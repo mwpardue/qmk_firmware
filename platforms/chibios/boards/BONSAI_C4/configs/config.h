@@ -87,6 +87,8 @@
 #    endif
 #endif
 
+#ifndef SPLIT_USB_DETECT
 #ifndef USB_VBUS_PIN
 #    define USB_VBUS_PIN PAL_LINE(GPIOA, 9)
+#endif
 #endif
