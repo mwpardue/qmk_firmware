@@ -148,11 +148,41 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
           }
           return PROCESS_RECORD_RETURN_TRUE;
 
-        case SFT_AT:
+        case ALT_AT:
           if (record->tap.count > 0) {
             if (record->event.pressed) {
               dprintln("KC_AT pressed");
               tap_code16(KC_AT);
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_TRUE;
+      
+        case CTL_BSL:
+          if (record->tap.count > 0) {
+            if (record->event.pressed) {
+              dprintln("KC_AT pressed");
+              tap_code16(KC_BSLS);
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_TRUE;
+      
+        case GUI_PIP:
+          if (record->tap.count > 0) {
+            if (record->event.pressed) {
+              dprintln("KC_AT pressed");
+              tap_code16(KC_PIPE);
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_TRUE;
+      
+        case SFT_UND:
+          if (record->tap.count > 0) {
+            if (record->event.pressed) {
+              dprintln("KC_AT pressed");
+              tap_code16(KC_UNDS);
             }
             return PROCESS_RECORD_RETURN_FALSE;
           }

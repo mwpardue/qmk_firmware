@@ -102,7 +102,7 @@ void matrix_scan_user(void) {
   // are on the same hand in Dvorak.
   switch (tap_hold_keycode) {
     case GUI_F: //F   + W, Q
-      if (other_keycode == KC_W || other_keycode == KC_Q) {return true;}
+      if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
     case CTL_S:
       if (other_keycode == SFT_NUM) {return true;}
     // case SFT_5: //Shift + XCS_SFT

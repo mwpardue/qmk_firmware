@@ -60,7 +60,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                 return PROCESS_RECORD_RETURN_FALSE;
             }
 
-          case SFT_NUM:
+          case CAP_MEH:
       if (record->event.pressed) {
         if (record->tap.count > 0) {
           if ((isAnyOneShot) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state == (XCASE_ON || XCASE_WAIT))) {
@@ -99,6 +99,30 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
       return PROCESS_RECORD_RETURN_TRUE;
       }
 
+          case SFT_NUM:
+      if (record->event.pressed) {
+        if (record->tap.count > 0) {
+          if ((isAnyOneShotButShift) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state == (XCASE_ON || XCASE_WAIT))) {
+            clear_locked_and_oneshot_mods();
+            disable_caps_word();
+            disable_xcase();
+            dprintln("disable caps_word and xcase");
+              if (host_keyboard_led_state().caps_lock) {
+                tap_code16(KC_CAPS);
+              }
+          } else {
+              if (isOneShotShift) {
+                del_oneshot_mods(MOD_MASK_SHIFT);
+                enable_caps_word();
+              } else {
+                add_oneshot_mods(MOD_LSFT);
+              }
+          return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_FALSE;
+        }
+      return PROCESS_RECORD_RETURN_TRUE;
+      }
 
           case SFT_ENT:
       if (record->event.pressed) {

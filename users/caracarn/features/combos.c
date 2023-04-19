@@ -5,16 +5,16 @@
 //Shortcuts
 const uint16_t PROGMEM bootloader_combo[] = {SFT_NUM, KC_Q, KC_T, COMBO_END};
 const uint16_t PROGMEM sleep_combo[] = {SFT_NUM, KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM playpause_combo[] = {SFT_NUM, ALT_S, CTL_D, COMBO_END};
-const uint16_t PROGMEM previous_combo[] = {SFT_NUM, SFT_A, ALT_S, COMBO_END};
-const uint16_t PROGMEM next_combo[] = {SFT_NUM, CTL_D, GUI_F, COMBO_END};
+const uint16_t PROGMEM playpause_combo[] = {SFT_NUM, CTL_S, SFT_D, COMBO_END};
+const uint16_t PROGMEM previous_combo[] = {SFT_NUM, ALT_A, CTL_S, COMBO_END};
+const uint16_t PROGMEM next_combo[] = {SFT_NUM, SFT_D, GUI_F, COMBO_END};
 const uint16_t PROGMEM login_combo[] = {SFT_BSP, KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM copy_combo[] = {ENT_NAV, KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM cut_combo[] = {ENT_NAV, KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM paste_combo[] = {ENT_NAV, KC_C, ALT_V, COMBO_END};
-const uint16_t PROGMEM debug_combo[] = {ENT_NAV, CTL_D, KC_G, COMBO_END};
-const uint16_t PROGMEM delete_combo[] = {ESC_MEH, ALT_S, SFT_A, COMBO_END};
-const uint16_t PROGMEM enter_combo[] = {ESC_MEH, ALT_S, CTL_D, COMBO_END};
+const uint16_t PROGMEM debug_combo[] = {ENT_NAV, SFT_D, KC_G, COMBO_END};
+const uint16_t PROGMEM delete_combo[] = {ESC_MEH, CTL_S, ALT_A, COMBO_END};
+const uint16_t PROGMEM enter_combo[] = {ESC_MEH, CTL_S, SFT_D, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
 

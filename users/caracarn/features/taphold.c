@@ -42,6 +42,8 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case CTL_SCN:
         case CTL_D:
         case CTL_K:
+        case ALT_A:
+        case ALT_SCN:
           return get_modtap_tapping_term();
         case SFT_K:
         case SFT_D:
@@ -79,6 +81,8 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         case CTL_K:
         case SFT_A:
         case SFT_SCN:
+        case ALT_A:
+        case ALT_SCN:
             return false;
     }
     switch (keycode) {
@@ -99,7 +103,6 @@ bool get_hold_on_other_key_press_result(uint16_t keycode) {
         case ENT_HYP:
         case SPC_HYP:
         case SPC_SYM:
-        case SFT_NUM:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -130,6 +133,8 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case CTL_K:
         case SFT_A:
         case SFT_SCN:
+        case ALT_A:
+        case ALT_SCN:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

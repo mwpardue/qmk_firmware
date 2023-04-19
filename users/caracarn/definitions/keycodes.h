@@ -55,7 +55,7 @@ enum {
     SFT_TTP, SFT_TTM, BSP_WRD, BSP_LIN, T_CLOSE, SP_RGT,
     S_ARRNG, BROWSER_BACK, BROWSER_FORWARD, TAB_BACK, TAB_FORWARD, TMX_LDS,
     PASSPAL, TMX_VIS, NAV_LFT, NAV_RGT, SEL_WRD, SEL_LIN, VIM_TRE, TMX_VSP,
-    TMX_HSP, MDT_TTP, MDT_TTM, ACH_TTM, ACH_TTP, SFT_AT,
+    TMX_HSP, MDT_TTP, MDT_TTM, ACH_TTM, ACH_TTP, SP_AT, CAP_MEH,
 #endif
 
 #ifdef SELECT_WORD_ENABLE
@@ -88,6 +88,7 @@ enum {
 // Mod-taps
 #define CTL_A LCTL_T(KC_A)
 #define SFT_A LSFT_T(KC_A)
+#define ALT_A LALT_T(KC_A)
 #define CTL_S LCTL_T(KC_S)
 #define ALT_V LALT_T(KC_V)
 #define ALT_S LALT_T(KC_S)
@@ -105,6 +106,7 @@ enum {
 #define ALT_RGT LALT_T(SP_RGT)
 #define CTL_SCN LCTL_T(KC_SCLN)
 #define SFT_SCN LSFT_T(KC_SCLN)
+#define ALT_SCN LALT_T(KC_SCLN)
 
 // One-shot mods
 
@@ -137,6 +139,7 @@ enum {
 #define ESC_CTL LCTL_T(KC_ESC)
 #define ENT_HYP HYPR_T(KC_ENT)
 #define ENT_MEH MEH_T(KC_ENT)
+#define CAP_MEH MEH_T(SP_CAP)
 #define SPC_MEH MEH_T(KC_SPACE)
 #define TAB_MEH MEH_T(KC_TAB)
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
@@ -203,6 +206,10 @@ enum {
 #define PG_DOWN LGUI(KC_DOWN)
 #define CAD LCTL(LALT(KC_DEL))
 #define KIT_RST LGUI(KC_0)
+#define ALT_AT LALT_T(SP_AT)
+#define CTL_BSL LCTL_T(KC_BSLS)
+#define SFT_UND LSFT_T(KC_UNDS)
+#define GUI_PIP LGUI_T(KC_PIPE)
 
 uint16_t extract_base_tapping_keycode(uint16_t keycode);
 

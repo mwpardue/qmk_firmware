@@ -6,6 +6,8 @@
 
 //extern os_t os;
 
+static uint8_t smart_mods;
+
 static td_tap_t tap_state = {
     .state = TD_NONE
 };
@@ -41,19 +43,23 @@ void td_quotes(tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
             if (get_mods() & MOD_MASK_SHIFT) {
-                del_mods(MOD_MASK_SHIFT);
-                del_weak_mods(MOD_MASK_SHIFT);
-                del_oneshot_mods(MOD_MASK_SHIFT);
-                tap_code16(KC_SCLN);
+              tap_code16(KC_DQUO);
             } else {
-            tap_code16(KC_QUOT);
+              tap_code16(KC_QUOT);
             };
             break;
-        case TD_DOUBLE_TAP:
+        case TD_SINGLE_HOLD:
             if (get_mods() & MOD_MASK_SHIFT) {
-                tap_code16(KC_COLN);
+              smart_mods = get_mods();
+              tap_code16(KC_DQUO);
+              tap_code16(KC_DQUO);
+              unregister_mods(smart_mods);
+              tap_code16(KC_LEFT);
+              register_mods(smart_mods);
             } else {
-            tap_code16(KC_DQUO);
+              tap_code16(KC_QUOT);
+              tap_code16(KC_QUOT);
+              tap_code16(KC_LEFT);
             };
             break;
         default: break;
