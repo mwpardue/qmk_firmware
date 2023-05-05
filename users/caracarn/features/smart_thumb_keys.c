@@ -30,6 +30,34 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
 
 
     switch (keycode) {
+        case XCASE:
+                if (record->event.pressed) {
+                    if (xcase_state == XCASE_WAIT && host_keyboard_led_state().caps_lock) {
+                        disable_xcase();
+                        disable_caps_word();
+                        dprintln("Disabled XCASE and Caps Word");
+                    }
+                    else if (xcase_state == XCASE_WAIT) {
+                        // enable_xcase();
+                        enable_caps_word();
+                        dprintln("XCASE WAIT, enabled Caps Word");
+                    }
+                    else if (xcase_state == XCASE_ON) {
+                        disable_xcase();
+                        disable_caps_word();
+                        dprintln("Disable XCASE from ON state");
+                    }
+                    else {
+                      if (get_mods() & MOD_MASK_SHIFT) {
+                        enable_xcase_with(OSM(MOD_LSFT));
+                      } else {
+                        enable_xcase();
+                        dprintln("Enabling XCASE to WAIT state");
+                    }
+                }
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+
         case FUN_XCS:
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
@@ -124,20 +152,20 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
       return PROCESS_RECORD_RETURN_TRUE;
       }
 
-          case SFT_ENT:
-      if (record->event.pressed) {
-        if (record->tap.count > 0) {
-          if (get_mods() & MOD_MASK_CTRL) {
-            unregister_mods(MOD_MASK_CTRL);
-            tap_code16(KC_ENTER);
-          } else {
-            dprintln("That's enter now, dummy");
-          return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_FALSE;
-        }
-      return PROCESS_RECORD_RETURN_TRUE;
-      }
+      //     case ENT_GUI:
+      // if (record->event.pressed) {
+      //   if (record->tap.count > 0) {
+      //     if (get_mods() & MOD_MASK_CTRL) {
+      //       unregister_mods(MOD_MASK_CTRL);
+      //       tap_code16(KC_ENTER);
+      //     } else {
+      //       tap_code16(KC_SPACE);
+      //     return PROCESS_RECORD_RETURN_FALSE;
+      //     }
+      //     return PROCESS_RECORD_RETURN_FALSE;
+      //   }
+      // return PROCESS_RECORD_RETURN_TRUE;
+      // }
 
       //     case CAP_SFT:
       // if (record->event.pressed) {
@@ -195,16 +223,16 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
               //   }
               // return PROCESS_RECORD_CONTINUE;
 
-    case OPT_PST:
-      if (record->tap.count > 0) {
-        dprintln("OPT_PST tapped");
-        if (record->event.pressed) {
-          dprintln("OPT_PST pressed");
-          tap_code16(G(KC_V));
-        }
-        return PROCESS_RECORD_RETURN_FALSE;
-      }
-      return PROCESS_RECORD_RETURN_TRUE;
+    // case OPT_PST:
+    //   if (record->tap.count > 0) {
+    //     dprintln("OPT_PST tapped");
+    //     if (record->event.pressed) {
+    //       dprintln("OPT_PST pressed");
+    //       tap_code16(G(KC_V));
+    //     }
+    //     return PROCESS_RECORD_RETURN_FALSE;
+    //   }
+    //   return PROCESS_RECORD_RETURN_TRUE;
 
                 case MOD_KEY:
             if (record->tap.count > 0) {

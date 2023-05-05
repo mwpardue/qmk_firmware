@@ -165,3 +165,21 @@ ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)
     endif
 
 endif
+
+ifeq ($(strip $(RAW_ENABLE)), yes)
+	ifeq ($(strip $(CONVERT_TO)), bonsai_c4)
+		override RAW_ENABLE = no
+	endif
+endif
+
+ifeq ($(strip $(ENCODER_ENABLE)), yes)
+	ifeq ($(strip $(CONVERT_TO)), bonsai_c4)
+		override ENCODER_ENABLE = no
+	endif
+endif
+
+ifeq ($(strip $(ENCODER_MAP_ENABLE)), yes)
+	ifeq ($(strip $(CONVERT_TO)), bonsai_c4)
+		override ENCODER_MAP_ENABLE = no
+	endif
+endif

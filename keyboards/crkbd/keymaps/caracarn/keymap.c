@@ -15,18 +15,20 @@
 
 // clang-format off
 
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [_BASE] =       { ENCODER_CCW_CW(C(KC_H), C(KC_L)),                  ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP)  },
-    [_NAVIGATION] = { ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)),       ENCODER_CCW_CW(LALT(KC_UP), LALT(KC_DOWN)) },
-    [_MACROS] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [_COLEMAK_DH] = { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-    [_HEX] =        { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-    [_NUMPAD] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-    [_SYMBOL] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-    [_FUNCTION] =   { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-    [_MEDIA] =      { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-    [_ADJUST] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-};
+#ifdef CONVERT_TO_HELIOS
+  const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+      [_BASE] =       { ENCODER_CCW_CW(C(KC_H), C(KC_L)),                  ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP)  },
+      [_NAVIGATION] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN),        ENCODER_CCW_CW(LALT(KC_UP), LALT(KC_DOWN)) },
+      [_MACROS] =     { ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)),       ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+      [_COLEMAK_DH] = { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_HEX] =        { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_NUMPAD] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_SYMBOL] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_FUNCTION] =   { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_MEDIA] =      { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_ADJUST] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+  };
+#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -34,35 +36,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
   CAP_MEH, ALT_A,  CTL_S,   SFT_D,   GUI_F,    KC_G,                        KC_H,    GUI_J,   SFT_K,   CTL_L,   ALT_SCN, TD_QUOT,
   OSMHYPR, KC_Z,   KC_X,    KC_C,    KC_V,     KC_B,                        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-                                     ESC_MEH, TAB_NAV, SFT_NUM,    SFT_BSP, SPC_MAC, ENT_HYP
+                                     ESC_MEH, BSP_NAV, TAB_NUM,    ENT_GUI, SPC_MAC, ENT_HYP
 ),
 
-// [_COLEMAK_DH] = LAYOUT_split_3x6_3(
-//   _______, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y,    TD_QUOT, _______,
-//   _______, KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    _______,
-//   _______, KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-//                                      ESC_NUM, TAB_NAV, MOD_SFT,    SFT_BSP, SPC_CTL, ENT_MAC
-// ),
 [_COLEMAK_DH] = LAYOUT_split_3x6_3(
-  KC_ESC,  KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-  TAB_MEH, KC_A,   ALT_S,   CTL_D,   GUI_F,    KC_G,                        KC_H,    GUI_J,   CTL_K,   ALT_L,   KC_SCLN, TD_QUOT,
-  OSMHYPR, KC_Z,   KC_X,    KC_C,    KC_V,     KC_B,                        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-                                     ESC_MEH, TAB_NAV, SFT_NUM,    SFT_BSP, SPC_MAC, ENT_HYP
+  QK_GESC, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+  TAB_MEH, ALT_A,  CTL_R,   SFT_S,   GUIT,    KC_G,                         KC_M,    GUI_N,   SFT_E,   CTL_I,   ALT_O,   TD_QUOT,
+  OSMHYPR, KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+                                     ESC_MEH, BSP_NAV, TAB_NUM,    ENT_GUI, SPC_MAC, ENT_HYP
 ),
 
 [_NUMPAD] = LAYOUT_split_3x6_3(
   KC_BSPC, TD_CURB, KC_RCBR, TD_PARB, KC_RPRN, TIPS,                         KC_GRV,  KC_7,    KC_8,    KC_9,    KC_SLSH, _______,
   KC_TAB,  ALT_AT,  CTL_BSL, SFT_UND, GUI_PIP, KC_PIPE,                      KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, _______,
-  LLOCK,   TD_SQRB, KC_RBRC, _______, _______, _______,                      KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  KC_ENT,
-                                      _______, _______, _______,    MONAV,   KC_0,    ENT_HYP
+  LLOCK,   TD_SQRB, KC_RBRC, XCASE,   _______, LLOCK,                        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  KC_ENT,
+                                      _______, _______, _______,    KC_ENT,  KC_0,    ENT_HYP
 ),
-
-// [_NUMPAD] = LAYOUT_split_3x6_3(
-//   KC_BSPC, TD_CURB, KC_RCBR, TD_PARB, KC_RPRN, TIPS,                         KC_GRV,  KC_7,    KC_8,    KC_9,    KC_SLSH, _______,
-//   KC_TAB,  ALT_AT,  CTL_BSL, SFT_UND, OSMLGUI, KC_PIPE,                      KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, _______,
-//   LLOCK,   TD_SQRB, KC_RBRC, _______, _______, _______,                      KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  KC_ENT,
-//                                       _______, _______, _______,    MONAV,   KC_0,    ENT_HYP
-// ),
 
 [_SYMBOL] = LAYOUT_split_3x6_3(
   _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                        KC_GRV,  KC_AMPR, KC_ASTR, KC_LPRN, KC_TILD, _______,
@@ -79,21 +68,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NAVIGATION] = LAYOUT_split_3x6_3(
-  KC_BSPC, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, TD_SSFL,  		             WD_LEFT, SEL_WRD,  SEL_LIN, WD_RGHT, PASSPAL, _______,
-  TAB_MEH, OSMLALT, OSMLCTL, OSMLSFT, OSMLGUI, TD_SNIP,                  KC_LEFT, KC_DOWN,  KC_UP,   KC_RGHT, _______, _______,
-  LLOCK,   _______, TD_PAST, TD_COPY, TD_PAST, KC_ENT,  		             _______, _______,  _______, _______, _______, KC_ENT,
-							                        KIT_RST, _______, _______,    BSP_SYM, KC_SPC,  KC_ENT
+  KC_BSPC, MC_SWAP, MOV_LFT, SM_SWIT, MOV_RGT, TD_SSFL,  		             WD_LEFT, SEL_WRD,  SEL_LIN, WD_RGHT, PASSPAL, _______,
+  TAB_MEH, OSMLALT, OSMLCTL, OSMLSFT, OSMLGUI, TD_SNIP,                  KC_LEFT, KC_DOWN,  KC_UP,   KC_RGHT, TD_QUOT, _______,
+  LLOCK,   _______, _______, TD_COPY, TD_PAST, _______,  		             _______, _______,  _______, _______, _______, KC_ENT,
+							                        KIT_RST, _______, _______,    KC_ENT, KC_SPC,  KC_ENT
 ),
 
 [_MACROS] = LAYOUT_split_3x6_3(
   _______, _______, _______, _______, _______, _______,                      _______, KC_MPRV,  KC_MPLY, KC_MNXT, PASSPAL, PASSPAL,
-  _______, _______, MON_L,   MON_M,   MON_R,   _______,                      _______, TD_MONL,  TD_MONM, TD_MONR, _______, _______,
+  _______, _______, MON_L,   MON_M,   MON_R,   _______,                      TD_MONL, TD_MONL,  TD_MONM, TD_MONR, _______, _______,
   _______, _______, MAX_SCR, MON_BL,  _______, _______,                      _______, MAX_SCR,  TD_MONB, _______, _______, _______,
-                                      _______, _______, FUN_XCS,    _______, _______, KC_MUTE
+                                      KC_BTN2, KC_BTN1, FUN_XCS,    _______, _______, KC_MUTE
 ),
 
 [_FUNCTION] = LAYOUT_split_3x6_3( \
-  _______, TOADJ,   _______, _______, _______, CAD,                           _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,\
+  _______, TOADJ,   _______, DF_TOGG, _______, CAD,                           _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,\
   _______, MDT_TTP, _______, DB_TOGG, _______, _______,                       _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______,\
   _______, MDT_TTM, TOHEX,   _______, _______, _______,                       _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______,\
                                       _______,  _______,  _______,   TOADJ,   _______, _______ \

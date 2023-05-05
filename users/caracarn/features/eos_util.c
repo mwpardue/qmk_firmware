@@ -50,8 +50,7 @@ void process_eos(uint16_t keycode, const keyrecord_t *record) {
             case ENT_MEH:
             case ENT_HYP:
             case SPC_HYP:
-            case TAB_NAV:
-            case ENT_NAV:
+            case BSP_NAV:
             case ESC_CTL:
             case ESC_MEH:
             case KC_SLSH:

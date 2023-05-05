@@ -61,22 +61,37 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         /* Example: KEYCODE will not be considered for hold-tap if the last key press was less than 150ms ago */
         /* case KEYCODE: */
         /*     return 150; */
+        case ALT_A:
         case CTL_S:
         case GUI_F:
-        case ALT_V:
+        case ALT_SCN:
         case CTL_L:
         case GUI_J:
-        case ALT_M:
-        case CTL_D:
-        case CTL_A:
-        case CTL_SCN:
-        case ALT_A:
-        case ALT_SCN:
+        case CTL_R: 
+        case GUIT: 
+        case ALT_O: 
+        case CTL_I: 
+        case GUI_N: 
+        // case CTL_S:
+        // case GUI_F:
+        // case ALT_V:
+        // case CTL_L:
+        // case GUI_J:
+        // case ALT_M:
+        // case CTL_D:
+        // case CTL_A:
+        // case CTL_SCN:
+        // case ALT_A:
+        // case ALT_SCN:
           return 150;
-        case SFT_D:
         case SFT_K:
-        case SFT_A:
-        case SFT_SCN:
+        case SFT_D:
+        case SFT_S: 
+        case SFT_E: 
+        // case SFT_D:
+        // case SFT_K:
+        // case SFT_A:
+        // case SFT_SCN:
           return 1;
         default:
             return 0;  // global_quick_tap is not applied

@@ -25,6 +25,7 @@ typedef union {
     #ifdef CASEMODE_ENABLE
         uint8_t xcase_state :8;
         bool caps_word_on :1;
+        uint16_t llocked :16;
     #endif
         // uint8_t smart_case_types :8;
     };

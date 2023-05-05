@@ -2,34 +2,46 @@
 
 #include "combos.h"
 
+#include "casemodes.h"
+
 //Shortcuts
-const uint16_t PROGMEM bootloader_combo[] = {SFT_NUM, KC_Q, KC_T, COMBO_END};
-const uint16_t PROGMEM sleep_combo[] = {SFT_NUM, KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM playpause_combo[] = {SFT_NUM, CTL_S, SFT_D, COMBO_END};
-const uint16_t PROGMEM previous_combo[] = {SFT_NUM, ALT_A, CTL_S, COMBO_END};
-const uint16_t PROGMEM next_combo[] = {SFT_NUM, SFT_D, GUI_F, COMBO_END};
-const uint16_t PROGMEM login_combo[] = {SFT_BSP, KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM copy_combo[] = {ENT_NAV, KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM cut_combo[] = {ENT_NAV, KC_Z, KC_X, COMBO_END};
-const uint16_t PROGMEM paste_combo[] = {ENT_NAV, KC_C, ALT_V, COMBO_END};
-const uint16_t PROGMEM debug_combo[] = {ENT_NAV, SFT_D, KC_G, COMBO_END};
+const uint16_t PROGMEM bootloader_combo[] = {TAB_NUM, KC_Q, KC_T, COMBO_END};
+const uint16_t PROGMEM bootloadercm_combo[] = {TAB_NUM, KC_Q, KC_B, COMBO_END};
+const uint16_t PROGMEM sleep_combo[] = {TAB_NUM, KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM escape_combo[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM playpause_combo[] = {TAB_NUM, CTL_S, SFT_D, COMBO_END};
+const uint16_t PROGMEM previous_combo[] = {TAB_NUM, ALT_A, CTL_S, COMBO_END};
+const uint16_t PROGMEM next_combo[] = {TAB_NUM, SFT_D, GUI_F, COMBO_END};
+const uint16_t PROGMEM login_combo[] = {ENT_GUI, KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM logincm_combo[] = {ENT_GUI, KC_Y, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM copy_combo[] = {BSP_NAV, KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM cut_combo[] = {BSP_NAV, KC_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM paste_combo[] = {BSP_NAV, KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM debug_combo[] = {BSP_NAV, SFT_D, KC_G, COMBO_END};
 const uint16_t PROGMEM delete_combo[] = {ESC_MEH, CTL_S, ALT_A, COMBO_END};
 const uint16_t PROGMEM enter_combo[] = {ESC_MEH, CTL_S, SFT_D, COMBO_END};
+const uint16_t PROGMEM capsword_combo[] = {SFT_D, SFT_K, COMBO_END};
+const uint16_t PROGMEM capswordcm_combo[] = {SFT_S, SFT_E, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
 
   COMBO(bootloader_combo, QK_BOOT),
+  COMBO(bootloadercm_combo, QK_BOOT),
   COMBO(sleep_combo, MACSLEP),
+  COMBO(escape_combo, QK_GESC),
   COMBO(playpause_combo, KC_MPLY),
   COMBO(previous_combo, KC_MPRV),
   COMBO(next_combo, KC_MNXT),
   COMBO(login_combo, SM_LOGN),
+  COMBO(logincm_combo, SM_LOGN),
   COMBO(copy_combo, LGUI(KC_C)),
   COMBO(cut_combo, LGUI(KC_X)),
   COMBO(paste_combo, LGUI(KC_V)),
   COMBO(debug_combo, DB_TOGG),
   COMBO(delete_combo, KC_BACKSPACE),
-  COMBO(enter_combo, KC_ENTER)
+  COMBO(enter_combo, KC_ENTER),
+  COMBO(capsword_combo, SM_CW),
+  COMBO(capswordcm_combo, SM_CW)
 
 };
 
@@ -77,6 +89,13 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
             if (record->event.pressed) {
                     send_string(secrets[1]);
                     tap_code16(KC_ENTER);
+                    return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case SM_CW:
+            if (record->event.pressed) {
+                    toggle_caps_word();
                     return PROCESS_RECORD_RETURN_FALSE;
             }
             break;

@@ -14,6 +14,8 @@ extern uint16_t achordion_tapping_term;
 
 extern layer_state_t locked_layers;
 
+// static uint8_t rgb_matrix_mode_str;
+
 void render_heatmap_specs(void);
 
 #ifdef CASEMODE_ENABLE
@@ -163,16 +165,6 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
     }
 }
 
-// void render_logo(void) {
-//     static const char PROGMEM corne_logo[] = {
-//         0x80, 0x81, 0x82, 0x83, 0x84,
-//         0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
-//         0xc0, 0xc1, 0xc2, 0xc3, 0xc4,
-//         0x20, 0x99, 0x9a, 0x9b, 0x20, 0};
-//     oled_write_P(corne_logo, false);
-// }
-
-
 void render_layer_box_upper_top(void) {
   static const char PROGMEM locked_upper[] = {
     0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0};
@@ -260,15 +252,48 @@ void render_layer_state(void) {
     }
 }
 
+char rgb_matrix_mode_str[8];
+char rgb_matrix_speed_str[8];
+char rgb_matrix_val_str[8];
+
 void render_led_state(void) {
-    // if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
         if (user_config.rgb_matrix_ledmap_active) {
-            oled_write_P(PSTR(" LED "), false);
+            oled_write_P(PSTR("L"), false);
         } else {
-            oled_write_P(PSTR(" RGB "), false);
+            oled_write_P(PSTR("R"), false);
         }
+
+        switch (rgb_matrix_get_flags()) {
+            case LED_FLAG_ALL: {
+                oled_write_P(PSTR(" ALL"), false);
+            }
+            break;
+            case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
+                oled_write_P(PSTR(" KMI"), false);
+            }
+            break;
+            case LED_FLAG_UNDERGLOW: {
+                oled_write_P(PSTR(" UG "), false);
+            }
+            break;
+            default: {
+                oled_write_P(PSTR(" OFF"), false);
+            }
+            break;
+        }
+      
+        sprintf(rgb_matrix_mode_str, "%03d", rgb_matrix_get_mode());
+        oled_write_P(PSTR("\nM:"), false);
+        oled_write_P(rgb_matrix_mode_str, false);
+  
+        sprintf(rgb_matrix_speed_str, "%03d", rgb_matrix_get_speed());
+        oled_write_P(PSTR("\nS:"), false);
+        oled_write_P(rgb_matrix_speed_str, false);
+  
+        sprintf(rgb_matrix_val_str, "%03d", rgb_matrix_get_val());
+        oled_write_P(PSTR("\nB:"), false);
+        oled_write_P(rgb_matrix_val_str, false);
 }
-    // } else {
 
 void render_smart_case(void) {
         #ifdef SMART_CASE_ENABLE
@@ -302,8 +327,6 @@ void render_smart_case(void) {
                 0xb4, 0x43, 0x41, 0x50, 0xb8, 0};
             static const char PROGMEM capslock[] = {
                 0xb4, 0x43, 0x50, 0x9c, 0xb8, 0};
-            // static const char PROGMEM blank[] = {
-            //     0xb4, 0xbc, 0xbc, 0xbc, 0xb8, 0};
             if ((host_keyboard_led_state().caps_lock) && (xcase_state == XCASE_ON)) {
                 render_layer_box_lower_top();
                 oled_write_P(xcase_caps, false);
@@ -330,9 +353,6 @@ void render_smart_case(void) {
                 render_layer_box_bottom();
         #endif
             } else {
-                // oled_write_P(blank, false);
-                // oled_write_P(blank, false);
-                // oled_write_P(blank, false);
                 render_heatmap_specs();
             }
 }
@@ -376,11 +396,8 @@ void render_heatmap_specs(void) {
     oled_write_P(PSTR("\nS:"), false);
     oled_write_P(heatmap_spread_str, false);
     oled_write_P(PSTR("\n"), false);
-        // render_smart_case();
     }
-    // }
-    // else {
-        // render_space();
+
 void render_modtap_specs(void) {
   sprintf(shift_tapping_term_str, "%03d", get_shift_tapping_term_str());
   sprintf(g_tapping_term_str, "%03d", get_tapping_term_str());
@@ -398,32 +415,31 @@ void render_modtap_specs(void) {
   oled_write_P(PSTR("\n"), false);
   oled_write_P(PSTR("AT"), false);
   oled_write_P(achordion_tapping_term_str, false);
-  // oled_write_P(PSTR("\n"), false);
-        // render_space();
-        // render_smart_case();
-        // render_space();
-    // }
+  oled_write_P(PSTR("\n"), false);
 }
-
-// void render_heatmap_spread(void) {
-//     sprintf(heatmap_spread_str, "%03d", get_heatmap_spread());
-//     oled_write_ln_P(heatmap_spread_str, false);
-//     oled_write_P(PSTR("\n"), false);
-// }
 
 bool oled_task_user(void) {
     if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
-      render_modtap_specs();
-      render_layer_box_upper_top();
-      render_layer_box_lower_top();
-      render_layer_state();
-      render_layer_box_bottom();
-      render_heatmap_specs();
-      render_led_state();
+      if (is_keyboard_master()) {
+        render_modtap_specs();
+        // render_layer_box_upper_top();
+        render_layer_box_lower_top();
+        render_layer_state();
+        render_layer_box_bottom();
+        render_heatmap_specs();
+        // render_led_state();
+        render_space();
+      } else {
+        render_led_state();
+        // render_modtap_specs();
+        render_layer_box_upper_top();
+        render_layer_box_lower_top();
+        render_layer_state();
+        render_layer_box_bottom();
+        render_heatmap_specs();
+        // render_space();
+      }
     } else {
-    // Renders the current keyboard state (layers and mods)
-    // render_logo();
-    // render_space();
     render_space();
     render_mod_status_gui_alt(get_mods()|get_oneshot_mods());
     render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
@@ -431,13 +447,9 @@ bool oled_task_user(void) {
     render_layer_box_lower_top();
     render_layer_state();
     render_layer_box_bottom();
-    // render_space();
-    // render_heatmap_specs();
     render_space();
     render_smart_case();
     render_space();
-    // render_smart_case();
-    // render_heatmap_spread();
   }
   return false;
 }

@@ -12,6 +12,8 @@
 uint32_t transport_user_state = 0;
 uint32_t transport_kb_state = 0;
 
+extern layer_state_t locked_layers;
+
 user_runtime_config_t user_state;
 
 kb_state_t kb_state;
@@ -59,6 +61,7 @@ void user_transport_update(void) {
     // #endif
         kb_state.xcase_state = xcase_state;
         kb_state.caps_word_on = caps_word_on;
+        kb_state.llocked = locked_layers;
         // kb_state.smart_case_types = smart_case_types;
         transport_kb_state = kb_state.raw;
     } else {
@@ -73,6 +76,7 @@ void user_transport_update(void) {
     // #endif
         xcase_state = kb_state.xcase_state;
         caps_word_on = kb_state.caps_word_on;
+        locked_layers = kb_state.llocked;
         // smart_case_types = kb_state.smart_case_types;
 
     }

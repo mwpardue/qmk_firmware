@@ -101,7 +101,7 @@ void set_layer_rgb_matrix(uint8_t led_min, uint8_t led_max, int layer, int led_t
                 };
 			    rgb_matrix_sethsv_noeeprom(hsv.h, hsv.s, hsv.v);
               // if ((get_highest_layer(layer_state | default_layer_state)) != _BASE && (get_highest_layer(layer_state | default_layer_state)) != _ADJUST && (get_highest_layer(layer_state | default_layer_state)) != _COLEMAK_DH ) {
-                if (HAS_ANY_FLAGS(g_led_config.flags[i], LED_FLAG_UNDERGLOW)) {
+                if (HAS_ANY_FLAGS(g_led_config.flags[i], (led_type & LED_FLAG_UNDERGLOW))) {
                     RGB rgb = hsv_to_rgb(hsv);
                     RGB_MATRIX_INDICATOR_SET_COLOR(i, rgb.r, rgb.g, rgb.b);
                 }

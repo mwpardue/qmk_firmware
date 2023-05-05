@@ -139,14 +139,14 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
       }
         return PROCESS_RECORD_RETURN_TRUE;
 
-        case ALT_RGT:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              tap_code16(C(KC_RIGHT));
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
+        // case ALT_RGT:
+        //   if (record->tap.count > 0) {
+        //     if (record->event.pressed) {
+        //       tap_code16(C(KC_RIGHT));
+        //     }
+        //     return PROCESS_RECORD_RETURN_FALSE;
+        //   }
+        //   return PROCESS_RECORD_RETURN_TRUE;
 
         case ALT_AT:
           if (record->tap.count > 0) {
@@ -267,6 +267,26 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
               tap_code16(C(A(G(S(KC_RBRC)))));
             return PROCESS_RECORD_RETURN_FALSE;
             }
+
+         case DF_TOGG:
+            if (record->event.pressed) {
+              if (default_layer_state == 1 << _COLEMAK_DH) {
+                dprintln("set to qwerty");
+                set_single_persistent_default_layer(_BASE);
+        } else {
+                dprintln("set to colemak");
+                set_single_persistent_default_layer(_COLEMAK_DH);
+        }
+            return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+         case SM_SWIT:
+            if (record->event.pressed) {
+              register_mods(MOD_MASK_GUI);
+              tap_code16(KC_TAB);
+            } else {
+              unregister_mods(MOD_MASK_GUI);
+              }
 
         return PROCESS_RECORD_RETURN_FALSE;
     }

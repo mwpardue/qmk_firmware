@@ -28,8 +28,8 @@ void keyboard_pre_init_user(void) {
 void                       keyboard_post_init_user(void) {
 #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
     keyboard_post_init_transport_sync();
-    rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
-    rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
+    // rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
+    // rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
 #endif
 }
 
@@ -103,8 +103,10 @@ void matrix_scan_user(void) {
   switch (tap_hold_keycode) {
     case GUI_F: //F   + W, Q
       if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
-    case CTL_S:
-      if (other_keycode == SFT_NUM) {return true;}
+    case GUIT: //F   + W, Q
+      if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
+    case ALT_A:
+      if (other_keycode == BSP_NAV) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;
@@ -126,14 +128,13 @@ void matrix_scan_user(void) {
      case ESC_CTL:
      case ESC_MEH:
      case BSP_SYM:
-     case SFT_BSP:
+     case ENT_GUI:
      case SPCSFT:
-     case TAB_NAV:
-     case ENT_NAV:
+     case BSP_NAV:
      case ENT_MEH:
      case ENT_HYP:
      case SPC_HYP:
-     case SFT_NUM:
+     case TAB_NUM:
      case SPC_MAC:
      case SFT_FUN:
      case SPC_SYM:
@@ -158,14 +159,11 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
              return true;
          // case (XCASE & 0xff):
          // case XCASE:
-         case TAB_NAV:
-         case ENT_NAV:
+         case BSP_NAV:
          case BSP_SYM:
-         case SFT_BSP:
-         case SFT_NUM:
+         case ENT_GUI:
+         case TAB_NUM:
          case SP_CAP:
-         case ALT_M:
-         case ALT_V:
          default:
             return false;
      }

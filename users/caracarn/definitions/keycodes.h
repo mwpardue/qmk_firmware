@@ -52,10 +52,10 @@ enum {
 
 #ifdef SHORTCUTS_ENABLE
     SS_MODP, SS_MODM, COLEMAK, QWERTY, TG_KBAB, TG_CAML, TG_SNAK, SM_PARN,
-    SFT_TTP, SFT_TTM, BSP_WRD, BSP_LIN, T_CLOSE, SP_RGT,
+    SFT_TTP, SFT_TTM, BSP_WRD, BSP_LIN, T_CLOSE, SP_RGT, DF_TOGG,
     S_ARRNG, BROWSER_BACK, BROWSER_FORWARD, TAB_BACK, TAB_FORWARD, TMX_LDS,
     PASSPAL, TMX_VIS, NAV_LFT, NAV_RGT, SEL_WRD, SEL_LIN, VIM_TRE, TMX_VSP,
-    TMX_HSP, MDT_TTP, MDT_TTM, ACH_TTM, ACH_TTP, SP_AT, CAP_MEH,
+    TMX_HSP, MDT_TTP, MDT_TTM, ACH_TTM, ACH_TTP, SP_AT, CAP_MEH, SM_SWIT,
 #endif
 
 #ifdef SELECT_WORD_ENABLE
@@ -67,7 +67,7 @@ enum {
 #endif
 
 #ifdef COMBO_ENABLE
-    SM_LOGN,
+    SM_LOGN, SM_CW,
 #endif
 
 #ifdef LAYER_LOCK_ENABLE
@@ -85,28 +85,46 @@ enum {
     CUSTOM_KEYCODE_END
 };
 
-// Mod-taps
-#define CTL_A LCTL_T(KC_A)
-#define SFT_A LSFT_T(KC_A)
+// Mod-taps (QWERTY)
+
+// Left Hand
 #define ALT_A LALT_T(KC_A)
 #define CTL_S LCTL_T(KC_S)
-#define ALT_V LALT_T(KC_V)
-#define ALT_S LALT_T(KC_S)
 #define SFT_D LSFT_T(KC_D)
-#define CTL_D LCTL_T(KC_D)
 #define GUI_F LGUI_T(KC_F)
-#define CTL_QUO RCTL_T(KC_QUOT)
-#define CTL_L RCTL_T(KC_L)
-#define ALT_M RALT_T(KC_M)
-#define ALT_L RALT_T(KC_L)
-#define SFT_K RSFT_T(KC_K)
-#define CTL_K RCTL_T(KC_K)
-#define GUI_J RGUI_T(KC_J)
-#define OPT_PST LALT_T(SP_PST)
-#define ALT_RGT LALT_T(SP_RGT)
-#define CTL_SCN LCTL_T(KC_SCLN)
-#define SFT_SCN LSFT_T(KC_SCLN)
+
+// Right Hand
 #define ALT_SCN LALT_T(KC_SCLN)
+#define CTL_L RCTL_T(KC_L)
+#define SFT_K RSFT_T(KC_K)
+#define GUI_J RGUI_T(KC_J)
+
+//
+//
+// #define ALT_V LALT_T(KC_V)
+// #define ALT_S LALT_T(KC_S)
+// #define CTL_D LCTL_T(KC_D)
+// #define CTL_QUO RCTL_T(KC_QUOT)
+// #define ALT_M RALT_T(KC_M)
+// #define ALT_L RALT_T(KC_L)
+// #define CTL_K RCTL_T(KC_K)
+// #define OPT_PST LALT_T(SP_PST)
+// #define ALT_RGT LALT_T(SP_RGT)
+// #define CTL_SCN LCTL_T(KC_SCLN)
+// #define SFT_SCN LSFT_T(KC_SCLN)
+
+// Mod-taps (COLEMAK-DH)
+
+// Left Hand
+#define CTL_R LCTL_T(KC_R)
+#define SFT_S LSFT_T(KC_S)
+#define GUIT LGUI_T(KC_T)
+
+// Right Hand
+#define ALT_O LALT_T(KC_O)
+#define CTL_I LCTL_T(KC_I)
+#define SFT_E LSFT_T(KC_E)
+#define GUI_N LGUI_T(KC_N)
 
 // One-shot mods
 
@@ -128,12 +146,18 @@ enum {
 #define BSP_SYM LT(_SYMBOL, KC_BSPC)
 #define SPC_MAC LT(_MACROS, KC_SPACE)
 #define SFT_NUM LT(_NUMPAD, SP_CAP)
+#define ENT_NUM LT(_NUMPAD, KC_ENTER)
+#define TAB_NUM LT(_NUMPAD, KC_TAB)
+#define BSP_GUI LGUI_T(KC_BSPC)
+#define ENT_GUI LGUI_T(KC_ENTER)
 #define SFT_BSP LSFT_T(KC_BSPC)
 #define MAC_BSP LT(_MACROS, KC_BSPC)
 #define SFT_ENT LSFT_T(KC_ENTER)
 #define SFT_FUN LT(_FUNCTION, SP_CAP)
-#define TAB_NAV LT(_NAVIGATION, KC_TAB)
+#define BSP_NAV LT(_NAVIGATION, KC_BSPC)
+#define BSP_NUM LT(_NUMPAD, KC_BSPC)
 #define ENT_NAV LT(_NAVIGATION, KC_ENT)
+#define TAB_NAV LT(_NAVIGATION, KC_TAB)
 #define TAB_SFT LSFT_T(KC_TAB)
 #define FUN_XCS LT(_FUNCTION, XCASE)
 #define ESC_CTL LCTL_T(KC_ESC)
