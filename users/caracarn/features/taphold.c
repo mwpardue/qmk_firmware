@@ -5,20 +5,20 @@
 
 uint16_t get_tapping_term_result(uint16_t keycode) {
     switch (keycode) {
-        case BSP_NAV:
+        case IL_THUM:
         case BSP_SYM:
-        case ENT_GUI:
+        case OR_THUM:
         case ENT_HYP:
         case SPC_HYP:
         case ESC_MEH:
-        case TAB_NUM:
-        case SPC_MAC:
+        case OL_THUM:
+        case IR_THUM:
         case TD_SNIP:
         case TD_SSFL:
-        case TD_COPY:
-        case TD_PAST:
         case TAB_MEH:
             return g_tapping_term + 40;
+        case TD_COPY:
+        case TD_PAST:
         case FUN_XCS:
         case OSMLSFT:
         case OSMRSFT:
@@ -33,38 +33,38 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case TD_MONR:
         case TD_MONB:
           return g_tapping_term + 100;
-        case ALT_A:
-        case CTL_S:
-        case GUI_F:
-        case ALT_SCN:
-        case CTL_L:
-        case GUI_J:
-        case CTL_R: 
-        case GUIT: 
-        case ALT_O: 
-        case CTL_I: 
-        case GUI_N: 
+        case LHM_A:
+        case LHM_S:
+        case LHM_F:
+        case RHM_SCN:
+        case RHM_L:
+        case RHM_J:
+        case CLHM_R: 
+        case CLHMT: 
+        case CRHM_O: 
+        case CRHM_I: 
+        case CRHM_N: 
         // case CTL_A:
         // case ALT_S:
-        // case GUI_F:
-        // case GUI_J:
+        // case LHM_F:
+        // case RHM_J:
         // case ALT_L:
         // case CTL_QUO:
-        // case CTL_L:
-        // case CTL_S:
+        // case RHM_L:
+        // case LHM_S:
         // case ALT_V:
         // case ALT_M:
         // case CTL_SCN:
         // case CTL_D:
         // case CTL_K:
-        // case ALT_A:
-        // case ALT_SCN:
+        // case LHM_A:
+        // case RHM_SCN:
           return get_modtap_tapping_term();
-        case SFT_K:
-        case SFT_D:
-        case SFT_S: 
+        case RHM_K:
+        case LHM_D:
+        case CLHM_S: 
         // case SFT_A:
-        case SFT_E: 
+        case CRHM_E: 
         // case SFT_SCN:
             return get_sft_tapping_term();
         default:
@@ -75,22 +75,22 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
 bool get_tapping_force_hold_result(uint16_t keycode) {
     switch (keycode) {
         case BSP_SYM:
-        case ENT_GUI:
-        case BSP_NAV:
+        case OR_THUM:
+        case IL_THUM:
         case SPC_HYP:
         case ENT_HYP:
         case ESC_MEH:
-        case SPC_MAC:
+        case IR_THUM:
         // case CTL_A:
         // case ALT_S:
-        // case SFT_D:
-        // case GUI_F:
-        // case GUI_J:
-        // case SFT_K:
+        // case LHM_D:
+        // case LHM_F:
+        // case RHM_J:
+        // case RHM_K:
         // case ALT_L:
         // case CTL_QUO:
-        // case CTL_S:
-        // case CTL_L:
+        // case LHM_S:
+        // case RHM_L:
         // case ALT_V:
         // case ALT_M:
         // case CTL_SCN:
@@ -98,23 +98,23 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         // case CTL_K:
         // case SFT_A:
         // case SFT_SCN:
-        // case ALT_A:
-        // case ALT_SCN:
-        case ALT_A:
-        case CTL_S:
-        case GUI_F:
-        case ALT_SCN:
-        case CTL_L:
-        case GUI_J:
-        case CTL_R: 
-        case GUIT: 
-        case ALT_O: 
-        case CTL_I: 
-        case GUI_N: 
-        case SFT_K:
-        case SFT_D:
-        case SFT_S: 
-        case SFT_E: 
+        // case LHM_A:
+        // case RHM_SCN:
+        case LHM_A:
+        case LHM_S:
+        case LHM_F:
+        case RHM_SCN:
+        case RHM_L:
+        case RHM_J:
+        case CLHM_R: 
+        case CLHMT: 
+        case CRHM_O: 
+        case CRHM_I: 
+        case CRHM_N: 
+        case RHM_K:
+        case LHM_D:
+        case CLHM_S: 
+        case CRHM_E: 
             return false;
     }
     switch (keycode) {
@@ -129,13 +129,13 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
 
 bool get_hold_on_other_key_press_result(uint16_t keycode) {
     switch (keycode) {
-        case BSP_NAV:
+        case IL_THUM:
         case BSP_SYM:
-        case ENT_GUI:
+        case IR_THUM:
         case ENT_HYP:
         case SPC_HYP:
         case SPC_SYM:
-        case TAB_NUM:
+        // case OL_THUM:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -145,44 +145,23 @@ bool get_hold_on_other_key_press_result(uint16_t keycode) {
 
 bool get_permissive_hold_result(uint16_t keycode) {
     switch (keycode) {
-        case SPCSFT:
         case BSP_SYM:
-        case ENT_GUI:
-        // case CTL_A:
-        // case ALT_S:
-        // case SFT_D:
-        // case GUI_F:
-        // case GUI_J:
-        // case SFT_K:
-        // case ALT_L:
-        // case CTL_QUO:
-        // case CTL_S:
-        // case CTL_L:
-        // case ALT_V:
-        // case ALT_M:
-        // case CTL_SCN:
-        // case SPC_SYM:
-        // case CTL_D:
-        // case CTL_K:
-        // case SFT_A:
-        // case SFT_SCN:
-        // case ALT_A:
-        // case ALT_SCN:
-        case ALT_A:
-        case CTL_S:
-        case GUI_F:
-        case ALT_SCN:
-        case CTL_L:
-        case GUI_J:
-        case CTL_R: 
-        case GUIT: 
-        case ALT_O: 
-        case CTL_I: 
-        case GUI_N: 
-        case SFT_K:
-        case SFT_D:
-        case SFT_S: 
-        case SFT_E: 
+        case OR_THUM:
+        case LHM_A:
+        case LHM_S:
+        case LHM_F:
+        case RHM_SCN:
+        case RHM_L:
+        case RHM_J:
+        case CLHM_R: 
+        case CLHMT: 
+        case CRHM_O: 
+        case CRHM_I: 
+        case CRHM_N: 
+        case RHM_K:
+        case LHM_D:
+        case CLHM_S: 
+        case CRHM_E: 
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

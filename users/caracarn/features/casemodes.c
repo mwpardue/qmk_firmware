@@ -176,11 +176,11 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_MINS:
             case KC_UNDS:
             case KC_BSPC:
-            case BSP_NAV:
-            case TAB_NUM:
+            case IL_THUM:
+            case OL_THUM:
             case BSP_SYM:
-            case ENT_GUI:
-            case SPC_MAC:
+            case OR_THUM:
+            case IR_THUM:
             case SPC_HYP:
             // case (XCASE & 0xff):
             case KC_UP:
@@ -213,7 +213,7 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     //      case KC_1 ... KC_0:
     //          return true;
     //      case (XCASE & 0xff):
-    //      case BSP_NAV:
+    //      case IL_THUM:
     //      default:
     //         return false;
     //  }
@@ -258,7 +258,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                     case FUN_XCS:
                     case XCASE:
                     case (XCASE & 0xff):
-                    case TAB_NUM:
+                    case OL_THUM:
                     case SP_CAP:
                     case (SP_CAP & 0xFF):
                         return false;

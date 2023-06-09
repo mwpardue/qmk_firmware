@@ -46,11 +46,11 @@ void process_eos(uint16_t keycode, const keyrecord_t *record) {
 
             case (KC_ENT & 0xff):
             case (KC_SPC & 0xff):
-            case SPC_MAC:
+            case IR_THUM:
             case ENT_MEH:
             case ENT_HYP:
             case SPC_HYP:
-            case BSP_NAV:
+            case IL_THUM:
             case ESC_CTL:
             case ESC_MEH:
             case KC_SLSH:

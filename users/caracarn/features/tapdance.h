@@ -26,7 +26,8 @@ enum {
     MONITOR_LEFT,
     MONITOR_MIDDLE,
     MONITOR_RIGHT,
-    MONITOR_BOTTOM
+    MONITOR_BOTTOM,
+    TD_ATTIPS
 };
 
 #define TD_S15 TD(SEC1_5)
@@ -49,6 +50,7 @@ enum {
 #define TD_MONR TD(MONITOR_RIGHT)
 #define TD_MONM TD(MONITOR_MIDDLE)
 #define TD_MONB TD(MONITOR_BOTTOM)
+#define TD_TIPS TD(TD_ATTIPS)
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,

@@ -101,12 +101,14 @@ void matrix_scan_user(void) {
   // Exceptionally consider the following chords as holds, even though they
   // are on the same hand in Dvorak.
   switch (tap_hold_keycode) {
-    case GUI_F: //F   + W, Q
+    case LHM_F: //F   + W, Q
       if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
-    case GUIT: //F   + W, Q
+    case CLHMT: //F   + W, Q
       if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
-    case ALT_A:
-      if (other_keycode == BSP_NAV) {return true;}
+    case LHM_S:
+      if (other_keycode == IL_THUM) {return true;}
+    case LHM_D:
+      if (other_keycode == OL_THUM) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;
@@ -128,14 +130,13 @@ void matrix_scan_user(void) {
      case ESC_CTL:
      case ESC_MEH:
      case BSP_SYM:
-     case ENT_GUI:
-     case SPCSFT:
-     case BSP_NAV:
+     case OR_THUM:
+     case IL_THUM:
      case ENT_MEH:
      case ENT_HYP:
      case SPC_HYP:
-     case TAB_NUM:
-     case SPC_MAC:
+     case OL_THUM:
+     case IR_THUM:
      case SFT_FUN:
      case SPC_SYM:
      case TAB_MEH:
@@ -159,10 +160,10 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
              return true;
          // case (XCASE & 0xff):
          // case XCASE:
-         case BSP_NAV:
+         case IL_THUM:
          case BSP_SYM:
-         case ENT_GUI:
-         case TAB_NUM:
+         case OR_THUM:
+         case OL_THUM:
          case SP_CAP:
          default:
             return false;

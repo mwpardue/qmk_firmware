@@ -85,19 +85,44 @@ enum {
     CUSTOM_KEYCODE_END
 };
 
+// Thumb keys
+
+#define IL_THUM LT(_NUMPAD, KC_BSPC)
+#define OL_THUM LT(_NAVIGATION, SP_CAP)
+#define IR_THUM LT(_MACROS, KC_ENT)
+#define OR_THUM LCTL_T(KC_SPACE)
+
 // Mod-taps (QWERTY)
 
 // Left Hand
-#define ALT_A LALT_T(KC_A)
-#define CTL_S LCTL_T(KC_S)
-#define SFT_D LSFT_T(KC_D)
-#define GUI_F LGUI_T(KC_F)
+// #define ALT_A LALT_T(KC_A)
+// #define CTL_A LCTL_T(KC_A)
+// #define CTL_S LCTL_T(KC_S)
+// #define ALT_S LALT_T(KC_S)
+// #define SFT_D LSFT_T(KC_D)
+// #define GUI_F LGUI_T(KC_F)
+
+// #define LHM_A LALT_T(KC_A)
+#define LHM_A LCTL_T(KC_A)
+// #define LHM_S LCTL_T(KC_S)
+#define LHM_S LALT_T(KC_S)
+#define LHM_D LSFT_T(KC_D)
+#define LHM_F LGUI_T(KC_F)
 
 // Right Hand
-#define ALT_SCN LALT_T(KC_SCLN)
-#define CTL_L RCTL_T(KC_L)
-#define SFT_K RSFT_T(KC_K)
-#define GUI_J RGUI_T(KC_J)
+// #define ALT_SCN LALT_T(KC_SCLN)
+// #define CTL_SCN LCTL_T(KC_SCLN)
+// #define CTL_L RCTL_T(KC_L)
+// #define ALT_L RALT_T(KC_L)
+// #define SFT_K RSFT_T(KC_K)
+// #define GUI_J RGUI_T(KC_J)
+
+// #define RHM_SCN LALT_T(KC_SCLN)
+#define RHM_SCN LCTL_T(KC_SCLN)
+// #define RHM_L RCTL_T(KC_L)
+#define RHM_L RALT_T(KC_L)
+#define RHM_K RSFT_T(KC_K)
+#define RHM_J RGUI_T(KC_J)
 
 //
 //
@@ -116,15 +141,16 @@ enum {
 // Mod-taps (COLEMAK-DH)
 
 // Left Hand
-#define CTL_R LCTL_T(KC_R)
-#define SFT_S LSFT_T(KC_S)
-#define GUIT LGUI_T(KC_T)
+#define CLHM_A LCTL_T(KC_A)
+#define CLHM_R LALT_T(KC_R)
+#define CLHM_S LSFT_T(KC_S)
+#define CLHMT LGUI_T(KC_T)
 
 // Right Hand
-#define ALT_O LALT_T(KC_O)
-#define CTL_I LCTL_T(KC_I)
-#define SFT_E LSFT_T(KC_E)
-#define GUI_N LGUI_T(KC_N)
+#define CRHM_O LCTL_T(KC_O)
+#define CRHM_I LALT_T(KC_I)
+#define CRHM_E LSFT_T(KC_E)
+#define CRHM_N LGUI_T(KC_N)
 
 // One-shot mods
 
@@ -144,17 +170,13 @@ enum {
 #define MOD_KEY LSFT_T(SP_MOD)
 #define MOD_SFT LSFT_T(SP_MOD)
 #define BSP_SYM LT(_SYMBOL, KC_BSPC)
-#define SPC_MAC LT(_MACROS, KC_SPACE)
 #define SFT_NUM LT(_NUMPAD, SP_CAP)
 #define ENT_NUM LT(_NUMPAD, KC_ENTER)
-#define TAB_NUM LT(_NUMPAD, KC_TAB)
 #define BSP_GUI LGUI_T(KC_BSPC)
-#define ENT_GUI LGUI_T(KC_ENTER)
 #define SFT_BSP LSFT_T(KC_BSPC)
 #define MAC_BSP LT(_MACROS, KC_BSPC)
 #define SFT_ENT LSFT_T(KC_ENTER)
 #define SFT_FUN LT(_FUNCTION, SP_CAP)
-#define BSP_NAV LT(_NAVIGATION, KC_BSPC)
 #define BSP_NUM LT(_NUMPAD, KC_BSPC)
 #define ENT_NAV LT(_NAVIGATION, KC_ENT)
 #define TAB_NAV LT(_NAVIGATION, KC_TAB)
@@ -230,10 +252,11 @@ enum {
 #define PG_DOWN LGUI(KC_DOWN)
 #define CAD LCTL(LALT(KC_DEL))
 #define KIT_RST LGUI(KC_0)
-#define ALT_AT LALT_T(SP_AT)
-#define CTL_BSL LCTL_T(KC_BSLS)
-#define SFT_UND LSFT_T(KC_UNDS)
-#define GUI_PIP LGUI_T(KC_PIPE)
+#define LHM_AT LALT_T(SP_AT)
+#define LHM_BSL LCTL_T(KC_BSLS)
+#define LHM_UND LSFT_T(KC_UNDS)
+#define LHM_PIP LGUI_T(KC_PIPE)
+#define ALT_BSP LALT(KC_BSPC)
 
 uint16_t extract_base_tapping_keycode(uint16_t keycode);
 

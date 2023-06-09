@@ -127,7 +127,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
       return PROCESS_RECORD_RETURN_TRUE;
       }
 
-          case SFT_NUM:
+          case OL_THUM:
       if (record->event.pressed) {
         if (record->tap.count > 0) {
           if ((isAnyOneShotButShift) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state == (XCASE_ON || XCASE_WAIT))) {
@@ -139,8 +139,9 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                 tap_code16(KC_CAPS);
               }
           } else {
-              if (isOneShotShift) {
+              if (isOneShotShift || (get_mods() & MOD_MASK_SHIFT)) {
                 del_oneshot_mods(MOD_MASK_SHIFT);
+                unregister_mods(MOD_MASK_SHIFT);
                 enable_caps_word();
               } else {
                 add_oneshot_mods(MOD_LSFT);

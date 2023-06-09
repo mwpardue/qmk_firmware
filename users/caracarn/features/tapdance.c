@@ -310,6 +310,19 @@ void td_parentesis(tap_dance_state_t *state, void *user_data) {
         default: break;
     }
 }
+
+void td_tips(tap_dance_state_t *state, void *user_data) {
+    tap_state.state = dance_state(state);
+    switch (tap_state.state) {
+        case TD_SINGLE_TAP:
+            send_string("trueipsolutions.com");
+            break;
+        case TD_SINGLE_HOLD:
+            send_string("@trueipsolutions.com");
+            break;
+        default: break;
+    }
+}
 // Tap dance declarations
 
 tap_dance_action_t tap_dance_actions[] = {
@@ -333,4 +346,5 @@ tap_dance_action_t tap_dance_actions[] = {
     [MONITOR_RIGHT] = ACTION_TAP_DANCE_FN(td_monitor_right),
     [MONITOR_MIDDLE] = ACTION_TAP_DANCE_FN(td_monitor_middle),
     [MONITOR_BOTTOM] = ACTION_TAP_DANCE_FN(td_monitor_bottom),
+    [TD_ATTIPS] = ACTION_TAP_DANCE_FN(td_tips),
 };
