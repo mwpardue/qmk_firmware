@@ -13,6 +13,10 @@ void housekeeping_task_transport_sync(void);
     #include "features/tapdance.h"
 #endif
 
+#ifdef COMBO_ENABLE
+    #include "features/combos.h"
+#endif
+
 #ifdef GQT_ENABLE
   #include "features/global_quick_tap.h"
 #endif
@@ -59,10 +63,6 @@ void housekeeping_task_transport_sync(void);
 
 #ifdef MACRO_ENABLE
     #include "features/macros.h"
-#endif
-
-#ifdef COMBO_ENABLE
-    #include "features/combos.h"
 #endif
 
 #ifdef CUSTOM_LEADER_ENABLE

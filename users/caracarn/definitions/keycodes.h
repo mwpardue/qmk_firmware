@@ -89,8 +89,8 @@ enum {
 
 #define IL_THUM LT(_NUMPAD, KC_BSPC)
 #define OL_THUM LT(_NAVIGATION, SP_CAP)
-#define IR_THUM LT(_MACROS, KC_ENT)
-#define OR_THUM LCTL_T(KC_SPACE)
+#define OR_THUM LT(_MACROS, KC_SPACE)
+#define IR_THUM LCTL_T(KC_ENT)
 
 // Mod-taps (QWERTY)
 

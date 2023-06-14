@@ -13,6 +13,12 @@ ifeq ($(strip $(SECRETS_ENABLE)), yes)
     OPT_DEFS += -DSECRETS_ENABLE
 endif
 
+COMBO_ENABLE ?= no
+ifeq ($(strip $(COMBO_ENABLE)), yes)
+    SRC += $(USER_PATH)/features/combos.c
+    OPT_DEFS += -DCOMBO_ENABLE
+endif
+
 GQT_ENABLE ?= no
 ifeq ($(strip $(GQT_ENABLE)), yes)
     SRC += $(USER_PATH)/features/global_quick_tap.c
@@ -95,12 +101,6 @@ MACRO_ENABLE ?= no
 ifeq ($(strip $(MACRO_ENABLE)), yes)
     SRC += $(USER_PATH)/features/macros.c
     OPT_DEFS += -DMACRO_ENABLE
-endif
-
-COMBO_ENABLE ?= no
-ifeq ($(strip $(COMBO_ENABLE)), yes)
-    SRC += $(USER_PATH)/features/combos.c
-    OPT_DEFS += -DCOMBO_ENABLE
 endif
 
 SELECT_WORD_ENABLE ?= no

@@ -21,9 +21,9 @@
 
 // #define KEYBOARD_SHARED_EP
 
-#undef RGB_DI_PIN
+#undef WS2812_DI_PIN
 #ifdef CONVERT_TO_HELIOS
-  #define RGB_DI_PIN 25U
+  #define WS2812_DI_PIN 25U
 
   #define ENCODERS_PAD_A { B5 }
   #define ENCODERS_PAD_B { B4 }
