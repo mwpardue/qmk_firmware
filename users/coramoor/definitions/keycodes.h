@@ -56,6 +56,7 @@ enum {
     S_ARRNG, BROWSER_BACK, BROWSER_FORWARD, TAB_BACK, TAB_FORWARD, TMX_LDS,
     PASSPAL, TMX_VIS, NAV_LFT, NAV_RGT, SEL_WRD, SEL_LIN, VIM_TRE, TMX_VSP,
     TMX_HSP, MDT_TTP, MDT_TTM, ACH_TTM, ACH_TTP, SP_AT, CAP_MEH, SM_SWIT,
+    TG_OS,
 #endif
 
 #ifdef SELECT_WORD_ENABLE
@@ -67,7 +68,7 @@ enum {
 #endif
 
 #ifdef COMBO_ENABLE
-    SM_LOGN, SM_CW,
+    SM_LOGN, SM_CW, SM_PAR, SM_CUR, SM_BRC,
 #endif
 
 #ifdef LAYER_LOCK_ENABLE
@@ -85,20 +86,23 @@ enum {
     CUSTOM_KEYCODE_END
 };
 
-// Thumb keys
+// Left thumb keys
 
+#define LUTHUM1 LGUI_T(KC_ENTER)
+#define LUTHUM2 LT(_NUMPAD, KC_MINS)
+#define LOL_THM LSFT_T(KC_TAB)
+#define LIL_THM LT(_NAVIGATION, KC_BSPC)
 #define UIL_THM LGUI_T(SP_CAP)
-#define UOL_THM KC_CAPS
-#define LUTHUM1 LGUI_T(KC_ESC)
-#define LUTHUM2 LT(_NUMPAD, KC_BSPC)
-#define LIL_THM LSFT_T(KC_BSPC)
-#define LOL_THM LT(_NAVIGATION, KC_TAB)
-#define UIR_THM XCASE
-#define UOR_THM LCTL_T(KC_TAB)
-#define LOR_THM LCTL_T(KC_ENTER)
-#define LIR_THM LT(_MACROS, KC_SPACE)
-#define RUTHUM2 LT(_SYMBOL, KC_DELETE)
+#define UOL_THM LALT_T(KC_CAPS)
+
+// Right thumb keys
+
 #define RUTHUM1 LGUI_T(KC_TAB)
+#define RUTHUM2 LT(_MACROS, KC_UNDS)
+#define LIR_THM LCTL_T(KC_SPACE)
+#define LOR_THM RSFT_T(KC_ENTER)
+#define UIR_THM RALT_T(XCASE)
+#define UOR_THM MEH_T(KC_TAB)
 
 // Mod-taps (QWERTY)
 
@@ -195,7 +199,7 @@ enum {
 #define ENT_MEH MEH_T(KC_ENT)
 #define CAP_MEH MEH_T(SP_CAP)
 #define SPC_MEH MEH_T(KC_SPACE)
-#define TAB_MEH MEH_T(KC_TAB)
+// #define TAB_MEH MEH_T(KC_TAB)
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
 #define SPC_HYP HYPR_T(KC_SPACE)
 #define MC_SWAP LGUI(KC_GRV)
@@ -234,7 +238,7 @@ enum {
 #define BSP_CTL LCTL_T(KC_BSPC)
 #define ESC_NUM LT(_NUMPAD, KC_ESC)
 #define ESC_NAV LT(_NAVIGATION, KC_ESC)
-#define SPC_SYM LT(_SYMBOL, KC_SPACE)
+// #define SPC_SYM LT(_SYMBOL, KC_SPACE)
 #define SPCSFT LSFT_T(KC_SPC)
 #define MACSLEP LSFT(LCTL(KC_KB_POWER))
 #define MON_L LCTL(LALT(LSFT(KC_4)))
@@ -242,8 +246,8 @@ enum {
 #define MON_R LCTL(LALT(LSFT(KC_6)))
 #define MON_BL LCTL(LALT(LSFT(KC_1)))
 #define MAX_SCR LGUI(LCTL(LALT(LSFT(KC_M))))
-#define MOV_LFT LCTL(KC_LEFT)
-#define MOV_RGT LCTL(KC_RIGHT)
+#define MOV_LFT LCTL(KC_H)
+#define MOV_RGT LCTL(KC_L)
 #define TAB_LFT LCTL(LSFT(KC_TAB))
 #define TAB_RGT LCTL(KC_TAB)
 #define BRWS_FW LGUI(KC_RBRC)

@@ -11,17 +11,18 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case ESC_MEH:
         case TD_SNIP:
         case TD_SSFL:
-        case TAB_MEH:
         case LUTHUM1:
         case LUTHUM2:
         case LOL_THM:
         case UIR_THM:
+        case UOL_THM:
         case UIL_THM:
         case LIR_THM:
         case LOR_THM:
         case LIL_THM:
         case RUTHUM2:
         case RUTHUM1:
+        case SFT_ENT:
             return g_tapping_term + 40;
         case TD_COPY:
         case TD_PAST:
@@ -108,7 +109,6 @@ bool get_hold_on_other_key_press_result(uint16_t keycode) {
         case BSP_SYM:
         case ENT_HYP:
         case SPC_HYP:
-        case SPC_SYM:
         case LUTHUM1:
         case LUTHUM2:
         case LOL_THM:
@@ -117,6 +117,7 @@ bool get_hold_on_other_key_press_result(uint16_t keycode) {
         case LIL_THM:
         case RUTHUM2:
         case RUTHUM1:
+        case SFT_ENT:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:

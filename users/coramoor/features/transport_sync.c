@@ -7,6 +7,10 @@
 #ifdef CASEMODE_ENABLE
     #include "features/casemodes.h"
 #endif
+#ifdef OS_TOGGLE_ENABLE
+    #include "features/os_toggle.h"
+#endif
+
 #include <string.h>
 
 uint32_t transport_user_state = 0;
@@ -29,6 +33,7 @@ extern smart_case_t smart_case;
     extern bool caps_word_on;
 #endif
 
+    // extern os_t os;
 
 void user_state_sync(uint8_t initiator2target_buffer_size, const void* initiator2target_buffer, uint8_t target2initiator_buffer_size, void* target2initiator_buffer) {
     if (initiator2target_buffer_size == sizeof(transport_user_state)) {
@@ -50,11 +55,11 @@ void keyboard_post_init_transport_sync(void) {
 
 void user_transport_update(void) {
     if (is_keyboard_master()) {
-        // ledmap_active = get_ledmap_active();
-        // user_state.rgb_matrix_ledmap_active = ledmap_active;
-        // user_state.rgb_matrix_ledmap_active = user_config.rgb_matrix_ledmap_active;
+        // user_state.rgb_matrix_hue = user_config.rgb_matrix_hue;
+        // user_state.rgb_matrix_sat = user_config.rgb_matrix_sat;
         user_state.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area;
         user_state.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread;
+        user_state.os = user_config.os;
         transport_user_state = user_state.raw;
     // #ifdef SMART_CASE_ENABLE
     //     kb_state.type = smart_case.type;
@@ -66,10 +71,11 @@ void user_transport_update(void) {
         transport_kb_state = kb_state.raw;
     } else {
         user_state.raw       = transport_user_state;
-        // ledmap_active = user_state.rgb_matrix_ledmap_active;
-        // user_config.rgb_matrix_ledmap_active = user_state.rgb_matrix_ledmap_active;
+        // user_config.rgb_matrix_hue = user_state.rgb_matrix_hue;
+        // user_config.rgb_matrix_sat = user_state.rgb_matrix_sat;
         user_config.rgb_matrix_heatmap_area = user_state.rgb_matrix_heatmap_area;
         user_config.rgb_matrix_heatmap_spread = user_state.rgb_matrix_heatmap_spread;
+        user_config.os = user_state.os;
         kb_state.raw = transport_kb_state;
     // #ifdef SMART_CASE_ENABLE
     //     smart_case.type = kb_state.type;

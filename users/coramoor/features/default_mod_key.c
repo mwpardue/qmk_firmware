@@ -2,7 +2,7 @@
 
 #include "default_mod_key.h"
 
-extern os_t os;
+// extern os_t os;
 
 void clear_locked_and_oneshot_mods(void) {
     uint8_t oneshot_locked_mods = get_oneshot_locked_mods();
@@ -25,7 +25,7 @@ bool should_send_ctrl(bool isWindowsOrLinux, bool isOneShotShift) {
 
 process_record_result_t process_default_mod_key(uint16_t keycode, keyrecord_t *record) {
 
-    bool isWindowsOrLinux = os.type == WINDOWS || os.type == LINUX;
+    bool isWindowsOrLinux = user_config.os == WINDOWS || user_config.os == LINUX;
     bool isOneShotDefaultMod = (!isWindowsOrLinux && (get_oneshot_mods() & MOD_MASK_GUI)) || (isWindowsOrLinux && (get_oneshot_mods() & MOD_MASK_CTRL)) ;
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || isOneShotLockedShift;

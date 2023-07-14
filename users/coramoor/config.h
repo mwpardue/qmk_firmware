@@ -47,7 +47,7 @@
 
 // Configure combos
 #ifdef COMBO_ENABLE
-    #define COMBO_COUNT 18
+    #define COMBO_COUNT 21
     #define COMBO_TERM 60
     #define EXTRA_SHORT_COMBOS
     #define COMBO_STRICT_TIMER
@@ -59,15 +59,24 @@
 
 // Mouse key speed and acceleration.
 #ifdef MOUSEKEY_ENABLE
-    #define MOUSEKEY_DELAY 100
-    #define MOUSEKEY_INTERVAL 10
-    #define MOUSEKEY_MOVE_DELTA 5
-    #define MOUSEKEY_MAX_SPEED 7
-    #define MOUSEKEY_TIME_TO_MAX 100
-    #define MOUSEKEY_WHEEL_DELAY 100
-    #define MOUSEKEY_WHEEL_INTERVAL 100
-    #define MOUSEKEY_WHEEL_MAX_SPEED 20
-    #define MOUSEKEY_WHEEL_TIME_TO_MAX 10
+    // #define MOUSEKEY_DELAY 100
+    // #define MOUSEKEY_INTERVAL 10
+    // #define MOUSEKEY_MOVE_DELTA 5
+    // #define MOUSEKEY_MAX_SPEED 7
+    // #define MOUSEKEY_TIME_TO_MAX 100
+    // #define MOUSEKEY_WHEEL_DELAY 10
+    // #define MOUSEKEY_WHEEL_INTERVAL 20
+    // #define MOUSEKEY_WHEEL_MAX_SPEED 40
+    // #define MOUSEKEY_WHEEL_TIME_TO_MAX 0
+    #define MK_3_SPEED
+    #define MK_W_OFFSET_UNMOD 5
+    #define MK_W_INTERVAL_UNMOD 1
+    #define MK_W_OFFSET_0 10
+    #define MK_W_INTERVAL_0 120
+    #define MK_W_OFFSET_1 5
+    #define MK_W_INTERVAL_1 1
+    #define MK_W_OFFSET_2 10
+    #define MK_W_INTERVAL_2 20
 #endif
 
 #ifdef LAYER_LOCK_ENABLE

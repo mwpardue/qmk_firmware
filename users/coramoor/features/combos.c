@@ -46,7 +46,7 @@
 //   COMBO(tab_combo, KC_TAB)
 // };
 
-extern os_t os;
+// extern os_t os;
 
 #ifndef DEFAULT_MOD_ENABLE
     #ifndef SHORTCUTS_ENABLE
@@ -98,6 +98,30 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
             if (record->event.pressed) {
                     toggle_caps_word();
                     return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case SM_PAR:
+            if (record->event.pressed) {
+                tap_code16(KC_LPRN);
+                tap_code16(KC_RPRN);
+                tap_code16(KC_LEFT);
+            }
+            break;
+
+        case SM_CUR:
+            if (record->event.pressed) {
+                tap_code16(KC_LCBR);
+                tap_code16(KC_RCBR);
+                tap_code16(KC_LEFT);
+            }
+            break;
+
+        case SM_BRC:
+            if (record->event.pressed) {
+                tap_code16(KC_LBRC);
+                tap_code16(KC_RBRC);
+                tap_code16(KC_LEFT);
             }
             break;
         }

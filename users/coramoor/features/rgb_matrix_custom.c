@@ -1,4 +1,3 @@
-
 #include "coramoor.h"
 #include "features/rgb_matrix_custom.h"
 #include "definitions/layers.h"
@@ -29,9 +28,8 @@ __attribute__((weak)) bool rgb_matrix_indicators_advanced_keymap(uint8_t led_min
     return true;
 }
 
-void rgb_matrix_set_custom_indicators(uint8_t led_min, uint8_t led_max, int led_type, uint8_t hue, uint8_t sat, uint8_t val) {
-    if ((get_highest_layer(layer_state | default_layer_state)) == _BASE) {
-        uint8_t val = rgb_matrix_get_val();
+void rgb_matrix_set_custom_indicators(uint8_t led_min, uint8_t led_max, int led_type, uint16_t hue, uint8_t sat, uint8_t val) {
+        val = rgb_matrix_get_val();
         for (uint8_t i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
             HSV hsv = {
                 .h = hue,
@@ -44,21 +42,25 @@ void rgb_matrix_set_custom_indicators(uint8_t led_min, uint8_t led_max, int led_
                     RGB_MATRIX_INDICATOR_SET_COLOR(i, rgb.r, rgb.g, rgb.b);
                }
         }
-    }
 }
 
 //
-void set_layer_rgb_matrix(uint8_t hue, uint8_t sat, uint8_t val, uint8_t led_min, uint8_t led_max) {
+void set_layer_rgb_matrix(uint16_t hue, uint8_t sat, uint8_t val, uint8_t led_min, uint8_t led_max) {
     HSV hsv = {hue, sat, val};
     if (hsv.v > rgb_matrix_get_val()) {
         hsv.v = rgb_matrix_get_val();
     }
 
     RGB rgb       = hsv_to_rgb(hsv);
-    rgb_matrix_sethsv_noeeprom(hsv.h, hsv.s, hsv.v);
+    // rgb_matrix_sethsv_noeeprom(hsv.h, hsv.s, hsv.v);
     for (uint8_t i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], LED_FLAG_UNDERGLOW)) {
-            RGB_MATRIX_INDICATOR_SET_COLOR(i, rgb.r, rgb.g, rgb.b);
+        switch (rgb_matrix_get_flags()) {
+            case LED_FLAG_ALL:
+            case LED_FLAG_UNDERGLOW:
+                if (HAS_FLAGS(g_led_config.flags[i], LED_FLAG_UNDERGLOW)) {
+                    RGB_MATRIX_INDICATOR_SET_COLOR(i, rgb.r, rgb.g, rgb.b);
+                }
+                break;
         }
     }
 }
@@ -99,40 +101,46 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             set_layer_rgb_matrix(HEX_UNDERGLOW, led_min, led_max);
             break;
         default:
-            set_layer_rgb_matrix(BASE_UNDERGLOW, led_min, led_max);
-            #ifdef CASEMODE_ENABLE
-                 if ((xcase_state == XCASE_ON) && (host_keyboard_led_state().caps_lock)) {
-                            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_PURPLE);
-                } else if ((xcase_state == XCASE_WAIT) && (host_keyboard_led_state().caps_lock)) {
-                            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_ORANGE);
-                } else if ((xcase_state == XCASE_WAIT)) {
-                            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_YELLOW);
-                } else if ((xcase_state == XCASE_ON)) {
-                            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_BLUE);
-                } else if (host_keyboard_led_state().caps_lock) {
-                            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
-                }
-            #endif
+            set_layer_rgb_matrix(rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val(), led_min, led_max);
+            // rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_UNDERGLOW, rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val());
 
-            bool isHyper = get_mods() & (MOD_BIT(KC_LCTL) && get_mods() & MOD_BIT(KC_LSFT) && get_mods() & MOD_BIT(KC_LALT) && get_mods() & MOD_BIT(KC_LGUI));
-            bool isOneShotHyper = get_oneshot_mods() & (MOD_BIT(KC_LCTL) && get_oneshot_mods() & MOD_BIT(KC_LSFT) && get_oneshot_mods() & MOD_BIT(KC_LALT) && get_oneshot_mods() & MOD_BIT(KC_LGUI));
-            bool isMeh = get_mods() & (MOD_BIT(KC_LCTL) && get_mods() & MOD_BIT(KC_LSFT) && get_mods() & MOD_BIT(KC_LALT));
-            bool isOneShotMeh = get_oneshot_mods() & (MOD_BIT(KC_LCTL) && get_oneshot_mods() & MOD_BIT(KC_LSFT) && get_oneshot_mods() & MOD_BIT(KC_LALT));
+            switch (rgb_matrix_get_flags()) {
+                case LED_FLAG_ALL:
+                case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR):
+                    #ifdef CASEMODE_ENABLE
+                         if ((xcase_state == XCASE_ON) && (host_keyboard_led_state().caps_lock)) {
+                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_PURPLE);
+                        } else if ((xcase_state == XCASE_WAIT) && (host_keyboard_led_state().caps_lock)) {
+                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_ORANGE);
+                        } else if ((xcase_state == XCASE_WAIT)) {
+                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_YELLOW);
+                        } else if ((xcase_state == XCASE_ON)) {
+                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_BLUE);
+                        } else if (host_keyboard_led_state().caps_lock) {
+                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
+                        }
+                    #endif
 
-                if (isHyper||isOneShotHyper) {
-                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_BLUE);
-                } else if (isMeh||isOneShotMeh) {
-                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_YELLOW);
-                } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_RED);
-                } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI) {
-                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_GREEN);
-                } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_ALT) {
-                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_ORANGE);
-                } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_CTRL) {
-                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_TURQUOISE);
+                    // bool isHyper = get_mods() & (MOD_BIT(KC_LCTL) && get_mods() & MOD_BIT(KC_LSFT) && get_mods() & MOD_BIT(KC_LALT) && get_mods() & MOD_BIT(KC_LGUI));
+                    // bool isOneShotHyper = get_oneshot_mods() & (MOD_BIT(KC_LCTL) && get_oneshot_mods() & MOD_BIT(KC_LSFT) && get_oneshot_mods() & MOD_BIT(KC_LALT) && get_oneshot_mods() & MOD_BIT(KC_LGUI));
+                    // bool isMeh = get_mods() & (MOD_BIT(KC_LCTL) && get_mods() & MOD_BIT(KC_LSFT) && get_mods() & MOD_BIT(KC_LALT));
+                    // bool isOneShotMeh = get_oneshot_mods() & (MOD_BIT(KC_LCTL) && get_oneshot_mods() & MOD_BIT(KC_LSFT) && get_oneshot_mods() & MOD_BIT(KC_LALT));
+                    //
+                    //     if (isHyper||isOneShotHyper) {
+                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_BLUE);
+                    //     } else if (isMeh||isOneShotMeh) {
+                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_YELLOW);
+                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_RED);
+                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI) {
+                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_GREEN);
+                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_ALT) {
+                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_ORANGE);
+                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_CTRL) {
+                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_TURQUOISE);
+                    //     }
+                    #endif
                 }
-#endif
             break;
     }
     return false;

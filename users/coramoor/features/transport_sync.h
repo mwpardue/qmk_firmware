@@ -8,9 +8,10 @@ typedef union {
     uint32_t raw;
     struct {
         // bool    rgb_matrix_ledmap_active  :1;
-        bool    rgb_matrix_toggle :1;
+        // bool    rgb_matrix_toggle :1;
         uint8_t rgb_matrix_heatmap_area :8;
         uint8_t rgb_matrix_heatmap_spread :8;
+        uint8_t os :8;
     };
 } user_runtime_config_t;
 
@@ -33,15 +34,28 @@ typedef union {
 
 extern kb_state_t kb_state;
 
+typedef enum {
+    OTHER,
+    MACOS,
+    WINDOWS,
+    LINUX
+} os_t;
+
+extern os_t os;
+
 typedef union {
     uint32_t raw;
+
     struct {
         // bool    rgb_matrix_ledmap_active  :1;
-        bool    rgb_matrix_toggle :1;
+        // bool    rgb_matrix_toggle :1;
         uint8_t rgb_matrix_heatmap_area :8;
         uint8_t rgb_matrix_heatmap_spread :8;
+        uint8_t os :8;
     };
-} user_config_t;
+
+
+} __attribute__((packed)) user_config_t;
 
 extern user_config_t user_config;
 

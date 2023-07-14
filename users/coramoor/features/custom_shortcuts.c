@@ -3,7 +3,7 @@
 #include "custom_shortcuts.h"
 #include "definitions/keycodes.h"
 
-extern os_t os;
+// extern os_t os;
 
 uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
 
@@ -29,7 +29,7 @@ uint16_t get_achordion_tapping_term(void) {
 
 process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
 
-    bool isWindowsOrLinux = os.type == WINDOWS || os.type == LINUX;
+    bool isWindowsOrLinux = user_config.os == WINDOWS || user_config.os == LINUX;
     bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotCtrl = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
     uint8_t smart_mods = 0;
@@ -157,7 +157,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
           }
           return PROCESS_RECORD_RETURN_TRUE;
-      
+
         case LHM_BSL:
           if (record->tap.count > 0) {
             if (record->event.pressed) {
@@ -167,7 +167,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
           }
           return PROCESS_RECORD_RETURN_TRUE;
-      
+
         case LHM_PIP:
           if (record->tap.count > 0) {
             if (record->event.pressed) {
@@ -177,7 +177,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
           }
           return PROCESS_RECORD_RETURN_TRUE;
-      
+
         case LHM_UND:
           if (record->tap.count > 0) {
             if (record->event.pressed) {
@@ -187,7 +187,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
           }
           return PROCESS_RECORD_RETURN_TRUE;
-      
+
 #ifdef CUSTOM_LEADER_ENABLE
        case LEADER:
             if (record->event.pressed) {
@@ -287,6 +287,28 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             } else {
               unregister_mods(MOD_MASK_GUI);
               }
+
+        case TG_OS:
+            if (record->event.pressed) {
+                switch (user_config.os) {
+
+                    case MACOS:
+                        user_config.os = WINDOWS;
+                        eeconfig_update_user(user_config.raw);
+                        break;
+
+                    case WINDOWS:
+                        user_config.os = LINUX;
+                        eeconfig_update_user(user_config.raw);
+                        break;
+
+                    case LINUX:
+                        user_config.os = MACOS;
+                        eeconfig_update_user(user_config.raw);
+                        break;
+
+                }
+            }
 
         return PROCESS_RECORD_RETURN_FALSE;
     }

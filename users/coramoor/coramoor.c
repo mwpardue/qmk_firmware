@@ -9,6 +9,8 @@
     #endif
 #endif
 
+_Static_assert(sizeof(user_config_t) == sizeof(uint32_t), "user_config_t is oversize!");
+
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
   setPinOutput(24);
@@ -18,6 +20,8 @@ void keyboard_pre_init_user(void) {
 }
 
 void                       keyboard_post_init_user(void) {
+    user_config.raw = eeconfig_read_user();
+
 #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
     keyboard_post_init_transport_sync();
 #endif
@@ -28,6 +32,7 @@ void                       eeconfig_init_user(void) {
     user_config.raw              = 0;
     user_config.rgb_matrix_heatmap_area = 40;
     user_config.rgb_matrix_heatmap_spread = 35;
+    user_config.os = MACOS;
     eeconfig_update_user(user_config.raw);
     eeconfig_init_keymap();
 }
@@ -123,8 +128,6 @@ void matrix_scan_user(void) {
      case ENT_HYP:
      case SPC_HYP:
      case SFT_FUN:
-     case SPC_SYM:
-     case TAB_MEH:
      case UIL_THM:
      case UOL_THM:
      case LUTHUM1:
@@ -137,6 +140,7 @@ void matrix_scan_user(void) {
      case LOR_THM:
      case RUTHUM2:
      case RUTHUM1:
+     case SFT_ENT:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }

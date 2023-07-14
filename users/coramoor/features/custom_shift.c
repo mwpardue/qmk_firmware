@@ -3,7 +3,7 @@
 #include "custom_shift.h"
 #include "tapdance.h"
 
-extern os_t os;
+// extern os_t os;
 static bool custom_shifting = false;
 
 process_record_result_t process_custom_shift(uint16_t keycode, keyrecord_t *record) {
