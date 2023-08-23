@@ -30,11 +30,11 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
     // Finish swapper
     if (!is_swapper_keycode(keycode)) {
         if (swapper.state != NONE) {
-            dprintf("swapper.state before=%d",swapper.state);
+            dprintf("swapper.state before=%d\n",swapper.state);
             clear_mods();
             clear_locked_and_oneshot_mods();
             swapper.state = NONE;
-            dprintf("swapper.state after=%d",swapper.state);
+            dprintf("swapper.state after=%d\n",swapper.state);
             send_keyboard_report();
         }
         return PROCESS_RECORD_CONTINUE;

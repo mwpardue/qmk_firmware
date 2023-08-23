@@ -53,7 +53,7 @@ bool process_layer_lock(uint16_t keycode, keyrecord_t* record,
     layer_lock_set_user(locked_layers &= layer_state);
   }
 
-  if (keycode == lock_keycode || ((extract_base_tapping_keycode(keycode)) == (lock_keycode & 0xff))) {
+  if (keycode == lock_keycode || ((IS_QK_MOD_TAP(keycode)) == (lock_keycode & 0xff))) {
     switch (keycode) {
         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX: {
             if (record->tap.count == 0 && !record->event.pressed &&

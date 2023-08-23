@@ -9,6 +9,9 @@
     #endif
 #endif
 
+// static uint16_t next_keycode;
+// static keyrecord_t next_record;
+
 _Static_assert(sizeof(user_config_t) == sizeof(uint32_t), "user_config_t is oversize!");
 
 void keyboard_pre_init_user(void) {
@@ -97,8 +100,6 @@ void matrix_scan_user(void) {
   switch (tap_hold_keycode) {
     case LHM_F: //F   + W, Q
       if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
-    case CLHMT: //F   + W, Q
-      if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
     case LHM_S:
       if (other_keycode == LIL_THM) {return true;}
     case LHM_D:
@@ -121,7 +122,7 @@ void matrix_scan_user(void) {
   uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
    switch (tap_hold_keycode) {
      case FUN_XCS:
-     case ESC_CTL:
+     // case ESC_CTL:
      case ESC_MEH:
      case BSP_SYM:
      case ENT_MEH:
@@ -134,13 +135,17 @@ void matrix_scan_user(void) {
      case LUTHUM2:
      case LIL_THM:
      case LOL_THM:
+     // case CLIL_THM:
+     case CLOL_THM:
+     // case CLOR_THM:
      case UOR_THM:
      case UIR_THM:
      case LIR_THM:
      case LOR_THM:
      case RUTHUM2:
      case RUTHUM1:
-     case SFT_ENT:
+     case ALT_TAB:
+     // case SFT_ENT:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -171,6 +176,42 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
      }
     return false;
 }
+
+// Gloal quick-tap
+// #ifdef QT_ENABLE
+
+//     bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
+//     #define IS_HOMEROW(r) (r->event.key.row == 1 || r->event.key.row == 5)
+//
+//     static uint16_t prev_keycode;
+//     if (record->event.pressed) {
+//         // Store the previous keycode for instant tap decision
+//         prev_keycode = next_keycode;
+//         // Cache the next input for mod-tap decisions
+//         next_keycode = keycode;
+//         next_record  = *record;
+//     }
+//
+//     // Match home row mod-tap keys when it is not preceded by a Layer key
+//     if (IS_HOMEROW(record) && IS_QK_MOD_TAP(keycode) && !IS_QK_LAYER_TAP(prev_keycode) && (last_input_activity_elapsed() > COMBO_TERM)) {
+//         dprintln("Inside pre_process_record_user function.");
+//         // Tap the mod-tap key instantly when it follows a short interval
+//         if (record->event.pressed && (last_input_activity_elapsed() < GQT_TAPPING_TERM)) {
+//             record->keycode = keycode & 0xff;
+//             action_tapping_process(*record);
+//             dprintln("Registering tap action due to short interval");
+//             return false;
+//         } else { // Send the base keycode key up event
+//             keyrecord_t base_record   = *record;
+//             base_record.keycode       = keycode & 0xff;
+//             base_record.event.pressed = false;
+//             action_tapping_process(base_record);
+//             dprintln("Registering tap action on long interval");
+//         }
+//     }
+//     return true;
+// }
+// #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_LEADER_ENABLE

@@ -3,6 +3,7 @@
 #include "tapdance.h"
 #include "secrets.h"
 #include "smart_case.h"
+#include "transport_sync.h"
 
 //extern os_t os;
 
@@ -137,10 +138,22 @@ void td_copy(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-            tap_code16(G(KC_C));
+            if (user_config.os == MACOS) {
+                dprintln("Executing MACOS command");
+                tap_code16(G(KC_C));
+            } else {
+                dprintln("Executing WINDOWS command");
+                tap_code16(C(KC_C));
+            }
             break;
         case TD_SINGLE_HOLD:
-            tap_code16(G(KC_X));
+            if (user_config.os == MACOS) {
+                dprintln("Executing MACOS command");
+                tap_code16(G(KC_X));
+            } else {
+                dprintln("Executing WINDOWS command");
+                tap_code16(C(KC_X));
+            }
             break;
         default: break;
     }
@@ -150,13 +163,31 @@ void td_paste(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-            tap_code16(G(KC_V));
+            if (user_config.os == MACOS) {
+                dprintln("Executing MACOS command");
+                tap_code16(G(KC_V));
+            } else {
+                dprintln("Executing WINDOWS command");
+                tap_code16(C(KC_V));
+            }
             break;
         case TD_SINGLE_HOLD:
-            tap_code16(G(A(KC_V)));
+            if (user_config.os == MACOS) {
+                dprintln("Executing MACOS command");
+                tap_code16(G(A(KC_V)));
+            } else {
+                dprintln("Executing WINDOWS command");
+                tap_code16(C(KC_V));
+            }
             break;
         case TD_DOUBLE_TAP:
-            tap_code16(G(C(KC_V)));
+            if (user_config.os == MACOS) {
+                dprintln("Executing MACOS command");
+                tap_code16(G(C(KC_V)));
+            } else {
+                dprintln("Executing WINDOWS command");
+                tap_code16(C(KC_V));
+            }
             break;
         default: break;
     }
@@ -323,6 +354,20 @@ void td_tips(tap_dance_state_t *state, void *user_data) {
         default: break;
     }
 }
+
+void td_http(tap_dance_state_t *state, void *user_data) {
+    tap_state.state = dance_state(state);
+    switch (tap_state.state) {
+        case TD_SINGLE_TAP:
+            send_string("http://");
+            break;
+        case TD_SINGLE_HOLD:
+            send_string("https://");
+            break;
+        default: break;
+    }
+}
+
 // Tap dance declarations
 
 tap_dance_action_t tap_dance_actions[] = {
@@ -347,4 +392,5 @@ tap_dance_action_t tap_dance_actions[] = {
     [MONITOR_MIDDLE] = ACTION_TAP_DANCE_FN(td_monitor_middle),
     [MONITOR_BOTTOM] = ACTION_TAP_DANCE_FN(td_monitor_bottom),
     [TD_ATTIPS] = ACTION_TAP_DANCE_FN(td_tips),
+    [HTTP] = ACTION_TAP_DANCE_FN(td_http),
 };

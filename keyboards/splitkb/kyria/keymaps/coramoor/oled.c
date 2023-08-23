@@ -9,6 +9,10 @@ extern uint16_t modtap_tapping_term;
 
 extern uint16_t achordion_tapping_term;
 
+extern uint16_t gqt_tapping_term;
+
+extern uint16_t sgqt_tapping_term;
+
 extern layer_state_t locked_layers;
 
 // extern os_t os;
@@ -23,9 +27,17 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_
 void render_led_flags(void);
 void render_matrix_mode(void);
 void render_rgb_speed(void);
+void render_stt_specs(void);
+void render_tt_specs(void);
+void render_mt_specs(void);
+void render_at_specs(void);
 
 void render_newline(void) {
     oled_write_P(PSTR("\n"), false);
+}
+
+void render_blank_line(void) {
+    oled_write_P(PSTR("                     "), false);
 }
 
 void render_mod_status_gui_alt_1(uint8_t modifiers) {
@@ -299,7 +311,7 @@ void render_single_space(void) {
 //     render_mod_status_ctrl_shift_2(get_mods()|get_oneshot_mods());
 // }
 
-void render_logo_short(void) {
+void render_logo_short_slave(void) {
     render_newline();
     render_logo1();
     render_single_space();
@@ -310,6 +322,16 @@ void render_logo_short(void) {
     render_logo3();
     render_single_space();
     render_rgb_speed();
+}
+
+void render_logo_short_master(void) {
+    render_newline();
+    render_logo1();
+    render_stt_specs();
+    render_logo2();
+    render_tt_specs();
+    render_logo3();
+    render_mt_specs();
 }
 
 // void render_qmk_logo_version_short(void) {
@@ -381,6 +403,12 @@ void render_layer_state(void) {
                 break;
             case _MEDIA:
                 oled_write_P(PSTR("  MEDIA   "), false);
+                break;
+            case _GAMING:
+                oled_write_P(PSTR("  GAMING  "), false);
+                break;
+            case _GAMENUM:
+                oled_write_P(PSTR(" GAMENUM  "), false);
                 break;
             default:
                 oled_write_P(PSTR("UNDEFINED "), false);
@@ -528,14 +556,89 @@ void render_heatmap_specs(void) {
     oled_write_P(PSTR(""), false);
     }
 
+uint16_t get_shift_tapping_term_str(void) {
+    return sft_tapping_term;
+}
+
+uint16_t get_tapping_term_str(void) {
+    return g_tapping_term;
+}
+
+uint16_t get_modtap_tapping_term_str(void) {
+    return modtap_tapping_term;
+}
+
+uint16_t get_achordion_tapping_term_str(void) {
+    return achordion_tapping_term;
+}
+
+uint16_t get_gqt_tapping_term_str(void) {
+    return gqt_tapping_term;
+}
+
+uint16_t get_sgqt_tapping_term_str(void) {
+    return sgqt_tapping_term;
+}
+
+char shift_tapping_term_str[16];
+char g_tapping_term_str[16];
+char modtap_tapping_term_str[16];
+char achordion_tapping_term_str[16];
+char gqt_tapping_term_str[16];
+char sgqt_tapping_term_str[16];
+
+void render_stt_specs(void) {
+  sprintf(shift_tapping_term_str, "%03d", get_shift_tapping_term_str());
+  oled_write_P(PSTR("        STT: "), false);
+  oled_write_P(shift_tapping_term_str, false);
+}
+
+void render_tt_specs(void) {
+  sprintf(g_tapping_term_str, "%03d", get_tapping_term_str());
+  oled_write_P(PSTR("        GTT: "), false);
+  oled_write_P(g_tapping_term_str, false);
+}
+
+void render_mt_specs(void) {
+  sprintf(modtap_tapping_term_str, "%03d", get_modtap_tapping_term_str());
+  oled_write_P(PSTR("        MTT: "), false);
+  oled_write_P(modtap_tapping_term_str, false);
+}
+
+void render_at_specs(void) {
+  sprintf(achordion_tapping_term_str, "%03d", get_achordion_tapping_term_str());
+  oled_write_P(PSTR("             ATT: "), false);
+  oled_write_P(achordion_tapping_term_str, false);
+}
+
+void render_gqt_specs(void) {
+  sprintf(gqt_tapping_term_str, "%03d", get_gqt_tapping_term_str());
+  oled_write_P(PSTR("             GQT: "), false);
+  oled_write_P(gqt_tapping_term_str, false);
+}
+
+void render_sgqt_specs(void) {
+  sprintf(sgqt_tapping_term_str, "%03d", get_sgqt_tapping_term_str());
+  oled_write_P(PSTR("            SGQT: "), false);
+  oled_write_P(sgqt_tapping_term_str, false);
+}
 
 bool oled_task_user(void) {
     if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
-        render_logo_short();
-        render_rgb_hue();
-        render_rgb_sat();
-        render_rgb_value();
-        render_heatmap_specs();
+        if (is_keyboard_master()) {
+            render_logo_short_master();
+            render_at_specs();
+            render_gqt_specs();
+            render_sgqt_specs();
+            render_blank_line();
+            render_blank_line();
+        } else {
+            render_logo_short_slave();
+            render_rgb_hue();
+            render_rgb_sat();
+            render_rgb_value();
+            render_heatmap_specs();
+        }
     } else {
         if (is_keyboard_master()) {
             // render_qmk_logo_version_mods();

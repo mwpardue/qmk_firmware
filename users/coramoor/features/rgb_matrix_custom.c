@@ -65,9 +65,24 @@ void set_layer_rgb_matrix(uint16_t hue, uint8_t sat, uint8_t val, uint8_t led_mi
     }
 }
 
+void rgb_custom_thumb_indicators(uint16_t hue, uint8_t sat, uint8_t val) {
+    HSV hsv = {hue, sat, val};
+    if (hsv.v > rgb_matrix_get_val()) {
+        hsv.v = rgb_matrix_get_val();
+    }
+
+    RGB rgb       = hsv_to_rgb(hsv);
+        rgb_matrix_set_color(11, rgb.r, rgb.g, rgb.b);
+        rgb_matrix_set_color(42, rgb.r, rgb.g, rgb.b);
+}
+
 bool rgb_matrix_indicators_user(void) { rgb_matrix_indicators_keymap(); return true; }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+
+    bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    bool isShift = get_mods() & MOD_MASK_SHIFT;
+    bool isOneShotCtrl = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
 
     if (!rgb_matrix_indicators_advanced_keymap(led_min, led_max)) {
             return false;
@@ -100,45 +115,44 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         case _HEX:
             set_layer_rgb_matrix(HEX_UNDERGLOW, led_min, led_max);
             break;
+        case _GAMING:
+            if (is_keyboard_master()) {
+                set_layer_rgb_matrix(GAMING_UNDERGLOW, led_min, led_max);
+            } else {
+                set_layer_rgb_matrix(0, 0, 0, led_min, led_max);
+            }
+            break;
+        case _GAMENUM:
+            if (is_keyboard_master()) {
+                set_layer_rgb_matrix(GAMING_UNDERGLOW, led_min, led_max);
+            } else {
+                set_layer_rgb_matrix(0, 0, 0, led_min, led_max);
+            }
+            break;
         default:
             set_layer_rgb_matrix(rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val(), led_min, led_max);
-            // rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_UNDERGLOW, rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val());
 
             switch (rgb_matrix_get_flags()) {
                 case LED_FLAG_ALL:
                 case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR):
                     #ifdef CASEMODE_ENABLE
                          if ((xcase_state == XCASE_ON) && (host_keyboard_led_state().caps_lock)) {
-                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_PURPLE);
+                                    rgb_custom_thumb_indicators(XCASE_ON_STRONG_INDICATOR);
                         } else if ((xcase_state == XCASE_WAIT) && (host_keyboard_led_state().caps_lock)) {
-                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_ORANGE);
+                                    rgb_custom_thumb_indicators(XCASE_WAIT_STRONG_INDICATOR);
                         } else if ((xcase_state == XCASE_WAIT)) {
-                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_YELLOW);
+                                    rgb_custom_thumb_indicators(XCASE_WAIT_INDICATOR);
                         } else if ((xcase_state == XCASE_ON)) {
-                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_BLUE);
+                                    rgb_custom_thumb_indicators(XCASE_ON_INDICATOR);
                         } else if (host_keyboard_led_state().caps_lock) {
-                                    rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
+                                    rgb_custom_thumb_indicators(CAPS_LOCK_INDICATOR);
+                        } else if (isOneShotShift || isShift) {
+                                    rgb_custom_thumb_indicators(SHIFT_INDICATOR);
+                        } else if (isOneShotCtrl) {
+                                    rgb_custom_thumb_indicators(CTRL_INDICATOR);
                         }
                     #endif
 
-                    // bool isHyper = get_mods() & (MOD_BIT(KC_LCTL) && get_mods() & MOD_BIT(KC_LSFT) && get_mods() & MOD_BIT(KC_LALT) && get_mods() & MOD_BIT(KC_LGUI));
-                    // bool isOneShotHyper = get_oneshot_mods() & (MOD_BIT(KC_LCTL) && get_oneshot_mods() & MOD_BIT(KC_LSFT) && get_oneshot_mods() & MOD_BIT(KC_LALT) && get_oneshot_mods() & MOD_BIT(KC_LGUI));
-                    // bool isMeh = get_mods() & (MOD_BIT(KC_LCTL) && get_mods() & MOD_BIT(KC_LSFT) && get_mods() & MOD_BIT(KC_LALT));
-                    // bool isOneShotMeh = get_oneshot_mods() & (MOD_BIT(KC_LCTL) && get_oneshot_mods() & MOD_BIT(KC_LSFT) && get_oneshot_mods() & MOD_BIT(KC_LALT));
-                    //
-                    //     if (isHyper||isOneShotHyper) {
-                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_BLUE);
-                    //     } else if (isMeh||isOneShotMeh) {
-                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_YELLOW);
-                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_RED);
-                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI) {
-                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_GREEN);
-                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_ALT) {
-                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_ORANGE);
-                    //     } else if ((get_mods()|get_oneshot_mods()) & MOD_MASK_CTRL) {
-                    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_MODIFIER, HSV_TURQUOISE);
-                    //     }
                     #endif
                 }
             break;

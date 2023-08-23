@@ -14,16 +14,16 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LUTHUM1:
         case LUTHUM2:
         case LOL_THM:
-        case UIR_THM:
-        case UOL_THM:
-        case UIL_THM:
-        case LIR_THM:
         case LOR_THM:
         case LIL_THM:
         case RUTHUM2:
         case RUTHUM1:
-        case SFT_ENT:
+        // case SFT_ENT:
             return g_tapping_term + 40;
+        case UOR_THM:
+        case UIR_THM:
+        case UOL_THM:
+        case UIL_THM:
         case TD_COPY:
         case TD_PAST:
         case FUN_XCS:
@@ -39,7 +39,12 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case TD_MONM:
         case TD_MONR:
         case TD_MONB:
-        case CTL_ESC:
+        case ALT_TAB:
+        case LIR_THM:
+        case LHM_AT:
+        case LHM_BSL:
+        case LHM_UND:
+        case LHM_PIP:
           return g_tapping_term + 100;
         case LHM_A:
         case LHM_S:
@@ -47,16 +52,9 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R:
-        case CLHMT:
-        case CRHM_O:
-        case CRHM_I:
-        case CRHM_N:
           return get_modtap_tapping_term();
         case RHM_K:
         case LHM_D:
-        case CLHM_S:
-        case CRHM_E:
             return get_sft_tapping_term();
         default:
             return g_tapping_term;
@@ -71,7 +69,7 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         case ESC_MEH:
         case LUTHUM1:
         case LUTHUM2:
-        case LOL_THM:
+        case LIL_THM:
         case UIR_THM:
         case LIR_THM:
         case LOR_THM:
@@ -83,15 +81,8 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R:
-        case CLHMT:
-        case CRHM_O:
-        case CRHM_I:
-        case CRHM_N:
         case RHM_K:
         case LHM_D:
-        case CLHM_S:
-        case CRHM_E:
             return false;
     }
     switch (keycode) {
@@ -111,13 +102,11 @@ bool get_hold_on_other_key_press_result(uint16_t keycode) {
         case SPC_HYP:
         case LUTHUM1:
         case LUTHUM2:
-        case LOL_THM:
+        // case LIL_THM:
         case UIR_THM:
         case LOR_THM:
-        case LIL_THM:
         case RUTHUM2:
         case RUTHUM1:
-        case SFT_ENT:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -134,15 +123,8 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R:
-        case CLHMT:
-        case CRHM_O:
-        case CRHM_I:
-        case CRHM_N:
         case RHM_K:
         case LHM_D:
-        case CLHM_S:
-        case CRHM_E:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

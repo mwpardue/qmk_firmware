@@ -1,6 +1,9 @@
 #include "global_quick_tap.h"
 #include "definitions/keycodes.h"
 
+extern uint16_t gqt_tapping_term;
+
+extern uint16_t sgqt_tapping_term;
 
 static struct {
     uint16_t keycode;
@@ -67,32 +70,10 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R: 
-        case CLHMT: 
-        case CRHM_O: 
-        case CRHM_I: 
-        case CRHM_N: 
-        // case LHM_S:
-        // case LHM_F:
-        // case ALT_V:
-        // case RHM_L:
-        // case RHM_J:
-        // case ALT_M:
-        // case CTL_D:
-        // case CTL_A:
-        // case CTL_SCN:
-        // case LHM_A:
-        // case RHM_SCN:
-          return 150;
+          return gqt_tapping_term;
         case RHM_K:
         case LHM_D:
-        case CLHM_S: 
-        case CRHM_E: 
-        // case LHM_D:
-        // case RHM_K:
-        // case SFT_A:
-        // case SFT_SCN:
-          return 1;
+          return sgqt_tapping_term;
         default:
             return 0;  // global_quick_tap is not applied
     }

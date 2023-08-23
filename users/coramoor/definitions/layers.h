@@ -3,6 +3,8 @@
 typedef enum {
   _BASE,
   _COLEMAK_DH,
+  _GAMING,
+  _GAMENUM,
   _HEX,
   _NUMPAD,
   _NAVIGATION,

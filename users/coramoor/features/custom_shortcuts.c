@@ -23,12 +23,25 @@ uint16_t get_achordion_tapping_term(void) {
     return achordion_tapping_term;
 }
 
+uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
+
+uint16_t get_gqt_tapping_term(void) {
+    return gqt_tapping_term;
+}
+
+uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
+
+uint16_t sget_gqt_tapping_term(void) {
+    return sgqt_tapping_term;
+}
+
 #ifdef CUSTOM_LEADER_ENABLE
   #include "leader.h"
 #endif
 
 process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
 
+    bool isMacOS = user_config.os == MACOS;
     bool isWindowsOrLinux = user_config.os == WINDOWS || user_config.os == LINUX;
     bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotCtrl = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
@@ -198,13 +211,19 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_TRUE;
 #endif
 
+       case UOR_THM:
        case PASSPAL:
             if (record->event.pressed) {
-              tap_code16(C(A(G(S(KC_P)))));
-              add_oneshot_mods(MOD_LCTL);
-              return PROCESS_RECORD_RETURN_FALSE;
+                dprintln("PASSPAL pressed");
+                if (record->tap.count > 0) {
+                  dprintln("PASSPAL tapped");
+                  tap_code16(C(A(G(S(KC_P)))));
+                  add_oneshot_mods(MOD_LCTL);
+                  return PROCESS_RECORD_RETURN_FALSE;
+                  }
+             return PROCESS_RECORD_CONTINUE;
              }
-             return PROCESS_RECORD_RETURN_TRUE;
+         return PROCESS_RECORD_RETURN_TRUE;
 
         case SFT_TTP:
             if (record->event.pressed) {
@@ -237,28 +256,66 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
         case ACH_TTP:
             if (record->event.pressed) {
                 achordion_tapping_term = achordion_tapping_term + 50;
-                dprintf("Mod-Tap Tapping Term = %d\n", achordion_tapping_term);
+                dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
 
         case ACH_TTM:
             if (record->event.pressed) {
                 achordion_tapping_term = achordion_tapping_term - 50;
-                dprintf("Mod-Tap Tapping Term = %d\n", achordion_tapping_term);
+                dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+        case GQT_TTP:
+            if (record->event.pressed) {
+                gqt_tapping_term = gqt_tapping_term + 5;
+                dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+        case GQT_TTM:
+            if (record->event.pressed) {
+                gqt_tapping_term = gqt_tapping_term - 5;
+                dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+        case SGT_TTP:
+            if (record->event.pressed) {
+                sgqt_tapping_term = sgqt_tapping_term + 5;
+                dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+        case SGT_TTM:
+            if (record->event.pressed) {
+                sgqt_tapping_term = sgqt_tapping_term - 5;
+                dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
 
          case SEL_WRD:
             if (record->event.pressed) {
-              tap_code16(A(KC_LEFT));
-              tap_code16(A(S(KC_RIGHT)));
+                if (isMacOS) {
+                  tap_code16(A(KC_LEFT));
+                  tap_code16(A(S(KC_RIGHT)));
+                } else {
+                    tap_code16(C(KC_LEFT));
+                    tap_code16(C(S(KC_RIGHT)));
+                }
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
          case SEL_LIN:
             if (record->event.pressed) {
-              tap_code16(G(KC_LEFT));
-              tap_code16(G(S(KC_RIGHT)));
+                if (isMacOS) {
+                  tap_code16(G(KC_LEFT));
+                  tap_code16(G(S(KC_RIGHT)));
+                } else {
+                    tap_code16(KC_HOME);
+                    tap_code16(S(KC_END));
+                }
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
@@ -287,6 +344,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             } else {
               unregister_mods(MOD_MASK_GUI);
               }
+            return PROCESS_RECORD_RETURN_FALSE;
 
         case TG_OS:
             if (record->event.pressed) {
@@ -308,6 +366,14 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
                         break;
 
                 }
+            return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+        case KIT_MOD:
+            if (record->event.pressed) {
+                register_mods(MOD_MASK_CS);
+            } else {
+                unregister_mods(MOD_MASK_CS);
             }
 
         return PROCESS_RECORD_RETURN_FALSE;
