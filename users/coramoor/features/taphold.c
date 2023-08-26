@@ -8,7 +8,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case BSP_SYM:
         case ENT_HYP:
         case SPC_HYP:
-        case ESC_MEH:
+        // case ESC_MEH:
         case TD_SNIP:
         case TD_SSFL:
         case LUTHUM1:
@@ -45,6 +45,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LHM_BSL:
         case LHM_UND:
         case LHM_PIP:
+        case TD_QUOT:
           return g_tapping_term + 100;
         case LHM_A:
         case LHM_S:
@@ -66,7 +67,7 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         case BSP_SYM:
         case SPC_HYP:
         case ENT_HYP:
-        case ESC_MEH:
+        // case ESC_MEH:
         case LUTHUM1:
         case LUTHUM2:
         case LIL_THM:

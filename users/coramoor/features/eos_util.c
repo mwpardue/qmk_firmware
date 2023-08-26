@@ -52,7 +52,7 @@ void process_eos(uint16_t keycode, const keyrecord_t *record) {
             case SPC_HYP:
             case IL_THUM:
             case ESC_CTL:
-            case ESC_MEH:
+            // case ESC_MEH:
             case KC_SLSH:
             dot_counter = 0;
             dprintf("ent/spc dot_counter=%d\n", dot_counter);

@@ -92,8 +92,8 @@ enum {
 #define LUTHUM2 LCTL_T(KC_MINS)
 #define LIL_THM LT(_NAVIGATION, KC_Z)
 #define LOL_THM LT(_NUMPAD, KC_BSPC)
-#define UIL_THM LGUI_T(KC_ESC)
-#define UOL_THM LGUI_T(KC_CAPS)
+#define UOL_THM MEH_T(KC_ESC)
+#define UIL_THM LGUI_T(KC_CAPS)
 
 // Right thumb keys
 
@@ -101,8 +101,9 @@ enum {
 #define RUTHUM2 LGUI_T(KC_Q)
 #define LIR_THM LT(_MACROS, KC_SPACE)
 #define LOR_THM LT(_SYMBOL, KC_ENTER)
-#define UIR_THM RALT_T(XCASE)
-#define UOR_THM LT(_MACROS, PASSPAL)
+#define UIR_THM RCTL_T(XCASE)
+#define UOR_THM HYPR_T(PASSPAL)
+// #define UOR_THM LT(_MACROS, PASSPAL)
 
 #define CLUTHUM1 LGUI_T(KC_ENTER)
 #define CLOL_THM LT(_NUMPAD, KC_Q)
@@ -203,7 +204,7 @@ enum {
 #define COPY LGUI(KC_C)
 #define SAVE LGUI(KC_S)
 #define UNDO LGUI(KC_Z)
-#define ESC_MEH MEH_T(KC_ESC)
+// #define ESC_MEH MEH_T(KC_ESC)
 #define SPC_CTL LCTL_T(KC_SPACE)
 #define ENT_MAC LT(_MACROS, KC_ENT)
 #define BSP_SYM LT(_SYMBOL, KC_BSPC)

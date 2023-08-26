@@ -123,7 +123,7 @@ void matrix_scan_user(void) {
    switch (tap_hold_keycode) {
      case FUN_XCS:
      // case ESC_CTL:
-     case ESC_MEH:
+     // case ESC_MEH:
      case BSP_SYM:
      case ENT_MEH:
      case ENT_HYP:

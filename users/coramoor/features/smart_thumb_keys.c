@@ -167,7 +167,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
           case LIL_THM:
       if (record->event.pressed) {
         if (record->tap.count > 0) {
-          if ((isAnyOneShotButShift) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state == (XCASE_ON || XCASE_WAIT))) {
+          if ((isAnyOneShotButShift) || (isOneShotLockedShift) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state == (XCASE_ON || XCASE_WAIT))) {
             clear_locked_and_oneshot_mods();
             disable_caps_word();
             disable_xcase();
