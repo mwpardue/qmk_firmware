@@ -15,6 +15,8 @@ extern uint16_t sgqt_tapping_term;
 
 extern layer_state_t locked_layers;
 
+extern rgb_menu_selector_t rgb_menu_selector;
+
 // extern os_t os;
 
 #ifdef CASEMODE_ENABLE
@@ -327,11 +329,21 @@ void render_logo_short_slave(void) {
 void render_logo_short_master(void) {
     render_newline();
     render_logo1();
-    render_stt_specs();
+    render_single_space();
+    render_led_flags();
     render_logo2();
-    render_tt_specs();
+    render_single_space();
+    render_matrix_mode();
     render_logo3();
-    render_mt_specs();
+    render_single_space();
+    render_rgb_speed();
+    // render_newline();
+    // render_logo1();
+    // render_stt_specs();
+    // render_logo2();
+    // render_tt_specs();
+    // render_logo3();
+    // render_mt_specs();
 }
 
 // void render_qmk_logo_version_short(void) {
@@ -482,54 +494,78 @@ char rgb_matrix_hue_str[8];
 char rgb_matrix_sat_str[8];
 
 void render_led_flags(void) {
+    if (user_config.rgb_menu_selector == RGBM_FLG) {
+    oled_write_P(PSTR("      >FLG:"), false);
+    } else {
     oled_write_P(PSTR("       FLG:"), false);
-        switch (rgb_matrix_get_flags()) {
-            case LED_FLAG_ALL: {
-                oled_write_P(PSTR(" ALL"), false);
-            }
-            break;
-            case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
-                oled_write_P(PSTR(" KMI"), false);
-            }
-            break;
-            case LED_FLAG_UNDERGLOW: {
-                oled_write_P(PSTR(" UG "), false);
-            }
-            break;
-            default: {
-                oled_write_P(PSTR(" OFF"), false);
-            }
-            break;
+    }
+    switch (rgb_matrix_get_flags()) {
+        case LED_FLAG_ALL: {
+            oled_write_P(PSTR(" ALL"), false);
         }
+        break;
+        case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
+            oled_write_P(PSTR(" KMI"), false);
+        }
+        break;
+        case LED_FLAG_UNDERGLOW: {
+            oled_write_P(PSTR(" UG "), false);
+        }
+        break;
+        default: {
+            oled_write_P(PSTR(" OFF"), false);
+        }
+        break;
+    }
 }
 
 void render_matrix_mode(void) {
     sprintf(rgb_matrix_mode_str, "%03d", rgb_matrix_get_mode());
-    oled_write_P(PSTR("       MOD: "), false);
+    if (user_config.rgb_menu_selector == RGBM_MOD) {
+        oled_write_P(PSTR("      >MOD: "), false);
+    } else {
+        oled_write_P(PSTR("       MOD: "), false);
+    }
     oled_write_P(rgb_matrix_mode_str, false);
 }
 
 void render_rgb_speed(void) {
     sprintf(rgb_matrix_speed_str, "%03d", rgb_matrix_get_speed());
-    oled_write_P(PSTR("       SPD: "), false);
+    if (user_config.rgb_menu_selector == RGBM_SPD) {
+        oled_write_P(PSTR("      >SPD: "), false);
+    } else {
+        oled_write_P(PSTR("       SPD: "), false);
+    }
     oled_write_P(rgb_matrix_speed_str, false);
 }
 
 void render_rgb_hue(void) {
     sprintf(rgb_matrix_hue_str, "%03d", rgb_matrix_get_hue());
-    oled_write_P(PSTR("             HUE: "), false);
+    if (user_config.rgb_menu_selector == RGBM_HUE) {
+        oled_write_P(PSTR("            >HUE: "), false);
+    } else {
+        oled_write_P(PSTR("             HUE: "), false);
+    }
     oled_write_P(rgb_matrix_hue_str, false);
 }
 
 void render_rgb_sat(void) {
     sprintf(rgb_matrix_sat_str, "%03d", rgb_matrix_get_sat());
-    oled_write_P(PSTR("             SAT: "), false);
+    if (user_config.rgb_menu_selector == RGBM_SAT) {
+        oled_write_P(PSTR("            >SAT: "), false);
+    } else {
+        oled_write_P(PSTR("             SAT: "), false);
+    }
     oled_write_P(rgb_matrix_sat_str, false);
 }
 
 void render_rgb_value(void) {
     sprintf(rgb_matrix_val_str, "%03d", rgb_matrix_get_val());
-    oled_write_P(PSTR("             VAL: "), false);
+    if (user_config.rgb_menu_selector == RGBM_VAL) {
+        oled_write_P(PSTR("            >VAL: "), false);
+    } else {
+        oled_write_P(PSTR("             VAL: "), false);
+    }
     oled_write_P(rgb_matrix_val_str, false);
 }
 
@@ -625,20 +661,20 @@ void render_sgqt_specs(void) {
 
 bool oled_task_user(void) {
     if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
-        if (is_keyboard_master()) {
-            render_logo_short_master();
-            render_at_specs();
-            render_gqt_specs();
-            render_sgqt_specs();
-            render_blank_line();
-            render_blank_line();
-        } else {
+        // if (is_keyboard_master()) {
+        //     render_logo_short_master();
+        //     render_at_specs();
+        //     render_gqt_specs();
+        //     render_sgqt_specs();
+        //     render_blank_line();
+        //     render_blank_line();
+        // } else {
             render_logo_short_slave();
             render_rgb_hue();
             render_rgb_sat();
             render_rgb_value();
             render_heatmap_specs();
-        }
+        // }
     } else {
         if (is_keyboard_master()) {
             // render_qmk_logo_version_mods();

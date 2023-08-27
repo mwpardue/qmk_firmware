@@ -54,7 +54,7 @@ combo_t key_combos[] = {
       [_SYMBOL] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
       [_FUNCTION] =   { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
       [_MEDIA] =      { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-      [_ADJUST] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
+      [_ADJUST] =     { ENCODER_CCW_CW(RENC_MDM, RENC_MDP),                ENCODER_CCW_CW(RENC_ADM, RENC_ADP) },
   };
 
 // clang-format off

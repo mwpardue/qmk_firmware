@@ -4,6 +4,7 @@
 #include "coramoor.h"
 #include "rgb_matrix.h"
 
+
 // extern bool ledmap_active;
 
 // static void heatmap_spread_report(void) {
@@ -105,12 +106,134 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
             }
             break;
 
-        // case RGB_MDT:
-        //     if (record->event.pressed) {
-        //         user_config.rgb_matrix_ledmap_active ^= 1;
-        //         eeconfig_update_user(user_config.rgb_matrix_ledmap_active);
-        //     }
-        //     break;
+        case RENC_MDP:
+            if (record->event.pressed) {
+                if (user_config.rgb_menu_selector == RGBM_MAX - 1) {
+                    user_config.rgb_menu_selector = 0;
+                } else {
+                    user_config.rgb_menu_selector = user_config.rgb_menu_selector + 1;
+                };
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case RENC_MDM:
+            if (record->event.pressed) {
+                if (user_config.rgb_menu_selector == 0) {
+                    user_config.rgb_menu_selector = RGBM_MAX - 1;
+                } else {
+                    user_config.rgb_menu_selector = user_config.rgb_menu_selector - 1;
+                }
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case RENC_ADP:
+            if (record->event.pressed) {
+                switch (user_config.rgb_menu_selector) {
+                    case RGBM_HUE:
+                        rgb_matrix_increase_hue();
+                        break;
+                    case RGBM_SAT:
+                        rgb_matrix_increase_sat();
+                        break;
+                    case RGBM_VAL:
+                        rgb_matrix_increase_val();
+                        break;
+                    case RGBM_SPD:
+                        rgb_matrix_increase_speed();
+                        break;
+                    case RGBM_MOD:
+                        rgb_matrix_step();
+                        break;
+                    case RGBM_FLG:
+                          switch (rgb_matrix_get_flags()) {
+                            case LED_FLAG_ALL: {
+                                rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
+                                // rgb_matrix_set_color_all(0, 0, 0);
+                                dprintf("rgb_matrix_get_flags (KMI)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                            case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
+                                rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
+                                // rgb_matrix_set_color_all(0, 0, 0);
+                                dprintf("rgb_matrix_get_flags (UG)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                            case LED_FLAG_UNDERGLOW: {
+                                rgb_matrix_set_flags(LED_FLAG_NONE);
+                                rgb_matrix_disable_noeeprom();
+                                dprintf("rgb_matrix_get_flags (OFF)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                            default: {
+                                rgb_matrix_set_flags(LED_FLAG_ALL);
+                                rgb_matrix_enable_noeeprom();
+                                dprintf("rgb_matrix_get_flags (ALL)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                          }
+                        break;
+                    default:
+                        break;
+                }
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case RENC_ADM:
+            if (record->event.pressed) {
+                switch (user_config.rgb_menu_selector) {
+                    case RGBM_HUE:
+                        rgb_matrix_decrease_hue();
+                        break;
+                    case RGBM_SAT:
+                        rgb_matrix_decrease_sat();
+                        break;
+                    case RGBM_VAL:
+                        rgb_matrix_decrease_val();
+                        break;
+                    case RGBM_SPD:
+                        rgb_matrix_decrease_speed();
+                        break;
+                    case RGBM_MOD:
+                        rgb_matrix_step_reverse();
+                        break;
+                    case RGBM_FLG:
+                          switch (rgb_matrix_get_flags()) {
+                            case LED_FLAG_ALL: {
+                                rgb_matrix_set_flags(LED_FLAG_NONE);
+                                rgb_matrix_disable_noeeprom();
+                                dprintf("rgb_matrix_get_flags (OFF)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                            case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
+                                rgb_matrix_set_flags(LED_FLAG_ALL);
+                                dprintf("rgb_matrix_get_flags (ALL)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                            case LED_FLAG_UNDERGLOW: {
+                                rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
+                                // rgb_matrix_set_color_all(0, 0, 0);
+                                dprintf("rgb_matrix_get_flags (KMI)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                            default: {
+                                rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
+                                rgb_matrix_enable_noeeprom();
+                                // rgb_matrix_set_color_all(0, 0, 0);
+                                dprintf("rgb_matrix_get_flags (UG)= %d\n", rgb_matrix_get_flags());
+                              }
+                              break;
+                          }
+                        break;
+                    default:
+                        break;
+                }
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
   }
     return PROCESS_RECORD_CONTINUE; // Process all other keycodes normally
 }
