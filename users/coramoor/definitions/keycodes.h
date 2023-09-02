@@ -68,7 +68,7 @@ enum {
 #endif
 
 #ifdef COMBO_ENABLE
-    SM_LOGN, SM_CW, SM_PAR, SM_CUR, SM_BRC,
+    SM_LOGN, SM_CW, SM_PAR, SM_CUR, SM_BRC, SM_ANG,
 #endif
 
 #ifdef LAYER_LOCK_ENABLE
@@ -99,10 +99,10 @@ enum {
 // Right thumb keys
 
 #define RUTHUM1 LSFT_T(KC_DEL)
-#define RUTHUM2 LGUI_T(KC_Q)
+#define RUTHUM2 LCTL_T(KC_Q)
 #define LIR_THM LT(_MACROS, KC_SPACE)
 #define LOR_THM LT(_SYMBOL, KC_ENTER)
-#define UIR_THM RCTL_T(XCASE)
+#define UIR_THM RGUI_T(XCASE)
 #define UOR_THM HYPR_T(PASSPAL)
 // #define UOR_THM LT(_MACROS, PASSPAL)
 

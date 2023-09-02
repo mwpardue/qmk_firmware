@@ -30,6 +30,7 @@ const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
 const uint16_t PROGMEM escape_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM escape2_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM angb_combo[] = {KC_COMM, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(bootloader_combo, QK_BOOT),
@@ -41,7 +42,8 @@ combo_t key_combos[] = {
   COMBO(curb_combo, SM_CUR),
   COMBO(brac_combo, SM_BRC),
   COMBO(escape_combo, KC_ESC),
-  COMBO(escape2_combo, KC_ESC)
+  COMBO(escape2_combo, KC_ESC),
+  COMBO(angb_combo, SM_ANG)
 };
 
   const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
@@ -139,8 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = LAYOUT( \
   _______, TOBAS,   _______, EE_CLR,  QK_RBT,  _______,                                         RGB_ALM, RGB_ALP,  RGB_SPM,  RGB_SPP, _______, _______,  \
-  ACH_TTP, SGT_TTP, MDT_TTP, SFT_TTP, GQT_TTP, DT_UP,                                           RGB_CHG, RGB_HUI,  RGB_SAI,  RGB_VAI, RGB_SPI, _______,\
-  ACH_TTM, SGT_TTM, MDT_TTM, SFT_TTM, GQT_TTM, DT_DOWN, _______, _______,     _______, _______, RGB_MOD, RGB_HUD,  RGB_SAD,  RGB_VAD, RGB_SPD, _______,\
+  ACH_TTP, SGT_TTP, MDT_TTP, SFT_TTP, GQT_TTP, DT_UP,                                           _______, _______,  _______,  _______, _______, _______,\
+  ACH_TTM, SGT_TTM, MDT_TTM, SFT_TTM, GQT_TTM, DT_DOWN, _______, _______,     _______, _______, _______, _______,  _______,  _______, _______, _______,\
                              KC_NO,   ACH_TTM, _______, _______, _______,     _______, _______, _______, ACH_TTP, KC_NO \
 )
 };

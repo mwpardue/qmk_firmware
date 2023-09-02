@@ -124,6 +124,14 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
                 tap_code16(KC_LEFT);
             }
             break;
+
+        case SM_ANG:
+            if (record->event.pressed) {
+                tap_code16(KC_LT);
+                tap_code16(KC_GT);
+                tap_code16(KC_LEFT);
+            }
+            break;
         }
 
     return PROCESS_RECORD_CONTINUE;
