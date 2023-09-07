@@ -385,6 +385,13 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
                 return PROCESS_RECORD_RETURN_FALSE;
             }
 
+        case FUN_BSP:
+            if (record->event.pressed) {
+                tap_code16(A(KC_BSPC));
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
     }
     return PROCESS_RECORD_CONTINUE;
 }

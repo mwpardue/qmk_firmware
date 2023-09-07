@@ -56,7 +56,7 @@ enum {
     S_ARRNG, BROWSER_BACK, BROWSER_FORWARD, TAB_BACK, TAB_FORWARD, TMX_LDS,
     PASSPAL, TMX_VIS, NAV_LFT, NAV_RGT, SEL_WRD, SEL_LIN, VIM_TRE, TMX_VSP,
     TMX_HSP, MDT_TTP, MDT_TTM, ACH_TTM, ACH_TTP, SP_AT, CAP_MEH, SM_SWIT,
-    TG_OS, GQT_TTP, GQT_TTM, SGT_TTP, SGT_TTM, KIT_MOD, ADJ_LYR,
+    TG_OS, GQT_TTP, GQT_TTM, SGT_TTP, SGT_TTM, KIT_MOD, ADJ_LYR, FUN_BSP,
 #endif
 
 #ifdef SELECT_WORD_ENABLE
@@ -91,20 +91,23 @@ enum {
 
 #define LUTHUM1 LGUI_T(KC_ENTER)
 #define LUTHUM2 LCTL_T(KC_MINS)
+// #define LUTHUM2 LT(_NUMPAD, KC_MINS)
 #define LIL_THM LT(_NAVIGATION, KC_Z)
 #define LOL_THM LT(_NUMPAD, KC_BSPC)
+// #define LOL_THM LSFT_T(KC_Z)
 #define UOL_THM MEH_T(KC_ESC)
 #define UIL_THM LGUI_T(KC_CAPS)
 
 // Right thumb keys
 
 #define RUTHUM1 LSFT_T(KC_DEL)
-#define RUTHUM2 LCTL_T(KC_Q)
+#define RUTHUM2 LGUI_T(KC_Q)
+// #define RUTHUM2 LT(_SYMBOL, KC_Z)
 #define LIR_THM LT(_MACROS, KC_SPACE)
 #define LOR_THM LT(_SYMBOL, KC_ENTER)
+// #define LOR_THM LCTL_T(KC_ENTER)
 #define UIR_THM RGUI_T(XCASE)
 #define UOR_THM HYPR_T(PASSPAL)
-// #define UOR_THM LT(_MACROS, PASSPAL)
 
 #define CLUTHUM1 LGUI_T(KC_ENTER)
 #define CLOL_THM LT(_NUMPAD, KC_Q)
@@ -248,6 +251,7 @@ enum {
 #define LHM_PIP LGUI_T(KC_PIPE)
 #define ALT_BSP LALT(KC_BSPC)
 #define ALT_TAB LALT_T(KC_TAB)
+#define SFT_ENT LSFT_T(KC_ENT)
 
 // uint16_t extract_base_tapping_keycode(uint16_t keycode);
 //

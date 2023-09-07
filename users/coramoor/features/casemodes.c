@@ -196,6 +196,12 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_RIGHT:
             case KC_LEFT:
             case SM_CW:
+            case KC_LPRN:
+            case KC_RPRN:
+            case KC_LBRC:
+            case KC_RBRC:
+            case KC_LCBR:
+            case KC_RCBR:
             dprintln("terminate_case_modes");
                 // If mod chording disable the mods
                 if (record->event.pressed && (get_mods() != 0)) {
@@ -294,6 +300,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                 // place the delimiter if space is tapped
                 if (keycode == KC_SPACE) {
                     delimiters_count++;
+                    dprintln("Increaseing delimiter count");
                     if (delimiters_count < DEFAULT_DELIMITERS_TERMINATE_COUNT) {
                         place_delimiter();
                         distance_to_last_delim = 0;
@@ -305,6 +312,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                         remove_delimiter();
                         disable_xcase();
                         disable_caps_word();
+                        dprintln("Disabling xcase and capsword under XCASE_ON");
                         return true;
                     }
                 }
@@ -330,6 +338,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
             // check if the case modes have been terminated
             if (terminate_case_modes(keycode, record)) {
                 disable_caps_word();
+                dprintln("Disabling caps word and xcase under terminate_case_modes");
                 disable_xcase();
             }
 
