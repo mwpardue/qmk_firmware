@@ -15,18 +15,6 @@ extern uint16_t sgqt_tapping_term;
 
 extern layer_state_t locked_layers;
 
-// extern rgb_menu_selector_t rgb_menu_selector;
-
-// extern os_t os;
-
-// bool check_menu(uint8_t menu_item) {
-//     if (user_config.rgb_menu_selector == menu_item) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
-
 bool check_lock(void) {
     if (locked_layers) {
         return true;
@@ -34,16 +22,6 @@ bool check_lock(void) {
         return false;
     }
 }
-
-// uint8_t viewport_begin(void) {
-//     if (user_config.rgb_menu_selector <= 3) {
-//         return 1;
-//     } else if (user_config.rgb_menu_selector >= (RGBM_MAX - 3)) {
-//         return (RGBM_MAX - VIEWPORT_HEIGHT);
-//     } else {
-//         return (user_config.rgb_menu_selector - 3);
-//     }
-// }
 
 #ifdef CASEMODE_ENABLE
     extern enum xcase_state xcase_state;
@@ -438,219 +416,12 @@ void render_led_state_slave(void) {
         oled_write_P(PSTR("          "), false);
 }
 
-// char rgb_matrix_mode_str[8];
-// char rgb_matrix_speed_str[8];
-// char rgb_matrix_val_str[8];
-// char rgb_matrix_hue_str[8];
-// char rgb_matrix_sat_str[8];
-
-// void render_led_flags(void) {
-//     oled_write_P(PSTR("LED FLAGS:"), check_menu(RGBM_FLG));
-//         switch (rgb_matrix_get_flags()) {
-//             case LED_FLAG_ALL: {
-//                 oled_write_P(PSTR("        ALL"), check_menu(RGBM_FLG));
-//             }
-//             break;
-//             case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
-//                 oled_write_P(PSTR("        KMI"), check_menu(RGBM_FLG));
-//             }
-//             break;
-//             case LED_FLAG_UNDERGLOW: {
-//                 oled_write_P(PSTR("  UNDERGLOW"), check_menu(RGBM_FLG));
-//             }
-//             break;
-//             default: {
-//                 oled_write_P(PSTR("       NONE"), check_menu(RGBM_FLG));
-//             }
-//             break;
-//         }
-// }
-
-// void render_matrix_mode(void) {
-//     uint8_t mode_length = strlen(rmodes[rgb_matrix_get_mode()]);
-//     oled_write_P(PSTR("MODE: "), check_menu(RGBM_MOD));
-//     uint8_t space_length = (VIEWPORT_WIDTH - 6) - mode_length;
-//     for (uint8_t i = 1; i <= space_length; i++) {
-//         oled_write_P(PSTR(" "), check_menu(RGBM_MOD));
-//     }
-//     oled_write_P(rmodes[rgb_matrix_get_mode()], check_menu(RGBM_MOD));
-// }
-
-// void render_rgb_speed(void) {
-//     sprintf(rgb_matrix_speed_str, "%03d", rgb_matrix_get_speed());
-//     oled_write_P(PSTR("RGB SPEED:        "), check_menu(RGBM_SPD));
-//     oled_write_P(rgb_matrix_speed_str, check_menu(RGBM_SPD));
-// }
-
-// void render_rgb_hue(void) {
-//     sprintf(rgb_matrix_hue_str, "%03d", rgb_matrix_get_hue());
-//     oled_write_P(PSTR("RGB HUE:          "), check_menu(RGBM_HUE));
-//     oled_write_P(rgb_matrix_hue_str, check_menu(RGBM_HUE));
-// }
-
-// void render_rgb_sat(void) {
-//     sprintf(rgb_matrix_sat_str, "%03d", rgb_matrix_get_sat());
-//     oled_write_P(PSTR("RGB SATURATION:   "), check_menu(RGBM_SAT));
-//     oled_write_P(rgb_matrix_sat_str, check_menu(RGBM_SAT));
-// }
-
-// void render_rgb_value(void) {
-//     sprintf(rgb_matrix_val_str, "%03d", rgb_matrix_get_val());
-//     oled_write_P(PSTR("RGB VALUE:        "), check_menu(RGBM_VAL));
-//     oled_write_P(rgb_matrix_val_str, check_menu(RGBM_VAL));
-// }
-
-uint8_t get_heatmap_area(void) {
-    return user_config.rgb_matrix_heatmap_area;
-}
-
-uint8_t get_heatmap_spread(void) {
-    return user_config.rgb_matrix_heatmap_spread;
-}
-
-char heatmap_area_str[8];
-char heatmap_spread_str[8];
-
-void render_heatmap_specs(void) {
-    sprintf(heatmap_area_str, "%03d", get_heatmap_area());
-    sprintf(heatmap_spread_str, "%03d", get_heatmap_spread());
-    // oled_write_P(PSTR("            AREA: "), false);
-    oled_write_P(PSTR("              "), false);
-    oled_write_P(heatmap_area_str, false);
-    oled_write_P(PSTR("/"), false);
-    // oled_write_P(PSTR("          SPREAD: "), false);
-    oled_write_P(heatmap_spread_str, false);
-    oled_write_P(PSTR(""), false);
-    }
-
-uint16_t get_shift_tapping_term_str(void) {
-    return sft_tapping_term;
-}
-
-uint16_t get_tapping_term_str(void) {
-    return g_tapping_term;
-}
-
-uint16_t get_modtap_tapping_term_str(void) {
-    return modtap_tapping_term;
-}
-
-uint16_t get_achordion_tapping_term_str(void) {
-    return achordion_tapping_term;
-}
-
-uint16_t get_gqt_tapping_term_str(void) {
-    return gqt_tapping_term;
-}
-
-uint16_t get_sgqt_tapping_term_str(void) {
-    return sgqt_tapping_term;
-}
-
-char shift_tapping_term_str[16];
-char g_tapping_term_str[16];
-char modtap_tapping_term_str[16];
-char achordion_tapping_term_str[16];
-char gqt_tapping_term_str[16];
-char sgqt_tapping_term_str[16];
-
-void render_stt_specs(void) {
-  sprintf(shift_tapping_term_str, "%03d", get_shift_tapping_term_str());
-  oled_write_P(PSTR("        STT: "), false);
-  oled_write_P(shift_tapping_term_str, false);
-}
-
-void render_tt_specs(void) {
-  sprintf(g_tapping_term_str, "%03d", get_tapping_term_str());
-  oled_write_P(PSTR("        GTT: "), false);
-  oled_write_P(g_tapping_term_str, false);
-}
-
-void render_mt_specs(void) {
-  sprintf(modtap_tapping_term_str, "%03d", get_modtap_tapping_term_str());
-  oled_write_P(PSTR("        MTT: "), false);
-  oled_write_P(modtap_tapping_term_str, false);
-}
-
-void render_at_specs(void) {
-  sprintf(achordion_tapping_term_str, "%03d", get_achordion_tapping_term_str());
-  oled_write_P(PSTR("             ATT: "), false);
-  oled_write_P(achordion_tapping_term_str, false);
-}
-
-void render_gqt_specs(void) {
-  sprintf(gqt_tapping_term_str, "%03d", get_gqt_tapping_term_str());
-  oled_write_P(PSTR("             GQT: "), false);
-  oled_write_P(gqt_tapping_term_str, false);
-}
-
-void render_sgqt_specs(void) {
-  sprintf(sgqt_tapping_term_str, "%03d", get_sgqt_tapping_term_str());
-  oled_write_P(PSTR("            SGQT: "), false);
-  oled_write_P(sgqt_tapping_term_str, false);
-}
-
-// void render_os(void) {
-//     oled_write_P(PSTR("CURRENT OS:"), check_menu(OLED_OS));
-//     switch (user_config.os) {
-//     case WINDOWS:
-//         oled_write_P(PSTR("   WINDOWS"), check_menu(OLED_OS));
-//         break;
-//     case LINUX:
-//         oled_write_P(PSTR("     LINUX"), check_menu(OLED_OS));
-//         break;
-//     default:
-//         oled_write_P(PSTR("     MACOS"), check_menu(OLED_OS));
-//         break;
-//     }
-// }
-
-// void render_eeprom_clear(void) {
-//     oled_write_P(PSTR("         CLEAR EEPROM"), check_menu(OLED_EEC));
-// }
-
-// void render_debug(void) {
-//     if (kb_state.debug_enabled) {
-//     oled_write_P(PSTR("DEBUG STATUS:      ON"), check_menu(OLED_DBG));
-//     } else {
-//     oled_write_P(PSTR("DEBUG STATUS:     OFF"), check_menu(OLED_DBG));
-//     }
-// }
-
-// void render_menu_header(void) {
-//     oled_write_P(PSTR(" Kyria Configuration "), false);
-// }
-
-// void render_begin(void) {
-// }
-//
-// void render_max(void) {
-// }
-
-// void (*menuView[])(void) = {
-//         render_begin,
-//         render_led_flags,
-//         render_rgb_speed,
-//         render_rgb_hue,
-//         render_rgb_sat,
-//         render_rgb_value,
-//         render_matrix_mode,
-//         render_os,
-//         render_debug,
-//         render_eeprom_clear,
-//         render_max
-//     };
-
 void render_menu(void) {
     menu_items();
-    // for (uint8_t i = viewport_begin(); i <= (viewport_begin() + 6); i++) {
-    //      menuView[i]();
-    // }
 }
 
 bool oled_task_user(void) {
     if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
-            // render_menu_header();
             render_menu();
     } else {
         if (is_keyboard_master()) {

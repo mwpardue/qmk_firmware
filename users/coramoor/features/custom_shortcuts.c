@@ -3,38 +3,6 @@
 #include "custom_shortcuts.h"
 #include "definitions/keycodes.h"
 
-// extern os_t os;
-
-uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
-
-uint16_t get_sft_tapping_term(void) {
-    return sft_tapping_term;
-}
-
-uint16_t modtap_tapping_term = MODTAP_TAPPING_TERM;
-
-uint16_t get_modtap_tapping_term(void) {
-    return modtap_tapping_term;
-}
-
-uint16_t achordion_tapping_term = ACHORDION_TAPPING_TERM;
-
-uint16_t get_achordion_tapping_term(void) {
-    return achordion_tapping_term;
-}
-
-uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
-
-uint16_t get_gqt_tapping_term(void) {
-    return gqt_tapping_term;
-}
-
-uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
-
-uint16_t sget_gqt_tapping_term(void) {
-    return sgqt_tapping_term;
-}
-
 #ifdef CUSTOM_LEADER_ENABLE
   #include "leader.h"
 #endif
@@ -152,15 +120,6 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
       }
         return PROCESS_RECORD_RETURN_TRUE;
 
-        // case ALT_RGT:
-        //   if (record->tap.count > 0) {
-        //     if (record->event.pressed) {
-        //       tap_code16(C(KC_RIGHT));
-        //     }
-        //     return PROCESS_RECORD_RETURN_FALSE;
-        //   }
-        //   return PROCESS_RECORD_RETURN_TRUE;
-
         case LHM_AT:
           if (record->tap.count > 0) {
             if (record->event.pressed) {
@@ -224,76 +183,6 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
              return PROCESS_RECORD_CONTINUE;
              }
          return PROCESS_RECORD_RETURN_TRUE;
-
-        case SFT_TTP:
-            if (record->event.pressed) {
-                sft_tapping_term = sft_tapping_term + 5;
-                dprintf("Shift Tapping Term = %d\n", sft_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case SFT_TTM:
-            if (record->event.pressed) {
-                sft_tapping_term = sft_tapping_term - 5;
-                dprintf("Shift Tapping Term = %d\n", sft_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case MDT_TTP:
-            if (record->event.pressed) {
-                modtap_tapping_term = modtap_tapping_term + 5;
-                dprintf("Mod-Tap Tapping Term = %d\n", modtap_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case MDT_TTM:
-            if (record->event.pressed) {
-                modtap_tapping_term = modtap_tapping_term - 5;
-                dprintf("Mod-Tap Tapping Term = %d\n", modtap_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case ACH_TTP:
-            if (record->event.pressed) {
-                achordion_tapping_term = achordion_tapping_term + 50;
-                dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case ACH_TTM:
-            if (record->event.pressed) {
-                achordion_tapping_term = achordion_tapping_term - 50;
-                dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case GQT_TTP:
-            if (record->event.pressed) {
-                gqt_tapping_term = gqt_tapping_term + 5;
-                dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case GQT_TTM:
-            if (record->event.pressed) {
-                gqt_tapping_term = gqt_tapping_term - 5;
-                dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case SGT_TTP:
-            if (record->event.pressed) {
-                sgqt_tapping_term = sgqt_tapping_term + 5;
-                dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-        case SGT_TTM:
-            if (record->event.pressed) {
-                sgqt_tapping_term = sgqt_tapping_term - 5;
-                dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
 
          case SEL_WRD:
             if (record->event.pressed) {

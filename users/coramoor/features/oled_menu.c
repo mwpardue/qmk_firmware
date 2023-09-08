@@ -2,6 +2,18 @@
 
 #include "coramoor.h"
 
+extern uint16_t sft_tapping_term;
+
+extern uint16_t modtap_tapping_term;
+
+extern uint16_t achordion_tapping_term;
+
+extern uint16_t gqt_tapping_term;
+
+extern uint16_t sgqt_tapping_term;
+
+// GENERAL MENU FUNCTIONS
+
 bool check_menu(uint8_t menu_item) {
     if (user_config.rgb_menu_selector == menu_item) {
         return true;
@@ -19,6 +31,50 @@ uint8_t viewport_begin(void) {
         return (user_config.rgb_menu_selector - 3);
     }
 }
+
+// HEATMAP SECTION
+uint8_t get_heatmap_area(void) {
+    return user_config.rgb_matrix_heatmap_area;
+}
+
+uint8_t get_heatmap_spread(void) {
+    return user_config.rgb_matrix_heatmap_spread;
+}
+
+char heatmap_area_str[8];
+char heatmap_spread_str[8];
+
+// TAPPING TERM SECTION
+uint16_t get_shift_tapping_term_str(void) {
+    return sft_tapping_term;
+}
+
+uint16_t get_tapping_term_str(void) {
+    return g_tapping_term;
+}
+
+uint16_t get_modtap_tapping_term_str(void) {
+    return modtap_tapping_term;
+}
+
+uint16_t get_achordion_tapping_term_str(void) {
+    return achordion_tapping_term;
+}
+
+uint16_t get_gqt_tapping_term_str(void) {
+    return gqt_tapping_term;
+}
+
+uint16_t get_sgqt_tapping_term_str(void) {
+    return sgqt_tapping_term;
+}
+
+char shift_tapping_term_str[16];
+char g_tapping_term_str[16];
+char modtap_tapping_term_str[16];
+char achordion_tapping_term_str[16];
+char gqt_tapping_term_str[16];
+char sgqt_tapping_term_str[16];
 
 void menu_items(void) {
 char rgb_matrix_speed_str[8];
@@ -77,6 +133,46 @@ uint8_t mode_length = strlen(rmodes[rgb_matrix_get_mode()]);
                     oled_write_P(PSTR(" "), check_menu(MENU_RGBMODE));
                 }
                 oled_write_P(rmodes[rgb_matrix_get_mode()], check_menu(MENU_RGBMODE));
+                break;
+            case MENU_HMAREA:
+                sprintf(heatmap_area_str, "%03d", get_heatmap_area());
+                oled_write_P(PSTR("HEATMAP AREA:     "), check_menu(MENU_HMAREA));
+                oled_write_P(heatmap_area_str, check_menu(MENU_HMAREA));
+                break;
+            case MENU_HMSPREAD:
+                sprintf(heatmap_spread_str, "%03d", get_heatmap_spread());
+                oled_write_P(PSTR("HEATMAP SPREAD:   "), check_menu(MENU_HMSPREAD));
+                oled_write_P(heatmap_spread_str, check_menu(MENU_HMSPREAD));
+                break;
+            case MENU_STT:
+                sprintf(shift_tapping_term_str, "%03d", get_shift_tapping_term_str());
+                oled_write_P(PSTR("SHIFT TAP TERM:   "), check_menu(MENU_STT));
+                oled_write_P(shift_tapping_term_str, check_menu(MENU_STT));
+                break;
+            case MENU_TT:
+                sprintf(g_tapping_term_str, "%03d", get_tapping_term_str());
+                oled_write_P(PSTR("TAPPING TERM:     "), check_menu(MENU_TT));
+                oled_write_P(g_tapping_term_str, check_menu(MENU_TT));
+                break;
+            case MENU_MT:
+                sprintf(modtap_tapping_term_str, "%03d", get_modtap_tapping_term_str());
+                oled_write_P(PSTR("MOD TAP TERM:     "), check_menu(MENU_MT));
+                oled_write_P(modtap_tapping_term_str, check_menu(MENU_MT));
+                break;
+            case MENU_AT:
+                sprintf(achordion_tapping_term_str, "%03d", get_achordion_tapping_term_str());
+                oled_write_P(PSTR("ACH TAP TERM:     "), check_menu(MENU_AT));
+                oled_write_P(achordion_tapping_term_str, check_menu(MENU_AT));
+                break;
+            case MENU_GQT:
+                sprintf(gqt_tapping_term_str, "%03d", get_gqt_tapping_term_str());
+                oled_write_P(PSTR("GQT TAP TERM:     "), check_menu(MENU_GQT));
+                oled_write_P(gqt_tapping_term_str, check_menu(MENU_GQT));
+                break;
+            case MENU_SGQT:
+                sprintf(sgqt_tapping_term_str, "%03d", get_sgqt_tapping_term_str());
+                oled_write_P(PSTR("SGQT TAP TERM:    "), check_menu(MENU_SGQT));
+                oled_write_P(sgqt_tapping_term_str, check_menu(MENU_SGQT));
                 break;
             case MENU_OSFLAG:
                 oled_write_P(PSTR("CURRENT OS:"), check_menu(MENU_OSFLAG));
