@@ -157,6 +157,12 @@ ifeq ($(strip $(EOS_ENABLE)), yes)
 	OPT_DEFS += -DEOS_ENABLE
 endif
 
+OLED_MENU_ENABLE?= no
+ifeq ($(strip $(OLED_MENU_ENABLE)), yes)
+	SRC += $(USER_PATH)/features/oled_menu.c
+	OPT_DEFS += -DOLED_MENU_ENABLE
+endif
+
 CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
 ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)
     ifeq ($(strip $(SPLIT_KEYBOARD)), yes)

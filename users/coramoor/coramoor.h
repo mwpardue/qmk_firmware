@@ -109,4 +109,8 @@ void housekeeping_task_transport_sync(void);
   #include "features/eos_util.h"
 #endif
 
+#ifdef OLED_MENU_ENABLE
+    #include "features/oled_menu.h"
+#endif
+
 void matrix_scan_keymap(void);

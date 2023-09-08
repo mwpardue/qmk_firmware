@@ -110,7 +110,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
 
         case RENC_MDP:
             if (record->event.pressed) {
-                if (user_config.rgb_menu_selector == RGBM_MAX - 1) {
+                if (user_config.rgb_menu_selector == MENU_MAX - 1) {
                     user_config.rgb_menu_selector = 1;
                 } else {
                     user_config.rgb_menu_selector = user_config.rgb_menu_selector + 1;
@@ -124,7 +124,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
         case RENC_MDM:
             if (record->event.pressed) {
                 if (user_config.rgb_menu_selector == 1) {
-                    user_config.rgb_menu_selector = RGBM_MAX - 1;
+                    user_config.rgb_menu_selector = MENU_MAX - 1;
                 } else {
                     user_config.rgb_menu_selector = user_config.rgb_menu_selector - 1;
                 }
@@ -137,22 +137,22 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
         case RENC_ADP:
             if (record->event.pressed) {
                 switch (user_config.rgb_menu_selector) {
-                    case RGBM_HUE:
+                    case MENU_HUE:
                         rgb_matrix_increase_hue();
                         break;
-                    case RGBM_SAT:
+                    case MENU_SAT:
                         rgb_matrix_increase_sat();
                         break;
-                    case RGBM_VAL:
+                    case MENU_VAL:
                         rgb_matrix_increase_val();
                         break;
-                    case RGBM_SPD:
+                    case MENU_SPEED:
                         rgb_matrix_increase_speed();
                         break;
-                    case RGBM_MOD:
+                    case MENU_RGBMODE:
                         rgb_matrix_step();
                         break;
-                    case RGBM_FLG:
+                    case MENU_FLAGS:
                           switch (rgb_matrix_get_flags()) {
                             case LED_FLAG_ALL: {
                                 rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
@@ -180,7 +180,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                               break;
                           }
                         break;
-                    case OLED_EEC:
+                    case MENU_EECLEAR:
                         #ifdef NO_RESET
                             eeconfig_init();
                         #else
@@ -188,7 +188,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                             soft_reset_keyboard();
                         #endif
                         break;
-                    case OLED_DBG:
+                    case MENU_DEBUG:
                         #ifndef NO_DEBUG
                             debug_enable ^= 1;
                             kb_state.debug_enabled = debug_enable;
@@ -200,7 +200,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                             }
                         #endif
                         break;
-                    case OLED_OS:
+                    case MENU_OSFLAG:
                         switch (user_config.os) {
                             case MACOS:
                                 user_config.os = WINDOWS;
@@ -226,22 +226,22 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
         case RENC_ADM:
             if (record->event.pressed) {
                 switch (user_config.rgb_menu_selector) {
-                    case RGBM_HUE:
+                    case MENU_HUE:
                         rgb_matrix_decrease_hue();
                         break;
-                    case RGBM_SAT:
+                    case MENU_SAT:
                         rgb_matrix_decrease_sat();
                         break;
-                    case RGBM_VAL:
+                    case MENU_VAL:
                         rgb_matrix_decrease_val();
                         break;
-                    case RGBM_SPD:
+                    case MENU_SPEED:
                         rgb_matrix_decrease_speed();
                         break;
-                    case RGBM_MOD:
+                    case MENU_RGBMODE:
                         rgb_matrix_step_reverse();
                         break;
-                    case RGBM_FLG:
+                    case MENU_FLAGS:
                           switch (rgb_matrix_get_flags()) {
                             case LED_FLAG_ALL: {
                                 rgb_matrix_set_flags(LED_FLAG_NONE);
@@ -269,7 +269,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                               break;
                           }
                         break;
-                    case OLED_EEC:
+                    case MENU_EECLEAR:
                         #ifdef NO_RESET
                             eeconfig_init();
                         #else
@@ -277,7 +277,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                             soft_reset_keyboard();
                         #endif
                         break;
-                    case OLED_DBG:
+                    case MENU_DEBUG:
                         #ifndef NO_DEBUG
                             debug_enable ^= 1;
                             kb_state.debug_enabled = debug_enable;
@@ -289,7 +289,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                             }
                         #endif
                         break;
-                    case OLED_OS:
+                    case MENU_OSFLAG:
                         switch (user_config.os) {
                             case MACOS:
                                 user_config.os = LINUX;
