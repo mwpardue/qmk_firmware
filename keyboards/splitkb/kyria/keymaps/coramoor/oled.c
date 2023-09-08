@@ -35,6 +35,16 @@ bool check_lock(void) {
     }
 }
 
+uint8_t viewport_begin(void) {
+    if (user_config.rgb_menu_selector <= 3) {
+        return 1;
+    } else if (user_config.rgb_menu_selector >= (RGBM_MAX - 3)) {
+        return (RGBM_MAX - VIEWPORT_HEIGHT);
+    } else {
+        return (user_config.rgb_menu_selector - 3);
+    }
+}
+
 #ifdef CASEMODE_ENABLE
     extern enum xcase_state xcase_state;
     extern bool caps_word_on;
@@ -300,55 +310,6 @@ void render_logo_master(void) {
     render_logo3();
 }
 
-void render_single_space(void) {
-    static const char PROGMEM single_space[] = {
-        0x80,0};
-    oled_write_P(single_space, false);
-}
-
-
-void render_space_six(void) {
-    oled_write_P(PSTR("      "), false);
-}
-
-void render_space_seven(void) {
-    oled_write_P(PSTR("       "), false);
-}
-
-void render_space_ten(void) {
-    oled_write_P(PSTR("          "), false);
-}
-
-void render_space_thirteen(void) {
-    oled_write_P(PSTR("             "), false);
-}
-
-void render_logo_short_slave(void) {
-    render_newline();
-    render_logo1();
-    render_single_space();
-    render_led_flags();
-    render_logo2();
-    render_single_space();
-    render_rgb_speed();
-    render_logo3();
-    render_single_space();
-    render_rgb_hue();
-}
-
-void render_logo_short_master(void) {
-    render_newline();
-    render_logo1();
-    render_single_space();
-    render_led_flags();
-    render_logo2();
-    render_single_space();
-    render_matrix_mode();
-    render_logo3();
-    render_single_space();
-    render_rgb_speed();
-}
-
 void render_layer_state(void) {
         // Host Keyboard Layer Status
     static const char PROGMEM layer_box_top[] = {
@@ -433,7 +394,7 @@ void render_led_state_main(void) {
         // Write host Keyboard LED Status to OLEDs
         led_t led_usb_state = host_keyboard_led_state();
 
-        render_space_ten();
+        oled_write_P(PSTR("          "), false);
         if ((led_usb_state.caps_lock) && (xcase_state == XCASE_ON)) {
             oled_write_P(PSTR("   XCASE   "), false);
         } else if (xcase_state == XCASE_ON) {
@@ -474,7 +435,7 @@ void render_led_state_slave(void) {
         } else {
             oled_write_P(PSTR("           "), false);
         }
-        render_space_ten();
+        oled_write_P(PSTR("          "), false);
 }
 
 // char rgb_matrix_mode_str[8];
@@ -484,23 +445,22 @@ char rgb_matrix_hue_str[8];
 char rgb_matrix_sat_str[8];
 
 void render_led_flags(void) {
-    render_space_seven();
-    oled_write_P(PSTR("FLG:"), check_menu(RGBM_FLG));
+    oled_write_P(PSTR("LED FLAGS:"), check_menu(RGBM_FLG));
         switch (rgb_matrix_get_flags()) {
             case LED_FLAG_ALL: {
-                oled_write_P(PSTR(" ALL"), check_menu(RGBM_FLG));
+                oled_write_P(PSTR("        ALL"), check_menu(RGBM_FLG));
             }
             break;
             case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
-                oled_write_P(PSTR(" KMI"), check_menu(RGBM_FLG));
+                oled_write_P(PSTR("        KMI"), check_menu(RGBM_FLG));
             }
             break;
             case LED_FLAG_UNDERGLOW: {
-                oled_write_P(PSTR(" UG "), check_menu(RGBM_FLG));
+                oled_write_P(PSTR("  UNDERGLOW"), check_menu(RGBM_FLG));
             }
             break;
             default: {
-                oled_write_P(PSTR(" OFF"), check_menu(RGBM_FLG));
+                oled_write_P(PSTR("       NONE"), check_menu(RGBM_FLG));
             }
             break;
         }
@@ -508,41 +468,35 @@ void render_led_flags(void) {
 
 void render_matrix_mode(void) {
     uint8_t mode_length = strlen(rmodes[rgb_matrix_get_mode()]);
-    uint8_t space_length = 21 - mode_length;
+    oled_write_P(PSTR("MODE: "), check_menu(RGBM_MOD));
+    uint8_t space_length = (VIEWPORT_WIDTH - 6) - mode_length;
     for (uint8_t i = 1; i <= space_length; i++) {
-        render_single_space();
+        oled_write_P(PSTR(" "), check_menu(RGBM_MOD));
     }
-    // render_space_six();
     oled_write_P(rmodes[rgb_matrix_get_mode()], check_menu(RGBM_MOD));
-
-    dprintf("Mode length is %d\n", strlen(rmodes[rgb_matrix_get_mode()]));
 }
 
 void render_rgb_speed(void) {
     sprintf(rgb_matrix_speed_str, "%03d", rgb_matrix_get_speed());
-    render_space_seven();
-    oled_write_P(PSTR("SPD: "), check_menu(RGBM_SPD));
+    oled_write_P(PSTR("RGB SPEED:        "), check_menu(RGBM_SPD));
     oled_write_P(rgb_matrix_speed_str, check_menu(RGBM_SPD));
 }
 
 void render_rgb_hue(void) {
     sprintf(rgb_matrix_hue_str, "%03d", rgb_matrix_get_hue());
-    render_space_seven();
-    oled_write_P(PSTR("HUE: "), check_menu(RGBM_HUE));
+    oled_write_P(PSTR("RGB HUE:          "), check_menu(RGBM_HUE));
     oled_write_P(rgb_matrix_hue_str, check_menu(RGBM_HUE));
 }
 
 void render_rgb_sat(void) {
     sprintf(rgb_matrix_sat_str, "%03d", rgb_matrix_get_sat());
-    render_space_thirteen();
-    oled_write_P(PSTR("SAT: "), check_menu(RGBM_SAT));
+    oled_write_P(PSTR("RGB SATURATION:   "), check_menu(RGBM_SAT));
     oled_write_P(rgb_matrix_sat_str, check_menu(RGBM_SAT));
 }
 
 void render_rgb_value(void) {
     sprintf(rgb_matrix_val_str, "%03d", rgb_matrix_get_val());
-    render_space_thirteen();
-    oled_write_P(PSTR("VAL: "), check_menu(RGBM_VAL));
+    oled_write_P(PSTR("RGB VALUE:        "), check_menu(RGBM_VAL));
     oled_write_P(rgb_matrix_val_str, check_menu(RGBM_VAL));
 }
 
@@ -636,14 +590,67 @@ void render_sgqt_specs(void) {
   oled_write_P(sgqt_tapping_term_str, false);
 }
 
+void render_os(void) {
+    oled_write_P(PSTR("CURRENT OS:"), check_menu(OLED_OS));
+    switch (user_config.os) {
+    case WINDOWS:
+        oled_write_P(PSTR("   WINDOWS"), check_menu(OLED_OS));
+        break;
+    case LINUX:
+        oled_write_P(PSTR("     LINUX"), check_menu(OLED_OS));
+        break;
+    default:
+        oled_write_P(PSTR("     MACOS"), check_menu(OLED_OS));
+        break;
+    }
+}
+
+void render_eeprom_clear(void) {
+    oled_write_P(PSTR("         CLEAR EEPROM"), check_menu(OLED_EEC));
+}
+
+void render_debug(void) {
+    if (kb_state.debug_enabled) {
+    oled_write_P(PSTR("DEBUG STATUS:      ON"), check_menu(OLED_DBG));
+    } else {
+    oled_write_P(PSTR("DEBUG STATUS:     OFF"), check_menu(OLED_DBG));
+    }
+}
+
+void render_menu_header(void) {
+    oled_write_P(PSTR(" Kyria Configuration "), false);
+}
+
+void render_begin(void) {
+}
+
+void render_max(void) {
+}
+
+void (*menuView[])(void) = {
+        render_begin,
+        render_led_flags,
+        render_rgb_speed,
+        render_rgb_hue,
+        render_rgb_sat,
+        render_rgb_value,
+        render_matrix_mode,
+        render_os,
+        render_debug,
+        render_eeprom_clear,
+        render_max
+    };
+
+void render_menu(void) {
+    for (uint8_t i = viewport_begin(); i <= (viewport_begin() + 6); i++) {
+         menuView[i]();
+    }
+}
+
 bool oled_task_user(void) {
     if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
-            render_logo_short_slave();
-            render_rgb_sat();
-            render_rgb_value();
-            render_matrix_mode();
-            render_heatmap_specs();
-        // }
+            render_menu_header();
+            render_menu();
     } else {
         if (is_keyboard_master()) {
             render_logo_master();

@@ -380,7 +380,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case ADJ_LYR:
             if (record->event.pressed) {
-                user_config.rgb_menu_selector = 0;
+                user_config.rgb_menu_selector = 1;
                 layer_on(_ADJUST);
                 return PROCESS_RECORD_RETURN_FALSE;
             }

@@ -90,3 +90,8 @@
     #define SPLIT_TRANSACTION_IDS_USER RPC_ID_USER_STATE_SYNC, RPC_ID_KB_STATE_SYNC
     #endif
 #endif
+
+#ifdef OLED_ENABLE
+    #define VIEWPORT_HEIGHT 7
+    #define VIEWPORT_WIDTH 21
+#endif

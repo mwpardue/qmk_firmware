@@ -13,6 +13,7 @@
 // static keyrecord_t next_record;
 
 _Static_assert(sizeof(user_config_t) == sizeof(uint32_t), "user_config_t is oversize!");
+_Static_assert(sizeof(kb_state_t) <= sizeof(uint32_t), "kb_state_t is oversize!");
 
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
@@ -24,6 +25,7 @@ void keyboard_pre_init_user(void) {
 
 void                       keyboard_post_init_user(void) {
     user_config.raw = eeconfig_read_user();
+    kb_state.raw = eeconfig_read_user();
 
 #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
     keyboard_post_init_transport_sync();

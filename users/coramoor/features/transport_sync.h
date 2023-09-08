@@ -26,12 +26,13 @@ typedef union {
     // #endif
     #ifdef CASEMODE_ENABLE
         uint8_t xcase_state :8;
+        uint16_t llocked :8;
         bool caps_word_on :1;
-        uint16_t llocked :16;
+        bool debug_enabled :1;
     #endif
         // uint8_t smart_case_types :8;
     };
-} kb_state_t;
+} __attribute__((packed)) kb_state_t;
 
 extern kb_state_t kb_state;
 

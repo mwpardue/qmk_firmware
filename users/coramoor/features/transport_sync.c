@@ -1,6 +1,7 @@
 #include "coramoor.h"
 #include "features/transport_sync.h"
 #include "transactions.h"
+#include "features/rgb_matrix_keys.h"
 #ifdef SMART_CASE_ENABLE
     #include "features/smart_case.h"
 #endif
@@ -66,8 +67,9 @@ void user_transport_update(void) {
     //     kb_state.type = smart_case.type;
     // #endif
         kb_state.xcase_state = xcase_state;
-        kb_state.caps_word_on = caps_word_on;
         kb_state.llocked = locked_layers;
+        kb_state.caps_word_on = caps_word_on;
+        kb_state.debug_enabled = debug_enable;
         // kb_state.smart_case_types = smart_case_types;
         transport_kb_state = kb_state.raw;
     } else {
@@ -83,8 +85,9 @@ void user_transport_update(void) {
     //     smart_case.type = kb_state.type;
     // #endif
         xcase_state = kb_state.xcase_state;
-        caps_word_on = kb_state.caps_word_on;
         locked_layers = kb_state.llocked;
+        caps_word_on = kb_state.caps_word_on;
+        debug_enable = kb_state.debug_enabled;
         // smart_case_types = kb_state.smart_case_types;
 
     }

@@ -25,6 +25,8 @@
 //     send_string(heatmap_area_str);
 // }
 
+extern uint8_t viewport_begin(void);
+
 process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RGB_CHG:
@@ -109,21 +111,25 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
         case RENC_MDP:
             if (record->event.pressed) {
                 if (user_config.rgb_menu_selector == RGBM_MAX - 1) {
-                    user_config.rgb_menu_selector = 0;
+                    user_config.rgb_menu_selector = 1;
                 } else {
                     user_config.rgb_menu_selector = user_config.rgb_menu_selector + 1;
                 };
+                dprintf("RGB Selector is %d\n", user_config.rgb_menu_selector);
+                dprintf("Viewport min is %d\n", viewport_begin());
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
 
         case RENC_MDM:
             if (record->event.pressed) {
-                if (user_config.rgb_menu_selector == 0) {
+                if (user_config.rgb_menu_selector == 1) {
                     user_config.rgb_menu_selector = RGBM_MAX - 1;
                 } else {
                     user_config.rgb_menu_selector = user_config.rgb_menu_selector - 1;
                 }
+                dprintf("RGB Selector is %d\n", user_config.rgb_menu_selector);
+                dprintf("Viewport min is %d\n", viewport_begin());
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
@@ -173,6 +179,42 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                               }
                               break;
                           }
+                        break;
+                    case OLED_EEC:
+                        #ifdef NO_RESET
+                            eeconfig_init();
+                        #else
+                            eeconfig_disable();
+                            soft_reset_keyboard();
+                        #endif
+                        break;
+                    case OLED_DBG:
+                        #ifndef NO_DEBUG
+                            debug_enable ^= 1;
+                            kb_state.debug_enabled = debug_enable;
+                            eeconfig_update_user(kb_state.raw);
+                            if (debug_enable) {
+                                print("DEBUG: enabled.\n");
+                            } else {
+                                print("DEBUG: disabled.\n");
+                            }
+                        #endif
+                        break;
+                    case OLED_OS:
+                        switch (user_config.os) {
+                            case MACOS:
+                                user_config.os = WINDOWS;
+                                eeconfig_update_user(user_config.raw);
+                                break;
+                            case WINDOWS:
+                                user_config.os = LINUX;
+                                eeconfig_update_user(user_config.raw);
+                                break;
+                            case LINUX:
+                                user_config.os = MACOS;
+                                eeconfig_update_user(user_config.raw);
+                                break;
+                        }
                         break;
                     default:
                         break;
@@ -227,6 +269,42 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                               break;
                           }
                         break;
+                    case OLED_EEC:
+                        #ifdef NO_RESET
+                            eeconfig_init();
+                        #else
+                            eeconfig_disable();
+                            soft_reset_keyboard();
+                        #endif
+                        break;
+                    case OLED_DBG:
+                        #ifndef NO_DEBUG
+                            debug_enable ^= 1;
+                            kb_state.debug_enabled = debug_enable;
+                            eeconfig_update_user(kb_state.raw);
+                            if (debug_enable) {
+                                print("DEBUG: enabled.\n");
+                            } else {
+                                print("DEBUG: disabled.\n");
+                            }
+                        #endif
+                        break;
+                    case OLED_OS:
+                        switch (user_config.os) {
+                            case MACOS:
+                                user_config.os = LINUX;
+                                eeconfig_update_user(user_config.raw);
+                                break;
+                            case WINDOWS:
+                                user_config.os = MACOS;
+                                eeconfig_update_user(user_config.raw);
+                                break;
+                            case LINUX:
+                                user_config.os = WINDOWS;
+                                eeconfig_update_user(user_config.raw);
+                                break;
+                        }
+                    break;
                     default:
                         break;
                 }

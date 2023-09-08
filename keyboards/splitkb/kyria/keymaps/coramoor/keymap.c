@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = LAYOUT( \
   _______, TOBAS,   _______, EE_CLR,  QK_RBT,  _______,                                         RGB_ALM, RGB_ALP,  RGB_SPM,  RGB_SPP, _______, _______,  \
-  ACH_TTP, SGT_TTP, MDT_TTP, SFT_TTP, GQT_TTP, DT_UP,                                           _______, _______,  _______,  _______, _______, _______,\
+  ACH_TTP, SGT_TTP, MDT_TTP, SFT_TTP, GQT_TTP, DT_UP,                                           RENC_ADM, RENC_MDP,  RENC_MDM,  RENC_ADP, _______, _______,\
   ACH_TTM, SGT_TTM, MDT_TTM, SFT_TTM, GQT_TTM, DT_DOWN, _______, _______,     _______, _______, _______, _______,  _______,  _______, _______, _______,\
                              KC_NO,   ACH_TTM, _______, _______, _______,     _______, _______, _______, ACH_TTP, KC_NO \
 )

@@ -2,6 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "../definitions/keycodes.h"
+#include "oled_menu.h"
 #include "process_record_result.h"
 #include "quantum.h"
 
@@ -9,17 +10,19 @@
 uint8_t rgb_matrix_get_heatmap_spread(void);
 uint8_t rgb_matrix_get_area_limit(void);
 
-typedef enum {
-    RGBM_FLG,
-    RGBM_SPD,
-    RGBM_HUE,
-    RGBM_SAT,
-    RGBM_VAL,
-    RGBM_MOD,
-    RGBM_MAX
-} rgb_menu_selector_t;
-
-extern rgb_menu_selector_t rgb_menu_selector;
+// typedef enum {
+//     RGBM_FLG,
+//     RGBM_SPD,
+//     RGBM_HUE,
+//     RGBM_SAT,
+//     RGBM_VAL,
+//     RGBM_MOD,
+//     OLED_EEC,
+//     OLED_DBG,
+//     RGBM_MAX
+// } rgb_menu_selector_t;
+//
+// extern rgb_menu_selector_t rgb_menu_selector;
 
 static const char * const rmodes[] = {
     "               ",
