@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 
+#include <ctype.h>
 #include "coramoor.h"
 
 extern uint16_t sft_tapping_term;
@@ -11,6 +12,52 @@ extern uint16_t achordion_tapping_term;
 extern uint16_t gqt_tapping_term;
 
 extern uint16_t sgqt_tapping_term;
+
+__attribute__((unused)) int            start_index = 0;
+
+__attribute__((unused)) uint32_t        substring_timer = 0;
+
+__attribute__((unused)) uint32_t scroll_time = 1000;
+//----------------------------------------------------------
+// RGB Matrix naming
+#include <rgb_matrix.h>
+
+#if defined(RGB_MATRIX_EFFECT)
+#    undef RGB_MATRIX_EFFECT
+#endif // defined(RGB_MATRIX_EFFECT)
+
+#define RGB_MATRIX_EFFECT(x) RGB_MATRIX_EFFECT_##x,
+enum {
+    RGB_MATRIX_EFFECT_NONE,
+#include "rgb_matrix_effects.inc"
+#undef RGB_MATRIX_EFFECT
+#ifdef RGB_MATRIX_CUSTOM_KB
+#    include "rgb_matrix_kb.inc"
+#endif
+#ifdef RGB_MATRIX_CUSTOM_USER
+#    include "rgb_matrix_user.inc"
+#endif
+};
+
+#define RGB_MATRIX_EFFECT(x)    \
+    case RGB_MATRIX_EFFECT_##x: \
+        return #x;
+const char* rgb_matrix_name(uint8_t effect) {
+    switch (effect) {
+        case RGB_MATRIX_EFFECT_NONE:
+            return "NONE";
+#include "rgb_matrix_effects.inc"
+#undef RGB_MATRIX_EFFECT
+#ifdef RGB_MATRIX_CUSTOM_KB
+#    include "rgb_matrix_kb.inc"
+#endif
+#ifdef RGB_MATRIX_CUSTOM_USER
+#    include "rgb_matrix_user.inc"
+#endif
+        default:
+            return "UNKNOWN";
+    }
+}
 
 // GENERAL MENU FUNCTIONS
 
@@ -32,56 +79,64 @@ uint8_t viewport_begin(void) {
     }
 }
 
-// HEATMAP SECTION
-uint8_t get_heatmap_area(void) {
-    return user_config.rgb_matrix_heatmap_area;
+void render_menu_item(const char *label, uint16_t property, uint8_t menu_item) {
+    size_t label_length = strlen(label);
+
+    char property_str[20];
+    snprintf(property_str, sizeof(property_str), "%d", property);
+    uint8_t property_length = strlen(property_str);
+
+    uint8_t spacer_length = (VIEWPORT_WIDTH - label_length - property_length);
+    oled_write_P(PSTR(label), check_menu(menu_item));
+    for (uint8_t i = 1; i <= spacer_length; i++) {
+        oled_write_P(PSTR(" "), check_menu(menu_item));
+    }
+    oled_write_P(PSTR(property_str), check_menu(menu_item));
 }
 
-uint8_t get_heatmap_spread(void) {
-    return user_config.rgb_matrix_heatmap_spread;
+void render_rgb_mode(const char *label, uint8_t menu_item) {
+    // oled_set_cursor(col, line);
+    __attribute__((unused)) static uint8_t mode;
+    // bool                                   need_update = false;
+    static char                            buf[41]     = {0};
+    int                                    STRING_LENGTH = strlen(rgb_matrix_name(rgb_matrix_get_mode()));
+    static char                            substring[22];
+    size_t                                 LABEL_LENGTH = strlen(label);
+    size_t                                 PROPERTY_LENGTH = (VIEWPORT_WIDTH - LABEL_LENGTH);
+
+    oled_write_P(PSTR(label), check_menu(menu_item));
+    if (mode != rgb_matrix_get_mode()) {
+        mode        = rgb_matrix_get_mode();
+        start_index = 0;
+        snprintf(buf, sizeof(buf), "%*s", PROPERTY_LENGTH, rgb_matrix_name(rgb_matrix_get_mode()));
+        STRING_LENGTH = strlen(strcat(buf, ""));
+        for (uint8_t i = 1; i < sizeof(buf); ++i) {
+            if (buf[i] == 0)
+                break;
+            else if (buf[i] == '_')
+                buf[i] = ' ';
+        }
+    }
+
+    if ( STRING_LENGTH > PROPERTY_LENGTH ) {
+        strncpy(substring, buf + start_index, PROPERTY_LENGTH);
+        oled_write(substring, check_menu(menu_item));
+        if (!check_menu(menu_item)) {
+            start_index = 0;
+            scroll_time = 1000;
+        } else {
+            if ((timer_elapsed32(substring_timer) > scroll_time) && (start_index <= STRING_LENGTH - (PROPERTY_LENGTH + 1))) {
+                start_index++;
+                substring_timer = timer_read32();
+                scroll_time = 500;
+            }
+        }
+    } else {
+        oled_write(buf, check_menu(menu_item));
+    }
 }
-
-char heatmap_area_str[8];
-char heatmap_spread_str[8];
-
-// TAPPING TERM SECTION
-uint16_t get_shift_tapping_term_str(void) {
-    return sft_tapping_term;
-}
-
-uint16_t get_tapping_term_str(void) {
-    return g_tapping_term;
-}
-
-uint16_t get_modtap_tapping_term_str(void) {
-    return modtap_tapping_term;
-}
-
-uint16_t get_achordion_tapping_term_str(void) {
-    return achordion_tapping_term;
-}
-
-uint16_t get_gqt_tapping_term_str(void) {
-    return gqt_tapping_term;
-}
-
-uint16_t get_sgqt_tapping_term_str(void) {
-    return sgqt_tapping_term;
-}
-
-char shift_tapping_term_str[16];
-char g_tapping_term_str[16];
-char modtap_tapping_term_str[16];
-char achordion_tapping_term_str[16];
-char gqt_tapping_term_str[16];
-char sgqt_tapping_term_str[16];
 
 void menu_items(void) {
-char rgb_matrix_speed_str[8];
-char rgb_matrix_hue_str[8];
-char rgb_matrix_sat_str[8];
-char rgb_matrix_val_str[8];
-uint8_t mode_length = strlen(rmodes[rgb_matrix_get_mode()]);
     oled_write_P(PSTR(" Kyria Configuration "), false);
     for (uint8_t i = viewport_begin(); i <= (viewport_begin() + 6); i++) {
         switch(i) {
@@ -107,72 +162,43 @@ uint8_t mode_length = strlen(rmodes[rgb_matrix_get_mode()]);
                     }
                     break;
             case MENU_SPEED:
-                sprintf(rgb_matrix_speed_str, "%03d", rgb_matrix_get_speed());
-                oled_write_P(PSTR("RGB SPEED:        "), check_menu(MENU_SPEED));
-                oled_write_P(rgb_matrix_speed_str, check_menu(MENU_SPEED));
+                render_menu_item("RGB SPEED:", rgb_matrix_get_speed(), i);
                 break;
             case MENU_HUE:
-                sprintf(rgb_matrix_hue_str, "%03d", rgb_matrix_get_hue());
-                oled_write_P(PSTR("RGB HUE:          "), check_menu(MENU_HUE));
-                oled_write_P(rgb_matrix_hue_str, check_menu(MENU_HUE));
+                render_menu_item("RGB HUE:", rgb_matrix_get_hue(), i);
                 break;
             case MENU_SAT:
-                sprintf(rgb_matrix_sat_str, "%03d", rgb_matrix_get_sat());
-                oled_write_P(PSTR("RGB SATURATION:   "), check_menu(MENU_SAT));
-                oled_write_P(rgb_matrix_sat_str, check_menu(MENU_SAT));
+                render_menu_item("RGB SAT:", rgb_matrix_get_sat(), i);
                 break;
             case MENU_VAL:
-                sprintf(rgb_matrix_val_str, "%03d", rgb_matrix_get_val());
-                oled_write_P(PSTR("RGB VALUE:        "), check_menu(MENU_VAL));
-                oled_write_P(rgb_matrix_val_str, check_menu(MENU_VAL));
+                render_menu_item("RGB VAL:", rgb_matrix_get_val(), i);
                 break;
             case MENU_RGBMODE:
-                oled_write_P(PSTR("MODE: "), check_menu(MENU_RGBMODE));
-                uint8_t space_length = (VIEWPORT_WIDTH - 6) - mode_length;
-                for (uint8_t i = 1; i <= space_length; i++) {
-                    oled_write_P(PSTR(" "), check_menu(MENU_RGBMODE));
-                }
-                oled_write_P(rmodes[rgb_matrix_get_mode()], check_menu(MENU_RGBMODE));
+                render_rgb_mode("MODE: ", i);
                 break;
             case MENU_HMAREA:
-                sprintf(heatmap_area_str, "%03d", get_heatmap_area());
-                oled_write_P(PSTR("HEATMAP AREA:     "), check_menu(MENU_HMAREA));
-                oled_write_P(heatmap_area_str, check_menu(MENU_HMAREA));
+                render_menu_item("HEATMAP AREA:", user_config.rgb_matrix_heatmap_area, i);
                 break;
             case MENU_HMSPREAD:
-                sprintf(heatmap_spread_str, "%03d", get_heatmap_spread());
-                oled_write_P(PSTR("HEATMAP SPREAD:   "), check_menu(MENU_HMSPREAD));
-                oled_write_P(heatmap_spread_str, check_menu(MENU_HMSPREAD));
+                render_menu_item("HEATMAP SPREAD:", user_config.rgb_matrix_heatmap_spread, i);
                 break;
             case MENU_STT:
-                sprintf(shift_tapping_term_str, "%03d", get_shift_tapping_term_str());
-                oled_write_P(PSTR("SHIFT TAP TERM:   "), check_menu(MENU_STT));
-                oled_write_P(shift_tapping_term_str, check_menu(MENU_STT));
+                render_menu_item("SHIFT TAP TERM:", sft_tapping_term, i);
                 break;
             case MENU_TT:
-                sprintf(g_tapping_term_str, "%03d", get_tapping_term_str());
-                oled_write_P(PSTR("TAPPING TERM:     "), check_menu(MENU_TT));
-                oled_write_P(g_tapping_term_str, check_menu(MENU_TT));
+                render_menu_item("TAPPING TERM:", g_tapping_term, i);
                 break;
             case MENU_MT:
-                sprintf(modtap_tapping_term_str, "%03d", get_modtap_tapping_term_str());
-                oled_write_P(PSTR("MOD TAP TERM:     "), check_menu(MENU_MT));
-                oled_write_P(modtap_tapping_term_str, check_menu(MENU_MT));
+                render_menu_item("MOD TAP TERM:", modtap_tapping_term, i);
                 break;
             case MENU_AT:
-                sprintf(achordion_tapping_term_str, "%03d", get_achordion_tapping_term_str());
-                oled_write_P(PSTR("ACH TAP TERM:     "), check_menu(MENU_AT));
-                oled_write_P(achordion_tapping_term_str, check_menu(MENU_AT));
+                render_menu_item("ACH TAP TERM:", achordion_tapping_term, i);
                 break;
             case MENU_GQT:
-                sprintf(gqt_tapping_term_str, "%03d", get_gqt_tapping_term_str());
-                oled_write_P(PSTR("GQT TAP TERM:     "), check_menu(MENU_GQT));
-                oled_write_P(gqt_tapping_term_str, check_menu(MENU_GQT));
+                render_menu_item("GQT TAP TERM:", gqt_tapping_term, i);
                 break;
             case MENU_SGQT:
-                sprintf(sgqt_tapping_term_str, "%03d", get_sgqt_tapping_term_str());
-                oled_write_P(PSTR("SGQT TAP TERM:    "), check_menu(MENU_SGQT));
-                oled_write_P(sgqt_tapping_term_str, check_menu(MENU_SGQT));
+                render_menu_item("SGQT TAP TERM:", sgqt_tapping_term, i);
                 break;
             case MENU_OSFLAG:
                 oled_write_P(PSTR("CURRENT OS:"), check_menu(MENU_OSFLAG));

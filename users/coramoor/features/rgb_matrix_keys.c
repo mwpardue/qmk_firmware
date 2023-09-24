@@ -34,6 +34,8 @@ uint16_t sget_gqt_tapping_term(void) {
     return sgqt_tapping_term;
 }
 
+extern uint32_t substring_timer;
+
 extern uint8_t viewport_begin(void);
 
 process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *record) {
@@ -78,6 +80,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                 };
                 dprintf("RGB Selector is %d\n", user_config.rgb_menu_selector);
                 dprintf("Viewport min is %d\n", viewport_begin());
+                substring_timer = timer_read32();
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
@@ -91,6 +94,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                 }
                 dprintf("RGB Selector is %d\n", user_config.rgb_menu_selector);
                 dprintf("Viewport min is %d\n", viewport_begin());
+                substring_timer = timer_read32();
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
@@ -112,6 +116,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                         break;
                     case MENU_RGBMODE:
                         rgb_matrix_step();
+                        substring_timer = timer_read32();
                         break;
                     case MENU_FLAGS:
                           switch (rgb_matrix_get_flags()) {
@@ -235,6 +240,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                         break;
                     case MENU_RGBMODE:
                         rgb_matrix_step_reverse();
+                        substring_timer = timer_read32();
                         break;
                     case MENU_FLAGS:
                           switch (rgb_matrix_get_flags()) {

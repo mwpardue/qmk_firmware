@@ -53,3 +53,5 @@ bool check_menu(uint8_t menu_item);
 uint8_t viewport_begin(void);
 
 void menu_items(void);
+
+void render_menu_item(const char *label, uint16_t property, uint8_t menu_item);
