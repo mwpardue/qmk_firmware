@@ -30,6 +30,8 @@ const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
 const uint16_t PROGMEM escape_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM escape2_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM mtescape_combo[] = {RHM_J, RHM_K, COMBO_END};
+const uint16_t PROGMEM mtescape2_combo[] = {LHM_D, LHM_F, COMBO_END};
 const uint16_t PROGMEM angb_combo[] = {KC_COMM, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
@@ -43,6 +45,8 @@ combo_t key_combos[] = {
   COMBO(brac_combo, SM_BRC),
   COMBO(escape_combo, KC_ESC),
   COMBO(escape2_combo, KC_ESC),
+  COMBO(mtescape_combo, KC_ESC),
+  COMBO(mtescape2_combo, KC_ESC),
   COMBO(angb_combo, SM_ANG)
 };
 
@@ -64,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE] = LAYOUT(
   QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                                           KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  ALT_TAB, KC_A,   KC_S,    KC_D,    KC_F,     KC_G,                                           KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  HYP_TAB, LHM_A,  LHM_S,   LHM_D,   LHM_F,    KC_G,                                           KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
   KIT_MOD, KC_Z,   KC_X,    KC_C,    KC_V,     KC_B,    UIL_THM, UOL_THM,    UOR_THM, UIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OSMRALT,
                             KC_NO,   LUTHUM1,  LUTHUM2, LIL_THM, LOL_THM,    LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
 ),
@@ -83,16 +87,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             KC_NO,   LUTHUM1,  KC_LSFT, KC_SPC,  LOL_THM,    LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
 ),
 
+// [_COLEMAK_DH] = LAYOUT(
+//   QK_GESC, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                           KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
+//   ALT_TAB, KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                                           KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    TD_QUOT,
+//   KIT_MOD, KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM,    UOR_THM, UIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, OSMRGUI,
+//                             KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,    LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
+// ),
+
 [_COLEMAK_DH] = LAYOUT(
-  QK_GESC, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                           KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
-  ALT_TAB, KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                                           KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    TD_QUOT,
-  KIT_MOD, KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM,    UOR_THM, UIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, OSMRGUI,
-                            KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,    LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
+  QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                                           KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+  ALT_TAB, KC_A,   KC_S,    KC_D,    KC_F,     KC_G,                                           KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  KIT_MOD, KC_Z,   KC_X,    KC_C,    KC_V,     KC_B,    UIL_THM, UOL_THM,    UOR_THM, UIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OSMRALT,
+                            KC_NO,   LUTHUM1,  LUTHUM2, LIL_THM, LOL_THM,    LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
 ),
 
 [_NAVIGATION] = LAYOUT(
   _______, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, TD_SSFL,  		                               WD_LEFT, SEL_WRD,  SEL_LIN, WD_RGHT, PASSPAL, _______,
-  KC_TAB,  OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, TD_SNIP,                                        KC_LEFT, KC_DOWN,  KC_UP,   KC_RGHT, KC_SCLN, TD_QUOT,
+  KC_TAB,  OSMLSFT, OSMLALT, OSMLCTL, OSMLGUI, TD_SNIP,                                        KC_LEFT, KC_DOWN,  KC_UP,   KC_RGHT, KC_SCLN, TD_QUOT,
   LLOCK,   KC_TAB,  XCASE,   TD_COPY, TD_PAST, _______, _______, _______,    _______, _______, _______, KC_HOME,  _______, _______, KC_END,  KC_ENT,
 						     KC_NO,   KIT_RST, _______, _______, _______,    KC_ENT,  KC_SPC,  KC_NO,   KC_NO,    KC_NO
 ),
@@ -113,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_MACROS] = LAYOUT(
   _______, _______, SCRN_L,  _______, SCRN_R,  _______,                                        _______, KC_MPRV,  KC_MPLY, KC_MNXT, PASSPAL, PASSPAL,
-  _______, TD_MONL, TD_MONL, TD_MONM, TD_MONR, _______,                                        TD_HTTP, OSMRGUI,  OSMRSFT, OSMRALT, OSMRCTL, _______,
+  _______, TD_MONL, TD_MONL, TD_MONM, TD_MONR, _______,                                        TD_HTTP, OSMRGUI,  OSMRCTL, OSMRALT, OSMRSFT, _______,
   _______, _______, MAX_SCR, TD_MONB, _______, _______, KC_BTN1, KC_BTN2,    _______, _______, _______, MAX_SCR,  _______, _______, _______, _______,
                              KC_NO,   _______, _______, MOFUN,   _______,    _______, _______, KC_MUTE, KC_NO,    KC_NO
 ),

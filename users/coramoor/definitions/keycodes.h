@@ -89,22 +89,22 @@ enum {
 // Left thumb keys
 
 #define LUTHUM1 LGUI_T(KC_ENTER)
-#define LUTHUM2 LCTL_T(KC_MINS)
+#define LUTHUM2 LSFT_T(KC_MINS)
 // #define LUTHUM2 LT(_NUMPAD, KC_MINS)
 #define LIL_THM LT(_NAVIGATION, KC_Z)
 #define LOL_THM LT(_NUMPAD, KC_BSPC)
-// #define LOL_THM LSFT_T(KC_Z)
-#define UOL_THM MEH_T(KC_ESC)
-#define UIL_THM LGUI_T(KC_CAPS)
+// #define LOL_THM LSFT_T(KC_BSPC)
+#define UOL_THM MEH_T(KC_CAPS)
+#define UIL_THM LGUI_T(KC_Z)
 
 // Right thumb keys
 
 #define RUTHUM1 LSFT_T(KC_DEL)
-#define RUTHUM2 LGUI_T(KC_Q)
+#define RUTHUM2 RSFT_T(KC_Q)
 // #define RUTHUM2 LT(_SYMBOL, KC_Z)
 #define LIR_THM LT(_MACROS, KC_SPACE)
 #define LOR_THM LT(_SYMBOL, KC_ENTER)
-// #define LOR_THM LCTL_T(KC_ENTER)
+// #define LOR_THM RSFT_T(KC_ENTER)
 #define UIR_THM RGUI_T(XCASE)
 #define UOR_THM HYPR_T(PASSPAL)
 
@@ -118,15 +118,15 @@ enum {
 // Mod-taps (QWERTY)
 
 // Left Hand
-#define LHM_A LCTL_T(KC_A)
+#define LHM_A LSFT_T(KC_A)
 #define LHM_S LALT_T(KC_S)
-#define LHM_D LSFT_T(KC_D)
+#define LHM_D LCTL_T(KC_D)
 #define LHM_F LGUI_T(KC_F)
 
 // Right Hand
-#define RHM_SCN LCTL_T(KC_SCLN)
+#define RHM_SCN RSFT_T(KC_SCLN)
 #define RHM_L RALT_T(KC_L)
-#define RHM_K RSFT_T(KC_K)
+#define RHM_K RCTL_T(KC_K)
 #define RHM_J RGUI_T(KC_J)
 
 //
@@ -226,8 +226,8 @@ enum {
 #define SCRN_L LCTL(LALT(LSFT(KC_H)))
 #define SCRN_R LCTL(LALT(LSFT(KC_L)))
 #define MAX_SCR LGUI(LCTL(LALT(LSFT(KC_M))))
-#define MOV_LFT LCTL(KC_H)
-#define MOV_RGT LCTL(KC_L)
+#define MOV_LFT LGUI(KC_H)
+#define MOV_RGT LGUI(KC_L)
 #define TAB_LFT LCTL(LSFT(KC_TAB))
 #define TAB_RGT LCTL(KC_TAB)
 #define BRWS_FW LGUI(KC_RBRC)
@@ -244,12 +244,13 @@ enum {
 #define PG_DOWN LGUI(KC_DOWN)
 #define CAD LCTL(LALT(KC_DEL))
 #define KIT_RST LGUI(KC_0)
-#define LHM_AT LCTL_T(SP_AT)
+#define LHM_AT LSFT_T(SP_AT)
 #define LHM_BSL LALT_T(KC_BSLS)
-#define LHM_UND LSFT_T(KC_UNDS)
+#define LHM_UND LCTL_T(KC_UNDS)
 #define LHM_PIP LGUI_T(KC_PIPE)
 #define ALT_BSP LALT(KC_BSPC)
 #define ALT_TAB LALT_T(KC_TAB)
+#define HYP_TAB HYPR_T(KC_TAB)
 #define SFT_ENT LSFT_T(KC_ENT)
 
 // uint16_t extract_base_tapping_keycode(uint16_t keycode);

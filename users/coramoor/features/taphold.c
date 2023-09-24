@@ -47,15 +47,19 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LHM_PIP:
         case TD_QUOT:
           return g_tapping_term + 100;
-        case LHM_A:
+        // case LHM_A:
         case LHM_S:
         case LHM_F:
-        case RHM_SCN:
+        // case RHM_SCN:
         case RHM_L:
         case RHM_J:
-          return get_modtap_tapping_term();
         case RHM_K:
         case LHM_D:
+          return get_modtap_tapping_term();
+        case LHM_A:
+        case RHM_SCN:
+        // case RHM_K:
+        // case LHM_D:
             return get_sft_tapping_term();
         default:
             return g_tapping_term;

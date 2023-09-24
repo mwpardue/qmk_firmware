@@ -249,10 +249,10 @@ void td_monitor_left(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LALT(LSFT(LCTL(KC_4))));
+          tap_code16(LGUI(LCTL(KC_4)));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LALT(LSFT(LCTL(KC_4)))));
+          tap_code16(LGUI(LSFT(LCTL(KC_4))));
           break;
         default: break;
     }
@@ -262,10 +262,10 @@ void td_monitor_middle(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LALT(LSFT(LCTL(KC_5))));
+          tap_code16(LGUI(LCTL(KC_5)));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LALT(LSFT(LCTL(KC_5)))));
+          tap_code16(LGUI(LSFT(LCTL(KC_5))));
           break;
         default: break;
     }
@@ -275,10 +275,10 @@ void td_monitor_right(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LALT(LSFT(LCTL(KC_6))));
+          tap_code16(LGUI(LCTL(KC_6)));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LALT(LSFT(LCTL(KC_6)))));
+          tap_code16(LGUI(LSFT(LCTL(KC_6))));
           break;
         default: break;
     }
@@ -288,10 +288,10 @@ void td_monitor_bottom(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LALT(LSFT(LCTL(KC_1))));
+          tap_code16(LGUI(LCTL(KC_1)));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LALT(LSFT(LCTL(KC_1)))));
+          tap_code16(LGUI(LSFT(LCTL(KC_1))));
           break;
         default: break;
     }

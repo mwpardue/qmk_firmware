@@ -26,6 +26,8 @@ void keyboard_pre_init_user(void) {
 void                       keyboard_post_init_user(void) {
     user_config.raw = eeconfig_read_user();
     kb_state.raw = eeconfig_read_user();
+    // rgb_matrix_sethsv(160, 140, rgb_matrix_get_val());
+    // rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_SIMPLE);
 
 #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
     keyboard_post_init_transport_sync();
@@ -124,8 +126,6 @@ void matrix_scan_user(void) {
   uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
    switch (tap_hold_keycode) {
      case FUN_XCS:
-     // case ESC_CTL:
-     // case ESC_MEH:
      case BSP_SYM:
      case ENT_MEH:
      case ENT_HYP:
@@ -137,17 +137,14 @@ void matrix_scan_user(void) {
      case LUTHUM2:
      case LIL_THM:
      case LOL_THM:
-     // case CLIL_THM:
      case CLOL_THM:
-     // case CLOR_THM:
      case UOR_THM:
      case UIR_THM:
      case LIR_THM:
      case LOR_THM:
      case RUTHUM2:
      case RUTHUM1:
-     case ALT_TAB:
-     // case SFT_ENT:
+     case HYP_TAB:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -228,8 +225,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (!process_leader(keycode, record)) { return false; }
 #endif
 
-#ifdef GQT_ENABLE
-  if (!process_global_quick_tap(keycode, record)) { return false; }
+#ifdef COMBO_ENABLE
+    // Process combos
+    switch (process_combos(keycode, record)) {
+        case PROCESS_RECORD_RETURN_TRUE:
+            return true;
+        case PROCESS_RECORD_RETURN_FALSE:
+            return false;
+        default:
+            break;
+    };
 #endif
 
 #ifdef ACHORDION_ENABLE
@@ -242,6 +247,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef LAYER_LOCK_ENABLE
       if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+#endif
+
+#ifdef GQT_ENABLE
+  if (!process_global_quick_tap(keycode, record)) { return false; }
 #endif
 
 #ifdef SMART_THUMB_KEYS_ENABLE
@@ -336,18 +345,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef SHORTCUTS_ENABLE
     // Process custom_shortcuts
     switch (process_custom_shortcuts(keycode, record)) {
-        case PROCESS_RECORD_RETURN_TRUE:
-            return true;
-        case PROCESS_RECORD_RETURN_FALSE:
-            return false;
-        default:
-            break;
-    };
-#endif
-
-#ifdef COMBO_ENABLE
-    // Process combos
-    switch (process_combos(keycode, record)) {
         case PROCESS_RECORD_RETURN_TRUE:
             return true;
         case PROCESS_RECORD_RETURN_FALSE:

@@ -19,8 +19,11 @@ void reset_global_quick_tap_state(void) {
 
 static uint16_t prev_press_time = 0;
 
+
 bool process_global_quick_tap(uint16_t keycode, keyrecord_t* record) {
-    if (record->event.pressed) {
+    const bool is_physical_pos = (record->event.key.row < 254
+                                && record->event.key.col < 254);
+    if (record->event.pressed && is_physical_pos) {
         /* Any key down. Recording key press times */
         uint16_t time_diff = record->event.time - prev_press_time;
         prev_press_time = record->event.time;
@@ -64,15 +67,19 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         /* Example: KEYCODE will not be considered for hold-tap if the last key press was less than 150ms ago */
         /* case KEYCODE: */
         /*     return 150; */
-        case LHM_A:
+        // case LHM_A:
         case LHM_S:
         case LHM_F:
-        case RHM_SCN:
+        // case RHM_SCN:
         case RHM_L:
         case RHM_J:
-          return gqt_tapping_term;
         case RHM_K:
         case LHM_D:
+          return gqt_tapping_term;
+        // case RHM_K:
+        // case LHM_D:
+        case RHM_SCN:
+        case LHM_A:
           return sgqt_tapping_term;
         default:
             return 0;  // global_quick_tap is not applied
