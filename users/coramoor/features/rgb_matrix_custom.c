@@ -13,6 +13,10 @@
     #include "features/caps_word.h"
 #endif
 
+#ifdef DYNAMIC_MACRO_ENABLE
+    extern bool is_dynamic_recording;
+#endif
+
 extern led_config_t g_led_config;
 
 uint8_t rgb_matrix_get_heatmap_spread(void) {
@@ -72,8 +76,8 @@ void rgb_custom_thumb_indicators(uint16_t hue, uint8_t sat, uint8_t val) {
     }
 
     RGB rgb       = hsv_to_rgb(hsv);
-        rgb_matrix_set_color(11, rgb.r, rgb.g, rgb.b);
-        rgb_matrix_set_color(42, rgb.r, rgb.g, rgb.b);
+        rgb_matrix_set_color(12, rgb.r, rgb.g, rgb.b);
+        rgb_matrix_set_color(43, rgb.r, rgb.g, rgb.b);
 }
 
 bool rgb_matrix_indicators_user(void) { rgb_matrix_indicators_keymap(); return true; }
@@ -157,5 +161,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 }
             break;
     }
+    #ifdef DYNAMIC_MACRO_ENABLE
+        if (is_dynamic_recording) {
+            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
+        }
+    #endif
+
     return false;
 }

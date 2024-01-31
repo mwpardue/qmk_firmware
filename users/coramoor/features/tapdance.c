@@ -44,23 +44,26 @@ void td_quotes(tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
             if (get_mods() & MOD_MASK_SHIFT) {
-              tap_code16(KC_DQUO);
+                tap_code16(KC_DQUO);
+                tap_code16(KC_DQUO);
+                smart_mods = get_mods();
+                unregister_mods(smart_mods);
+                tap_code16(KC_LEFT);
+                register_mods(smart_mods);
             } else {
-              tap_code16(KC_QUOT);
+                tap_code16(KC_QUOT);
+                tap_code16(KC_QUOT);
+                smart_mods = get_mods();
+                unregister_mods(smart_mods);
+                tap_code16(KC_LEFT);
+                register_mods(smart_mods);
             };
             break;
         case TD_SINGLE_HOLD:
             if (get_mods() & MOD_MASK_SHIFT) {
-              smart_mods = get_mods();
               tap_code16(KC_DQUO);
-              tap_code16(KC_DQUO);
-              unregister_mods(smart_mods);
-              tap_code16(KC_LEFT);
-              register_mods(smart_mods);
             } else {
               tap_code16(KC_QUOT);
-              tap_code16(KC_QUOT);
-              tap_code16(KC_LEFT);
             };
             break;
         default: break;

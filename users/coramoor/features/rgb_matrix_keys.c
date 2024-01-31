@@ -71,7 +71,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
               return PROCESS_RECORD_RETURN_FALSE;
             }
 
-        case RENC_MDP:
+        case MENU_MD:
             if (record->event.pressed) {
                 if (user_config.rgb_menu_selector == MENU_MAX - 1) {
                     user_config.rgb_menu_selector = 1;
@@ -85,7 +85,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
             }
             break;
 
-        case RENC_MDM:
+        case MENU_MU:
             if (record->event.pressed) {
                 if (user_config.rgb_menu_selector == 1) {
                     user_config.rgb_menu_selector = MENU_MAX - 1;
@@ -99,7 +99,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
             }
             break;
 
-        case RENC_ADP:
+        case MENU_AU:
             if (record->event.pressed) {
                 switch (user_config.rgb_menu_selector) {
                     case MENU_HUE:
@@ -216,6 +216,33 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                         sgqt_tapping_term = sgqt_tapping_term + 5;
                         dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
                         break;
+                    case MENU_NKRO:
+                        if (keymap_config.nkro) {
+                            clear_keyboard(); // clear first buffer to prevent stuck keys
+                            keymap_config.nkro = false;
+                        } else {
+                            clear_keyboard(); // clear first buffer to prevent stuck keys
+                            keymap_config.nkro = true;
+                        }
+                        break;
+                    case MENU_BOOTLOADER:
+                        reset_keyboard();
+                        break;
+                    case MENU_DEFAULTLAYER:
+                        switch (get_highest_layer(default_layer_state)) {
+                            case _BASE:
+                                set_single_persistent_default_layer(_COLEMAK_DH);
+                                break;
+                            case _COLEMAK_DH:
+                                set_single_persistent_default_layer(_GAMING);
+                                break;
+                            case _GAMING:
+                                set_single_persistent_default_layer(_BASE);
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -223,7 +250,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
             }
             break;
 
-        case RENC_ADM:
+        case MENU_AD:
             if (record->event.pressed) {
                 switch (user_config.rgb_menu_selector) {
                     case MENU_HUE:
@@ -339,6 +366,33 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                     case MENU_SGQT:
                         sgqt_tapping_term = sgqt_tapping_term - 5;
                         dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
+                        break;
+                    case MENU_NKRO:
+                        if (keymap_config.nkro) {
+                            clear_keyboard(); // clear first buffer to prevent stuck keys
+                            keymap_config.nkro = false;
+                        } else {
+                            clear_keyboard(); // clear first buffer to prevent stuck keys
+                            keymap_config.nkro = true;
+                        }
+                        break;
+                    case MENU_BOOTLOADER:
+                        reset_keyboard();
+                        break;
+                    case MENU_DEFAULTLAYER:
+                        switch (get_highest_layer(default_layer_state)) {
+                            case _BASE:
+                                set_single_persistent_default_layer(_COLEMAK_DH);
+                                break;
+                            case _COLEMAK_DH:
+                                set_single_persistent_default_layer(_GAMING);
+                                break;
+                            case _GAMING:
+                                set_single_persistent_default_layer(_BASE);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     default:
                         break;

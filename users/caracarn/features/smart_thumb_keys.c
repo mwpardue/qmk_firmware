@@ -58,35 +58,35 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                 return PROCESS_RECORD_RETURN_FALSE;
             }
 
-        case FUN_XCS:
-            if (record->tap.count > 0) {
-                if (record->event.pressed) {
-                    if (xcase_state == XCASE_WAIT && host_keyboard_led_state().caps_lock) {
-                        disable_xcase();
-                        disable_caps_word();
-                        dprintln("Disabled XCASE and Caps Word");
-                    }
-                    else if (xcase_state == XCASE_WAIT) {
-                        // enable_xcase();
-                        enable_caps_word();
-                        dprintln("XCASE WAIT, enabled Caps Word");
-                    }
-                    else if (xcase_state == XCASE_ON) {
-                        disable_xcase();
-                        disable_caps_word();
-                        dprintln("Disable XCASE from ON state");
-                    }
-                    else {
-                      if (get_mods() & MOD_MASK_SHIFT) {
-                        enable_xcase_with(OSM(MOD_LSFT));
-                      } else {
-                        enable_xcase();
-                        dprintln("Enabling XCASE to WAIT state");
-                    }
-                }
-              }
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
+        // case FUN_XCS:
+        //     if (record->tap.count > 0) {
+        //         if (record->event.pressed) {
+        //             if (xcase_state == XCASE_WAIT && host_keyboard_led_state().caps_lock) {
+        //                 disable_xcase();
+        //                 disable_caps_word();
+        //                 dprintln("Disabled XCASE and Caps Word");
+        //             }
+        //             else if (xcase_state == XCASE_WAIT) {
+        //                 // enable_xcase();
+        //                 enable_caps_word();
+        //                 dprintln("XCASE WAIT, enabled Caps Word");
+        //             }
+        //             else if (xcase_state == XCASE_ON) {
+        //                 disable_xcase();
+        //                 disable_caps_word();
+        //                 dprintln("Disable XCASE from ON state");
+        //             }
+        //             else {
+        //               if (get_mods() & MOD_MASK_SHIFT) {
+        //                 enable_xcase_with(OSM(MOD_LSFT));
+        //               } else {
+        //                 enable_xcase();
+        //                 dprintln("Enabling XCASE to WAIT state");
+        //             }
+        //         }
+        //       }
+        //         return PROCESS_RECORD_RETURN_FALSE;
+        //     }
 
           case CAP_MEH:
       if (record->event.pressed) {
@@ -197,7 +197,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
               //     } else if ((caps_word_on) && (xcase_state == (XCASE_WAIT || XCASE_ON))) {
               //       disable_caps_word();
               //       disable_xcase();
-              //     } else if 
+              //     } else if
               //
               //
               //

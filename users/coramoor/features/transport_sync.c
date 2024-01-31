@@ -34,6 +34,10 @@ extern smart_case_t smart_case;
     extern bool caps_word_on;
 #endif
 
+#ifdef DYNAMIC_MACRO_ENABLE
+    extern bool is_dynamic_recording;
+#endif
+
     // extern os_t os;
 
 void user_state_sync(uint8_t initiator2target_buffer_size, const void* initiator2target_buffer, uint8_t target2initiator_buffer_size, void* target2initiator_buffer) {
@@ -70,6 +74,7 @@ void user_transport_update(void) {
         kb_state.llocked = locked_layers;
         kb_state.caps_word_on = caps_word_on;
         kb_state.debug_enabled = debug_enable;
+        kb_state.is_dynamic_recording = is_dynamic_recording;
         // kb_state.smart_case_types = smart_case_types;
         transport_kb_state = kb_state.raw;
     } else {
@@ -88,6 +93,7 @@ void user_transport_update(void) {
         locked_layers = kb_state.llocked;
         caps_word_on = kb_state.caps_word_on;
         debug_enable = kb_state.debug_enabled;
+        is_dynamic_recording = kb_state.is_dynamic_recording;
         // smart_case_types = kb_state.smart_case_types;
 
     }

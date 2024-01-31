@@ -19,7 +19,6 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
             return g_tapping_term + 40;
         case TD_COPY:
         case TD_PAST:
-        case FUN_XCS:
         case OSMLSFT:
         case OSMRSFT:
         case OSMLCTL:
@@ -39,11 +38,11 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R: 
-        case CLHMT: 
-        case CRHM_O: 
-        case CRHM_I: 
-        case CRHM_N: 
+        case CLHM_R:
+        case CLHMT:
+        case CRHM_O:
+        case CRHM_I:
+        case CRHM_N:
         // case CTL_A:
         // case ALT_S:
         // case LHM_F:
@@ -62,9 +61,9 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
           return get_modtap_tapping_term();
         case RHM_K:
         case LHM_D:
-        case CLHM_S: 
+        case CLHM_S:
         // case SFT_A:
-        case CRHM_E: 
+        case CRHM_E:
         // case SFT_SCN:
             return get_sft_tapping_term();
         default:
@@ -106,15 +105,15 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R: 
-        case CLHMT: 
-        case CRHM_O: 
-        case CRHM_I: 
-        case CRHM_N: 
+        case CLHM_R:
+        case CLHMT:
+        case CRHM_O:
+        case CRHM_I:
+        case CRHM_N:
         case RHM_K:
         case LHM_D:
-        case CLHM_S: 
-        case CRHM_E: 
+        case CLHM_S:
+        case CRHM_E:
             return false;
     }
     switch (keycode) {
@@ -153,15 +152,15 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case RHM_SCN:
         case RHM_L:
         case RHM_J:
-        case CLHM_R: 
-        case CLHMT: 
-        case CRHM_O: 
-        case CRHM_I: 
-        case CRHM_N: 
+        case CLHM_R:
+        case CLHMT:
+        case CRHM_O:
+        case CRHM_I:
+        case CRHM_N:
         case RHM_K:
         case LHM_D:
-        case CLHM_S: 
-        case CRHM_E: 
+        case CLHM_S:
+        case CRHM_E:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

@@ -102,11 +102,11 @@ void matrix_scan_user(void) {
   // Exceptionally consider the following chords as holds, even though they
   // are on the same hand in Dvorak.
   switch (tap_hold_keycode) {
-    case LHM_F: //F   + W, Q
+    case LHM_V: //F   + W, Q
       if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
-    case LHM_S:
-      if (other_keycode == LIL_THM) {return true;}
-    case LHM_D:
+    case LHM_X:
+      if (other_keycode == LIL_THM || other_keycode == LUTHUM2 || other_keycode == UOL_THM) {return true;}
+    case LHM_Z:
       if (other_keycode == LOL_THM) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
@@ -125,26 +125,42 @@ void matrix_scan_user(void) {
 
   uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
    switch (tap_hold_keycode) {
-     case FUN_XCS:
-     case BSP_SYM:
-     case ENT_MEH:
-     case ENT_HYP:
-     case SPC_HYP:
-     case SFT_FUN:
-     case UIL_THM:
-     case UOL_THM:
-     case LUTHUM1:
-     case LUTHUM2:
-     case LIL_THM:
-     case LOL_THM:
-     case CLOL_THM:
-     case UOR_THM:
-     case UIR_THM:
-     case LIR_THM:
-     case LOR_THM:
-     case RUTHUM2:
-     case RUTHUM1:
-     case HYP_TAB:
+    // case BSP_SYM:
+    case ENT_MEH:
+    case ENT_HYP:
+    case SPC_HYP:
+    case SFT_FUN:
+    case UIL_THM:
+    case UOL_THM:
+    case LUTHUM1:
+    case LUTHUM2:
+    case LIL_THM:
+    case LOL_THM:
+    case CLOL_THM:
+    case UOR_THM:
+    case UIR_THM:
+    case LIR_THM:
+    case LOR_THM:
+    case RUTHUM2:
+    case RUTHUM1:
+    case HYP_TAB:
+    case CLUTHUM2:
+    case CRUTHUM2:
+    // case CLIR_THM:
+    case CLOR_THM:
+    case CLIL_THM:
+    // case CUOR_THM:
+    case SFT_MIN:
+    case SFT_QUO:
+    case GUI_BSP:
+    case ALT_MIN:
+    case CTL_BSP:
+    case CTL_TAB:
+    case MED_Z:
+    case SFT_Z:
+    case SFT_QUE:
+    case UIG_THM:
+    case UOG_THM:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -165,16 +181,29 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
              return true;
          // case (XCASE & 0xff):
          // case XCASE:
-         case BSP_SYM:
+         // case BSP_SYM:
          case SP_CAP:
          case LUTHUM2:
          case LOL_THM:
          case RUTHUM2:
+         case CRUTHUM2:
          default:
             return false;
      }
     return false;
 }
+
+#ifdef DYNAMIC_MACRO_ENABLE
+    bool is_dynamic_recording = false;
+
+    void dynamic_macro_record_start_user(int8_t direction) {
+        is_dynamic_recording = true;
+    }
+
+    void dynamic_macro_record_end_user(int8_t direction) {
+        is_dynamic_recording = false;
+    }
+#endif
 
 // Gloal quick-tap
 // #ifdef QT_ENABLE

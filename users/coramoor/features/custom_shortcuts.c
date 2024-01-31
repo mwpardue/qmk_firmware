@@ -258,11 +258,11 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
-        case KIT_MOD:
+        case CG_MOD:
             if (record->event.pressed) {
-                register_mods(MOD_MASK_CS);
+                register_mods(MOD_MASK_CG);
             } else {
-                unregister_mods(MOD_MASK_CS);
+                unregister_mods(MOD_MASK_CG);
             }
 
         return PROCESS_RECORD_RETURN_FALSE;

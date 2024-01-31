@@ -255,7 +255,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                     keycode = RALT(keycode);
                 }
                 switch (keycode) {
-                    case FUN_XCS:
+                    case RUTHUM2:
                     case XCASE:
                     case (XCASE & 0xff):
                     case OL_THUM:
@@ -324,8 +324,8 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
             if (terminate_case_modes(keycode, record)) {
                 disable_caps_word();
                 disable_xcase();
-            } 
-          
+            }
+
             if (caps_word_on || host_keyboard_led_state().caps_lock) {
               idle_timer = timer_read();
             }

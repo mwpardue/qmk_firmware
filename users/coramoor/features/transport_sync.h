@@ -29,6 +29,7 @@ typedef union {
         uint16_t llocked :8;
         bool caps_word_on :1;
         bool debug_enabled :1;
+        bool is_dynamic_recording :1;
     #endif
         // uint8_t smart_case_types :8;
     };

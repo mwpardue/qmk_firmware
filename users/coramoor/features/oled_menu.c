@@ -94,6 +94,26 @@ void render_menu_item(const char *label, uint16_t property, uint8_t menu_item) {
     oled_write_P(PSTR(property_str), check_menu(menu_item));
 }
 
+void render_bool_menu_item(const char *label, bool property, uint8_t menu_item) {
+    char property_str[4];
+    uint8_t property_length = strlen(property_str);
+    size_t label_length = strlen(label);
+
+    if (property) {
+        strcpy(property_str, "ON");
+    } else {
+        strcpy(property_str, "OFF");
+    }
+    property_length = strlen(property_str);
+
+    uint8_t spacer_length = (VIEWPORT_WIDTH - label_length - property_length);
+    oled_write_P(PSTR(label), check_menu(menu_item));
+    for (uint8_t i = 1; i <= spacer_length; i++) {
+        oled_write_P(PSTR(" "), check_menu(menu_item));
+    }
+    oled_write_P(PSTR(property_str), check_menu(menu_item));
+}
+
 void render_rgb_mode(const char *label, uint8_t menu_item) {
     // oled_set_cursor(col, line);
     __attribute__((unused)) static uint8_t mode;
@@ -200,18 +220,34 @@ void menu_items(void) {
             case MENU_SGQT:
                 render_menu_item("SGQT TAP TERM:", sgqt_tapping_term, i);
                 break;
+            case MENU_DEFAULTLAYER:
+                switch (get_highest_layer(default_layer_state)) {
+                    case _BASE:
+                        oled_write_P(PSTR("DF LAYER:      QWERTY"), check_menu(MENU_DEFAULTLAYER));
+                        break;
+                    case _COLEMAK_DH:
+                        oled_write_P(PSTR("DF LAYER:     COLEMAK"), check_menu(MENU_DEFAULTLAYER));
+                        break;
+                    case _GAMING:
+                        oled_write_P(PSTR("DF LAYER:      GAMING"), check_menu(MENU_DEFAULTLAYER));
+                        break;
+                    default:
+                        oled_write_P(PSTR("DF LAYER:       OTHER"), check_menu(MENU_DEFAULTLAYER));
+                        break;
+                }
+                break;
             case MENU_OSFLAG:
                 oled_write_P(PSTR("CURRENT OS:"), check_menu(MENU_OSFLAG));
                 switch (user_config.os) {
-                case WINDOWS:
-                    oled_write_P(PSTR("   WINDOWS"), check_menu(MENU_OSFLAG));
-                    break;
-                case LINUX:
-                    oled_write_P(PSTR("     LINUX"), check_menu(MENU_OSFLAG));
-                    break;
-                default:
-                    oled_write_P(PSTR("     MACOS"), check_menu(MENU_OSFLAG));
-                    break;
+                    case WINDOWS:
+                        oled_write_P(PSTR("   WINDOWS"), check_menu(MENU_OSFLAG));
+                        break;
+                    case LINUX:
+                        oled_write_P(PSTR("     LINUX"), check_menu(MENU_OSFLAG));
+                        break;
+                    default:
+                        oled_write_P(PSTR("     MACOS"), check_menu(MENU_OSFLAG));
+                        break;
                 }
                 break;
             case MENU_DEBUG:
@@ -222,7 +258,13 @@ void menu_items(void) {
                 }
                 break;
             case MENU_EECLEAR:
-                oled_write_P(PSTR("         CLEAR EEPROM"), check_menu(MENU_EECLEAR));
+                oled_write_P(PSTR("CLEAR EEPROM: EXECUTE"), check_menu(MENU_EECLEAR));
+                break;
+            case MENU_NKRO:
+                render_bool_menu_item("NKRO:", keymap_config.nkro, i);
+                break;
+            case MENU_BOOTLOADER:
+                oled_write_P(PSTR("FLASH FW:     EXECUTE"), check_menu(MENU_BOOTLOADER));
                 break;
             default:
             break;

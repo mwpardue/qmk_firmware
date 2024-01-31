@@ -20,9 +20,12 @@ typedef enum {
     MENU_AT,
     MENU_GQT,
     MENU_SGQT,
+    MENU_DEFAULTLAYER,
     MENU_OSFLAG,
     MENU_DEBUG,
     MENU_EECLEAR,
+    MENU_NKRO,
+    MENU_BOOTLOADER,
     MENU_MAX
 } rgb_menu_selector_t;
 
@@ -55,3 +58,5 @@ uint8_t viewport_begin(void);
 void menu_items(void);
 
 void render_menu_item(const char *label, uint16_t property, uint8_t menu_item);
+
+void render_bool_menu_item(const char *label, bool property, uint8_t menu_item);

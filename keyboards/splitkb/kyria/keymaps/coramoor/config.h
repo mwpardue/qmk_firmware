@@ -22,6 +22,7 @@
 
 /* Select hand configuration */
 
+#undef FORCE_NKRO
 #define FORCE_NKRO
 
 #ifdef SMART_CASE_ENABLE

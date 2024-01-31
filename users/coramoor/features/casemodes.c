@@ -176,20 +176,26 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_MINS:
             case KC_UNDS:
             case KC_BSPC:
-            case BSP_SYM:
+            // case BSP_SYM:
             case SPC_HYP:
             case UIL_THM:
             case UOL_THM:
             case LUTHUM1:
             case LUTHUM2:
             case LIL_THM:
+            case CLIL_THM:
             case LOL_THM:
             case UOR_THM:
             case UIR_THM:
             case LIR_THM:
             case LOR_THM:
+            case CLOR_THM:
+            case CLOL_THM:
+            case CRUTHUM2:
+            case CLUTHUM2:
             case RUTHUM2:
             case RUTHUM1:
+            case SFT_MIN:
             // case (XCASE & 0xff):
             case KC_UP:
             case KC_DOWN:
@@ -202,6 +208,8 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_RBRC:
             case KC_LCBR:
             case KC_RCBR:
+            case KC_SCLN:
+            case KC_COLN:
             dprintln("terminate_case_modes");
                 // If mod chording disable the mods
                 if (record->event.pressed && (get_mods() != 0)) {
@@ -269,7 +277,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                     keycode = RALT(keycode);
                 }
                 switch (keycode) {
-                    case FUN_XCS:
+                    case RUTHUM2:
                     case XCASE:
                     case (XCASE & 0xff):
                     case SP_CAP:
@@ -347,9 +355,19 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
             }
 
 #ifdef CAPSWORD_USE_SHIFT
-            else if (caps_word_on && keycode >= KC_A && keycode <= KC_Z){
-                tap_code16(LSFT(keycode));
-                return false;
+            else if (caps_word_on){
+                switch (keycode) {
+                    // Keycodes to ignore (don't disable caps word)
+                    case KC_A ... KC_Z:
+                    case KC_1 ... KC_0:
+                    case KC_MINS:
+                    case KC_UNDS:
+                        tap_code16(LSFT(keycode));
+                        break;
+                        return false;
+                    default:
+                        break;
+                }
             }
 #endif
 
