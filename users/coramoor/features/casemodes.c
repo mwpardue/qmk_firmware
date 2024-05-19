@@ -85,9 +85,11 @@ void enable_caps_word(void) {
 
 // Disable caps word
 void disable_caps_word(void) {
+    dprintln("Disable Caps_Word");
     caps_word_on = false;
 #ifndef CAPSWORD_USE_SHIFT
     if (host_keyboard_led_state().caps_lock) {
+        dprintln("Disabling Caps Word by Caps Lock");
         tap_code(KC_CAPS);
     }
 #else
@@ -217,6 +219,7 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
                 }
                 break;
             default:
+                dprintln("terminate default action");
                 if (record->event.pressed) {
                     return true;
                 }

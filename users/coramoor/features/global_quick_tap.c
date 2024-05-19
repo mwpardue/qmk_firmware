@@ -81,6 +81,8 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         case RHM_SCN:
         case LHM_A:
           return sgqt_tapping_term;
+        case LHM_MNL:
+        case LHM_MNR:
         default:
             return 0;  // global_quick_tap is not applied
     }

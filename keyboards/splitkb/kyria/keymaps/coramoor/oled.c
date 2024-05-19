@@ -123,10 +123,10 @@ void render_slave_mod_cluster_align(void) {
 // Master Modifier Cluster
 void render_master_mod_cluster_1(void) {
     render_master_mod_cluster_align();
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LCTL));
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LALT));
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LSFT));
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LGUI));
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
     render_newline();
 }
 
@@ -140,49 +140,49 @@ void render_master_mod_cluster_2(void) {
 
     render_master_mod_cluster_align();
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LCTL));
-    oled_write_P(mod_ctrl, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_LCTL)));
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LCTL));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
+    oled_write_P(mod_ctrl, ((get_mods()|get_oneshot_mods()) & MOD_MASK_CTRL));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LALT));
-    oled_write_P(mod_alt, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_LALT)));
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LALT));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
+    oled_write_P(mod_alt, ((get_mods()|get_oneshot_mods()) & MOD_MASK_ALT));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LSFT));
-    oled_write_P(mod_shift, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_LSFT)));
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LSFT));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
+    oled_write_P(mod_shift, ((get_mods()|get_oneshot_mods()) & MOD_MASK_SHIFT));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LGUI));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
 
     if (user_config.os == WINDOWS) {
-        oled_write_P(mod_win, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_LGUI)));
+        oled_write_P(mod_win, ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI));
     } else if (user_config.os == LINUX) {
-        oled_write_P(mod_lin, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_LGUI)));
+        oled_write_P(mod_lin, ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI));
     } else {
-        oled_write_P(mod_gui, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_LGUI)));
+        oled_write_P(mod_gui, ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI));
     }
 
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LGUI));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
 
     render_newline();
 }
 
 void render_master_mod_cluster_3(void) {
     render_master_mod_cluster_align();
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LCTL));
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LALT));
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LSFT));
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_LGUI));
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
     render_newline();
 }
 
 // Slave Modifier Cluster
 void render_slave_mod_cluster_1(void) {
     render_slave_mod_cluster_align();
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RGUI));
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RSFT));
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RALT));
-    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RCTL));
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
+    render_modifier_box_top(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
     render_newline();
 }
 
@@ -196,39 +196,39 @@ void render_slave_mod_cluster_2(void) {
 
     render_slave_mod_cluster_align();
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RGUI));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
 
     if (user_config.os == WINDOWS) {
-        oled_write_P(mod_win, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_RGUI)));
+        oled_write_P(mod_win, ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI));
     } else if (user_config.os == LINUX) {
-        oled_write_P(mod_lin, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_RGUI)));
+        oled_write_P(mod_lin, ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI));
     } else {
-        oled_write_P(mod_gui, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_RGUI)));
+        oled_write_P(mod_gui, ((get_mods()|get_oneshot_mods()) & MOD_MASK_GUI));
     }
 
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RGUI));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RSFT));
-    oled_write_P(mod_shift, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_RSFT)));
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RSFT));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
+    oled_write_P(mod_shift, ((get_mods()|get_oneshot_mods()) & MOD_MASK_SHIFT));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RALT));
-    oled_write_P(mod_alt, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_RALT)));
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RALT));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
+    oled_write_P(mod_alt, ((get_mods()|get_oneshot_mods()) & MOD_MASK_ALT));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
 
-    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RCTL));
-    oled_write_P(mod_ctrl, ((get_mods()|get_oneshot_mods()) & MOD_BIT(KC_RCTL)));
-    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RCTL));
+    render_modifier_box_left(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
+    oled_write_P(mod_ctrl, ((get_mods()|get_oneshot_mods()) & MOD_MASK_CTRL));
+    render_modifier_box_right(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
 
     render_newline();
 }
 
 void render_slave_mod_cluster_3(void) {
     render_slave_mod_cluster_align();
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RGUI));
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RSFT));
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RALT));
-    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_BIT(KC_RCTL));
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_GUI);
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_SHIFT);
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_ALT);
+    render_modifier_box_bottom(get_mods()|get_oneshot_mods(), MOD_MASK_CTRL);
     render_newline();
 }
 

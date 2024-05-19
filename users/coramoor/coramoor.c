@@ -103,11 +103,37 @@ void matrix_scan_user(void) {
   // are on the same hand in Dvorak.
   switch (tap_hold_keycode) {
     case LHM_V: //F   + W, Q
-      if (other_keycode == KC_W || other_keycode == KC_Q || other_keycode == QK_GESC) {return true;}
+      if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC)) {return true;}
     case LHM_X:
-      if (other_keycode == LIL_THM || other_keycode == LUTHUM2 || other_keycode == UOL_THM) {return true;}
+      if ((other_keycode == LIL_THM ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LUTHUM2) || (other_keycode == UOL_THM)) {return true;}
     case LHM_Z:
-      if (other_keycode == LOL_THM) {return true;}
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case LHM_C:
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_M:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_COM:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_DOT:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_SLS:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case LHM_F: //F   + W, Q
+      if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC)) {return true;}
+    case LHM_S:
+      if ((other_keycode == LIL_THM ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LUTHUM2) || (other_keycode == UOL_THM)) {return true;}
+    case LHM_A:
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case LHM_D:
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_J:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_K:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_L:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+    case RHM_SCN:
+      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;
@@ -126,8 +152,7 @@ void matrix_scan_user(void) {
   uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
    switch (tap_hold_keycode) {
     // case BSP_SYM:
-    case ENT_MEH:
-    case ENT_HYP:
+    // case ENT_HYP:
     case SPC_HYP:
     case SFT_FUN:
     case UIL_THM:
@@ -151,7 +176,7 @@ void matrix_scan_user(void) {
     case CLIL_THM:
     // case CUOR_THM:
     case SFT_MIN:
-    case SFT_QUO:
+    case CTL_QUO:
     case GUI_BSP:
     case ALT_MIN:
     case CTL_BSP:
@@ -159,8 +184,20 @@ void matrix_scan_user(void) {
     case MED_Z:
     case SFT_Z:
     case SFT_QUE:
+    case LHM_Z:
+    case RHM_SLS:
+    case RHM_SCN:
+    case CTL_CW:
+    case GUI_CW:
+    case SFT_CW:
     case UIG_THM:
-    case UOG_THM:
+    case LUGTHUM:
+    case LOG_THM:
+    case LIG_THM:
+    case LHM_MNL:
+    case LHM_MNR:
+    case CLIR_THM:
+    case GUI_SLS:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -175,6 +212,14 @@ void matrix_scan_user(void) {
 bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     // for example:
     switch (keycode) {
+        case SP_CAP:
+        case LUTHUM2:
+        case LOL_THM:
+        case RUTHUM2:
+        case CRUTHUM2:
+        case XCASE:
+        case (XCASE & 0xff):
+            return false;
          case KC_A ... KC_Z:
          case KC_1 ... KC_0:
           dprintf("default xcase separator from coramoor\n");
@@ -182,11 +227,6 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
          // case (XCASE & 0xff):
          // case XCASE:
          // case BSP_SYM:
-         case SP_CAP:
-         case LUTHUM2:
-         case LOL_THM:
-         case RUTHUM2:
-         case CRUTHUM2:
          default:
             return false;
      }

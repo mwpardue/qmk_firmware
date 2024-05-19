@@ -88,98 +88,104 @@ enum {
 
 // Left thumb keys
 
-#define LUTHUM1 LALT_T(KC_B)
-#define LUTHUM2 LGUI_T(KC_ENTER)
-// #define LUTHUM2 LT(_MEDIA, KC_ENTER)
+#define LUTHUM1 LT(_FUNCTION, KC_B)
+// #define LUTHUM2 LGUI_T(KC_CAPS)
+// #define LUTHUM2 LT(_NUMPAD, KC_B)
+#define LUTHUM2 LCTL_T(KC_MINS)
 #define LIL_THM LT(_NAVIGATION, KC_BSPC)
-#define LOL_THM LT(_NUMPAD, KC_BSPC)
-#define UOL_THM MEH_T(KC_BSPC)
-// #define UIL_THM LGUI_T(KC_CAPS)
-#define UIL_THM LT(_MEDIA, KC_CAPS)
+// #define LOL_THM LT(_NUMPAD, KC_TAB)
+#define LOL_THM LSFT_T(KC_TAB)
+#define UOL_THM HYPR_T(KC_ENTER)
+// #define UIL_THM LT(_MEDIA, KC_CAPS)
+#define UIL_THM MEH_T(KC_MINS)
+// #define UIL_THM LT(_NUMPAD, KC_MINS)
 #define MED_Z LT(_MEDIA, KC_Z)
 
 // Right thumb keys
 
-#define RUTHUM1 LGUI_T(KC_T)
-#define RUTHUM2 RGUI_T(KC_TAB)
-#define LOR_THM LT(_SYMBOL, KC_ENTER)
-#define LIR_THM LT(_MACROS, KC_SPACE)
-#define UIR_THM LT(_MEDIA, PASSPAL)
-#define UOR_THM LT(_FUNCTION, PASSPAL)
+#define RUTHUM1 LT(_FUNCTION, KC_T)
+// #define RUTHUM2 RALT_T(KC_TAB)
+#define RUTHUM2 LT(_MACROS, XCASE)
+// #define LOR_THM LT(_SYMBOL, KC_ENTER)
+#define LOR_THM RSFT_T(KC_ENTER)
+#define LIR_THM LT(_SYMBOL, KC_SPACE)
+// #define UIR_THM LT(_MEDIA, PASSPAL)
+#define UIR_THM MEH_T(PASSPAL)
+// #define UIR_THM LT(_SYMBOL, PASSPAL)
+#define UOR_THM HYPR_T(KC_2)
 
-#define CLUTHUM2 LGUI_T(KC_DEL)
-#define CLIL_THM LT(_NAVIGATION, KC_Q)
-#define CLOL_THM LT(_NUMPAD, KC_W)
-#define CLOR_THM LT(_SYMBOL, KC_V)
-#define CRUTHUM2 LGUI_T(KC_MINS)
+// #define CLIL_THM LT(_NAVIGATION, KC_BSPC)
+#define CLUTHUM2 LT(_NUMPAD, KC_MINS)
+// #define CLUTHUM2 LT(_NUMPAD, KC_X)
+// #define CLOL_THM LT(_NUMPAD, KC_BSPC)
+// #define CLOL_THM LSFT_T(KC_TAB)
+// #define CLOL_THM LT(_NUMPAD, KC_BSPC)
+#define CLIL_THM LT(_NAVIGATION, KC_C)
+#define CLOL_THM LT(_NUMPAD, KC_T)
+#define CLOR_THM KC_F6
+// #define CLOR_THM LT(_SYMBOL, KC_ENTER)
+// #define CLOR_THM RSFT_T(KC_ENTER)
+#define CLIR_THM LT(_MACROS, KC_SPACE)
+#define CUIL_THM OSMHYPR
+#define CUIR_THM OSMHYPR
+#define CUOR_THM OSMMEH
+#define CUOL_THM OSMMEH
+// #define CLIR_THM LT(_MACROS, KC_SPACE)
+#define CRUTHUM2 RCTL_T(KC_B)
+// #define CRUTHUM2 LT(_SYMBOL, KC_X)
+#define NUM_Z LT(_NUMPAD, KC_Z)
+#define GUI_SLS RGUI_T(KC_SLSH)
+#define MAC_SLS LT(_MACROS, KC_SLSH)
+#define MAC_QUO LT(_MACROS, KC_QUOTE)
+
+#define SFT_CW LSFT_T(KC_Q)
+#define CTL_CW LCTL_T(KC_Q)
+#define GUI_CW LGUI_T(KC_Q)
+
+#define RHM_4 RGUI_T(KC_4)
+#define RHM_5 RSFT_T(KC_5)
+#define RHM_6 RALT_T(KC_6)
+#define RHM_CLN RCTL_T(KC_C)
+
 
 // Right thumb keys
 
-// #define CRUTHUM2 RGUI_T(XCASE)
-// #define CLOR_THM LT(_SYMBOL, KC_DEL)
 #define SFT_TAB SFT_T(KC_TAB)
+#define MEH_QUO MEH_T(KC_QUOT)
 
 // Right thumb keys
 
-// Gaming Thumb keys
+// Gaming keys
 #define UIG_THM LM(_GAMENUM, MOD_LCTL)
-#define UOG_THM LM(_GAMENUM, MOD_LSFT)
-
+#define LUGTHUM LM(_GAMENUM, MOD_LSFT)
+#define LOG_THM LT(_GAMENUM, KC_TAB)
+#define LIG_THM LSFT_T(KC_SPACE)
 
 // Mod-taps (QWERTY)
 
 // Left Hand
-// #define LHM_A LCTL_T(KC_A)
-// #define LHM_S LALT_T(KC_S)
-// #define LHM_D LSFT_T(KC_D)
-// #define LHM_F LGUI_T(KC_F)
-#define LHM_A LGUI_T(KC_A)
+#define LHM_A LCTL_T(KC_A)
 #define LHM_S LALT_T(KC_S)
-#define LHM_D LCTL_T(KC_D)
-#define LHM_F LSFT_T(KC_F)
-#define SFT_Z LSFT_T(KC_Z)
-#define SFT_QUE RSFT_T(KC_SLSH)
-// #define LHM_Z LCTL_T(KC_Z)
-// #define LHM_X LALT_T(KC_X)
-// #define LHM_C LSFT_T(KC_C)
-// #define LHM_V LGUI_T(KC_V)
-#define LHM_Z LGUI_T(KC_Z)
+#define LHM_D LSFT_T(KC_D)
+#define LHM_F LGUI_T(KC_F)
+#define SFT_Z RSFT_T(KC_Z)
+#define SFT_QUE LSFT_T(KC_SLSH)
+#define LHM_Z LCTL_T(KC_Z)
 #define LHM_X LALT_T(KC_X)
-#define LHM_C LCTL_T(KC_C)
-#define LHM_V LSFT_T(KC_V)
+#define LHM_C LSFT_T(KC_C)
+#define LHM_V LGUI_T(KC_V)
 
 // Right Hand
-// #define RHM_SCN RCTL_T(KC_SCLN)
-// #define RHM_L   RALT_T(KC_L)
-// #define RHM_K   RSFT_T(KC_K)
-// #define RHM_J   RGUI_T(KC_J)
-#define RHM_SCN RGUI_T(KC_SCLN)
+#define RHM_SCN RCTL_T(KC_SCLN)
 #define RHM_L   RALT_T(KC_L)
-#define RHM_K   RCTL_T(KC_K)
-#define RHM_J   RSFT_T(KC_J)
-// #define RHM_SLS RCTL_T(KC_SLSH)
-// #define RHM_DOT RALT_T(KC_DOT)
-// #define RHM_COM RSFT_T(KC_COMM)
-// #define RHM_M   RGUI_T(KC_M)
-#define RHM_SLS RGUI_T(KC_SLSH)
+#define RHM_K   RSFT_T(KC_K)
+#define RHM_J   RGUI_T(KC_J)
+#define RHM_SLS RCTL_T(KC_SLSH)
 #define RHM_DOT RALT_T(KC_DOT)
-#define RHM_COM RCTL_T(KC_COMM)
-#define RHM_M   RSFT_T(KC_M)
+#define RHM_COM RSFT_T(KC_COMM)
+#define RHM_M   RGUI_T(KC_M)
 
-//
 // Mod-taps (COLEMAK-DH)
-
-// Left Hand
-// #define CLHM_A LCTL_T(KC_A)
-// #define CLHM_R LALT_T(KC_R)
-// #define CLHM_S LSFT_T(KC_S)
-// #define CLHMT LGUI_T(KC_T)
-//
-// Right Hand
-// #define CRHM_O LCTL_T(KC_O)
-// #define CRHM_I LALT_T(KC_I)
-// #define CRHM_E LSFT_T(KC_E)
-// #define CRHM_N LGUI_T(KC_N)
 
 // One-shot mods
 
@@ -208,9 +214,8 @@ enum {
 #define BSP_NUM LT(_NUMPAD, KC_BSPC)
 #define ENT_NAV LT(_NAVIGATION, KC_ENT)
 #define TAB_NAV LT(_NAVIGATION, KC_TAB)
-#define TAB_SFT LSFT_T(KC_TAB)
-#define ENT_HYP HYPR_T(KC_ENT)
-#define ENT_MEH MEH_T(KC_ENT)
+// #define TAB_SFT LSFT_T(KC_TAB)
+// #define ENT_HYP HYPR_T(KC_ENT)
 #define CAP_MEH MEH_T(SP_CAP)
 #define SPC_MEH MEH_T(KC_SPACE)
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
@@ -296,6 +301,8 @@ enum {
 #define LHM_BSL LALT_T(KC_BSLS)
 #define LHM_UND LSFT_T(KC_U)
 #define LHM_PIP LGUI_T(KC_PIPE)
+#define LHM_MNL LALT_T(KC_W)
+#define LHM_MNR LGUI_T(KC_R)
 #define ALT_BSP LALT(KC_BSPC)
 #define ALT_MIN LALT_T(KC_MINS)
 #define SFT_BSP LSFT_T(KC_BSPC)
@@ -308,8 +315,10 @@ enum {
 #define ALT_ENT RALT_T(KC_ENT)
 #define SFT_QUO RSFT_T(KC_QUOT)
 #define CTL_QUO RCTL_T(KC_QUOT)
+#define GUI_QUO RGUI_T(KC_QUOT)
 #define HYP_TAB HYPR_T(KC_TAB)
 #define RMT_PLY LGUI(LCTL(LALT(LSFT(KC_GRAVE))))
+#define APP_SWI MEH(KC_W)
 // #define SFT_ENT LSFT_T(KC_ENT)
 
 // uint16_t extract_base_tapping_keycode(uint16_t keycode);

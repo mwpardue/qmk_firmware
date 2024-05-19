@@ -252,23 +252,23 @@ void td_monitor_left(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LGUI(LCTL(KC_4)));
+          tap_code16(LALT(KC_H));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LSFT(LCTL(KC_4))));
+          tap_code16(LALT(LSFT(KC_H)));
           break;
         default: break;
     }
 }
 
-void td_monitor_middle(tap_dance_state_t *state, void *user_data) {
+void td_monitor_up(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LGUI(LCTL(KC_5)));
+          tap_code16(LALT(KC_K));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LSFT(LCTL(KC_5))));
+          tap_code16(LALT(LSFT(KC_K)));
           break;
         default: break;
     }
@@ -278,23 +278,23 @@ void td_monitor_right(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LGUI(LCTL(KC_6)));
+          tap_code16(LALT(KC_L));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LSFT(LCTL(KC_6))));
+          tap_code16(LALT(LSFT(KC_L)));
           break;
         default: break;
     }
 }
 
-void td_monitor_bottom(tap_dance_state_t *state, void *user_data) {
+void td_monitor_down(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-          tap_code16(LGUI(LCTL(KC_1)));
+          tap_code16(LALT(KC_J));
           break;
         case TD_SINGLE_HOLD:
-          tap_code16(LGUI(LSFT(LCTL(KC_1))));
+          tap_code16(LALT(LSFT(KC_J)));
           break;
         default: break;
     }
@@ -392,8 +392,8 @@ tap_dance_action_t tap_dance_actions[] = {
     [SS_SNIP] = ACTION_TAP_DANCE_FN(td_screenshot_snippet),
     [MONITOR_LEFT] = ACTION_TAP_DANCE_FN(td_monitor_left),
     [MONITOR_RIGHT] = ACTION_TAP_DANCE_FN(td_monitor_right),
-    [MONITOR_MIDDLE] = ACTION_TAP_DANCE_FN(td_monitor_middle),
-    [MONITOR_BOTTOM] = ACTION_TAP_DANCE_FN(td_monitor_bottom),
+    [MONITOR_UP] = ACTION_TAP_DANCE_FN(td_monitor_up),
+    [MONITOR_DOWN] = ACTION_TAP_DANCE_FN(td_monitor_down),
     [TD_ATTIPS] = ACTION_TAP_DANCE_FN(td_tips),
     [HTTP] = ACTION_TAP_DANCE_FN(td_http),
 };

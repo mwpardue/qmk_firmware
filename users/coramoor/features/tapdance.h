@@ -24,9 +24,9 @@ enum {
     VIMQ,
     SS_SNIP,
     MONITOR_LEFT,
-    MONITOR_MIDDLE,
+    MONITOR_UP,
     MONITOR_RIGHT,
-    MONITOR_BOTTOM,
+    MONITOR_DOWN,
     TD_ATTIPS,
     HTTP
 };
@@ -49,8 +49,8 @@ enum {
 #define TD_VIMQ TD(VIMQ)
 #define TD_MONL TD(MONITOR_LEFT)
 #define TD_MONR TD(MONITOR_RIGHT)
-#define TD_MONM TD(MONITOR_MIDDLE)
-#define TD_MONB TD(MONITOR_BOTTOM)
+#define TD_MONU TD(MONITOR_UP)
+#define TD_MOND TD(MONITOR_DOWN)
 #define TD_TIPS TD(TD_ATTIPS)
 #define TD_HTTP TD(HTTP)
 typedef enum {

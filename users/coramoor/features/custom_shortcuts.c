@@ -121,6 +121,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
         return PROCESS_RECORD_RETURN_TRUE;
 
         case LHM_AT:
+        case UOR_THM:
           if (record->tap.count > 0) {
             if (record->event.pressed) {
               dprintln("KC_AT pressed");
@@ -160,6 +161,34 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
           }
           return PROCESS_RECORD_RETURN_TRUE;
 
+        case LHM_MNL:
+          if (record->tap.count > 0) {
+            if (record->event.pressed) {
+              tap_code16(C(KC_LEFT));
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_TRUE;
+
+
+        case LHM_MNR:
+          if (record->tap.count > 0) {
+            if (record->event.pressed) {
+              tap_code16(C(KC_RIGHT));
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_TRUE;
+
+        case RHM_CLN:
+          if (record->tap.count > 0) {
+            if (record->event.pressed) {
+              tap_code16(KC_COLN);
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+          }
+          return PROCESS_RECORD_RETURN_TRUE;
+
 #ifdef CUSTOM_LEADER_ENABLE
        case LEADER:
             if (record->event.pressed) {
@@ -170,17 +199,16 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_TRUE;
 #endif
 
-       case UOR_THM:
        case PASSPAL:
             if (record->event.pressed) {
                 dprintln("PASSPAL pressed");
-                if (record->tap.count > 0) {
+                // if (record->tap.count > 0) {
                   dprintln("PASSPAL tapped");
                   tap_code16(C(A(G(S(KC_P)))));
                   add_oneshot_mods(MOD_LCTL);
                   return PROCESS_RECORD_RETURN_FALSE;
-                  }
-             return PROCESS_RECORD_CONTINUE;
+                  // }
+             // return PROCESS_RECORD_CONTINUE;
              }
          return PROCESS_RECORD_RETURN_TRUE;
 

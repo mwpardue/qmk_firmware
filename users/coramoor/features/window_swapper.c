@@ -16,6 +16,7 @@ bool is_swapper_keycode(uint16_t keycode) {
         case KC_LEFT:
         case KC_RIGHT:
         case KC_DOWN:
+        case KC_UP:
             return true;
         default:
             return false;
@@ -138,6 +139,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
                 case KC_LEFT:
                 case KC_RIGHT:
                 case KC_DOWN:
+                case KC_UP:
                     unregister_mods(MOD_LSFT);
                     break;
             }
@@ -157,7 +159,9 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
               return false;
               break;
             case KC_DOWN:
-              tap_code(KC_Q);
+              return false;
+              break;
+            case KC_UP:
               return false;
               break;
             case MC_SWLE:
@@ -165,6 +169,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
               tap_code(KC_TAB);
               break;
           }
+          break;
         case ZOOMING_CONTINUE:
             switch (keycode) {
                 case MC_SWLE:
@@ -198,6 +203,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             case KC_LEFT:
             case KC_RIGHT:
             case KC_DOWN:
+            case KC_UP:
               return false;
           }
             break;
