@@ -15,25 +15,184 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include QMK_KEYBOARD_H
+#include "coramoor.h"
+
+#ifdef OLED_ENABLE
+# include "oled.c"
+#endif
+
+const uint16_t PROGMEM bootloader_combo[] = {LTHUM1, KC_Q, KC_T, COMBO_END};
+const uint16_t PROGMEM bootloadercm_combo[] = {LTHUM1, KC_Q, KC_B, COMBO_END};
+const uint16_t PROGMEM sleep_combo[] = {LTHUM2, KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM login_combo[] = {LTHUM2, LHM_S, LHM_D, COMBO_END};
+// const uint16_t PROGMEM logincm_combo[] = {CLIR_THM, KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM parn_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
+const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
+const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
+const uint16_t PROGMEM escape_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM escape2_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM mtescape_combo[] = {RHM_J, RHM_K, COMBO_END};
+const uint16_t PROGMEM mtescape2_combo[] = {LHM_D, LHM_F, COMBO_END};
+const uint16_t PROGMEM angb_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM cw_combo[] = {LTHUM2, RTHUM1, COMBO_END};
+
+combo_t key_combos[] = {
+  COMBO(bootloader_combo, QK_BOOT),
+  COMBO(bootloadercm_combo, QK_BOOT),
+  COMBO(sleep_combo, MACSLEP),
+  COMBO(login_combo, SM_LOGN),
+  // COMBO(logincm_combo, SM_LOGN),
+  COMBO(parn_combo, SM_PAR),
+  COMBO(curb_combo, SM_CUR),
+  COMBO(brac_combo, SM_BRC),
+  COMBO(escape_combo, KC_ESC),
+  COMBO(escape2_combo, KC_ESC),
+  COMBO(mtescape_combo, KC_ESC),
+  COMBO(mtescape2_combo, KC_ESC),
+  COMBO(angb_combo, SM_ANG),
+  COMBO(cw_combo, SM_CW)
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-    [0] = LAYOUT_split_5x6_6(
-        KC_ESC,    KC_1,      KC_2,      KC_3,     KC_4,       KC_5,         KC_6,      KC_7,    KC_8,     KC_9,     KC_0,    KC_BSLS,
-        KC_GRV,    KC_Q,      KC_W,      KC_E,     KC_R,       KC_T,         KC_Y,      KC_U,    KC_I,     KC_O,     KC_P,    KC_EQL,
-        KC_TAB,    KC_A,      KC_S,      KC_D,     KC_F,       KC_G,         KC_H,      KC_J,    KC_K,     KC_L,     KC_SCLN, KC_QUOT,
-        KC_LSFT,     KC_Z,      KC_X,      KC_C,     KC_V,       KC_B,         KC_N,      KC_M,    KC_COMM,  KC_DOT,   KC_SLSH, KC_MINS,
-                              KC_NO,     KC_LGUI,  KC_LCTL,    KC_SPC,       KC_RSFT,   KC_ENT,  KC_LBRC,     KC_RBRC,
-                                                   MO(1),      LCTL(KC_C),   KC_BSPC,   MO(1),
-                                                   KC_LALT,    LCTL(KC_V),   KC_DEL,    KC_RSFT
+    [_BASE] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    PASSPAL,
+      KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
+      KC_MINS, LHM_A,  LHM_S,   LHM_D,   LHM_F,   KC_G,                                            KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
+      TOADJ,   MED_Z,  KC_X,    KC_C,    KC_V,    KC_B,                                            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MOFUN,
+                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+                                         LTHUM1,  LTHUM2,                                 RTHUM3,  RTHUM2,  RTHUM1,
+                                         LTHUM3,  LTHUM4,
+                                         LTHUM5,  LTHUM6
     ),
-    [1] = LAYOUT_split_5x6_6(
-        KC_TRNS,   KC_F1,     KC_F2,     KC_F3,    KC_F4,         KC_F5,     KC_F6,       KC_F7,      KC_F8,       KC_F9,       KC_F10,     KC_F11,
-        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,  KC_TRNS,       KC_TRNS,   KC_TRNS,     KC_TRNS,    KC_TRNS,     KC_TRNS,     KC_TRNS,    KC_F12,
-        KC_TRNS,   KC_TRNS,   KC_PSCR,   KC_DOWN,  KC_UP,         KC_HOME,   KC_END,      KC_LEFT,    KC_RIGHT,    KC_TRNS,     KC_TRNS,    KC_TRNS,
-        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,  KC_TRNS,       KC_TRNS,   KC_TRNS,     KC_TRNS,    KC_TRNS,     KC_TRNS,     KC_BSLS,    KC_TRNS,
-                   QK_BOOT,     KC_TRNS,   KC_TRNS,  KC_TRNS,       KC_TRNS,   KC_TRNS,     KC_TRNS,    KC_TRNS,
-                                         MO(1),    LCTL(KC_C),    KC_TRNS,   MO(1),
-                                         KC_TRNS,  LCTL(KC_V),    KC_TRNS,   KC_TRNS
+
+    [_MOUSE] = LAYOUT_split_5x6_63(
+      _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
+      _______, KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, _______,                                        _______, KC_BTN1, KC_BTN2, _______, _______, _______,
+      _______, SNIPING, DRGSCRL, KC_BTN2, KC_BTN1, _______,                                        _______, _______, _______, _______, _______, _______,
+                       _______, _______,                                                                             _______, _______,
+                                         _______,  _______,                                 _______,  TOBAS,  _______,
+                                         _______,  _______,
+                                         _______,  _______
+    ),
+
+    [_GAMENUM] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
+      KC_AT,   LHM_A,  LHM_S,   LHM_D,   LHM_F,   KC_G,                                            KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
+      KC_MINS, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                                            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_PIPE,
+                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_COLEMAK_DH] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
+      KC_AT,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+      TOADJ, LHM_Z,  LHM_X,   LHM_C,   LHM_V,   KC_B,                                            KC_N,    RHM_M,   RHM_COM, RHM_DOT, RHM_SLS, KC_PIPE,
+                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_NAVIGATION] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      RMT_PLY, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, TD_SSFL,                                        KC_HOME, _______, SEL_LIN, KC_END,  _______, _______,
+      KC_BSPC, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, TD_SNIP,                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, TD_QUOT,
+      LLOCK,   _______, _______, TD_COPY, TD_PAST, _______,                                     _______, _______, _______, _______, _______, KC_ENT,
+                       TAB_LFT,  TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+
+      // QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      // RMT_PLY, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, _______,  		                               KC_HOME, _______, SEL_LIN, KC_END,  _______, _______,
+      // _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, TD_QUOT,
+      // LLOCK,   _______, _______, TD(TDCOPY), TD_PAST, _______,                                        _______, _______, _______, _______, _______, KC_ENT,
+      //                  TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+      //                                    LTHUM1,  LTHUM2,                                 RTHUM3,  RTHUM2,  RTHUM1,
+      //                                    LTHUM3,  LTHUM4,
+      //                                    LTHUM5,  LTHUM6
+    ),
+
+    [_NUMPAD] = LAYOUT_split_5x6_63(
+      KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+      _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                                           KC_SLSH, KC_7,    KC_8,    KC_9,    KC_SLSH, PASSPAL,
+      _______, LHM_AT,  LHM_BSL, LHM_UND, LHM_PIP, KC_PIPE,                                        KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, KC_QUOT,
+      LLOCK,   _______, KC_LBRC, KC_RBRC, _______, _______,                                        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  KC_ENT,
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, KC_0,    _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_SYMBOL] = LAYOUT_split_5x6_63(
+      KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+      _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                                           KC_GRV,  KC_AMPR, KC_ASTR, KC_LPRN, KC_SLSH, _______,
+      _______, KC_AT,   KC_BSLS, KC_UNDS, KC_PIPE, KC_PIPE,                                        KC_UNDS, KC_DLR,  KC_PERC, KC_CIRC, KC_COLN, KC_QUOT,
+      _______, KC_LBRC, KC_RBRC, _______, _______, _______,                                        KC_PLUS, KC_EXLM, KC_AT,   KC_HASH, KC_DOT,  LLOCK,
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_MACROS] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      _______, _______, _______, DM_REC1, DM_REC2, _______,                                        _______, _______, _______, _______, _______, _______,
+      SFT_MIN, _______, DM_RSTP, DM_PLY1, DM_PLY2, _______,                                        _______, OSMRGUI, OSMRSFT, OSMRALT, OSMRCTL, _______,
+      _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_HEX] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      _______, KC_TAB,  _______, _______, _______, _______,                                        KC_PIPE, KC_7,    KC_8,    KC_9,    KC_TILD, _______,
+      _______, _______, KC_SLSH, _______, _______, _______,                                        KC_UNDS, KC_4,    KC_5,    KC_6,    KC_COLN, _______,
+      _______, TOBAS,   TOBAS,   _______, _______, _______,                                        KC_MINS, KC_1,    KC_2,    KC_3,    KC_DOT,  _______,
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_FUNCTION] = LAYOUT_split_5x6_63( \
+      QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      TOADJ,   _______, _______, _______, _______, _______,                                         _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F13,\
+      _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                         _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,  KC_F14,\
+      _______, _______, TOHEX,   _______, _______, _______,                                         _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  KC_F15,\
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_MEDIA] = LAYOUT_split_5x6_63(
+      QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      KC_TILD, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+      _______, KC_LBRC, KC_RBRC, KC_MINS, KC_BSLS, TIPS,                                           _______, OSMRGUI, OSMRSFT, OSMRALT, OSMRCTL, _______,
+      _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                                           KC_EQL,  _______, _______, _______, KC_DOT,  KC_ENT,
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
+    ),
+
+    [_ADJUST] = LAYOUT_split_5x6_63( \
+      QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
+      TOBAS,   TOBAS,   _______, EE_CLR,  QK_RBT,  _______,                                         _______, _______,  _______,  _______, _______, _______,  \
+      _______, _______, _______, _______, _______, _______,                                         MENU_AD, MENU_MD,  MENU_MU,  MENU_AU, _______, _______,\
+      TOBAS,   _______, _______, _______, _______, _______,                                         _______, _______,  _______,  _______, _______, _______,\
+                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                                         _______, _______,                                _______, _______, _______,
+                                         _______, _______,
+                                         _______, _______
     )
 };

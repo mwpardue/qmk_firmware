@@ -17,26 +17,27 @@
 #pragma once
 
 #include "quantum.h"
+#include "definitions/keycodes.h"
 
 //#warning ">>> PREPROCESSOR CHECKING trackball.h"
 
 
-enum charybdis_keycodes {
-#        ifdef VIA_ENABLE
-    POINTER_DEFAULT_DPI_FORWARD = USER00,
-#        else
-    POINTER_DEFAULT_DPI_FORWARD = SAFE_RANGE,
-#        endif  // VIA_ENABLE
-    POINTER_DEFAULT_DPI_REVERSE,
-    POINTER_SNIPING_DPI_FORWARD,
-    POINTER_SNIPING_DPI_REVERSE,
-    SNIPING_MODE,
-    SNIPING_MODE_TOGGLE,
-    DRAGSCROLL_MODE,
-    DRAGSCROLL_MODE_TOGGLE,
-    KEYMAP_SAFE_RANGE,
-};
-#        define CHARYBDIS_SAFE_RANGE KEYMAP_SAFE_RANGE
+// enum charybdis_keycodes {
+// #        ifdef VIA_ENABLE
+//     POINTER_DEFAULT_DPI_FORWARD = USER00,
+// #        else
+//     POINTER_DEFAULT_DPI_FORWARD = SAFE_RANGE,
+// #        endif  // VIA_ENABLE
+//     POINTER_DEFAULT_DPI_REVERSE,
+//     POINTER_SNIPING_DPI_FORWARD,
+//     POINTER_SNIPING_DPI_REVERSE,
+//     SNIPING_MODE,
+//     SNIPING_MODE_TOGGLE,
+//     DRAGSCROLL_MODE,
+//     DRAGSCROLL_MODE_TOGGLE,
+//     KEYMAP_SAFE_RANGE,
+// };
+// #        define CHARYBDIS_SAFE_RANGE KEYMAP_SAFE_RANGE
 #        define DPI_MOD POINTER_DEFAULT_DPI_FORWARD
 #        define DPI_RMOD POINTER_DEFAULT_DPI_REVERSE
 #        define S_D_MOD POINTER_SNIPING_DPI_FORWARD

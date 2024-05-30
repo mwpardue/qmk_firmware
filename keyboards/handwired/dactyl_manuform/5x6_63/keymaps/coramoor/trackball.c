@@ -151,6 +151,7 @@ void charybdis_cycle_pointer_sniping_dpi(bool forward) {
 bool charybdis_get_pointer_sniping_enabled(void) { return g_charybdis_config.is_sniping_enabled; }
 
 void charybdis_set_pointer_sniping_enabled(bool enable) {
+    dprintln("Sniping pressed");
     g_charybdis_config.is_sniping_enabled = enable;
     maybe_update_pointing_device_cpi(&g_charybdis_config);
 }
@@ -159,6 +160,7 @@ bool charybdis_get_pointer_dragscroll_enabled(void) { return g_charybdis_config.
 
 void charybdis_set_pointer_dragscroll_enabled(bool enable) {
     g_charybdis_config.is_dragscroll_enabled = enable;
+    dprintln("Dragscroll pressed");
     maybe_update_pointing_device_cpi(&g_charybdis_config);
 }
 
@@ -192,7 +194,7 @@ void charybdis_set_pointer_dragscroll_enabled(bool enable) {
 static void pointing_device_task_charybdis(report_mouse_t* mouse_report) {
     static int16_t scroll_buffer_x = 0;
     static int16_t scroll_buffer_y = 0;
-    print("In pointing_device_task_charybdis\n");
+    // print("In pointing_device_task_charybdis\n");
     if (g_charybdis_config.is_dragscroll_enabled) {
 #    ifdef CHARYBDIS_DRAGSCROLL_REVERSE_X
         scroll_buffer_x -= mouse_report->x;
@@ -261,25 +263,26 @@ static bool has_shift_mod(void) {
  *   - default DPI: internal table index/actual DPI
  *   - sniping DPI: internal table index/actual DPI
  */
-__attribute__((unused)) static void debug_charybdis_config_to_console(charybdis_config_t* config) {
-#    ifdef CONSOLE_ENABLE
-    IGNORE_FORMAT_WARNING(dprintf("(charybdis) process_record_kb: config = {\n"
-                                  "\traw = 0x%04X,\n"
-                                  "\t{\n"
-                                  "\t\tis_dragscroll_enabled=%b\n"
-                                  "\t\tis_sniping_enabled=%b\n"
-                                  "\t\tdefault_dpi=0x%02X (%ld)\n"
-                                  "\t\tsniping_dpi=0x%01X (%ld)\n"
-                                  "\t}\n"
-                                  "}\n",
-                                  config->raw, config->is_dragscroll_enabled, config->is_sniping_enabled, config->pointer_default_dpi, get_pointer_default_dpi(config), config->pointer_sniping_dpi, get_pointer_sniping_dpi(config)));
-#    endif // CONSOLE_ENABLE
-}
+// __attribute__((unused)) static void debug_charybdis_config_to_console(charybdis_config_t* config) {
+// #    ifdef CONSOLE_ENABLE
+//     IGNORE_FORMAT_WARNING(dprintf("(charybdis) process_record_kb: config = {\n"
+//                                   "\traw = 0x%04X,\n"
+//                                   "\t{\n"
+//                                   "\t\tis_dragscroll_enabled=%b\n"
+//                                   "\t\tis_sniping_enabled=%b\n"
+//                                   "\t\tdefault_dpi=0x%02X (%ld)\n"
+//                                   "\t\tsniping_dpi=0x%01X (%ld)\n"
+//                                   "\t}\n"
+//                                   "}\n",
+//                                   config->raw, config->is_dragscroll_enabled, config->is_sniping_enabled, config->pointer_default_dpi, get_pointer_default_dpi(config), config->pointer_sniping_dpi, get_pointer_sniping_dpi(config)));
+// #    endif // CONSOLE_ENABLE
+// }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     if (!process_record_user(keycode, record)) {
         return false;
     }
+    dprintln("Running trackball code");
 #    ifndef NO_CHARYBDIS_KEYCODES
     switch (keycode) {
         case POINTER_DEFAULT_DPI_FORWARD:
