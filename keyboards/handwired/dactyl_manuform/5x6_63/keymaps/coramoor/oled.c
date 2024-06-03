@@ -469,7 +469,7 @@ void render_master_layer_state(void) {
             oled_write_P(PSTR("  MEDIA   "), check_lock());
             break;
         case _MOUSE:
-            oled_write_P(PSTR("  MOUSE   "), check_lock());
+            oled_write_P(PSTR("  TRACK   "), check_lock());
             break;
         case _GAMENUM:
             oled_write_P(PSTR(" GAMENUM  "), check_lock());
@@ -559,7 +559,7 @@ void render_slave_layer_state(void) {
             oled_write_P(PSTR("  MEDIA   "), check_lock());
             break;
         case _MOUSE:
-            oled_write_P(PSTR("  MOUSE   "), check_lock());
+            oled_write_P(PSTR("  TRACK   "), check_lock());
             break;
         case _GAMENUM:
             oled_write_P(PSTR(" GAMENUM  "), check_lock());

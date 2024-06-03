@@ -28,7 +28,7 @@
 #define CHARYBDIS_DRAGSCROLL_DPI 100
 #define CHARYBDIS_POINTER_ACCELERATION_ENABLE
 // #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
-#define AUTO_MOUSE_TIME 500
+#define AUTO_MOUSE_TIME 550
 
 #ifdef OLED_ENABLE
 #   define OLED_FONT_H "keyboards/handwired/dactyl_manuform/5x6_63/keymaps/coramoor/glcdfont.c"

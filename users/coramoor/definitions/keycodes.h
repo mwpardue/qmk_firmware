@@ -109,11 +109,12 @@ enum {
 // #define LTHUM4 LT(_NUMPAD, KC_B)
 #define LTHUM2 LT(_NAVIGATION, KC_BSPC)
 // #define LTHUM2 LSFT_T(KC_TAB)
-#define LTHUM1 LT(_NUMPAD, KC_BSPC)
+// #define LTHUM1 LT(_NUMPAD, KC_BSPC)
+#define LTHUM1 LSFT_T(KC_BSPC)
 //#define LTHUM3 LT(_FUNCTION, KC_B)
 #define LTHUM3 DRGSCRL
 // #define LTHUM4 LCTL_T(KC_MINS)
-#define LTHUM4 KC_BTN1
+#define LTHUM4 KC_TAB
 //#define LTHUM5 MEH_T(KC_MINS)
 #define LTHUM6 KC_BTN2
 // #define LTHUM6 HYPR_T(KC_ENTER)
@@ -127,9 +128,10 @@ enum {
 
 #define RUTHUM1 LT(_FUNCTION, KC_T)
 // #define RTHUM3 RALT_T(KC_TAB)
-#define RTHUM1 HYPR_T(KC_ENTER)
+#define RTHUM1 RSFT_T(KC_ENTER)
 #define RTHUM2 LT(_SYMBOL, KC_SPACE)
-#define RTHUM3 LT(_MACROS, XCASE)
+// #define RTHUM3 LT(_MACROS, XCASE)
+#define RTHUM3 HYPR_T(XCASE)
 // #define RTHUM1 LT(_SYMBOL, KC_ENTER)
 
 #define NUM_Z LT(_NUMPAD, KC_Z)
@@ -230,6 +232,7 @@ enum {
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
 #define SPC_HYP HYPR_T(KC_SPACE)
 #define MC_SWAP LGUI(KC_GRV)
+#define TGMOUSE TG(_MOUSE)
 
 // Layer transitions
 

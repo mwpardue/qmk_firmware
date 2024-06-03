@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
       KC_MINS, LHM_A,  LHM_S,   LHM_D,   LHM_F,   KC_G,                                            KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
       TOADJ,   MED_Z,  KC_X,    KC_C,    KC_V,    KC_B,                                            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MOFUN,
-                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+                       KC_BTN2, KC_BTN1,                                                                             KC_LBRC, KC_RBRC,
                                          LTHUM1,  LTHUM2,                                 RTHUM3,  RTHUM2,  RTHUM1,
                                          LTHUM3,  LTHUM4,
                                          LTHUM5,  LTHUM6
@@ -69,12 +69,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOUSE] = LAYOUT_split_5x6_63(
       _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
-      _______, KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, _______,                                        _______, KC_BTN1, KC_BTN2, _______, _______, _______,
-      _______, SNIPING, DRGSCRL, KC_BTN2, KC_BTN1, _______,                                        _______, _______, _______, _______, _______, _______,
+      _______, DRGSCRL, SNIPING, KC_BTN2, KC_BTN1, _______,                                        _______, KC_RGUI, KC_RSFT, KC_RALT, KC_RCTL, _______,
+      _______, _______, TGMOUSE, _______, _______, _______,                                        _______, KC_BTN1, KC_BTN2, _______, _______, _______,
                        _______, _______,                                                                             _______, _______,
-                                         _______,  _______,                                 _______,  TOBAS,  _______,
-                                         _______,  _______,
-                                         _______,  _______
+                                          _______, _______,                              _______,  TOBAS,   _______,
+                                          _______, _______,
+                                          _______, _______
     ),
 
     [_GAMENUM] = LAYOUT_split_5x6_63(
