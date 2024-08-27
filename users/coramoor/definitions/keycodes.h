@@ -88,16 +88,17 @@ enum {
 #endif
 
 #ifdef POINTING_DEVICE_ENABLE
-    // DPI_MOD, DPI_RMOD, S_D_MOD, S_D_RMOD, SNIPING, SNP_TOG, DRGSCRL, DRG_TOG,
-    POINTER_DEFAULT_DPI_FORWARD,
-    POINTER_DEFAULT_DPI_REVERSE,
-    POINTER_SNIPING_DPI_FORWARD,
-    POINTER_SNIPING_DPI_REVERSE,
-    SNIPING_MODE,
-    SNIPING_MODE_TOGGLE,
-    DRAGSCROLL_MODE,
-    DRAGSCROLL_MODE_TOGGLE,
-
+    #ifdef CHARYBDIS_POINTING
+        // DPI_MOD, DPI_RMOD, S_D_MOD, S_D_RMOD, SNIPING, SNP_TOG, DRGSCRL, DRG_TOG,
+        POINTER_DEFAULT_DPI_FORWARD,
+        POINTER_DEFAULT_DPI_REVERSE,
+        POINTER_SNIPING_DPI_FORWARD,
+        POINTER_SNIPING_DPI_REVERSE,
+        SNIPING_MODE,
+        SNIPING_MODE_TOGGLE,
+        DRAGSCROLL_MODE,
+        DRAGSCROLL_MODE_TOGGLE,
+    #endif //CHARYBDIS_POINTING
 #endif
 
     CUSTOM_KEYCODE_END
@@ -105,32 +106,20 @@ enum {
 
 // Left thumb keys
 
-// #define LTHUM4 LGUI_T(KC_CAPS)
-// #define LTHUM4 LT(_NUMPAD, KC_B)
 #define LTHUM2 LT(_NAVIGATION, KC_BSPC)
-// #define LTHUM2 LSFT_T(KC_TAB)
 #define LTHUM1 LT(_NUMPAD, KC_BSPC)
-//#define LTHUM3 LT(_FUNCTION, KC_B)
-#define LTHUM3 DRGSCRL
-// #define LTHUM4 LCTL_T(KC_MINS)
-#define LTHUM4 KC_BTN1
-//#define LTHUM5 MEH_T(KC_MINS)
-#define LTHUM6 KC_BTN2
-// #define LTHUM6 HYPR_T(KC_ENTER)
-#define LTHUM5 SNIPING
-// #define LTHUM2 LT(_NUMPAD, KC_TAB)
-// #define LTHUM5 LT(_MEDIA, KC_CAPS)
-// #define LTHUM5 LT(_NUMPAD, KC_MINS)
+#define LTHUM4 LALT(KC_L)
+#define LTHUM3 LSFT_T(KC_TAB)
+#define LTHUM5 LALT(KC_H)
+
 #define MED_Z LT(_NUMPAD, KC_Z)
 
 // Right thumb keys
 
 #define RUTHUM1 LT(_FUNCTION, KC_T)
-// #define RTHUM3 RALT_T(KC_TAB)
-#define RTHUM1 HYPR_T(KC_ENTER)
+#define RTHUM3 RSFT_T(KC_ENTER)
 #define RTHUM2 LT(_SYMBOL, KC_SPACE)
-#define RTHUM3 LT(_MACROS, XCASE)
-// #define RTHUM1 LT(_SYMBOL, KC_ENTER)
+#define RTHUM1 RCTL_T(KC_3)
 
 #define NUM_Z LT(_NUMPAD, KC_Z)
 #define GUI_SLS RGUI_T(KC_SLSH)
@@ -146,6 +135,12 @@ enum {
 // #define DRGSCRL DRAGSCROLL_MODE
 // #define DRG_TOG DRAGSCROLL_MODE_TOGGLE
 //
+#define SNIPING PM_MO(PM_PRECISION)
+#define DRGSCRL PM_MO(PM_DRAG)
+#define PNTVOLM PM_MO(PM_VOLUME)
+#define PNTCART PM_MO(PM_CARET)
+#define PNTMON PM_MO(PM_MON)
+#define PNTBROW PM_MO(PM_BROW)
 
 #define SFT_CW LSFT_T(KC_Q)
 #define CTL_CW LCTL_T(KC_Q)
@@ -174,7 +169,7 @@ enum {
 
 // Left Hand
 #define LHM_A LCTL_T(KC_A)
-#define LHM_S LALT_T(KC_S)
+// #define LHM_S LALT_T(KC_S)
 #define LHM_D LSFT_T(KC_D)
 #define LHM_F LGUI_T(KC_F)
 #define SFT_Z RSFT_T(KC_Z)
@@ -183,6 +178,9 @@ enum {
 #define LHM_X LALT_T(KC_X)
 #define LHM_C LSFT_T(KC_C)
 #define LHM_V LGUI_T(KC_V)
+#define LHM_R LALT_T(KC_R)
+#define LHM_S LSFT_T(KC_S)
+#define LHM_T LGUI_T(KC_T)
 
 // Right Hand
 #define RHM_SCN RCTL_T(KC_SCLN)
@@ -193,6 +191,10 @@ enum {
 #define RHM_DOT RALT_T(KC_DOT)
 #define RHM_COM RSFT_T(KC_COMM)
 #define RHM_M   RGUI_T(KC_M)
+#define RHM_O RCTL_T(KC_O)
+#define RHM_I   RALT_T(KC_I)
+#define RHM_E   RSFT_T(KC_E)
+#define RHM_N   RGUI_T(KC_N)
 
 // Mod-taps (COLEMAK-DH)
 
@@ -230,6 +232,7 @@ enum {
 #define ENT_SYM LT(_SYMBOL, KC_ENT)
 #define SPC_HYP HYPR_T(KC_SPACE)
 #define MC_SWAP LGUI(KC_GRV)
+#define TGMOUSE TG(_MOUSE)
 
 // Layer transitions
 
@@ -256,6 +259,8 @@ enum {
 #define SELALL LGUI(KC_A)
 #define CUT LGUI(KC_X)
 #define COPY LGUI(KC_C)
+#define PASTE LGUI(KC_V)
+#define HPASTE LGUI(LCTL(KC_V))
 #define SAVE LGUI(KC_S)
 #define UNDO LGUI(KC_Z)
 // #define ESC_MEH MEH_T(KC_ESC)
@@ -269,8 +274,8 @@ enum {
 #define ESC_NAV LT(_NAVIGATION, KC_ESC)
 #define SPCSFT LSFT_T(KC_SPC)
 #define MACSLEP LSFT(LCTL(KC_KB_POWER))
-#define MON_L LALT(KC_H)
-#define MON_R LALT(KC_L)
+// #define MON_L LALT(KC_H)
+// #define MON_R LALT(KC_L)
 #define MON_U LALT(KC_K)
 #define MON_D LALT(KC_J)
 #define SPC_L LALT(LGUI((KC_H)))

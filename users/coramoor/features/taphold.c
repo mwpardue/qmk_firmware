@@ -2,7 +2,32 @@
 
 #include "taphold.h"
 #include "features/custom_shortcuts.h"
-#include "features/oled_menu.h"
+// #include "features/oled_menu.h"
+
+uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
+
+uint16_t get_sft_tapping_term(void) {
+    return sft_tapping_term;
+}
+
+uint16_t modtap_tapping_term = MODTAP_TAPPING_TERM;
+
+uint16_t get_modtap_tapping_term(void) {
+    return modtap_tapping_term;
+}
+
+uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
+
+uint16_t get_gqt_tapping_term(void) {
+    return gqt_tapping_term;
+}
+
+uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
+
+uint16_t sget_gqt_tapping_term(void) {
+    return sgqt_tapping_term;
+}
+
 
 uint16_t get_tapping_term_result(uint16_t keycode) {
     switch (keycode) {
@@ -21,7 +46,6 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case SFT_QUO:
         // case SFT_ENT:
             return g_tapping_term + 40;
-        case LTHUM6:
         case LTHUM5:
         case TD_COPY:
         case TD_PAST:
@@ -56,27 +80,27 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case RHM_CLN:
           return g_tapping_term + 100;
         case LHM_A:
-        case LHM_S:
-        case RHM_SCN:
-        case RHM_L:
+        case LHM_R:
+        case RHM_O:
+        case RHM_I:
         case RHM_DOT:
         case LHM_X:
         case MED_Z:
         case RHM_M:
         case LHM_V:
-        case LHM_F:
-        case RHM_J:
+        case LHM_T:
+        case RHM_N:
         case LHM_C:
         case RHM_COM:
-        // case RHM_K:
-        // case LHM_D:
+        // case RHM_E:
+        // case LHM_S:
           return get_modtap_tapping_term();
         // case LHM_A:
-        // case RHM_SCN:
+        // case RHM_O:
         case LHM_Z:
         case RHM_SLS:
-        case RHM_K:
-        case LHM_D:
+        case RHM_E:
+        case LHM_S:
         case SFT_Z:
         case SFT_QUE:
             return get_sft_tapping_term();
@@ -98,13 +122,13 @@ bool get_tapping_force_hold_result(uint16_t keycode) {
         case RTHUM1:
         case RTHUM3:
         case LHM_A:
+        case LHM_R:
+        case LHM_T:
+        case RHM_O:
+        case RHM_I:
+        case RHM_N:
+        case RHM_E:
         case LHM_S:
-        case LHM_F:
-        case RHM_SCN:
-        case RHM_L:
-        case RHM_J:
-        case RHM_K:
-        case LHM_D:
         case RHM_SLS:
         case RHM_DOT:
         case RHM_M:
@@ -148,13 +172,13 @@ bool get_permissive_hold_result(uint16_t keycode) {
     switch (keycode) {
         // case BSP_SYM:
         case LHM_A:
+        case LHM_R:
+        case LHM_T:
+        case RHM_O:
+        case RHM_I:
+        case RHM_N:
+        case RHM_E:
         case LHM_S:
-        case LHM_F:
-        case RHM_SCN:
-        case RHM_L:
-        case RHM_J:
-        case RHM_K:
-        case LHM_D:
         case RHM_SLS:
         case RHM_DOT:
         case RHM_M:

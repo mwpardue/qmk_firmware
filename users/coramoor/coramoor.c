@@ -29,6 +29,8 @@ __attribute__((weak)) void eeconfig_init_keymap(void) {}
 void                       eeconfig_init_user(void) {
     user_config.raw              = 0;
     user_config.os = MACOS;
+    user_config.auto_mouse_time = 300;
+    set_auto_mouse_timeout(user_config.auto_mouse_time);
     eeconfig_update_user(user_config.raw);
     eeconfig_init_keymap();
 }
@@ -84,6 +86,13 @@ void matrix_scan_user(void) {
 }
 
 #ifdef ACHORDION_ENABLE
+
+uint16_t achordion_tapping_term = ACHORDION_TAPPING_TERM;
+
+uint16_t get_achordion_tapping_term(void) {
+    return achordion_tapping_term;
+}
+
  bool achordion_chord(uint16_t tap_hold_keycode,
                       keyrecord_t* tap_hold_record,
                       uint16_t other_keycode,
@@ -94,7 +103,7 @@ void matrix_scan_user(void) {
     case LHM_V: //F   + W, Q
       if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC)) {return true;}
     case LHM_X:
-      if ((other_keycode == LTHUM1 ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LTHUM4) || (other_keycode == LTHUM6)) {return true;}
+      if ((other_keycode == LTHUM1 ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LTHUM4)) {return true;}
     case LHM_Z:
       if ((other_keycode == LTHUM2) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     case LHM_C:
@@ -107,21 +116,21 @@ void matrix_scan_user(void) {
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     case RHM_SLS:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case LHM_F: //F   + W, Q
+    case LHM_T: //F   + W, Q
       if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC)) {return true;}
-    case LHM_S:
-      if ((other_keycode == LTHUM1 ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LTHUM4) || (other_keycode == LTHUM6)) {return true;}
+    case LHM_R:
+      if ((other_keycode == LTHUM1 ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LTHUM4)) {return true;}
     case LHM_A:
       if ((other_keycode == LTHUM2) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case LHM_D:
+    case LHM_S:
       if ((other_keycode == LTHUM2) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_J:
+    case RHM_N:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_K:
+    case RHM_E:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_L:
+    case RHM_I:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_SCN:
+    case RHM_O:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
@@ -145,7 +154,6 @@ void matrix_scan_user(void) {
     case SPC_HYP:
     case SFT_FUN:
     case LTHUM5:
-    case LTHUM6:
     case LTHUM3:
     case LTHUM4:
     case LTHUM1:
@@ -165,7 +173,7 @@ void matrix_scan_user(void) {
     case SFT_QUE:
     case LHM_Z:
     case RHM_SLS:
-    case RHM_SCN:
+    case RHM_O:
     case CTL_CW:
     case GUI_CW:
     case SFT_CW:
@@ -258,26 +266,43 @@ void pointing_device_init_user(void) {
     set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
 }
 
-bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
-    switch(keycode) {
-        case DRGSCRL:
-            return true;
-        case SNIPING:
-            return true;
-        default:
-            return false;
+    bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+        switch(keycode) {
+            case DRGSCRL:
+            case SNIPING:
+            case PNTVOLM:
+            case PNTCART:
+            case PNTBROW:
+            case PNTMON:
+                return true;
+            default:
+                return false;
+        }
+        return  is_mouse_record_user(keycode, record);
     }
-    return  is_mouse_record_user(keycode, record);
-}
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    if (get_highest_layer(state) == _NAVIGATION) {
-        charybdis_set_pointer_dragscroll_enabled(true);
-    } else {
-        charybdis_set_pointer_dragscroll_enabled(false);
+    layer_state_t layer_state_set_user(layer_state_t state) {
+        pointing_mode_reset();
+        switch(get_highest_layer(state)) {
+            case _NAVIGATION:  // Navigation layer
+                set_pointing_mode_id(PM_DRAG);
+                break;
+            case _MEDIA: // Media control layer
+                set_pointing_mode_id(PM_VOL);
+                break;
+            case _NUMPAD:
+                set_pointing_mode_id(PM_CARET);
+                break;
+        }
+        #ifdef CHARYBDIS_POINTING
+            if (get_highest_layer(state) == _NAVIGATION) {
+                charybdis_set_pointer_dragscroll_enabled(true);
+            } else {
+                charybdis_set_pointer_dragscroll_enabled(false);
+            }
+        #endif //CHARYBDIS_POINTING
+        return state;
     }
-    return state;
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_LEADER_ENABLE

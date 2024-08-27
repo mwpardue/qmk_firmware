@@ -14,6 +14,7 @@ typedef enum {
     MENU_AT,
     MENU_GQT,
     MENU_SGQT,
+    MENU_AMT,
     MENU_DEFAULTLAYER,
     MENU_OSFLAG,
     MENU_DEBUG,

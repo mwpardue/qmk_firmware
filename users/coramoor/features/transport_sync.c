@@ -24,6 +24,7 @@ user_runtime_config_t user_state;
 kb_state_t kb_state;
 
 user_config_t user_config;
+// uint16_t user_config.auto_mouse_time = get_auto_mouse_timeout();
 
 os_t os;
 
@@ -64,6 +65,7 @@ void user_transport_update(void) {
     if (is_keyboard_master()) {
         user_state.oled_menu_selector = user_config.oled_menu_selector;
         user_state.os = user_config.os;
+        user_state.auto_mouse_time = user_config.auto_mouse_time;
         transport_user_state = user_state.raw;
     // #ifdef SMART_CASE_ENABLE
     //     kb_state.type = smart_case.type;
@@ -79,6 +81,7 @@ void user_transport_update(void) {
         user_state.raw       = transport_user_state;
         user_config.oled_menu_selector = user_state.oled_menu_selector;
         user_config.os = user_state.os;
+        user_config.auto_mouse_time = user_state.auto_mouse_time;
         kb_state.raw = transport_kb_state;
     // #ifdef SMART_CASE_ENABLE
     //     smart_case.type = kb_state.type;

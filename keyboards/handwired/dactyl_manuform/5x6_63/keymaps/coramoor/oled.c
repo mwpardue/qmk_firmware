@@ -30,7 +30,12 @@ bool check_lock(void) {
 
 bool check_state(void) {
     led_t led_usb_state = host_keyboard_led_state();
-    if (led_usb_state.caps_lock || (xcase_state == XCASE_ON) || (xcase_state == XCASE_WAIT) || led_usb_state.num_lock || caps_word_on) {
+    if (led_usb_state.caps_lock || \
+        (xcase_state == XCASE_ON) || \
+        (xcase_state == XCASE_WAIT) || \
+        led_usb_state.num_lock || \
+        caps_word_on || \
+        (get_pointing_mode_id() != PM_NONE)) {
         return true;
     } else {
         return false;
@@ -383,23 +388,44 @@ void render_kb_state_1(void) {
 void render_kb_state_2(void) {
     render_kb_box_left();
     led_t led_usb_state = host_keyboard_led_state();
-
-    if ((led_usb_state.caps_lock) && (xcase_state == XCASE_ON)) {
-        oled_write_P(PSTR("XC"), true);
-    } else if (xcase_state == XCASE_ON) {
-        oled_write_P(PSTR("xc"), true);
-    } else if ((led_usb_state.caps_lock) && (xcase_state == XCASE_WAIT)) {
-        oled_write_P(PSTR("XW"), true);
-    } else if (xcase_state == XCASE_WAIT) {
-        oled_write_P(PSTR("xw"), true);
-    } else if (caps_word_on) {
-        oled_write_P(PSTR("CW"), true);
-    } else if (led_usb_state.num_lock) {
-        oled_write_P(PSTR("NL"), true);
-    } else if (led_usb_state.caps_lock) {
-        oled_write_P(PSTR("CL"), true);
-    } else {
-        oled_write_P(PSTR("  "), false);
+    switch(get_pointing_mode_id()) {
+        case PM_DRAG:
+            oled_write_P(PSTR("DR"), true);
+            break;
+        case PM_CARET:
+            oled_write_P(PSTR("CT"), true);
+            break;
+        case PM_PRECISION:
+            oled_write_P(PSTR("PR"), true);
+            break;
+        case PM_VOLUME:
+            oled_write_P(PSTR("VL"), true);
+            break;
+        case PM_MON:
+            oled_write_P(PSTR("MN"), true);
+            break;
+        case PM_BROW:
+            oled_write_P(PSTR("BR"), true);
+            break;
+        default:
+            if ((led_usb_state.caps_lock) && (xcase_state == XCASE_ON)) {
+                oled_write_P(PSTR("XC"), true);
+            } else if (xcase_state == XCASE_ON) {
+                oled_write_P(PSTR("xc"), true);
+            } else if ((led_usb_state.caps_lock) && (xcase_state == XCASE_WAIT)) {
+                oled_write_P(PSTR("XW"), true);
+            } else if (xcase_state == XCASE_WAIT) {
+                oled_write_P(PSTR("xw"), true);
+            } else if (caps_word_on) {
+                oled_write_P(PSTR("CW"), true);
+            } else if (led_usb_state.num_lock) {
+                oled_write_P(PSTR("NL"), true);
+            } else if (led_usb_state.caps_lock) {
+                oled_write_P(PSTR("CL"), true);
+            } else {
+                oled_write_P(PSTR("  "), false);
+            }
+            break;
     }
     render_kb_box_right();
 }
@@ -469,7 +495,7 @@ void render_master_layer_state(void) {
             oled_write_P(PSTR("  MEDIA   "), check_lock());
             break;
         case _MOUSE:
-            oled_write_P(PSTR("  MOUSE   "), check_lock());
+            oled_write_P(PSTR("  TRACK   "), check_lock());
             break;
         case _GAMENUM:
             oled_write_P(PSTR(" GAMENUM  "), check_lock());
@@ -559,7 +585,7 @@ void render_slave_layer_state(void) {
             oled_write_P(PSTR("  MEDIA   "), check_lock());
             break;
         case _MOUSE:
-            oled_write_P(PSTR("  MOUSE   "), check_lock());
+            oled_write_P(PSTR("  TRACK   "), check_lock());
             break;
         case _GAMENUM:
             oled_write_P(PSTR(" GAMENUM  "), check_lock());

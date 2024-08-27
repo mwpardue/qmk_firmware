@@ -7,6 +7,7 @@ typedef union {
     struct {
         uint8_t oled_menu_selector :8;
         uint8_t os :8;
+        uint16_t auto_mouse_time :16;
     };
 } user_runtime_config_t;
 
@@ -37,7 +38,7 @@ extern kb_state_t kb_state;
 //     WINDOWS,
 //     LINUX
 // } os_t;
-
+//
 // extern os_t os;
 
 typedef union {
@@ -46,6 +47,7 @@ typedef union {
     struct {
         uint8_t oled_menu_selector :8;
         uint8_t os :8;
+        uint16_t auto_mouse_time :16;
     };
 
 

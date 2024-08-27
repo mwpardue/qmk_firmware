@@ -178,10 +178,8 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_MINS:
             case KC_UNDS:
             case KC_BSPC:
-            // case BSP_SYM:
             case SPC_HYP:
             case LTHUM5:
-            case LTHUM6:
             case LTHUM3:
             case LTHUM4:
             case LTHUM1:

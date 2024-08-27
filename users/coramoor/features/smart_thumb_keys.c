@@ -4,7 +4,9 @@
 #ifdef CASEMODE_ENABLE
     #include "casemodes.h"
 #endif
-#include "features/os_toggle.h"
+#ifdef OS_TOGGLE_ENABLE
+    #include "features/os_toggle.h"
+#endif
 
 // extern os_t           os;
 // extern user_config_t user_config;
@@ -29,7 +31,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     bool isOneShotGui         = get_oneshot_mods() & MOD_MASK_GUI || get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotButShift = isOneShotCtrl || isOneShotAlt || isOneShotGui;
     bool isAnyOneShot         = isOneShotCtrl || isOneShotAlt || isOneShotGui || isOneShotShift;
-    bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
+    // bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
 
 
     switch (keycode) {
@@ -92,7 +94,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     }
     return PROCESS_RECORD_RETURN_TRUE;
 
-    case RTHUM3:
+    case RTHUM1:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
                 if ((isAnyOneShotButShift) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state != 0)) {
@@ -173,41 +175,63 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
 
 
         case LTHUM1:
-          if (record->event.pressed) {
-            if (record->tap.count > 0) {
-              if (isCtrl) {
-                enable_caps_word();
-              }
-              else if ((isAnyOneShotButShift) || (xcase_state != 0)) {
-                clear_locked_and_oneshot_mods();
-                disable_xcase();
-                dprintln("disable xcase");
-                  if (caps_word_on) {
-                    disable_caps_word();
-                  } else if (host_keyboard_led_state().caps_lock) {
-                    dprintln("disable caps lock 1");
-                    tap_code16(KC_CAPS);
-                  }
-              } else if (caps_word_on) {
-                disable_caps_word();
-                // tap_code16(KC_CAPS);
-                // dprintln("enabling Caps Lock");
-              } else if (host_keyboard_led_state().caps_lock) {
-                tap_code16(KC_CAPS);
-                dprintln("disabling caps lock 2");
-              } else if (isOneShotShift || isOneShotLockedShift) {
-                clear_locked_and_oneshot_mods();
-                enable_caps_word();
-                dprintln("enabling caps word");
-              } else {
-                add_oneshot_mods(MOD_LSFT);
-              return PROCESS_RECORD_RETURN_FALSE;
-              }
-              return PROCESS_RECORD_RETURN_FALSE;
+            if (record->event.pressed) {
+                if (record->tap.count > 0) {
+                    if (isAnyOneShot) {
+                        clear_locked_and_oneshot_mods();
+                        dprintln("isAnyOneShotButShift");
+                    } else if (caps_word_on) {
+                        disable_caps_word();
+                        tap_code16(KC_CAPS);
+                        dprintln("caps_word_on");
+                    } else if (host_keyboard_led_state().caps_lock) {
+                        tap_code16(KC_CAPS);
+                        dprintln("caps lock off");
+                    } else {
+                        enable_caps_word();
+                        dprintln("enable_caps_word");
+                    }
+                    return PROCESS_RECORD_RETURN_FALSE;
+                }
+                return PROCESS_RECORD_CONTINUE;
             }
-          return PROCESS_RECORD_CONTINUE;
-          }
-        break;
+            break;
+
+        //   if (record->event.pressed) {
+        //     if (record->tap.count > 0) {
+        //       if (isCtrl) {
+        //         enable_caps_word();
+        //       }
+        //       else if ((isAnyOneShotButShift) || (xcase_state != 0)) {
+        //         clear_locked_and_oneshot_mods();
+        //         disable_xcase();
+        //         dprintln("disable xcase");
+        //           if (caps_word_on) {
+        //             disable_caps_word();
+        //           } else if (host_keyboard_led_state().caps_lock) {
+        //             dprintln("disable caps lock 1");
+        //             tap_code16(KC_CAPS);
+        //           }
+        //       } else if (caps_word_on) {
+        //         disable_caps_word();
+        //         // tap_code16(KC_CAPS);
+        //         // dprintln("enabling Caps Lock");
+        //       } else if (host_keyboard_led_state().caps_lock) {
+        //         tap_code16(KC_CAPS);
+        //         dprintln("disabling caps lock 2");
+        //       } else if (isOneShotShift || isOneShotLockedShift) {
+        //         clear_locked_and_oneshot_mods();
+        //         enable_caps_word();
+        //         dprintln("enabling caps word");
+        //       } else {
+        //         add_oneshot_mods(MOD_LSFT);
+        //       return PROCESS_RECORD_RETURN_FALSE;
+        //       }
+        //       return PROCESS_RECORD_RETURN_FALSE;
+        //     }
+        //   return PROCESS_RECORD_CONTINUE;
+        //   }
+        // break;
 
     case CTL_CW:
     case SFT_CW:

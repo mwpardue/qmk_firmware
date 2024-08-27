@@ -101,7 +101,7 @@ void render_bool_menu_item(const char *label, bool property, uint8_t menu_item) 
 }
 
 void menu_items(void) {
-    oled_write_P(PSTR("   Dractyl Config    "), false);
+    oled_write_P(PSTR("    CONFIGURATION    "), false);
     for (uint8_t i = viewport_begin(); i <= (viewport_begin() + 6); i++) {
         switch(i) {
             case MENU_STT:
@@ -121,6 +121,9 @@ void menu_items(void) {
                 break;
             case MENU_SGQT:
                 render_menu_item("SGQT TAP TERM:", sgqt_tapping_term, i);
+                break;
+            case MENU_AMT:
+                render_menu_item("AUTO MOUSE TIME:", user_config.auto_mouse_time, i);
                 break;
             case MENU_DEFAULTLAYER:
                 switch (get_highest_layer(default_layer_state)) {
@@ -219,6 +222,8 @@ process_record_result_t process_oled_menu_keys(uint16_t keycode, keyrecord_t *re
                     case MENU_DEBUG:
                         #ifndef NO_DEBUG
                             debug_enable ^= 1;
+                            // debug_mouse ^= 1;
+                            // debug_matrix ^= 1;
                             kb_state.debug_enabled = debug_enable;
                             eeconfig_update_user(kb_state.raw);
                             if (debug_enable) {
@@ -267,6 +272,12 @@ process_record_result_t process_oled_menu_keys(uint16_t keycode, keyrecord_t *re
                     case MENU_SGQT:
                         sgqt_tapping_term = sgqt_tapping_term + 5;
                         dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
+                        break;
+                    case MENU_AMT:
+                        set_auto_mouse_timeout(get_auto_mouse_timeout() + 50);
+                        user_config.auto_mouse_time = get_auto_mouse_timeout();
+                        eeconfig_update_user(user_config.raw);
+                        dprintf("Auto Mouse Time = %d\n", get_auto_mouse_timeout());
                         break;
                     case MENU_NKRO:
                         if (keymap_config.nkro) {
@@ -361,6 +372,12 @@ process_record_result_t process_oled_menu_keys(uint16_t keycode, keyrecord_t *re
                     case MENU_SGQT:
                         sgqt_tapping_term = sgqt_tapping_term - 5;
                         dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
+                        break;
+                    case MENU_AMT:
+                        set_auto_mouse_timeout(get_auto_mouse_timeout() - 50);
+                        user_config.auto_mouse_time = get_auto_mouse_timeout();
+                        eeconfig_update_user(user_config.raw);
+                        dprintf("Auto Mouse Time = %d\n", get_auto_mouse_timeout());
                         break;
                     case MENU_NKRO:
                         if (keymap_config.nkro) {

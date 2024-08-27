@@ -24,17 +24,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM bootloader_combo[] = {LTHUM1, KC_Q, KC_T, COMBO_END};
 const uint16_t PROGMEM bootloadercm_combo[] = {LTHUM1, KC_Q, KC_B, COMBO_END};
 const uint16_t PROGMEM sleep_combo[] = {LTHUM2, KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM login_combo[] = {LTHUM2, LHM_S, LHM_D, COMBO_END};
+const uint16_t PROGMEM login_combo[] = {LTHUM2, LHM_R, LHM_S, COMBO_END};
 // const uint16_t PROGMEM logincm_combo[] = {CLIR_THM, KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM parn_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
 const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
-const uint16_t PROGMEM escape_combo[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM escape2_combo[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM mtescape_combo[] = {RHM_J, RHM_K, COMBO_END};
-const uint16_t PROGMEM mtescape2_combo[] = {LHM_D, LHM_F, COMBO_END};
+const uint16_t PROGMEM mtescape2_combo[] = {LHM_S, LHM_T, COMBO_END};
 const uint16_t PROGMEM angb_combo[] = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM cw_combo[] = {LTHUM2, RTHUM1, COMBO_END};
+const uint16_t PROGMEM copy_combo[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM paste_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM pastehistory_combo[] = {KC_X, KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM pw_combo[] = {RTHUM2, RHM_I, RHM_O, COMBO_END};
+const uint16_t PROGMEM mon_combo[] = {LTHUM4, LTHUM5, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(bootloader_combo, QK_BOOT),
@@ -45,47 +47,49 @@ combo_t key_combos[] = {
   COMBO(parn_combo, SM_PAR),
   COMBO(curb_combo, SM_CUR),
   COMBO(brac_combo, SM_BRC),
-  COMBO(escape_combo, KC_ESC),
-  COMBO(escape2_combo, KC_ESC),
-  COMBO(mtescape_combo, KC_ESC),
   COMBO(mtescape2_combo, KC_ESC),
   COMBO(angb_combo, SM_ANG),
-  COMBO(cw_combo, SM_CW)
+  COMBO(cw_combo, SM_CW),
+  COMBO(copy_combo, COPY),
+  COMBO(paste_combo, PASTE),
+  COMBO(pastehistory_combo, HPASTE),
+  COMBO(pw_combo, PASSPAL),
+  COMBO(mon_combo, MON_D)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_BASE] = LAYOUT_split_5x6_63(
       QK_GESC, KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    PASSPAL,
-      KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
-      KC_MINS, LHM_A,  LHM_S,   LHM_D,   LHM_F,   KC_G,                                            KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
-      TOADJ,   MED_Z,  KC_X,    KC_C,    KC_V,    KC_B,                                            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MOFUN,
-                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+      KC_GRV,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, PASSPAL,
+      SFT_MIN, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   SFT_QUO,
+      TOADJ,   NUM_Z,  KC_X,    KC_C,    KC_D,    KC_V,                                            KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, MOFUN,
+                       TAB_LFT, TAB_RGT,                                                                             KC_DOWN, KC_UP,
                                          LTHUM1,  LTHUM2,                                 RTHUM3,  RTHUM2,  RTHUM1,
                                          LTHUM3,  LTHUM4,
-                                         LTHUM5,  LTHUM6
+                                         LTHUM5
     ),
 
     [_MOUSE] = LAYOUT_split_5x6_63(
       _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
-      _______, KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, _______,                                        _______, KC_BTN1, KC_BTN2, _______, _______, _______,
-      _______, SNIPING, DRGSCRL, KC_BTN2, KC_BTN1, _______,                                        _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, PNTBROW, _______,                                        _______, _______, _______, _______, _______, _______,
+      _______, DRGSCRL, SNIPING, KC_BTN2, KC_BTN1, _______,                                        _______, KC_RGUI, KC_RSFT, KC_RALT, KC_RCTL, _______,
+      _______, TGMOUSE, PNTMON,  PNTCART, PNTVOLM, _______,                                        _______, KC_BTN1, KC_BTN2, _______, _______, _______,
                        _______, _______,                                                                             _______, _______,
-                                         _______,  _______,                                 _______,  TOBAS,  _______,
-                                         _______,  _______,
-                                         _______,  _______
+                                          _______, _______,                              KC_BTN1,  KC_BTN2, _______,
+                                          _______, _______,
+                                          _______
     ),
 
     [_GAMENUM] = LAYOUT_split_5x6_63(
       QK_GESC, KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
       QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
-      KC_AT,   LHM_A,  LHM_S,   LHM_D,   LHM_F,   KC_G,                                            KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
+      KC_AT,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
       KC_MINS, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                                            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_PIPE,
-                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+                       TAB_LFT, TAB_RGT,                                                                             _______, _______,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     ),
 
     [_COLEMAK_DH] = LAYOUT_split_5x6_63(
@@ -93,21 +97,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       QK_GESC, KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    PASSPAL,
       KC_AT,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
       TOADJ, LHM_Z,  LHM_X,   LHM_C,   LHM_V,   KC_B,                                            KC_N,    RHM_M,   RHM_COM, RHM_DOT, RHM_SLS, KC_PIPE,
-                       TAB_LFT, TAB_RGT,                                                                             KC_LBRC, KC_RBRC,
+                       TAB_LFT, TAB_RGT,                                                                             _______, _______,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     ),
 
     [_NAVIGATION] = LAYOUT_split_5x6_63(
       QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
-      RMT_PLY, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, TD_SSFL,                                        KC_HOME, _______, SEL_LIN, KC_END,  _______, _______,
+      SM_LOGN, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, TD_SSFL,                                        KC_HOME, SEL_WRD, SEL_LIN, KC_END,  _______, _______,
       KC_BSPC, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, TD_SNIP,                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, TD_QUOT,
       LLOCK,   _______, _______, TD_COPY, TD_PAST, _______,                                     _______, _______, _______, _______, _______, KC_ENT,
-                       TAB_LFT,  TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                       TAB_LFT,  TAB_RGT,                                                                            _______, _______,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
 
       // QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
       // RMT_PLY, MC_SWAP, MOV_LFT, MC_SWRI, MOV_RGT, _______,  		                               KC_HOME, _______, SEL_LIN, KC_END,  _______, _______,
@@ -122,12 +126,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUMPAD] = LAYOUT_split_5x6_63(
       KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
       _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                                           KC_SLSH, KC_7,    KC_8,    KC_9,    KC_SLSH, PASSPAL,
-      _______, LHM_AT,  LHM_BSL, LHM_UND, LHM_PIP, KC_PIPE,                                        KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, KC_QUOT,
+      _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, KC_PIPE,                                        KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, KC_QUOT,
       LLOCK,   _______, KC_LBRC, KC_RBRC, _______, _______,                                        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  KC_ENT,
-                        TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
+                        TAB_LFT, TAB_RGT,                                                                            _______, _______,
                                          _______, _______,                                _______, KC_0,    _______,
-                                         _______, _______,
-                                         _______, _______
+                                         _______, TAB_RGT,
+                                         TAB_LFT
     ),
 
     [_SYMBOL] = LAYOUT_split_5x6_63(
@@ -137,8 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_LBRC, KC_RBRC, _______, _______, _______,                                        KC_PLUS, KC_EXLM, KC_AT,   KC_HASH, KC_DOT,  LLOCK,
                         TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
                                          _______, _______,                                _______, _______, _______,
-                                         _______, _______,
-                                         _______, _______
+                                         _______, TAB_RGT,
+                                         TAB_LFT
     ),
 
     [_MACROS] = LAYOUT_split_5x6_63(
@@ -149,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     ),
 
     [_HEX] = LAYOUT_split_5x6_63(
@@ -160,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     ),
 
     [_FUNCTION] = LAYOUT_split_5x6_63( \
@@ -171,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     ),
 
     [_MEDIA] = LAYOUT_split_5x6_63(
@@ -182,17 +186,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     ),
 
     [_ADJUST] = LAYOUT_split_5x6_63( \
       QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_B,
-      TOBAS,   TOBAS,   _______, EE_CLR,  QK_RBT,  _______,                                         _______, _______,  _______,  _______, _______, _______,  \
-      _______, _______, _______, _______, _______, _______,                                         MENU_AD, MENU_MD,  MENU_MU,  MENU_AU, _______, _______,\
+      TOBAS,   TOBAS,   _______, EE_CLR,  QK_RBT,  QK_BOOT,                                         _______, _______,  _______,  _______, _______, _______,  \
+      _______, _______, _______, _______, _______, _______,                                         _______, _______,  _______,  _______, _______, _______,\
       TOBAS,   _______, _______, _______, _______, _______,                                         _______, _______,  _______,  _______, _______, _______,\
                         TAB_LFT, TAB_RGT,                                                                            KC_LBRC, KC_RBRC,
                                          _______, _______,                                _______, _______, _______,
                                          _______, _______,
-                                         _______, _______
+                                         _______
     )
 };
