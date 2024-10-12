@@ -30,6 +30,7 @@ typedef union {
         bool caps_word_on :1;
         bool debug_enabled :1;
         bool is_dynamic_recording :1;
+        bool leading :1;
     #endif
         // uint8_t smart_case_types :8;
     };

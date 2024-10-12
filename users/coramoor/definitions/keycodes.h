@@ -43,11 +43,15 @@ enum {
 #endif
 
 #ifdef SMART_THUMB_KEYS_ENABLE
-    CAP_KEY, SP_CAP, SP_MOD, DEF_MOD, XCASE, TS_CAP, SP_PST,
+    CAP_KEY, SP_CAP, SP_MOD, DEF_MOD, XCASE, TS_CAP, SP_PST, XCTHUM,
 #endif
 
 #ifdef SMART_CASE_ENABLE
     MC_CAPS, MC_WORD, MC_CAML, MC_SNAK, MC_KBAB,
+#endif
+
+#ifdef TAP_DANCE_ENABLE
+    TD_COPY, TD_PAST, TD_LEAD,
 #endif
 
 #ifdef SHORTCUTS_ENABLE
@@ -55,7 +59,7 @@ enum {
     SFT_TTP, SFT_TTM, BSP_WRD, BSP_LIN, T_CLOSE, SP_RGT, DF_TOGG,
     S_ARRNG, BROWSER_BACK, BROWSER_FORWARD, TAB_BACK, TAB_FORWARD, TMX_LDS,
     PASSPAL, TMX_VIS, NAV_LFT, NAV_RGT, SEL_WRD, SEL_LIN, VIM_TRE, TMX_VSP,
-    TMX_HSP, SP_AT, CAP_MEH, SM_SWIT, TG_OS, CG_MOD, ADJ_LYR, FUN_BSP,
+    TMX_HSP, SP_AT, CAP_MEH, SM_SWIT, TG_OS, CG_MOD, ADJ_LYR, FUN_BSP, MACSLEP,
 #endif
 
 #ifdef SELECT_WORD_ENABLE
@@ -67,7 +71,7 @@ enum {
 #endif
 
 #ifdef COMBO_ENABLE
-    SM_LOGN, SM_CW, SM_PAR, SM_CUR, SM_BRC, SM_ANG,
+    SM_LOGN, SM_ESC, SM_CW, SM_PAR, SM_CUR, SM_BRC, SM_ANG,
 #endif
 
 #ifdef LAYER_LOCK_ENABLE
@@ -83,60 +87,46 @@ enum {
     MENU_AD, MENU_MD, MENU_MU, MENU_AU,
 #endif
 
+
     CUSTOM_KEYCODE_END
 };
 
 // Left thumb keys
 
 #define LUTHUM1 LT(_FUNCTION, KC_B)
-// #define LUTHUM2 LGUI_T(KC_CAPS)
-// #define LUTHUM2 LT(_NUMPAD, KC_B)
-#define LUTHUM2 LCTL_T(KC_MINS)
+#define LUTHUM2 LGUI_T(PASSPAL)
 #define LIL_THM LT(_NAVIGATION, KC_BSPC)
-// #define LOL_THM LT(_NUMPAD, KC_TAB)
-#define LOL_THM LSFT_T(KC_TAB)
-#define UOL_THM HYPR_T(KC_ENTER)
-// #define UIL_THM LT(_MEDIA, KC_CAPS)
-#define UIL_THM MEH_T(KC_MINS)
-// #define UIL_THM LT(_NUMPAD, KC_MINS)
-#define MED_Z LT(_MEDIA, KC_Z)
+#define LOL_THM LT(_NUMPAD, KC_TAB)
+#define UOL_THM TD_PAST
+#define UIL_THM TD_COPY
+#define ASW_Z LT(_APPSWITCH, KC_Z)
 
 // Right thumb keys
 
 #define RUTHUM1 LT(_FUNCTION, KC_T)
-// #define RUTHUM2 RALT_T(KC_TAB)
-#define RUTHUM2 LT(_MACROS, XCASE)
+#define RUTHUM2 LT(_VIM, XCASE)
 // #define LOR_THM LT(_SYMBOL, KC_ENTER)
-#define LOR_THM RSFT_T(KC_ENTER)
+#define LOR_THM RCTL_T(KC_ENTER)
 #define LIR_THM LT(_SYMBOL, KC_SPACE)
-// #define UIR_THM LT(_MEDIA, PASSPAL)
+// #define LIR_THM RCTL_T(KC_SPACE)
 #define UIR_THM MEH_T(PASSPAL)
-// #define UIR_THM LT(_SYMBOL, PASSPAL)
 #define UOR_THM HYPR_T(KC_2)
 
-// #define CLIL_THM LT(_NAVIGATION, KC_BSPC)
-#define CLUTHUM2 LT(_NUMPAD, KC_MINS)
-// #define CLUTHUM2 LT(_NUMPAD, KC_X)
-// #define CLOL_THM LT(_NUMPAD, KC_BSPC)
-// #define CLOL_THM LSFT_T(KC_TAB)
-// #define CLOL_THM LT(_NUMPAD, KC_BSPC)
-#define CLIL_THM LT(_NAVIGATION, KC_C)
-#define CLOL_THM LT(_NUMPAD, KC_T)
-#define CLOR_THM KC_F6
-// #define CLOR_THM LT(_SYMBOL, KC_ENTER)
-// #define CLOR_THM RSFT_T(KC_ENTER)
-#define CLIR_THM LT(_MACROS, KC_SPACE)
-#define CUIL_THM OSMHYPR
+#define CLUTHUM2 LT(_NUMPAD, PASSPAL)
+#define CLIL_THM LT(_NAVIGATION, KC_TAB)
+#define CLOL_THM LSFT_T(KC_TAB)
+#define CLOR_THM RSFT_T(KC_ENTER)
+// #define CLIR_THM LT(_SYMBOL, KC_SPACE)
+#define CLIR_THM LT(_VIM, KC_SPACE)
+#define CUIL_THM MON_L
 #define CUIR_THM OSMHYPR
 #define CUOR_THM OSMMEH
-#define CUOL_THM OSMMEH
-// #define CLIR_THM LT(_MACROS, KC_SPACE)
-#define CRUTHUM2 RCTL_T(KC_B)
-// #define CRUTHUM2 LT(_SYMBOL, KC_X)
+#define CUOL_THM MON_R
+#define CRUTHUM2 LT(_NUMPAD, KC_Q)
 #define NUM_Z LT(_NUMPAD, KC_Z)
 #define GUI_SLS RGUI_T(KC_SLSH)
-#define MAC_SLS LT(_MACROS, KC_SLSH)
-#define MAC_QUO LT(_MACROS, KC_QUOTE)
+#define VIM_SLS LT(_VIM, KC_SLSH)
+#define VIM_QUO LT(_VIM, KC_QUOTE)
 
 #define SFT_CW LSFT_T(KC_Q)
 #define CTL_CW LCTL_T(KC_Q)
@@ -165,15 +155,22 @@ enum {
 
 // Left Hand
 #define LHM_A LCTL_T(KC_A)
-#define LHM_S LALT_T(KC_S)
+#define LQM_S LALT_T(KC_S)
 #define LHM_D LSFT_T(KC_D)
 #define LHM_F LGUI_T(KC_F)
-#define SFT_Z RSFT_T(KC_Z)
-#define SFT_QUE LSFT_T(KC_SLSH)
+#define SFT_Z LSFT_T(KC_Z)
+#define SFT_QUE RSFT_T(KC_SLSH)
+#define CTL_Z LCTL_T(KC_Z)
+#define CTL_QUE RCTL_T(KC_SLSH)
+#define SFT_DOT LSFT_T(KC_DOT)
 #define LHM_Z LCTL_T(KC_Z)
 #define LHM_X LALT_T(KC_X)
 #define LHM_C LSFT_T(KC_C)
 #define LHM_V LGUI_T(KC_V)
+
+#define LHM_R LALT_T(KC_R)
+#define LHM_S LSFT_T(KC_S)
+#define LHM_T LGUI_T(KC_T)
 
 // Right Hand
 #define RHM_SCN RCTL_T(KC_SCLN)
@@ -184,6 +181,11 @@ enum {
 #define RHM_DOT RALT_T(KC_DOT)
 #define RHM_COM RSFT_T(KC_COMM)
 #define RHM_M   RGUI_T(KC_M)
+
+#define RHM_O RCTL_T(KC_O)
+#define RHM_I RALT_T(KC_I)
+#define RHM_E RSFT_T(KC_E)
+#define RHM_N RGUI_T(KC_N)
 
 // Mod-taps (COLEMAK-DH)
 
@@ -209,7 +211,7 @@ enum {
 #define ENT_NUM LT(_NUMPAD, KC_ENTER)
 #define BSP_GUI LGUI_T(KC_BSPC)
 #define SFT_BSP LSFT_T(KC_BSPC)
-#define MAC_BSP LT(_MACROS, KC_BSPC)
+#define VIM_BSP LT(_VIM, KC_BSPC)
 #define SFT_FUN LT(_FUNCTION, SP_CAP)
 #define BSP_NUM LT(_NUMPAD, KC_BSPC)
 #define ENT_NAV LT(_NAVIGATION, KC_ENT)
@@ -225,20 +227,22 @@ enum {
 // Layer transitions
 
 #define MOFUN MO(_FUNCTION)
-#define MOMAC MO(_MACROS)
+#define MONUM MO(_NUMPAD)
+#define MOVIM MO(_VIM)
 #define MOGAMN MO(_GAMENUM)
 #define TOBAS TO(_BASE)
 #define TONAV TO(_NAVIGATION)
 #define MONAV MO(_NAVIGATION)
 #define TOSYM TO(_SYMBOL)
-#define TOMAC TO(_MACROS)
+#define TOVIM TO(_VIM)
 #define TOHEX TO(_HEX)
 #define TOFUN TO(_FUNCTION)
 // #define TOADJ TO(_ADJUST)
 #define TOADJ ADJ_LYR
 #define TOCMK TO(_COLEMAK_DH)
 #define TOGAM TO(_GAMING)
-#define OSL_MAC OSL(_MACROS)
+#define OSL_VIM OSL(_VIM)
+#define OSL_FUN OSL(_FUNCTION)
 
 // Custom Shortcuts
 
@@ -251,7 +255,7 @@ enum {
 #define UNDO LGUI(KC_Z)
 // #define ESC_MEH MEH_T(KC_ESC)
 #define SPC_CTL LCTL_T(KC_SPACE)
-#define ENT_MAC LT(_MACROS, KC_ENT)
+#define ENT_VIM LT(_VIM, KC_ENT)
 // #define BSP_SYM LT(_SYMBOL, KC_BSPC)
 #define DEL_SFT LSFT_T(KC_DEL)
 #define DEL_NUM LT(_NUMPAD, KC_DEL)
@@ -259,15 +263,16 @@ enum {
 #define ESC_NUM LT(_NUMPAD, KC_ESC)
 #define ESC_NAV LT(_NAVIGATION, KC_ESC)
 #define SPCSFT LSFT_T(KC_SPC)
-#define MACSLEP LSFT(LCTL(KC_KB_POWER))
+// #define MACSLEP LSFT(LCTL(KC_KB_POWER))
+// #define MACSLEP LGUI(LALT(KC_KB_POWER))
 #define MON_L LALT(KC_H)
 #define MON_R LALT(KC_L)
 #define MON_U LALT(KC_K)
 #define MON_D LALT(KC_J)
-#define SPC_L LALT(LGUI((KC_H)))
-#define SPC_R LALT(LGUI((KC_L)))
-#define SPC_U LALT(LGUI((KC_K)))
-#define SPC_D LALT(LGUI((KC_J)))
+#define SPC_L LALT(LCTL((KC_H)))
+#define SPC_R LALT(LCTL((KC_L)))
+#define SPC_U LALT(LCTL((KC_K)))
+#define SPC_D LALT(LCTL((KC_J)))
 #define APP_L LCTL(LALT((KC_H)))
 #define APP_R LCTL(LALT((KC_L)))
 #define APP_U LCTL(LALT((KC_K)))
@@ -306,8 +311,7 @@ enum {
 #define ALT_BSP LALT(KC_BSPC)
 #define ALT_MIN LALT_T(KC_MINS)
 #define SFT_BSP LSFT_T(KC_BSPC)
-#define CTL_BSP LCTL_T(KC_BSPC)
-#define CTL_TAB LCTL_T(KC_TAB)
+#define CTL_BSP LCTL_T(KC_TAB)
 #define GUI_BSP LGUI_T(KC_BSPC)
 #define ALT_MIN LALT_T(KC_MINS)
 #define SFT_MIN LSFT_T(KC_MINS)

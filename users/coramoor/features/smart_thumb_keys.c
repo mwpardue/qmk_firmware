@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "smart_thumb_keys.h"
+#include "leader.h"
 #ifdef CASEMODE_ENABLE
     #include "casemodes.h"
 #endif
@@ -28,7 +29,11 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     bool isOneShotGui         = get_oneshot_mods() & MOD_MASK_GUI || get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotButShift = isOneShotCtrl || isOneShotAlt || isOneShotGui;
     bool isAnyOneShot         = isOneShotCtrl || isOneShotAlt || isOneShotGui || isOneShotShift;
-    bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
+    // bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
+    // bool isShift               = get_mods() & MOD_MASK_SHIFT || isOneShotShift || isOneShotLockedShift;
+    // bool isAlt               = get_mods() & MOD_MASK_ALT || isOneShotAlt;
+    // bool isGui               = get_mods() & MOD_MASK_GUI || isOneShotGui;
+
 
 
     switch (keycode) {
@@ -68,8 +73,9 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
           }
           return PROCESS_RECORD_RETURN_FALSE;
         }
-      return PROCESS_RECORD_RETURN_TRUE;
+      return PROCESS_RECORD_CONTINUE;
       }
+    break;
 
         case MOD_KEY:
     if (record->tap.count > 0) {
@@ -86,127 +92,47 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                     add_oneshot_mods(MOD_LGUI);
                 }
             }
+            return PROCESS_RECORD_RETURN_FALSE;
         }
-        return PROCESS_RECORD_RETURN_FALSE;
+        return PROCESS_RECORD_CONTINUE;
     }
-    return PROCESS_RECORD_RETURN_TRUE;
+    break;
 
-    case RUTHUM2:
-        if (record->event.pressed) {
-            if (record->tap.count > 0) {
-                if ((isAnyOneShotButShift) || (host_keyboard_led_state().caps_lock) || (caps_word_on) || (xcase_state != 0)) {
-                    clear_locked_and_oneshot_mods();
-                    disable_caps_word();
-                    disable_xcase();
-                    dprintln("disable caps_word and xcase");
-                      if (host_keyboard_led_state().caps_lock) {
-                        dprintln("Disabling Caps Lock under RUTHUM2");
-                        tap_code16(KC_CAPS);
-                        }
-                } else if ((get_mods() & MOD_MASK_SHIFT) || isOneShotShift) {
-                    if (xcase_state == XCASE_WAIT) {
-                        disable_xcase();
-                        disable_caps_word();
-                        dprintln("Disabled XCASE and capsword from XWAIT with shift");
-                    } else if (xcase_state == XCASE_ON) {
-                        disable_xcase();
-                        disable_caps_word();
-                        dprintln("Disabled XCASE and capsword from XON with shift");
-                    } else {
-                        enable_xcase();
-                        enable_caps_word();
-                        dprintln("Enabled XCASE and caps word with shift");
-                    }
-                } else {
-                    if (xcase_state == XCASE_WAIT) {
-                        disable_xcase();
-                        disable_caps_word();
-                        dprintln("Disabled XCASE without shift");
-                    } else if (xcase_state == XCASE_ON) {
-                        disable_xcase();
-                        disable_caps_word();
-                        dprintln("Disabled XCASE from XON without shift");
-                    } else {
-                        enable_xcase();
-                        dprintln("Enabled XCASE without shift");
-                    }
-                }
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-            return PROCESS_RECORD_CONTINUE;
-        }
-        break;
-
-        // case CLUTHUM2:
+        // case CLOL_THM:
         //   if (record->event.pressed) {
         //     if (record->tap.count > 0) {
-        //       if ((isAnyOneShot) || (xcase_state != 0)) {
-        //         clear_locked_and_oneshot_mods();
-        //         disable_xcase();
-        //         dprintln("disable xcase");
-        //           if (caps_word_on) {
+        //         if ((xcase_state != 0 || caps_word_on)) {
+        //             disable_xcase();
         //             disable_caps_word();
-        //           } else if (host_keyboard_led_state().caps_lock) {
-        //             dprintln("disable caps lock 1");
-        //             tap_code16(KC_CAPS);
-        //           }
-        //       } else if (caps_word_on) {
-        //         disable_caps_word();
-        //         tap_code16(KC_CAPS);
-        //         dprintln("enabling Caps Lock");
-        //       } else if (host_keyboard_led_state().caps_lock) {
-        //         tap_code16(KC_CAPS);
-        //         dprintln("disabling caps lock 2");
-        //       } else {
-        //         enable_caps_word();
-        //         dprintln("enabling caps word");
-        //       // } else {
-        //       //   add_oneshot_mods(MOD_LSFT);
-        //       // return PROCESS_RECORD_RETURN_FALSE;
-        //       }
+        //             if (host_keyboard_led_state().caps_lock) {
+        //                 tap_code16(KC_CAPS);
+        //                 }
+        //             clear_mods();
+        //             clear_locked_and_oneshot_mods();
+        //             return PROCESS_RECORD_RETURN_FALSE;
+        //         }
+        //         else if (isCtrl || isShift ) {
+        //             if (isCtrl) {
+        //                 enable_xcase();
+        //             }
+        //             if (isShift) {
+        //                 enable_caps_word();
+        //             }
+        //             clear_mods();
+        //             clear_locked_and_oneshot_mods();
+        //             return PROCESS_RECORD_RETURN_FALSE;
+        //         } else if (isAlt || isGui ) {
+        //             clear_mods();
+        //             clear_locked_and_oneshot_mods();
+        //             return PROCESS_RECORD_RETURN_FALSE;
+        //         } else {
+        //             add_oneshot_mods(MOD_LSFT);
+        //         }
         //       return PROCESS_RECORD_RETURN_FALSE;
         //     }
         //   return PROCESS_RECORD_CONTINUE;
         //   }
         // break;
-
-
-        case CLOL_THM:
-          if (record->event.pressed) {
-            if (record->tap.count > 0) {
-              if (isCtrl) {
-                enable_caps_word();
-              }
-              else if ((isAnyOneShotButShift) || (xcase_state != 0)) {
-                clear_locked_and_oneshot_mods();
-                disable_xcase();
-                dprintln("disable xcase");
-                  if (caps_word_on) {
-                    disable_caps_word();
-                  } else if (host_keyboard_led_state().caps_lock) {
-                    dprintln("disable caps lock 1");
-                    tap_code16(KC_CAPS);
-                  }
-              } else if (caps_word_on) {
-                disable_caps_word();
-                // tap_code16(KC_CAPS);
-                // dprintln("enabling Caps Lock");
-              } else if (host_keyboard_led_state().caps_lock) {
-                tap_code16(KC_CAPS);
-                dprintln("disabling caps lock 2");
-              } else if (isOneShotShift || isOneShotLockedShift) {
-                clear_locked_and_oneshot_mods();
-                enable_caps_word();
-                dprintln("enabling caps word");
-              } else {
-                add_oneshot_mods(MOD_LSFT);
-              return PROCESS_RECORD_RETURN_FALSE;
-              }
-              return PROCESS_RECORD_RETURN_FALSE;
-            }
-          return PROCESS_RECORD_CONTINUE;
-          }
-        break;
 
     case CTL_CW:
     case SFT_CW:
@@ -225,38 +151,40 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
       }
     break;
 
+    case LUTHUM2:
+    case CLUTHUM2:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                tap_code16(G(C(A(S(KC_P)))));
+                start_pass_leading();
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            return PROCESS_RECORD_CONTINUE;
+        }
+        break;
 
-    // case LOR_THM:
-    //     if (record->event.pressed) {
-    //         if (record->tap.count > 0) {
-    //             if (get_mods() & MOD_MASK_CTRL) {
-    //                 unregister_mods(MOD_MASK_CTRL);
-    //                 tap_code16(KC_ENTER);
-    //             }
-    //             else {
-    //                 unregister_mods(MOD_MASK_CTRL);
-    //                 tap_code16(KC_SPACE);
-    //             }
-    //             return PROCESS_RECORD_RETURN_FALSE;
-    //         }
-    //         return PROCESS_RECORD_CONTINUE;
-    //     }
-    //     break;
-
-    // case UOL_THM:
-    //   if (record->event.pressed) {
-    //     if (record->tap.count > 0) {
-    //         if (get_mods() & MOD_MASK_SHIFT) {
-    //             unregister_mods(MOD_MASK_SHIFT);
-    //             SEND_STRING("@trueipsolutions.com");
-    //         } else {
-    //             SEND_STRING("trueipsolutions.com");
-    //         }
-    //         return PROCESS_RECORD_RETURN_FALSE;
-    //     }
-    //     return PROCESS_RECORD_CONTINUE;
-    // }
-    // break;
+    case XCTHUM:
+        if (record->event.pressed) {
+            dprintln("XCTHUM pressed");
+                if (xcase_state == XCASE_WAIT) {
+                    if (caps_word_on) {
+                        disable_caps_word();
+                        disable_xcase();
+                    } else {
+                        dprintln("XCTHUM xcase_state wait");
+                        enable_caps_word();
+                    }
+                } else if (xcase_state == XCASE_ON) {
+                    dprintln("XCTHUM xcase_state on");
+                    disable_caps_word();
+                    disable_xcase();
+                } else {
+                    enable_xcase();
+                    dprintln("XCTHUM else statement");
+                }
+                return PROCESS_RECORD_RETURN_FALSE;
+        }
+        break;
 
 }
 

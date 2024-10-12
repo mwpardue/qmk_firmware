@@ -15,6 +15,7 @@
  */
 
 #include "leader.h"
+#include "secrets.h"
 
 #include <string.h>
 
@@ -22,19 +23,14 @@
 #define LEADER_ESC_KEY KC_ESC
 #endif
 
-static bool leading = false;
+bool leading = false;
 static leader_func_t leader_func = NULL;
 
 #ifdef LEADER_DISPLAY_STR
 
 #ifndef LEADER_DISPLAY_LEN
-#define LEADER_DISPLAY_LEN 19
+#define LEADER_DISPLAY_LEN 8
 #endif
-
-// void *tmux_leader_func(uint16_t keycode);
-// void *tmux_leader_split_func(uint16_t keycode);
-// void *vim_leader_func(uint16_t keycode);
-// void *system_leader_func(uint16_t keycode);
 
 static const char keycode_to_ascii_lut[58] = {0, 0, 0, 0, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 0, 0, 0, '\t', ' ', '-', '=', '[', ']', '\\', 0, ';', '\'', '`', ',', '.', '/'};
 
@@ -70,84 +66,141 @@ char *leader_display_str(void) {
 }
 #endif
 
+void *leader_tips_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_A:
+                send_string_with_delay("@trueipsolutions.com", MACRO_TIMER);
+                break;
+            case KC_T:
+                send_string_with_delay("trueipsolutions.com", MACRO_TIMER);
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_email_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_C:
+                send_string_with_delay("@caracarn.anonaddy.com", MACRO_TIMER);
+                break;
+            case KC_T:
+                send_string_with_delay("mpardue@trueipsolutions.com", MACRO_TIMER);
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_keyb_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_C:
+                tap_code16(KC_CAPS);
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_screen_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_A:
+                tap_code16(G(S(A(C(KC_A)))));
+                break;
+            case KC_S:
+                tap_code16(LGUI(LSFT(KC_4)));
+                break;
+            case KC_C:
+                tap_code16(LGUI(LSFT(LCTL(KC_4))));
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_pass_func(uint16_t keycode) {
+    switch (keycode) {
+        case KC_5:
+            send_string_with_delay(secrets[4], MACRO_TIMER);
+            break;
+        case KC_1:
+            send_string_with_delay(secrets[16], MACRO_TIMER);
+            break;
+        case KC_A:
+            send_string_with_delay(secrets[0], MACRO_TIMER);
+            break;
+        case KC_B:
+            send_string_with_delay(secrets[2], MACRO_TIMER);
+            break;
+        case KC_D:
+            send_string_with_delay(secrets[12], MACRO_TIMER);
+            break;
+        case KC_J:
+            send_string_with_delay(secrets[3], MACRO_TIMER);
+            break;
+        case KC_I:
+            send_string_with_delay(secrets[14], MACRO_TIMER);
+            break;
+        case KC_L:
+            send_string_with_delay(secrets[9], MACRO_TIMER);
+            break;
+        case KC_N:
+            send_string_with_delay(secrets[11], MACRO_TIMER);
+            break;
+        case KC_O:
+            send_string_with_delay(secrets[6], MACRO_TIMER);
+            break;
+        case KC_P:
+            send_string_with_delay(secrets[7], MACRO_TIMER);
+            break;
+        case KC_R:
+            send_string_with_delay(secrets[13], MACRO_TIMER);
+            break;
+        case KC_S:
+            send_string_with_delay(secrets[8], MACRO_TIMER);
+            break;
+        case KC_T:
+            send_string_with_delay(secrets[5], MACRO_TIMER);
+            break;
+        case KC_U:
+            send_string_with_delay(secrets[15], MACRO_TIMER);
+            break;
+        case KC_Q:
+            send_string_with_delay(secrets[10], MACRO_TIMER);
+            break;
+        default:
+            break;
+    }
+    return NULL;
+}
+
 // The entry point for leader sequenc functions
-
-  void *tmux_leader_split_func(uint16_t keycode) {
-    switch (keycode) {
-      case KC_H:
-        tap_code16(C(KC_SPC));
-        tap_code16(KC_MINS);
-        break;
-      case KC_V:
-        tap_code16(C(KC_SPC));
-        tap_code16(KC_PIPE);
-        break;
-      default:
-        break;
-    }
-    return NULL;
-  }
-
-  void *tmux_leader_func(uint16_t keycode) {
-    switch (keycode) {
-      case KC_S:
-        return tmux_leader_split_func;
-      case KC_W:
-        tap_code16(C(KC_SPC));
-        tap_code16(KC_C);
-        break;
-        return NULL;
-      case KC_X:
-        tap_code16(C(KC_SPC));
-        tap_code16(KC_X);
-        wait_ms(200);
-        tap_code16(KC_Y);
-        return NULL;
-        break;
-      default:
-        return NULL;
-        break;
-    }
-    return NULL;
-  }
-
-  void *vim_leader_func(uint16_t keycode) {
-    switch (keycode) {
-      case KC_S:
-        tap_code16(KC_COLN);
-        tap_code16(KC_PERC);
-        tap_code16(KC_S);
-        tap_code16(KC_SLSH);
-        break;
-      default:
-        break;
-    }
-    return NULL;
-  }
-
-  void *system_leader_func(uint16_t keycode) {
-    switch (keycode) {
-      case KC_A:
-        tap_code16(C(A(S(G(KC_RBRC)))));
-        break;
-      default:
-        break;
-    }
-    return NULL;
-  }
-
-  void *leader_start_func(uint16_t keycode) {
+__attribute__ ((weak))
+void *leader_start_func(uint16_t keycode) {
     switch (keycode) {
         case KC_T:
-            return tmux_leader_func; // function that will choose new base layers
-        case KC_V:
-            return vim_leader_func; // function that opens common applications
+            return leader_tips_func;
+        case KC_E:
+            return leader_email_func;
+        case KC_K:
+            return leader_keyb_func;
         case KC_S:
-            return system_leader_func; // function that toggles keyboard settings
-        default:
-            return NULL;
+            return leader_screen_func;
+        case KC_P:
+            return leader_pass_func;
+        case KC_D:
+            tap_code16(G(S(A(C(KC_D)))));
+            break;
+        return NULL;
+    default:
+        return NULL;
     }
-  }
+    return NULL;
+}
 
 // Check to see if we are leading
 bool is_leading(void) {
@@ -155,7 +208,6 @@ bool is_leading(void) {
 }
 // Start leader sequence
 void start_leading(void) {
-    dprintln("start_leading called");
     leading = true;
     leader_func = leader_start_func;
 #ifdef LEADER_DISPLAY_STR
@@ -167,9 +219,22 @@ void start_leading(void) {
     leader_display_size = 3;
 #endif
 }
+
+void start_pass_leading(void) {
+    leading = true;
+    leader_func = leader_pass_func;
+#ifdef LEADER_DISPLAY_STR
+    memset(leader_display, 0, sizeof(leader_display));
+    leader_display[0] = 'P';
+    leader_display[1] = 'S';
+    leader_display[2] = 'W';
+    leader_display[3] = '-';
+    leader_display_size = 3;
+#endif
+}
+
 // Stop leader sequence
 void stop_leading(void) {
-    dprintln("stop_leading called");
     leading = false;
     leader_func = NULL;
 #ifdef LEADER_DISPLAY_STR
@@ -178,7 +243,6 @@ void stop_leading(void) {
 }
 
 // Process keycode for leader sequences
-// process_record_result_t process_custom_leader(uint16_t keycode, keyrecord_t *record) {
 bool process_leader(uint16_t keycode, const keyrecord_t *record) {
     if (leading && record->event.pressed) {
         // Get the base keycode of a mod or layer tap key
@@ -186,7 +250,6 @@ bool process_leader(uint16_t keycode, const keyrecord_t *record) {
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
             case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-            dprintln("process_leader intercepting keycode");
                 // Earlier return if this has not been considered tapped yet
                 if (record->tap.count == 0)
                     return true;
@@ -197,8 +260,7 @@ bool process_leader(uint16_t keycode, const keyrecord_t *record) {
         }
 
         // let through anything above that's normal keyboard keycode or a mod
-        if (keycode > QK_MODS_MAX || IS_MOD(keycode)) {
-            dprintln("keycode>QK_MODS_MAX");
+        if (keycode > QK_MODS_MAX || IS_MODIFIER_KEYCODE(keycode)) {
             return true;
         }
         // early exit if the esc key was hit
@@ -215,8 +277,7 @@ bool process_leader(uint16_t keycode, const keyrecord_t *record) {
         if (leader_func == NULL) {
             stop_leading();
         }
-      return false;  
+        return false;
     }
-  return true;
-    // PROCESS_RECORD_RETURN_TRUE;
+    return true;
 }

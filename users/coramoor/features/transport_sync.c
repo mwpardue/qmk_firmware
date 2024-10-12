@@ -12,6 +12,10 @@
     #include "features/os_toggle.h"
 #endif
 
+#ifdef CUSTOM_LEADER_ENABLE
+    #include "features/leader.h"
+#endif
+
 #include <string.h>
 
 uint32_t transport_user_state = 0;
@@ -36,6 +40,10 @@ extern smart_case_t smart_case;
 
 #ifdef DYNAMIC_MACRO_ENABLE
     extern bool is_dynamic_recording;
+#endif
+
+#ifdef CUSTOM_LEADER_ENABLE
+    extern bool leading;
 #endif
 
     // extern os_t os;
@@ -75,6 +83,7 @@ void user_transport_update(void) {
         kb_state.caps_word_on = caps_word_on;
         kb_state.debug_enabled = debug_enable;
         kb_state.is_dynamic_recording = is_dynamic_recording;
+        kb_state.leading = leading;
         // kb_state.smart_case_types = smart_case_types;
         transport_kb_state = kb_state.raw;
     } else {
@@ -94,6 +103,7 @@ void user_transport_update(void) {
         caps_word_on = kb_state.caps_word_on;
         debug_enable = kb_state.debug_enabled;
         is_dynamic_recording = kb_state.is_dynamic_recording;
+        leading = kb_state.leading;
         // smart_case_types = kb_state.smart_case_types;
 
     }

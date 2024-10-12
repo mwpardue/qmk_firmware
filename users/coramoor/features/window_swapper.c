@@ -17,6 +17,8 @@ bool is_swapper_keycode(uint16_t keycode) {
         case KC_RIGHT:
         case KC_DOWN:
         case KC_UP:
+        case KC_X:
+        case KC_Z:
             return true;
         default:
             return false;
@@ -25,6 +27,7 @@ bool is_swapper_keycode(uint16_t keycode) {
 
 process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *record) {
     if (record != NULL && record->event.pressed) {
+        dprintf("Swapper record is not null\n");
         return PROCESS_RECORD_CONTINUE;
     }
 
@@ -34,6 +37,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             dprintf("swapper.state before=%d\n",swapper.state);
             clear_mods();
             clear_locked_and_oneshot_mods();
+            layer_off(_APPSWITCH);
             swapper.state = NONE;
             dprintf("swapper.state after=%d\n",swapper.state);
             send_keyboard_report();
@@ -52,6 +56,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             case MC_SWLE:
             case MC_SWRI:
                 swapper.state = isShifted ? ZOOMING_START : SWAPPING_START;
+                dprintf("Setting swapper state to SWAPPING_START\n");
                 break;
             case MC_MODP:
             case MC_MODM:
@@ -72,6 +77,8 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
                     } else {
                         register_mods(MOD_LALT);
                     }
+                    layer_on(_APPSWITCH);
+                    dprintf("Registering mods for MC_SWRI\n");
                     swapper.state = SWAPPING_CONTINUE;
                     break;
             }
@@ -140,6 +147,8 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
                 case KC_RIGHT:
                 case KC_DOWN:
                 case KC_UP:
+                case KC_X:
+                case KC_Z:
                     unregister_mods(MOD_LSFT);
                     break;
             }
@@ -153,15 +162,11 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
         case TABBING_CONTINUE:
           switch (keycode) {
             case KC_RIGHT:
-              return false;
-              break;
             case KC_LEFT:
-              return false;
-              break;
             case KC_DOWN:
-              return false;
-              break;
             case KC_UP:
+            case KC_X:
+            case KC_Z:
               return false;
               break;
             case MC_SWLE:
@@ -204,6 +209,8 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             case KC_RIGHT:
             case KC_DOWN:
             case KC_UP:
+            case KC_X:
+            case KC_Z:
               return false;
           }
             break;

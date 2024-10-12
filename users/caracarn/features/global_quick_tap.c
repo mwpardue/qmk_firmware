@@ -62,34 +62,35 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         /* case KEYCODE: */
         /*     return 150; */
         case LHM_A:
-        case LHM_S:
-        case LHM_F:
-        case RHM_SCN:
-        case RHM_L:
-        case RHM_J:
-        case CLHM_R: 
-        case CLHMT: 
-        case CRHM_O: 
-        case CRHM_I: 
-        case CRHM_N: 
-        // case LHM_S:
-        // case LHM_F:
+        case LHM_R:
+        case LHM_T:
+        case RHM_O:
+        case RHM_I:
+        case RHM_N:
+        case CLHM_R:
+        case CLHMT:
+        case CRHM_O:
+        case CRHM_I:
+        case CRHM_N:
+        // case LHM_R:
+        // case LHM_T:
         // case ALT_V:
-        // case RHM_L:
-        // case RHM_J:
+        // case RHM_I:
+        // case RHM_N:
         // case ALT_M:
         // case CTL_D:
         // case CTL_A:
         // case CTL_SCN:
         // case LHM_A:
-        // case RHM_SCN:
+        // case RHM_O:
           return 150;
-        case RHM_K:
-        case LHM_D:
-        case CLHM_S: 
-        case CRHM_E: 
-        // case LHM_D:
-        // case RHM_K:
+        case RHM_E:
+        case LHM_S:
+        case LQM_S:
+        case CLHM_R:
+        case CRHM_E:
+        // case LHM_S:
+        // case RHM_E:
         // case SFT_A:
         // case SFT_SCN:
           return 1;

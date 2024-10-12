@@ -6,11 +6,11 @@ typedef enum {
   _GAMING,
   _GAMENUM,
   _HEX,
-  _NUMPAD,
   _NAVIGATION,
+  _NUMPAD,
   _SYMBOL,
-  _MACROS,
+  _VIM,
   _FUNCTION,
-  _MEDIA,
+  _APPSWITCH,
   _ADJUST
 } layers_t;

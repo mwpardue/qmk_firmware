@@ -28,7 +28,7 @@ enum {
     MONITOR_RIGHT,
     MONITOR_DOWN,
     TD_ATTIPS,
-    HTTP
+    TDLEAD
 };
 
 #define TD_S15 TD(SEC1_5)
@@ -44,7 +44,7 @@ enum {
 #define TD_PARB TD(BRT_PAR)
 // #define TD_ANGB TD(BRT_ANG)
 #define TD_QUOT TD(SDB_QUO)
-#define TD_SSFL TD(SS_FULL)
+#define TD_SHOT TD(SS_FULL)
 #define TD_SNIP TD(SS_SNIP)
 #define TD_VIMQ TD(VIMQ)
 #define TD_MONL TD(MONITOR_LEFT)
@@ -52,7 +52,7 @@ enum {
 #define TD_MONU TD(MONITOR_UP)
 #define TD_MOND TD(MONITOR_DOWN)
 #define TD_TIPS TD(TD_ATTIPS)
-#define TD_HTTP TD(HTTP)
+#define TD_LEAD TD(TDLEAD)
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,

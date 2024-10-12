@@ -4,6 +4,16 @@
 
 #include "casemodes.h"
 
+#ifdef CUSTOM_LEADER_ENABLE
+    #include "features/leader.h"
+#endif
+
+#ifdef CASEMODE_ENABLE
+    #include "casemodes.h"
+#endif
+
+extern enum xcase_state xcase_state;
+extern bool caps_word_on;
 
 //Shortcuts
 // const uint16_t PROGMEM bootloader_combo[] = {OL_THUM, KC_Q, KC_T, COMBO_END};
@@ -57,6 +67,7 @@
 #endif
 
 bool get_combo_must_tap(uint16_t index, combo_t *combo) {
+
     uint16_t key;
     uint8_t idx = 0;
     bool combo_must_tap = false;
@@ -81,8 +92,12 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
 
  process_record_result_t process_combos(uint16_t keycode, keyrecord_t *record) {
 
-    // bool isWindowsOrLinux = os.type == WINDOWS || os.type == LINUX;
-    // bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
+    bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
+    bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
+    bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
+    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading();
 
     switch (keycode) {
 
@@ -91,6 +106,26 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
                     send_string(secrets[1]);
                     tap_code16(KC_ENTER);
                     return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case SM_ESC:
+            if (record->event.pressed) {
+                if (kbFeature) {
+                    if (caps_word_on) {
+                        disable_caps_word();
+                        tap_code16(KC_ESC);
+                    }
+                    disable_xcase();
+                    clear_locked_and_oneshot_mods();
+                    stop_leading();
+                    return PROCESS_RECORD_RETURN_FALSE;
+                } else {
+                    tap_code16(KC_ESC);
+                    dprintln("SM_ESC default");
+                    return PROCESS_RECORD_RETURN_FALSE;
+                }
+                return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
 
@@ -132,7 +167,15 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
                 tap_code16(KC_LEFT);
             }
             break;
+
+        case LEADER:
+        if (record->event.pressed) {
+                start_leading();
         }
+        break;
+
+}
+
 
     return PROCESS_RECORD_CONTINUE;
 }

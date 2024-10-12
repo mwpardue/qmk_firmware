@@ -13,6 +13,10 @@
     #include "features/caps_word.h"
 #endif
 
+#ifdef CUSTOM_LEADER_ENABLE
+    #include "features/leader.h"
+#endif
+
 #ifdef DYNAMIC_MACRO_ENABLE
     extern bool is_dynamic_recording;
 #endif
@@ -104,14 +108,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         case _SYMBOL:
             set_layer_rgb_matrix(SYMBOL_UNDERGLOW, led_min, led_max);
             break;
-        case _MACROS:
-            set_layer_rgb_matrix(MACROS_UNDERGLOW, led_min, led_max);
+        case _VIM:
+            set_layer_rgb_matrix(VIM_UNDERGLOW, led_min, led_max);
             break;
         case _FUNCTION:
             set_layer_rgb_matrix(FUNCTION_UNDERGLOW, led_min, led_max);
             break;
-        case _MEDIA:
-            set_layer_rgb_matrix(MEDIA_UNDERGLOW, led_min, led_max);
+        case _APPSWITCH:
+            set_layer_rgb_matrix(APPSWITCH_UNDERGLOW, led_min, led_max);
             break;
         case _COLEMAK_DH:
             set_layer_rgb_matrix(COLEMAK_DH_UNDERGLOW, led_min, led_max);
@@ -120,11 +124,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             set_layer_rgb_matrix(HEX_UNDERGLOW, led_min, led_max);
             break;
         case _GAMING:
-            if (is_keyboard_master()) {
                 set_layer_rgb_matrix(GAMING_UNDERGLOW, led_min, led_max);
-            } else {
-                set_layer_rgb_matrix(0, 0, 0, led_min, led_max);
-            }
             break;
         case _GAMENUM:
             if (is_keyboard_master()) {
@@ -165,6 +165,12 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         if (is_dynamic_recording) {
             rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
         }
+    #endif
+
+    #ifdef CUSTOM_LEADER_ENABLE
+        if (is_leading()) {
+            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
+    }
     #endif
 
     return false;

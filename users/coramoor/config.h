@@ -22,6 +22,8 @@
     #define TAPPING_FORCE_HOLD_PER_KEY
     #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
     #define PERMISSIVE_HOLD_PER_KEY
+    #define QUICK_TAP_TERM_PER_KEY
+    // #define QUICK_TAP_TERM 0
 #endif
 //#define BILATERAL_COMBINATIONS
 
@@ -41,23 +43,25 @@
 
 // Configure leader key
 #ifdef CUSTOM_LEADER_ENABLE
-    // #define LEADER_TIMEOUT 1000
+    // #define LEADER_TIMEOUT 250
     // #define LEADER_PER_KEY_TIMING
+    // #define LEADER_KEY_STRICT_KEY_PROCESSING
     // #define LEADER_NO_TIMEOUT
-    #define LEADER_DISPLAY_STR
+    // #define LEADER_DISPLAY_STR
+    // #define LEADER_DISPLAY_LEN 8
 #endif
 
 // Configure combos
 #ifdef COMBO_ENABLE
-    #define COMBO_COUNT 13
-    #define COMBO_TERM 60
+    #define COMBO_COUNT 23
+    #define COMBO_TERM 40
     #define EXTRA_SHORT_COMBOS
     #define COMBO_STRICT_TIMER
-    #define COMBO_HOLD_TERM 175
+    #define COMBO_HOLD_TERM 150
     #define COMBO_MUST_TAP_PER_COMBO
 #endif
 
-    #define MACRO_TIMER 5
+    #define MACRO_TIMER 30
 
 // Mouse key speed and acceleration.
 #ifdef MOUSEKEY_ENABLE

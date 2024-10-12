@@ -189,23 +189,14 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
           }
           return PROCESS_RECORD_RETURN_TRUE;
 
-#ifdef CUSTOM_LEADER_ENABLE
-       case LEADER:
-            if (record->event.pressed) {
-                dprintln("calling start_leading from LEADER");
-                start_leading();
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-            return PROCESS_RECORD_RETURN_TRUE;
-#endif
-
        case PASSPAL:
             if (record->event.pressed) {
                 dprintln("PASSPAL pressed");
                 // if (record->tap.count > 0) {
                   dprintln("PASSPAL tapped");
-                  tap_code16(C(A(G(S(KC_P)))));
-                  add_oneshot_mods(MOD_LCTL);
+                  // tap_code16(C(A(G(S(KC_P)))));
+                  // add_oneshot_mods(MOD_LCTL);
+                  start_pass_leading();
                   return PROCESS_RECORD_RETURN_FALSE;
                   // }
              // return PROCESS_RECORD_CONTINUE;
@@ -256,9 +247,11 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
          case SM_SWIT:
             if (record->event.pressed) {
+              layer_on(_APPSWITCH);
               register_mods(MOD_MASK_GUI);
               tap_code16(KC_TAB);
             } else {
+              layer_off(_APPSWITCH);
               unregister_mods(MOD_MASK_GUI);
               }
             return PROCESS_RECORD_RETURN_FALSE;
@@ -305,6 +298,14 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
         case FUN_BSP:
             if (record->event.pressed) {
                 tap_code16(A(KC_BSPC));
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+        case MACSLEP:
+            if (record->event.pressed) {
+                wait_ms(500);
+                tap_code16(LGUI(LALT(KC_KB_POWER)));
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;

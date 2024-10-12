@@ -223,10 +223,10 @@ void menu_items(void) {
             case MENU_DEFAULTLAYER:
                 switch (get_highest_layer(default_layer_state)) {
                     case _BASE:
-                        oled_write_P(PSTR("DF LAYER:      QWERTY"), check_menu(MENU_DEFAULTLAYER));
+                        oled_write_P(PSTR("DF LAYER:     COLEMAK"), check_menu(MENU_DEFAULTLAYER));
                         break;
                     case _COLEMAK_DH:
-                        oled_write_P(PSTR("DF LAYER:     COLEMAK"), check_menu(MENU_DEFAULTLAYER));
+                        oled_write_P(PSTR("DF LAYER:    ALT BASE"), check_menu(MENU_DEFAULTLAYER));
                         break;
                     case _GAMING:
                         oled_write_P(PSTR("DF LAYER:      GAMING"), check_menu(MENU_DEFAULTLAYER));

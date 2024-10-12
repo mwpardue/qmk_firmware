@@ -30,7 +30,7 @@ bool check_lock(void) {
 
 bool check_state(void) {
     led_t led_usb_state = host_keyboard_led_state();
-    if (led_usb_state.caps_lock || (xcase_state == XCASE_ON) || (xcase_state == XCASE_WAIT) || led_usb_state.num_lock || caps_word_on) {
+    if (led_usb_state.caps_lock || (xcase_state == XCASE_ON) || (xcase_state == XCASE_WAIT) || led_usb_state.num_lock || caps_word_on || is_leading()) {
         return true;
     } else {
         return false;
@@ -398,6 +398,8 @@ void render_kb_state_2(void) {
         oled_write_P(PSTR("NL"), true);
     } else if (led_usb_state.caps_lock) {
         oled_write_P(PSTR("CL"), true);
+    } else if (is_leading()) {
+        oled_write_P(PSTR("LD"), true);
     } else {
         oled_write_P(PSTR("  "), false);
     }
@@ -439,10 +441,10 @@ void render_master_layer_state(void) {
     }
     switch (get_highest_layer(layer_state|default_layer_state)) {
         case _BASE:
-            oled_write_P(PSTR("  QWERTY  "), check_lock());
+            oled_write_P(PSTR("COLEMAK-DH"), check_lock());
             break;
         case _COLEMAK_DH:
-            oled_write_P(PSTR("COLEMAK-DH"), check_lock());
+            oled_write_P(PSTR(" ALT BASE "), check_lock());
             break;
         case _NAVIGATION:
             oled_write_P(PSTR("NAVIGATION"), check_lock());
@@ -459,14 +461,14 @@ void render_master_layer_state(void) {
         case _NUMPAD:
             oled_write_P(PSTR("  NUMPAD  "), check_lock());
             break;
-        case _MACROS:
-            oled_write_P(PSTR("  MACROS  "), check_lock());
+        case _VIM:
+            oled_write_P(PSTR("   VIM    "), check_lock());
             break;
         case _HEX:
             oled_write_P(PSTR("   HEX    "), check_lock());
             break;
-        case _MEDIA:
-            oled_write_P(PSTR("  MEDIA   "), check_lock());
+        case _APPSWITCH:
+            oled_write_P(PSTR(" APPSWITCH"), check_lock());
             break;
         case _GAMING:
             oled_write_P(PSTR("  GAMING  "), check_lock());
@@ -529,10 +531,10 @@ void render_slave_layer_state(void) {
     }
     switch (get_highest_layer(layer_state|default_layer_state)) {
         case _BASE:
-            oled_write_P(PSTR("  QWERTY  "), check_lock());
+            oled_write_P(PSTR("COLEMAK-DH"), check_lock());
             break;
         case _COLEMAK_DH:
-            oled_write_P(PSTR("COLEMAK-DH"), check_lock());
+            oled_write_P(PSTR(" ALT BASE "), check_lock());
             break;
         case _NAVIGATION:
             oled_write_P(PSTR("NAVIGATION"), check_lock());
@@ -549,14 +551,14 @@ void render_slave_layer_state(void) {
         case _NUMPAD:
             oled_write_P(PSTR("  NUMPAD  "), check_lock());
             break;
-        case _MACROS:
-            oled_write_P(PSTR("  MACROS  "), check_lock());
+        case _VIM:
+            oled_write_P(PSTR("   VIM    "), check_lock());
             break;
         case _HEX:
             oled_write_P(PSTR("   HEX    "), check_lock());
             break;
-        case _MEDIA:
-            oled_write_P(PSTR("  MEDIA   "), check_lock());
+        case _APPSWITCH:
+            oled_write_P(PSTR(" APPSWITCH"), check_lock());
             break;
         case _GAMING:
             oled_write_P(PSTR("  GAMING  "), check_lock());

@@ -3,6 +3,10 @@
     #include "raw_hid.h"
 #endif
 
+#ifdef CUSTOM_LEADER_ENABLE
+    #include "features/leader.h"
+#endif
+
 #ifdef CAPITALIZE_KEY_ENABLE
     #ifdef SMART_THUMB_KEYS_ENABLE
         #error Do not enable both Capitalize Key and Smart Thumb Key
@@ -118,21 +122,23 @@ void matrix_scan_user(void) {
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     case RHM_SLS:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case LHM_F: //F   + W, Q
-      if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC)) {return true;}
-    case LHM_S:
-      if ((other_keycode == LIL_THM ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LUTHUM2) || (other_keycode == UOL_THM)) {return true;}
+    case LHM_T: //F   + W, Q
+      if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+    case LHM_R:
+      if ((other_keycode == LIL_THM ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LUTHUM2) || (other_keycode == UOL_THM) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
     case LHM_A:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case LHM_D:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_J:
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+    case LHM_S:
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+    case LQM_S:
+      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+    case RHM_N:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_K:
+    case RHM_E:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_L:
+    case RHM_I:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_SCN:
+    case RHM_O:
       if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
@@ -150,6 +156,13 @@ void matrix_scan_user(void) {
 }
 
   uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
+    // extern leader_t leader;
+    // if (leader.isLeading) {
+    //     switch (tap_hold_keycode) {
+    //         default:
+    //         return 0;
+    //     }
+    // }
    switch (tap_hold_keycode) {
     // case BSP_SYM:
     // case ENT_HYP:
@@ -174,19 +187,17 @@ void matrix_scan_user(void) {
     // case CLIR_THM:
     case CLOR_THM:
     case CLIL_THM:
-    // case CUOR_THM:
+    case CUIL_THM:
     case SFT_MIN:
     case CTL_QUO:
     case GUI_BSP:
     case ALT_MIN:
-    case CTL_BSP:
-    case CTL_TAB:
-    case MED_Z:
+    case ASW_Z:
     case SFT_Z:
     case SFT_QUE:
     case LHM_Z:
     case RHM_SLS:
-    case RHM_SCN:
+    case RHM_O:
     case CTL_CW:
     case GUI_CW:
     case SFT_CW:
@@ -503,8 +514,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     return get_hold_on_other_key_press_result(keycode);
 }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-    return get_tapping_force_hold_result(keycode);
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    return get_quick_tap_term_result(keycode);
 }
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
