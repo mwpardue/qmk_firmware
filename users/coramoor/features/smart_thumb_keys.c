@@ -155,8 +155,15 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case CLUTHUM2:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                tap_code16(G(C(A(S(KC_P)))));
-                start_pass_leading();
+                switch (user_config.os) {
+                    case MACOS:
+                        tap_code16(G(C(A(S(KC_P)))));
+                        start_pass_leading();
+                        break;
+                    case LINUX:
+                        start_pass_leading();
+                        break;
+                }
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             return PROCESS_RECORD_CONTINUE;
