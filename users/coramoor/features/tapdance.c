@@ -204,7 +204,7 @@ void td_paste(tap_dance_state_t *state, void *user_data) {
                 tap_code16(G(C(KC_V)));
             } else {
                 dprintln("Executing WINDOWS command");
-                tap_code16(C(KC_V));
+                tap_code16(G(C(KC_V)));
             }
             break;
         default: break;

@@ -304,8 +304,21 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case MACSLEP:
             if (record->event.pressed) {
-                wait_ms(500);
-                tap_code16(LGUI(LALT(KC_KB_POWER)));
+                switch (user_config.os) {
+
+                    case MACOS:
+                        wait_ms(500);
+                        tap_code16(LGUI(LALT(KC_KB_POWER)));
+                        break;
+                    case LINUX:
+                        wait_ms(500);
+                        tap_code16(LGUI(KC_X));
+                        wait_ms(1000);
+                        tap_code16(KC_U);
+                        break;
+                    case WINDOWS:
+                        break;
+                }
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
