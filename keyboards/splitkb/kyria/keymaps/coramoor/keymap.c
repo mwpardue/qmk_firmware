@@ -137,8 +137,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK_DH] = LAYOUT(
   QK_GESC, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, PASSPAL,
   CTL_BSP, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   CTL_QUO,
-  KC_MINS, KC_Z,  KC_X,    KC_C,    KC_D,    KC_V,   CUIL_THM, CUOL_THM,  CUOR_THM, CUIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, OSMRGUI,
-                            KC_NO,   LUTHUM1, CLUTHUM2, LIL_THM, CLOL_THM,   CLOR_THM,  LIR_THM,  RUTHUM2, RUTHUM1, KC_NO
+  KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,   CUIL_THM, CUOL_THM,  CUOR_THM, CUIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
+                            KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,   LOR_THM,  LIR_THM,  RUTHUM2, RUTHUM1, KC_NO
 ),
 
 [_NAVIGATION] = LAYOUT(
