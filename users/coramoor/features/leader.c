@@ -105,6 +105,17 @@ void *leader_keyb_func(uint16_t keycode) {
         return NULL;
     }
 
+void *leader_reset_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_R:
+                reset_keyboard();
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
 void *leader_screen_func(uint16_t keycode) {
         switch (keycode) {
             case KC_A:
@@ -192,6 +203,8 @@ void *leader_start_func(uint16_t keycode) {
             return leader_screen_func;
         case KC_P:
             return leader_pass_func;
+        case KC_R:
+            return leader_reset_func;
         case KC_D:
             tap_code16(G(S(A(C(KC_D)))));
             break;

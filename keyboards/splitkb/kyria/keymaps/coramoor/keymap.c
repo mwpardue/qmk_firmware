@@ -51,16 +51,16 @@ const uint16_t PROGMEM parn_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
 const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
 const uint16_t PROGMEM escape_combo[] = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM passpal_combo[] = {LIL_THM, SFT_Z, KC_X, COMBO_END};
-const uint16_t PROGMEM passpal2_combo[] = {KC_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM leader_combo[] = {LIL_THM, SFT_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM leader2_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM capsword_combo[] = {SFT_Z, SFT_QUE, COMBO_END};
 const uint16_t PROGMEM capsword2_combo[] = {LHM_S, RHM_E, COMBO_END};
 const uint16_t PROGMEM qkboot_combo[] = {LOL_THM, KC_Q, KC_B, COMBO_END};
 const uint16_t PROGMEM qkboot2_combo[] = {CLOL_THM, KC_Q, KC_B, COMBO_END};
 const uint16_t PROGMEM sleep_combo[] = {LIL_THM, KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM login_combo[] = {LIL_THM, KC_A, KC_R, COMBO_END};
-const uint16_t PROGMEM login2_combo[] = {LIL_THM, LHM_A, LHM_R, COMBO_END};
-const uint16_t PROGMEM play_combo[] = {LIL_THM, KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM login_combo[] = {LIL_THM, KC_R, KC_S, COMBO_END};
+const uint16_t PROGMEM login2_combo[] = {LIL_THM, LHM_R, LHM_S, COMBO_END};
+const uint16_t PROGMEM play_combo[] = {LIL_THM, KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM play2_combo[] = {LIR_THM, KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM prev_combo[] = {LIR_THM, KC_H, KC_COMM, COMBO_END};
 const uint16_t PROGMEM next_combo[] = {LIR_THM, KC_DOT, SFT_QUE, COMBO_END};
@@ -76,8 +76,8 @@ combo_t key_combos[] = {
   [CM_CURB] = COMBO(curb_combo, SM_CUR),
   [CM_BRAC] = COMBO(brac_combo, SM_BRC),
   [CM_ESC] = COMBO(escape_combo, SM_ESC),
-  [CM_PASS] = COMBO(passpal_combo, LEADER),
-  [CM_PAS2] = COMBO(passpal2_combo, LEADER),
+  [CM_PASS] = COMBO(leader_combo, LEADER),
+  [CM_PAS2] = COMBO(leader2_combo, LEADER),
   [CM_CAPS] = COMBO(capsword_combo, SM_CW),
   [CM_CAP2] = COMBO(capsword2_combo, SM_CW),
   [CM_BOOT] = COMBO(qkboot_combo, QK_BOOT),
@@ -142,9 +142,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NAVIGATION] = LAYOUT(
-    _______, KC_BSPC, KC_TAB,  MOV_LFT, MOV_RGT, _______, 		                                 KC_PGDN, SEL_LIN, SEL_WRD, KC_PGUP, _______, _______,
+    _______, KC_BSPC, MC_SWRI, MOV_LFT, MOV_RGT, _______, 		                                 KC_PGDN, SEL_LIN, SEL_WRD, KC_PGUP, _______, _______,
     KC_BSPC, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN, TD_QUOT,
-    LLOCK,   MONUM,   KC_ENT,  TD_COPY, MC_SWRI, TD_PAST, _______, _______,    _______, _______, _______, _______, _______, _______, _______, KC_ENT,
+    LLOCK,   MONUM,   KC_ENT,  TD_COPY, TD_PAST, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, KC_ENT,
                                KC_NO,   _______, _______, _______, _______,    KC_ENT,  KC_SPC,  KC_NO,   KC_NO,    KC_NO
 ),
 
@@ -156,8 +156,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_SYMBOL] = LAYOUT(
-  _______, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, TIPS,                                           _______, _______, _______, _______, _______, _______,
-  ALT_BSP, KC_AT,   KC_BSLS, KC_UNDS, TIPS,    KC_PIPE,                                        _______, OSMRGUI, OSMRSFT, OSMRALT, OSMRCTL, KC_QUOT,
+  _______, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, _______,                                        _______, _______, _______, _______, _______, _______,
+  ALT_BSP, KC_AT,   KC_BSLS, KC_UNDS, KC_PIPE, TIPS,                                           _______, OSMRGUI, OSMRSFT, OSMRALT, OSMRCTL, KC_QUOT,
   _______, KC_LT,   KC_GT,   KC_LCBR, KC_RCBR, _______, _______, _______,    _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, LLOCK,
                              KC_NO,   _______, ALT_BSP, KC_BSPC, XCTHUM,     _______, _______, _______, KC_NO,   KC_NO
 ),
@@ -165,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_VIM] = LAYOUT(
   _______, KC_BSPC, KC_TAB,  _______, _______, _______,                                        _______, _______, _______, _______, _______, _______,
   _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, _______,
                              KC_NO,   _______, _______, KC_BSPC, XCTHUM,     _______, _______, KC_MUTE, KC_NO,    KC_NO
 ),
 

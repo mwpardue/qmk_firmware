@@ -94,7 +94,7 @@ enum {
 // Left thumb keys
 
 #define LUTHUM1 LT(_FUNCTION, KC_B)
-#define LUTHUM2 LGUI_T(PASSPAL)
+#define LUTHUM2 MEH_T(PASSPAL)
 #define LIL_THM LT(_NAVIGATION, KC_BSPC)
 #define LOL_THM LT(_NUMPAD, KC_TAB)
 #define UOL_THM TD_PAST
@@ -109,7 +109,7 @@ enum {
 #define LOR_THM RCTL_T(KC_ENTER)
 #define LIR_THM LT(_SYMBOL, KC_SPACE)
 // #define LIR_THM RCTL_T(KC_SPACE)
-#define UIR_THM MEH_T(PASSPAL)
+#define UIR_THM LGUI_T(PASSPAL)
 #define UOR_THM HYPR_T(KC_2)
 
 #define CLUTHUM2 LT(_NUMPAD, PASSPAL)
