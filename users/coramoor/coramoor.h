@@ -97,7 +97,8 @@ void housekeeping_task_transport_sync(void);
     #include "features/layer_lock.h"
 #endif
 
-#ifdef RGB_MATRIX_ENABLED
+/*#ifdef RGB_MATRIX_ENABLED*/
+#ifdef OLED_MENU_ENABLE
     #include "features/rgb_matrix_keys.h"
 #endif
 

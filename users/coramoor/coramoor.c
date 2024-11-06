@@ -21,10 +21,12 @@ _Static_assert(sizeof(kb_state_t) <= sizeof(uint32_t), "kb_state_t is oversize!"
 
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
+#ifdef KYRIA_KEYBOARD
   setPinOutput(24);
   // Turn the LED off
   // (Due to technical reasons, high is off and low is on)
   writePinHigh(24);
+#endif
 }
 
 void                       keyboard_post_init_user(void) {

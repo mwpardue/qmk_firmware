@@ -114,7 +114,7 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE] = LAYOUT(
-  QK_GESC, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, PASSPAL,
+  SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, PASSPAL,
   CTL_BSP, KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                                            KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CTL_QUO,
   KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM, CUOR_THM, CUIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
                             KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM, LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
@@ -135,8 +135,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_COLEMAK_DH] = LAYOUT(
-  QK_GESC, KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, PASSPAL,
-  CTL_BSP, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   CTL_QUO,
+  SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, PASSPAL,
+  CTL_BSP, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   KC_SCLN,
   KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,   CUIL_THM, CUOL_THM,  CUOR_THM, CUIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
                             KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,   LOR_THM,  LIR_THM,  RUTHUM2, RUTHUM1, KC_NO
 ),

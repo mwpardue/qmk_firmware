@@ -3,6 +3,36 @@
 #include "taphold.h"
 #include "features/custom_shortcuts.h"
 
+uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
+
+uint16_t get_sft_tapping_term(void) {
+    return sft_tapping_term;
+}
+
+uint16_t modtap_tapping_term = MODTAP_TAPPING_TERM;
+
+uint16_t get_modtap_tapping_term(void) {
+    return modtap_tapping_term;
+}
+
+uint16_t achordion_tapping_term = ACHORDION_TAPPING_TERM;
+
+uint16_t get_achordion_tapping_term(void) {
+    return achordion_tapping_term;
+}
+
+uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
+
+uint16_t get_gqt_tapping_term(void) {
+    return gqt_tapping_term;
+}
+
+uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
+
+uint16_t sget_gqt_tapping_term(void) {
+    return sgqt_tapping_term;
+}
+
 uint16_t get_tapping_term_result(uint16_t keycode) {
     switch (keycode) {
         case SPC_HYP:

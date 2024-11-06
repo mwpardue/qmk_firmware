@@ -25,8 +25,6 @@
 #undef FORCE_NKRO
 #define FORCE_NKRO
 
-#define KYRIA_KEYBOARD
-
 #ifdef SMART_CASE_ENABLE
     #define CUSTOM_ONESHOT_TIMEOUT 2000
 #endif
@@ -36,17 +34,40 @@
 // #endif
 
 #ifdef RGB_MATRIX_ENABLE
+    #undef RGB_MATRIX_KEYPRESSES // reacts to keypresses
     #define RGB_MATRIX_KEYPRESSES // reacts to keypresses
+                                  //
+    #undef RGB_MATRIX_TIMEOUT
     #define RGB_MATRIX_TIMEOUT 180000 // number of ticks to wait until disabling effects
+
+    #undef RGB_DISABLE_WHEN_USB_SUSPENDED  // turn off effects when suspended
     #define RGB_DISABLE_WHEN_USB_SUSPENDED  // turn off effects when suspended
+                                            //
+    #undef RGB_MATRIX_FRAMEBUFFER_EFFECTS
     #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+
+    #undef RGB_MATRIX_LED_PROCESS_LIMIT
     #define RGB_MATRIX_LED_PROCESS_LIMIT (RGB_MATRIX_LED_COUNT + 4) / 5 // limits the number of LEDs to process in an animation per task run (increases keyboard responsiveness)
+                                                                        //
+    #undef RGB_MATRIX_LED_FLUSH_LIMIT
     #define RGB_MATRIX_LED_FLUSH_LIMIT 16 // limits in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
+                                          //
+    #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
     #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200 // limits maximum brightness of LEDs to 150 out of 255. Higher may cause the controller to crash.
+
+    #undef RGB_MATRIX_DEFAULT_VAL
     #define RGB_MATRIX_DEFAULT_VAL 150
+
+    #undef RGB_MATRIX_HUE_STEP
     #define RGB_MATRIX_HUE_STEP 5
+
+    #undef RGB_MATRIX_SAT_STEP
     #define RGB_MATRIX_SAT_STEP 5
+
+    #undef RGB_MATRIX_VAL_STEP
     #define RGB_MATRIX_VAL_STEP 5
+
+    #undef RGB_MATRIX_SPD_STEP
     #define RGB_MATRIX_SPD_STEP 10
     #ifdef RGB_MATRIX_TYPING_HEATMAP_SPREAD
         #undef RGB_MATRIX_TYPING_HEATMAP_SPREAD

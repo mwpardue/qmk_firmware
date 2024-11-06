@@ -262,16 +262,19 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
                     case MACOS:
                         user_config.os = WINDOWS;
+                        SEND_STRING("win");
                         eeconfig_update_user(user_config.raw);
                         break;
 
                     case WINDOWS:
                         user_config.os = LINUX;
+                        SEND_STRING("lin");
                         eeconfig_update_user(user_config.raw);
                         break;
 
                     case LINUX:
                         user_config.os = MACOS;
+                        SEND_STRING("mac");
                         eeconfig_update_user(user_config.raw);
                         break;
 
