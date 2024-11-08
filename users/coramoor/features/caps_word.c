@@ -62,6 +62,8 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
   if (!(mods & ~MOD_MASK_SHIFT)) {
     switch (keycode) {
       // Ignore MO, TO, TG, TT, and OSL layer switch keys.
+        case DRGSCRL:
+        case SNIPING:
       case QK_MOMENTARY ... QK_MOMENTARY_MAX:
       case QK_TO ... QK_TO_MAX:
       case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
@@ -150,6 +152,8 @@ __attribute__((weak)) bool caps_word_press_user(uint16_t keycode) {
     case KC_UNDS:
     case KC_LPRN:
     case KC_RPRN:
+    case DRGSCRL:
+    case SNIPING:
     case (SP_CAP & 0xff):
       return true;
 

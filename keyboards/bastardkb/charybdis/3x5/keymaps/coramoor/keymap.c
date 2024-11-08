@@ -115,7 +115,7 @@ combo_t key_combos[] = {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-[_BASE] = LAYOUT(
+[_COLEMAK_DH] = LAYOUT(
   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                              KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                              KC_M,    KC_N,    KC_E,    KC_I,    KC_O,
   SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,                              KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE,
@@ -123,10 +123,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_GAMING] = LAYOUT(
-  KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                             KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-  LHM_A,  LQM_S,   LHM_D,   LHM_F,    KC_G,                             KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN,
-  KC_Z,   KC_X,    KC_C,    KC_V,     KC_B,                             KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-                            LUGTHUM, LIL_THM,  LOL_THM,             LOR_THM,  LIR_THM
+  _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______,
+  SNIPING, DRGSCRL, KC_BTN2, KC_BTN1, _______,                          _______, OSMRGUI, OSMRSFT, OSMRALT, OSMRCTL,
+  SNIPING, DRGSCRL, DPI_MOD, DPI_RMOD, _______,                          _______, _______, _______, _______, _______,
+                            _______, _______,  _______,             _______,  _______
 ),
 
 [_GAMENUM] = LAYOUT(
@@ -136,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             KC_LSFT, KC_SPC,  LOL_THM,               LOR_THM, LIR_THM
 ),
 
-[_COLEMAK_DH] = LAYOUT(
+[_BASE] = LAYOUT(
   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                              KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
   LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                              KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,
   SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,                              KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE,
@@ -181,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FUNCTION] = LAYOUT( \
   TOADJ,   TG_OS,   _______, _______, TOCMK,                            _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,
   OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                          _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,
-  _______, TOHEX,   _______, _______, _______,                          _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,
+  _______, TOHEX,   _______, DB_TOGG, _______,                          _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,
                              _______, KC_DEL,  _______,           _______, _______
 ),
 

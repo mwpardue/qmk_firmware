@@ -97,7 +97,7 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
     bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
     bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
-    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading();
+    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock;
 
     switch (keycode) {
 
@@ -115,6 +115,9 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
                     if (caps_word_on) {
                         disable_caps_word();
                         tap_code16(KC_ESC);
+                    }
+                    if (host_keyboard_led_state().caps_lock) {
+                        tap_code16(KC_CAPS);
                     }
                     disable_xcase();
                     clear_locked_and_oneshot_mods();

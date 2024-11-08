@@ -82,7 +82,7 @@ enum {
   LEADER,
 #endif
 
-#ifdef RGB_MATRIX_ENABLED
+#ifdef RGB_MATRIX_ENABLE
     RGB_SPP, RGB_SPM, RGB_ALP, RGB_ALM, RGB_CHG, RGB_MDT,
     MENU_AD, MENU_MD, MENU_MU, MENU_AU,
 #endif
@@ -98,18 +98,18 @@ enum {
 #define LIL_THM LT(_NAVIGATION, KC_BSPC)
 #define LOL_THM LT(_NUMPAD, KC_TAB)
 #define UOL_THM TD_PAST
-#define UIL_THM TD_COPY
+#define UIL_THM LEADER
 #define ASW_Z LT(_APPSWITCH, KC_Z)
 
 // Right thumb keys
 
 #define RUTHUM1 LT(_FUNCTION, KC_T)
-#define RUTHUM2 LT(_VIM, XCASE)
+#define RUTHUM2 KC_ENT
 // #define LOR_THM LT(_SYMBOL, KC_ENTER)
 #define LOR_THM RCTL_T(KC_ENTER)
 #define LIR_THM LT(_SYMBOL, KC_SPACE)
 // #define LIR_THM RCTL_T(KC_SPACE)
-#define UIR_THM LGUI_T(PASSPAL)
+#define UIR_THM PASSPAL
 #define UOR_THM HYPR_T(KC_2)
 
 #define CLUTHUM2 LT(_NUMPAD, PASSPAL)

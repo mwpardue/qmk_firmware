@@ -139,11 +139,11 @@ ifeq ($(strip $(LAYER_LOCK_ENABLE)), yes)
     OPT_DEFS += -DLAYER_LOCK_ENABLE
 endif
 
-# RGB_MATRIX_ENABLE ?= no
-# ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
-# 	SRC += $(USER_PATH)/features/rgb_matrix_keys.c
-# 	OPT_DEFS += -DRGB_MATRIX_ENABLED
-# endif
+RGB_MATRIX_ENABLE ?= no
+ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
+	SRC += $(USER_PATH)/features/rgb_matrix_keys.c
+	OPT_DEFS += -DRGB_MATRIX_ENABLED
+endif
 
 RGB_MATRIX_CUSTOM ?= no
 ifeq ($(strip $(RGB_MATRIX_CUSTOM)), yes)
@@ -160,7 +160,7 @@ endif
 OLED_MENU_ENABLE?= no
 ifeq ($(strip $(OLED_MENU_ENABLE)), yes)
 	SRC += $(USER_PATH)/features/oled_menu.c
-	SRC += $(USER_PATH)/features/rgb_matrix_keys.c
+	# SRC += $(USER_PATH)/features/rgb_matrix_keys.c
 	OPT_DEFS += -DOLED_MENU_ENABLE
 endif
 

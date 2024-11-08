@@ -192,14 +192,12 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
        case PASSPAL:
             if (record->event.pressed) {
                 dprintln("PASSPAL pressed");
-                // if (record->tap.count > 0) {
                   dprintln("PASSPAL tapped");
-                  // tap_code16(C(A(G(S(KC_P)))));
-                  // add_oneshot_mods(MOD_LCTL);
+                  if (isMacOS) {
+                    tap_code16(C(A(G(S(KC_P)))));
+                  }
                   start_pass_leading();
                   return PROCESS_RECORD_RETURN_FALSE;
-                  // }
-             // return PROCESS_RECORD_CONTINUE;
              }
          return PROCESS_RECORD_RETURN_TRUE;
 

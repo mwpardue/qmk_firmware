@@ -211,6 +211,10 @@ void matrix_scan_user(void) {
     case LHM_MNR:
     case CLIR_THM:
     case GUI_SLS:
+    #ifndef KYRIA_KEYBOARD
+    case DRGSCRL:
+    case SNIPING:
+    #endif
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -230,6 +234,10 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
         case LOL_THM:
         case RUTHUM2:
         case CRUTHUM2:
+        #ifndef KYRIA_KEYBOARD
+        case DRGSCRL:
+        case SNIPING:
+        #endif
         case XCASE:
         case (XCASE & 0xff):
             return false;
@@ -293,6 +301,24 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
 //     return true;
 // }
 // #endif
+
+#ifndef KYRIA_KEYBOARD
+void pointing_device_init_user(void) {
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch(get_highest_layer(state)) {
+        case _NAVIGATION:  // Navigation layer
+            charybdis_set_pointer_dragscroll_enabled(true);
+            break;
+        default:
+            charybdis_set_pointer_dragscroll_enabled(false);
+            break;
+    }
+    return state;
+}
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_LEADER_ENABLE
