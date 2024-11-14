@@ -108,40 +108,12 @@ void matrix_scan_user(void) {
   // Exceptionally consider the following chords as holds, even though they
   // are on the same hand in Dvorak.
   switch (tap_hold_keycode) {
-    case LHM_V: //F   + W, Q
-      if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC)) {return true;}
-    case LHM_X:
-      if ((other_keycode == LIL_THM ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LUTHUM2) || (other_keycode == UOL_THM)) {return true;}
-    case LHM_Z:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case LHM_C:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_M:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_COM:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_DOT:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_SLS:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
     case LHM_T: //F   + W, Q
-      if ((other_keycode == KC_W) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == KC_Q) || (other_keycode == QK_GESC) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+      if ((other_keycode == KC_W) || (other_keycode == KC_Q) || (other_keycode == QK_GESC) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
     case LHM_R:
-      if ((other_keycode == LIL_THM ) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == LUTHUM2) || (other_keycode == UOL_THM) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+      if (other_keycode == LIL_THM) {return true;}
     case LHM_A:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
-    case LHM_S:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
-    case LQM_S:
-      if ((other_keycode == LOL_THM) || (other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
-    case RHM_N:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_E:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_I:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
-    case RHM_O:
-      if ((other_keycode == KC_LEFT) || (other_keycode == KC_RIGHT) || (other_keycode == KC_DOWN) || (other_keycode == KC_UP)) {return true;}
+      if (other_keycode == KC_C) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;

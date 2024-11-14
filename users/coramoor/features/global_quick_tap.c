@@ -67,20 +67,20 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         /* Example: KEYCODE will not be considered for hold-tap if the last key press was less than 150ms ago */
         /* case KEYCODE: */
         /*     return 150; */
-        // case LHM_A:
+        case LHM_A:
         case LHM_R:
         case LHM_T:
-        // case RHM_O:
+        case RHM_O:
         case RHM_I:
         case RHM_N:
-        case RHM_E:
-        case LHM_S:
-        case LQM_S:
-          return gqt_tapping_term;
         // case RHM_E:
         // case LHM_S:
-        case RHM_O:
-        case LHM_A:
+        case LQM_S:
+          return gqt_tapping_term;
+        case RHM_E:
+        case LHM_S:
+        // case RHM_O:
+        // case LHM_A:
           return sgqt_tapping_term;
         case LHM_MNL:
         case LHM_MNR:

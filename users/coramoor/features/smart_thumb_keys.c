@@ -134,7 +134,6 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         //   }
         // break;
 
-    case CTL_CW:
     case SFT_CW:
     case GUI_CW:
       if (record->event.pressed) {
@@ -152,7 +151,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     break;
 
     case LUTHUM2:
-    case CLUTHUM2:
+    case RUTHUM2:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
                 switch (user_config.os) {
@@ -164,10 +163,21 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                         start_pass_leading();
                         break;
                 }
-                return PROCESS_RECORD_RETURN_FALSE;
+            return PROCESS_RECORD_RETURN_FALSE;
+                }
+      return PROCESS_RECORD_CONTINUE;
             }
-            return PROCESS_RECORD_CONTINUE;
-        }
+        break;
+
+    case UIL_THM:
+    case UIR_THM:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                    start_leading();
+        return PROCESS_RECORD_RETURN_FALSE;
+                }
+      return PROCESS_RECORD_CONTINUE;
+            }
         break;
 
     case XCTHUM:

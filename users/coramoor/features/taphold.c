@@ -62,6 +62,8 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case OSMRGUI:
         case TD_SNIP:
         case TD_SHOT:
+        case TD_PAST:
+        case TD_COPY:
         case LIR_THM:
         case LHM_AT:
         case LHM_BSL:

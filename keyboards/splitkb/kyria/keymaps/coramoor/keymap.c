@@ -25,25 +25,11 @@ enum combos {
     CM_CURB,
     CM_BRAC,
     CM_ESC,
-    CM_PASS,
-    CM_PAS2,
     CM_CAPS,
     CM_CAP2,
-    CM_BOOT,
-    CM_BOT2,
-    CM_SLEP,
     CM_LOGN,
     CM_LOG2,
-    CM_PLAY,
-    CM_PLY2,
-    CM_PREV,
-    CM_NEXT,
-    CM_NXT2,
-    CM_OFUN,
-    CM_OFN2,
-    CM_CAP3,
-    CM_SCLN,
-    CM_SCN2
+    CM_PLAY
 };
 
 
@@ -51,60 +37,32 @@ const uint16_t PROGMEM parn_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
 const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
 const uint16_t PROGMEM escape_combo[] = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM leader_combo[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM leader2_combo[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM capsword_combo[] = {SFT_Z, SFT_QUE, COMBO_END};
 const uint16_t PROGMEM capsword2_combo[] = {LHM_S, RHM_E, COMBO_END};
-const uint16_t PROGMEM qkboot_combo[] = {LOL_THM, KC_Q, KC_B, COMBO_END};
-const uint16_t PROGMEM qkboot2_combo[] = {CLOL_THM, KC_Q, KC_B, COMBO_END};
-const uint16_t PROGMEM sleep_combo[] = {LIL_THM, KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM login_combo[] = {LIL_THM, KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM login2_combo[] = {LIL_THM, LHM_R, LHM_S, COMBO_END};
 const uint16_t PROGMEM play_combo[] = {LIL_THM, KC_C, KC_D, COMBO_END};
-const uint16_t PROGMEM play2_combo[] = {LIR_THM, KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM prev_combo[] = {LIR_THM, KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM next_combo[] = {LIR_THM, KC_DOT, SFT_QUE, COMBO_END};
-const uint16_t PROGMEM next2_combo[] = {LIR_THM, KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM osfun_combo[] = {LIL_THM, LIR_THM, COMBO_END};
-const uint16_t PROGMEM osfun2_combo[] = {LIL_THM, CLIR_THM, COMBO_END};
-const uint16_t PROGMEM capsword3_combo[] = {KC_LSFT, SFT_DOT, COMBO_END};
-const uint16_t PROGMEM semicolon_combo[] = {RHM_I, RHM_O, COMBO_END};
-const uint16_t PROGMEM semicolon2_combo[] = {KC_I, KC_O, COMBO_END};
 
 combo_t key_combos[] = {
   [CM_PARN] = COMBO(parn_combo, SM_PAR),
   [CM_CURB] = COMBO(curb_combo, SM_CUR),
   [CM_BRAC] = COMBO(brac_combo, SM_BRC),
   [CM_ESC] = COMBO(escape_combo, SM_ESC),
-  [CM_PASS] = COMBO(leader_combo, LEADER),
-  [CM_PAS2] = COMBO(leader2_combo, SM_ESC),
   [CM_CAPS] = COMBO(capsword_combo, SM_CW),
   [CM_CAP2] = COMBO(capsword2_combo, SM_CW),
-  [CM_BOOT] = COMBO(qkboot_combo, QK_BOOT),
-  [CM_BOT2] = COMBO(qkboot2_combo, QK_BOOT),
-  [CM_SLEP] = COMBO(sleep_combo, MACSLEP),
   [CM_LOGN] = COMBO(login_combo, SM_LOGN),
   [CM_LOG2] = COMBO(login2_combo, SM_LOGN),
-  [CM_PLAY] = COMBO(play_combo, KC_MPLY),
-  [CM_PLY2] = COMBO(play2_combo, KC_MPLY),
-  [CM_PREV] = COMBO(prev_combo, KC_MPRV),
-  [CM_NEXT] = COMBO(next_combo, KC_MNXT),
-  [CM_NXT2] = COMBO(next2_combo, KC_MNXT),
-  [CM_OFUN] = COMBO(osfun_combo, OSL_FUN),
-  [CM_OFN2] = COMBO(osfun2_combo, OSL_FUN),
-  [CM_CAP3] = COMBO(capsword2_combo, SM_CW),
-  [CM_SCLN] = COMBO(semicolon_combo, KC_COLN),
-  [CM_SCN2] = COMBO(semicolon2_combo, KC_COLN)
+  [CM_PLAY] = COMBO(play_combo, KC_MPLY)
 };
 
   const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-      [_BASE] =       { ENCODER_CCW_CW(MOV_LFT, MOV_RGT),                  ENCODER_CCW_CW(KC_WH_U, KC_WH_D)  },
-      [_NAVIGATION] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),                  ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)) },
+      [_BASE] =       { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),                  ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)) },
+      [_NAVIGATION] = { ENCODER_CCW_CW(MOV_LFT, MOV_RGT),                  ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)) },
       [_VIM] =        { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),                  ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)) },
       [_COLEMAK_DH] = { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
       [_HEX] =        { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
       [_NUMPAD] =     { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
-      [_SYMBOL] =     { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),                  ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)) },
+      [_SYMBOL] =     { ENCODER_CCW_CW(MOV_LFT, MOV_RGT),                  ENCODER_CCW_CW(LGUI(KC_MINS), LGUI(KC_EQL)) },
       [_FUNCTION] =   { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
       [_APPSWITCH] =  { ENCODER_CCW_CW(_______, _______),                  ENCODER_CCW_CW(_______, _______) },
       [_ADJUST] =     { ENCODER_CCW_CW(MENU_MD, MENU_MU),                  ENCODER_CCW_CW(MENU_AD, MENU_AU) },
@@ -114,17 +72,17 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE] = LAYOUT(
-  SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_MINS,
-  KC_CAPS, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   KC_SCLN,
+  SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_DEL,
+  CTL_CAP, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   KC_SCLN,
   KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM,   UOR_THM,  UIR_THM,  KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
                             KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,   LOR_THM,  LIR_THM,  RUTHUM2, RUTHUM1, KC_NO
 ),
 
 [_GAMING] = LAYOUT(
-  KC_ESC,  KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                                              KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  KC_TAB,  LHM_A,  LQM_S,   LHM_D,   LHM_F,    KC_G,                                              KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
-  KC_LCTL, KC_Z,   KC_X,    KC_C,    KC_V,     KC_B,    CUIL_THM, CUOL_THM,   CUOR_THM, CUIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, TOBAS,
-                            KC_NO,   LUTHUM1,  LUGTHUM, LIL_THM,  LOL_THM,    LOR_THM,  LIR_THM,  RUTHUM2, RUTHUM1, KC_NO
+  _______, _______, _______, _______, _______, _______,                                           _______, _______, _______, _______, _______, _______,
+  _______, LHM_A,   LHM_R,   LHM_S,   LHM_T,    _______,                                          _______, RHM_N,   RHM_E,   RHM_I,   RHM_O,   _______,
+  _______, _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______,  _______,  _______, _______, _______,
+                             KC_NO,   _______, _______, _______, _______,     _______, _______, _______, _______, KC_NO
 ),
 
 [_GAMENUM] = LAYOUT(
@@ -135,9 +93,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_COLEMAK_DH] = LAYOUT(
-  SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, PASSPAL,
-  CTL_BSP, KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                                            KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CTL_QUO,
-  KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM, CUOR_THM, CUIR_THM, KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
+  SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_DEL,
+  CTL_CAP, KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                                            KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    RHM_SCN,
+  KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM, UOR_THM, UIR_THM,     KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
                             KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM, LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO
 ),
 
