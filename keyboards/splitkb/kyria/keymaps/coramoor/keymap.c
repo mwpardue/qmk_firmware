@@ -73,8 +73,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE] = LAYOUT(
   SM_ESC,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                                            KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
-  CTL_CAP, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   KC_QUOT,
-  KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM,   UOR_THM,  UIR_THM,  KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
+  MC_SWRI, LHM_A,  LHM_R,   LHM_S,   LHM_T,   KC_G,                                            KC_M,    RHM_N,   RHM_E,   RHM_I,   RHM_O,   KC_QUOT,
+  KC_CAPS, SFT_Z,  KC_X,    KC_C,    KC_D,    KC_V,    UIL_THM, UOL_THM,   UOR_THM,  UIR_THM,  KC_K,    KC_H,    KC_COMM, KC_DOT,  SFT_QUE, OSMRGUI,
                             KC_NO,   LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,   LOR_THM,  LIR_THM,  RUTHUM2, RUTHUM1, KC_NO
 ),
 
