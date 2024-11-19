@@ -586,6 +586,16 @@ void render_slave_layer_state(void) {
     }
 }
 
+void render_leading(void) {
+    oled_write_P(PSTR("     Leader Keys     "), false);
+    oled_write_P(PSTR("[DD]    Dynamic Macro"), false);
+    oled_write_P(PSTR("[SA]     Arrange Apps"), false);
+    oled_write_P(PSTR("[SS]   Scrnsht Snagit"), false);
+    oled_write_P(PSTR("[SC]   Scrnsht Clipbd"), false);
+    oled_write_P(PSTR("[RR]   Firmware Flash"), false);
+    oled_write_P(PSTR("[EC]        @caracarn"), false);
+    oled_write_P(PSTR("[ET]          @trueip"), false);
+}
 
 void render_menu(void) {
     menu_items();
@@ -594,6 +604,8 @@ void render_menu(void) {
 bool oled_task_user(void) {
     if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
             render_menu();
+    } else if (is_leading()) {
+            render_leading();
     } else {
         if (is_keyboard_left()) {
             render_master_logo();
