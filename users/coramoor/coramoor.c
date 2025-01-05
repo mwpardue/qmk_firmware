@@ -113,7 +113,9 @@ void matrix_scan_user(void) {
     case LHM_R:
       if (other_keycode == LIL_THM) {return true;}
     case LHM_A:
-      if (other_keycode == KC_C) {return true;}
+      if ((other_keycode == KC_C) || (other_keycode == LOL_THM)) {return true;}
+    case LHM_S:
+      if ((other_keycode == KC_QUOT) || (other_keycode == KC_DOT) || (other_keycode == KC_SCLN) || (other_keycode == SFT_QUE)) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;
@@ -291,6 +293,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 #endif
+
+#ifdef KEY_OVERRIDE_ENABLE
+const key_override_t dot_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLN);  // Shift . is :
+const key_override_t comm_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_SCLN); // Shift , is ;
+
+const key_override_t **key_overrides = (const key_override_t *[]){
+    &dot_key_override,
+    &comm_key_override,
+    NULL
+};
+
+#endif //KEY_OVERRIDE_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_LEADER_ENABLE

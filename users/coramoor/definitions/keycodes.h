@@ -59,7 +59,7 @@ enum {
     SFT_TTP, SFT_TTM, BSP_WRD, BSP_LIN, T_CLOSE, SP_RGT, DF_TOGG,
     S_ARRNG, BROWSER_BACK, BROWSER_FORWARD, TAB_BACK, TAB_FORWARD, TMX_LDS,
     PASSPAL, TMX_VIS, NAV_LFT, NAV_RGT, SEL_WRD, SEL_LIN, VIM_TRE, TMX_VSP,
-    TMX_HSP, SP_AT, CAP_MEH, SM_SWIT, TG_OS, CG_MOD, ADJ_LYR, FUN_BSP, MACSLEP,
+    TMX_HSP, SP_AT, CAP_MEH, SM_SWIT, TG_OS, CG_MOD, ADJ_LYR, FUN_BSP, MACSLEP, SAF_ENT,
 #endif
 
 #ifdef SELECT_WORD_ENABLE
@@ -93,36 +93,45 @@ enum {
 
 // Left thumb keys
 
-#define LUTHUM1 LT(_FUNCTION, KC_B)
-#define LUTHUM2 MEH_T(PASSPAL)
-#define LIL_THM LT(_NAVIGATION, KC_BSPC)
-#define LOL_THM LT(_NUMPAD, KC_TAB)
-#define UOL_THM LCA_T(LEADER)
-#define UIL_THM RALT_T(PASSPAL)
-#define ASW_Z LT(_APPSWITCH, KC_Z)
+    // Upper Left Thumb Keys
+    #define UOL_THM KC_CAPS
+    #define UIL_THM MEH_T(KC_F18)
+
+    // Lower Left Thumb Keys
+    #define LUTHUM0 MON_L
+    #define LUTHUM1 LT(_FUNCTION, KC_B)
+    #define LUTHUM2 SM_SWIT
+    #define LIL_THM LT(_NAVIGATION, KC_BSPC)
+    #define LOL_THM LT(_NUMPAD, KC_ENTER)
+
+    // Alt Base Thumb Keys
+    #define CLUTHUM2 LT(_NUMPAD, PASSPAL)
+    #define CLIL_THM LT(_NAVIGATION, KC_TAB)
+    #define CLOL_THM LT(_NUMPAD, LALT(KC_BSPC))
+    #define CUIL_THM MON_L
+    #define CUOL_THM MON_R
 
 // Right thumb keys
 
-#define RUTHUM1 LT(_FUNCTION, KC_T)
-#define RUTHUM2 MEH_T(KC_ENT)
-// #define LOR_THM LT(_SYMBOL, KC_ENTER)
-#define LOR_THM RGUI_T(KC_ENTER)
-#define LIR_THM LT(_SYMBOL, KC_SPACE)
-// #define LIR_THM RCTL_T(KC_SPACE)
-#define UIR_THM LALT_T(KC_F15)
-#define UOR_THM LCA_T(KC_F16)
+    // Lower Right Thumb Keys
+    #define RUTHUM1 KC_RSFT
+    #define RUTHUM2 MEH_T(KC_ENT)
+    /*#define LOR_THM LGUI_T(KC_MINS)*/
+    #define LOR_THM LT(_HEX, KC_MINS)
+    #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
-#define CLUTHUM2 LT(_NUMPAD, PASSPAL)
-#define CLIL_THM LT(_NAVIGATION, KC_TAB)
-#define CLOL_THM LSFT_T(KC_TAB)
-#define CLOR_THM RSFT_T(KC_ENTER)
-// #define CLIR_THM LT(_SYMBOL, KC_SPACE)
-#define CLIR_THM LT(_VIM, KC_SPACE)
-#define CUIL_THM MON_L
-#define CUIR_THM OSMHYPR
-#define CUOR_THM OSMMEH
-#define CUOL_THM MON_R
-#define CRUTHUM2 LT(_NUMPAD, KC_Q)
+    // Upper Right Thumb Keys
+    #define UIR_THM MEH_T(KC_F15)
+    #define UOR_THM LCA_T(KC_F16)
+
+    // Alt Base Thumb Keys
+    #define CLOR_THM RSFT_T(KC_ENTER)
+    #define CLIR_THM RALT_T(KC_SPACE)
+    #define CUIR_THM OSMHYPR
+    #define CUOR_THM OSMMEH
+    #define CRUTHUM2 LT(_NUMPAD, KC_Q)
+
+
 #define NUM_Z LT(_NUMPAD, KC_Z)
 #define GUI_SLS RGUI_T(KC_SLSH)
 #define VIM_SLS LT(_VIM, KC_SLSH)
@@ -132,6 +141,7 @@ enum {
 #define CTL_CW LCTL_T(KC_Q)
 #define CTL_CAP LCTL_T(KC_CAPS)
 #define GUI_CW LGUI_T(KC_Q)
+#define ASW_Z LT(_APPSWITCH, KC_Z)
 
 #define RHM_4 RGUI_T(KC_4)
 #define RHM_5 RSFT_T(KC_5)
@@ -160,8 +170,11 @@ enum {
 #define LHM_D LSFT_T(KC_D)
 #define LHM_F LGUI_T(KC_F)
 #define SFT_Z LSFT_T(KC_Z)
+#define SYM_Z LT(_NUMPAD, KC_Z)
 #define SFT_QUE RSFT_T(KC_SLSH)
 #define CTL_Z LCTL_T(KC_Z)
+#define CTL_TAB LCTL_T(KC_TAB)
+#define CTL_MINS LCTL_T(KC_MINS)
 #define CTL_QUE RCTL_T(KC_SLSH)
 #define SFT_DOT LSFT_T(KC_DOT)
 #define LHM_Z LCTL_T(KC_Z)
@@ -266,12 +279,12 @@ enum {
 #define SPCSFT LSFT_T(KC_SPC)
 // #define MACSLEP LSFT(LCTL(KC_KB_POWER))
 // #define MACSLEP LGUI(LALT(KC_KB_POWER))
-#define MON_L LALT(KC_H)
-#define MON_R LALT(KC_L)
+#define MON_L LALT(KC_M)
+#define MON_R LALT(KC_I)
 #define MON_U LALT(KC_K)
-#define MON_D LALT(KC_J)
-#define SPC_L LALT(LCTL((KC_H)))
-#define SPC_R LALT(LCTL((KC_L)))
+#define MON_D LALT(KC_N)
+#define SPC_L LALT(LCTL((KC_M)))
+#define SPC_R LALT(LCTL((KC_I)))
 #define SPC_U LALT(LCTL((KC_K)))
 #define SPC_D LALT(LCTL((KC_J)))
 #define APP_L LCTL(LALT((KC_H)))
@@ -283,8 +296,8 @@ enum {
 #define MAX_SCR LGUI(LCTL(LALT(LSFT(KC_M))))
 #define MOV_LFT LCTL(LSFT(KC_TAB))
 #define MOV_RGT LCTL(KC_TAB)
-#define TAB_LFT LCTL(LSFT(KC_TAB))
-#define TAB_RGT LCTL(KC_TAB)
+#define TAB_LFT LGUI(KC_M)
+#define TAB_RGT LGUI(KC_I)
 #define BRWS_FW LGUI(KC_RBRC)
 #define BRWS_BK LGUI(KC_LBRC)
 #define KM_HYPC LGUI(LCTL(LALT(LSFT(KC_C))))

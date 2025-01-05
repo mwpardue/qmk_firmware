@@ -35,7 +35,7 @@
     #define MODTAP_TAPPING_TERM 150
     #define ACHORDION_TAPPING_TERM 800
     #define GQT_TAPPING_TERM 175
-    #define SGQT_TAPPING_TERM 150
+    #define SGQT_TAPPING_TERM 100
 
 #ifdef CUSTOM_ONESHOT_MODS_ENABLE
     #define CUSTOM_ONESHOT_TIMEOUT 2000
@@ -53,7 +53,7 @@
 
 // Configure combos
 #ifdef COMBO_ENABLE
-    #define COMBO_COUNT 9
+    #define COMBO_COUNT 11
     #define COMBO_TERM 40
     #define EXTRA_SHORT_COMBOS
     #define COMBO_STRICT_TIMER

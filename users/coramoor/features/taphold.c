@@ -93,11 +93,15 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case RHM_N:
         case LHM_C:
         case RHM_COM:
+        // case RHM_E:
+        // case LHM_S:
           return get_modtap_tapping_term();
-        case LHM_Z:
-        case RHM_SLS:
+        // case LHM_A:
+        // case RHM_O:
         case RHM_E:
         case LHM_S:
+        case LHM_Z:
+        case RHM_SLS:
         case LQM_S:
         case SFT_Z:
         case SFT_QUE:

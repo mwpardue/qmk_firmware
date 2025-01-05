@@ -6,6 +6,7 @@
 
 #ifdef CUSTOM_LEADER_ENABLE
     #include "features/leader.h"
+    menu_t menu;
 #endif
 
 #ifdef CASEMODE_ENABLE
@@ -97,7 +98,7 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
     bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
     bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
-    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock;
+    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock || is_passing();
 
     switch (keycode) {
 

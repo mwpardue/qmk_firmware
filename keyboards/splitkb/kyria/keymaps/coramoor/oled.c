@@ -131,11 +131,17 @@ void render_master_mod_cluster_1(void) {
 }
 
 void render_master_mod_cluster_2(void) {
-    static const char PROGMEM mod_ctrl[] = {0x89, 0x8a, 0};
-    static const char PROGMEM mod_alt[] = {0x87, 0x88, 0};
-    static const char PROGMEM mod_shift[] = {0x8b, 0x8c, 0};
-    static const char PROGMEM mod_gui[] = {0x85, 0x86, 0};
-    static const char PROGMEM mod_win[] = {0x8d, 0x8e, 0};
+    // static const char PROGMEM mod_shift[] = {0x8b, 0x8c, 0};
+    // static const char PROGMEM mod_alt[] = {0x87, 0x88, 0};
+    // static const char PROGMEM mod_ctrl[] = {0x89, 0x8a, 0};
+    // static const char PROGMEM mod_gui[] = {0x85, 0x86, 0};
+    // static const char PROGMEM mod_win[] = {0x8d, 0x8e, 0};
+    // static const char PROGMEM mod_lin[] = {0x8f, 0x90, 0};
+    static const char PROGMEM mod_shift[] = {0xA9, 0xAA, 0};
+    static const char PROGMEM mod_alt[] = {0xA7, 0xA8, 0};
+    static const char PROGMEM mod_ctrl[] = {0xA5, 0xA6, 0};
+    static const char PROGMEM mod_gui[] = {0xAD, 0xAE, 0};
+    static const char PROGMEM mod_win[] = {0xAB, 0xAC, 0};
     static const char PROGMEM mod_lin[] = {0x8f, 0x90, 0};
 
     render_master_mod_cluster_align();
@@ -187,11 +193,17 @@ void render_slave_mod_cluster_1(void) {
 }
 
 void render_slave_mod_cluster_2(void) {
-    static const char PROGMEM mod_ctrl[] = {0x89, 0x8a, 0};
-    static const char PROGMEM mod_alt[] = {0x87, 0x88, 0};
-    static const char PROGMEM mod_shift[] = {0x8b, 0x8c, 0};
-    static const char PROGMEM mod_gui[] = {0x85, 0x86, 0};
-    static const char PROGMEM mod_win[] = {0x8d, 0x8e, 0};
+    // static const char PROGMEM mod_shift[] = {0x8b, 0x8c, 0};
+    // static const char PROGMEM mod_alt[] = {0x87, 0x88, 0};
+    // static const char PROGMEM mod_ctrl[] = {0x89, 0x8a, 0};
+    // static const char PROGMEM mod_gui[] = {0x85, 0x86, 0};
+    // static const char PROGMEM mod_win[] = {0x8d, 0x8e, 0};
+    // static const char PROGMEM mod_lin[] = {0x8f, 0x90, 0};
+    static const char PROGMEM mod_shift[] = {0xA9, 0xAA, 0};
+    static const char PROGMEM mod_alt[] = {0xA7, 0xA8, 0};
+    static const char PROGMEM mod_ctrl[] = {0xA5, 0xA6, 0};
+    static const char PROGMEM mod_gui[] = {0xAD, 0xAE, 0};
+    static const char PROGMEM mod_win[] = {0xAB, 0xAC, 0};
     static const char PROGMEM mod_lin[] = {0x8f, 0x90, 0};
 
     render_slave_mod_cluster_align();
@@ -587,7 +599,7 @@ void render_slave_layer_state(void) {
 }
 
 void render_leading(void) {
-    oled_write_P(PSTR("     Leader Keys     "), false);
+    oled_write_P(PSTR("     LEADER KEYS     "), false);
     oled_write_P(PSTR("[DD]    Dynamic Macro"), false);
     oled_write_P(PSTR("[SA]     Arrange Apps"), false);
     oled_write_P(PSTR("[SS]   Scrnsht Snagit"), false);
@@ -595,6 +607,17 @@ void render_leading(void) {
     oled_write_P(PSTR("[RR]   Firmware Flash"), false);
     oled_write_P(PSTR("[EC]        @caracarn"), false);
     oled_write_P(PSTR("[ET]          @trueip"), false);
+}
+
+void render_passing(void) {
+    oled_write_P(PSTR("      PASS-KEYS      "), false);
+    oled_write_P(PSTR("[A]  Ad!  |  [B] LbD "), false);
+    oled_write_P(PSTR("[D]  D!2  |  [I] T!P "), false);
+    oled_write_P(PSTR("[J]  JbD  |  [L] L2c "), false);
+    oled_write_P(PSTR("[N]  Nv_  |  [O] Pdn "), false);
+    oled_write_P(PSTR("[P]  P@s  |  [Q] StQ "), false);
+    oled_write_P(PSTR("[R]  IWR  |  [S] S1b "), false);
+    oled_write_P(PSTR("[T]  Tit  |  [Y] Lab "), false);
 }
 
 void render_menu(void) {
@@ -606,6 +629,8 @@ bool oled_task_user(void) {
             render_menu();
     } else if (is_leading()) {
             render_leading();
+    } else if (is_passing()) {
+            render_passing();
     } else {
         if (is_keyboard_left()) {
             render_master_logo();

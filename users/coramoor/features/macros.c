@@ -12,8 +12,8 @@ process_record_result_t process_macros(uint16_t keycode, keyrecord_t *record) {
             // Standalone accent characters
 
             case TIPS:
-                del_oneshot_mods(MOD_BIT(KC_LSFT));
-                unregister_mods(MOD_BIT(KC_LSFT));
+                del_oneshot_mods(MOD_MASK_SHIFT);
+                unregister_mods(MOD_MASK_SHIFT);
                 SEND_STRING("trueipsolutions.com");
                 return PROCESS_RECORD_RETURN_FALSE;
 

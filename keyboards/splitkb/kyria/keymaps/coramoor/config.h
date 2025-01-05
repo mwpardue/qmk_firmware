@@ -141,4 +141,6 @@
 #   define SPLIT_LED_STATE_ENABLE
 #   define SPLIT_MODS_ENABLE
 #   define SPLIT_OLED_ENABLE
+#   define OLED_FONT_LSB
 #endif
+

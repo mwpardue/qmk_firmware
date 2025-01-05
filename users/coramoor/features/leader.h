@@ -22,6 +22,8 @@ typedef void *(*leader_func_t)(uint16_t);
 
 // Check to see if we are leading
 bool is_leading(void);
+// Check to see if we are passing
+bool is_passing(void);
 // Start leader sequence
 void start_leading(void);
 // Start pass leader sequence
@@ -51,3 +53,15 @@ char *leader_display_str(void);
     }                                               \
 }
 #endif
+
+
+typedef enum {
+  NO_MENU,
+  LEADING_MENU,
+  PASSING_MENU,
+  STRINGING_MENU
+} menu_state_t;
+
+typedef struct {
+    menu_state_t state;
+} menu_t;

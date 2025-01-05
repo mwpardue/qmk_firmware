@@ -31,6 +31,11 @@ uint8_t rgb_matrix_get_heatmap_area_limit(void) {
     return user_config.rgb_matrix_heatmap_area;
 }
 
+// int leading_start_ind[] = {21, 53, 44, 22, 27, 23, 15};
+// size_t leading_start_size = sizeof(leading_start_ind) / sizeof(leading_start_ind[0]);
+// int screen_menu_ind[] = {20, 54};
+// size_t screen_menu_size = sizeof(screen_menu_ind) / sizeof(screen_menu_ind[0]);
+
 __attribute__((weak)) bool rgb_matrix_indicators_keymap(void) { return true; }
 __attribute__((weak)) bool rgb_matrix_indicators_advanced_keymap(uint8_t led_min, uint8_t led_max) {
     return true;
@@ -73,6 +78,20 @@ void set_layer_rgb_matrix(uint16_t hue, uint8_t sat, uint8_t val, uint8_t led_mi
     }
 }
 
+// void rgb_custom_leading_indicators(const int* indicatorLeds, size_t size, uint16_t hue, uint8_t sat, uint8_t val) {
+//     HSV hsv = {hue, sat, val};
+//     if (hsv.v > rgb_matrix_get_val()) {
+//         hsv.v = rgb_matrix_get_val();
+//     }
+//
+//     RGB rgb       = hsv_to_rgb(hsv);
+//     for (size_t i = 0; i < size; ++i) {
+//         dprintf("Setting indicator index %d at LED %d\n", i, indicatorLeds[i]);
+//         rgb_matrix_set_color(indicatorLeds[i], rgb.r, rgb.g, rgb.b);
+//
+//     }
+// }
+
 void rgb_custom_thumb_indicators(uint16_t hue, uint8_t sat, uint8_t val) {
     HSV hsv = {hue, sat, val};
     if (hsv.v > rgb_matrix_get_val()) {
@@ -80,17 +99,17 @@ void rgb_custom_thumb_indicators(uint16_t hue, uint8_t sat, uint8_t val) {
     }
 
     RGB rgb       = hsv_to_rgb(hsv);
-        rgb_matrix_set_color(12, rgb.r, rgb.g, rgb.b);
-        rgb_matrix_set_color(43, rgb.r, rgb.g, rgb.b);
+        rgb_matrix_set_color(11, rgb.r, rgb.g, rgb.b);
+        rgb_matrix_set_color(42, rgb.r, rgb.g, rgb.b);
 }
 
 bool rgb_matrix_indicators_user(void) { rgb_matrix_indicators_keymap(); return true; }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
-    bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
-    bool isShift = get_mods() & MOD_MASK_SHIFT;
-    bool isOneShotCtrl = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
+    // bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    // bool isShift = get_mods() & MOD_MASK_SHIFT;
+    // bool isOneShotCtrl = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
 
     if (!rgb_matrix_indicators_advanced_keymap(led_min, led_max)) {
             return false;
@@ -136,6 +155,19 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         default:
             set_layer_rgb_matrix(rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val(), led_min, led_max);
 
+            // switch (menu.state) {
+            //     case LEADING_MENU:
+            //         rgb_custom_leading_indicators(leading_start_ind, leading_start_size, HSV_RED);
+            //         break;
+            //     case SCREEN_MENU:
+            //         rgb_custom_leading_indicators(screen_menu_ind, screen_menu_size, HSV_RED);
+            //         break;
+            //     case NO_MENU:
+            //         break;
+            //     default:
+            //         break;
+            // }
+
             switch (rgb_matrix_get_flags()) {
                 case LED_FLAG_ALL:
                 case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR):
@@ -150,10 +182,12 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                                     rgb_custom_thumb_indicators(XCASE_ON_INDICATOR);
                         } else if (host_keyboard_led_state().caps_lock) {
                                     rgb_custom_thumb_indicators(CAPS_LOCK_INDICATOR);
-                        } else if (isOneShotShift || isShift) {
-                                    rgb_custom_thumb_indicators(SHIFT_INDICATOR);
-                        } else if (isOneShotCtrl) {
-                                    rgb_custom_thumb_indicators(CTRL_INDICATOR);
+                        } else if ((is_leading() || is_passing())) {
+                                    rgb_custom_thumb_indicators(HSV_PURPLE);
+                        // } else if (isOneShotShift || isShift) {
+                        //             rgb_custom_thumb_indicators(SHIFT_INDICATOR);
+                        // } else if (isOneShotCtrl) {
+                        //             rgb_custom_thumb_indicators(CTRL_INDICATOR);
                         }
                     #endif
 
@@ -167,11 +201,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
     #endif
 
-    #ifdef CUSTOM_LEADER_ENABLE
-        if (is_leading()) {
-            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
-    }
-    #endif
+    // #ifdef CUSTOM_LEADER_ENABLE
+    //     if (is_leading() || is_passing()) {
+    //         rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
+    // }
+    // #endif
 
     return false;
 }

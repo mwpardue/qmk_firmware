@@ -16,6 +16,7 @@
 
 #include "leader.h"
 #include "secrets.h"
+#include "features/rgb_matrix_custom.h"
 
 #include <string.h>
 
@@ -23,8 +24,12 @@
 #define LEADER_ESC_KEY KC_ESC
 #endif
 
-bool leading = false;
+menu_t menu = {.state = NO_MENU};
+// bool leading = false;
 static leader_func_t leader_func = NULL;
+
+// int leading_start_ind[] = {21, 53, 44, 22, 27, 23, 15};
+// size_t leading_start_size = sizeof(leading_start_ind) / sizeof(leading_start_ind[0]);
 
 #ifdef LEADER_DISPLAY_STR
 
@@ -183,6 +188,9 @@ void *leader_pass_func(uint16_t keycode) {
         case KC_Q:
             send_string_with_delay(secrets[10], MACRO_TIMER);
             break;
+        case KC_Y:
+            send_string_with_delay(secrets[16], MACRO_TIMER);
+            break;
         default:
             break;
     }
@@ -217,12 +225,31 @@ void *leader_start_func(uint16_t keycode) {
 
 // Check to see if we are leading
 bool is_leading(void) {
-    return leading;
+    if (menu.state == LEADING_MENU) {
+        return true;
+    } else {
+        return false;
+    }
+    // return leading;
 }
+
+// Check to see if we are leading
+bool is_passing(void) {
+    if (menu.state == PASSING_MENU) {
+        return true;
+    } else {
+        return false;
+    }
+    // return leading;
+}
+
 // Start leader sequence
 void start_leading(void) {
-    leading = true;
+    menu.state = LEADING_MENU;
+    // leading = true;
+        // dprintf("early leader_func %p\n", *leader_func);
     leader_func = leader_start_func;
+        // dprintf("started leader_func %p\n", *leader_func);
 #ifdef LEADER_DISPLAY_STR
     memset(leader_display, 0, sizeof(leader_display));
     leader_display[0] = 'L';
@@ -234,7 +261,8 @@ void start_leading(void) {
 }
 
 void start_pass_leading(void) {
-    leading = true;
+    // leading = true;
+    menu.state = PASSING_MENU;
     leader_func = leader_pass_func;
 #ifdef LEADER_DISPLAY_STR
     memset(leader_display, 0, sizeof(leader_display));
@@ -248,7 +276,8 @@ void start_pass_leading(void) {
 
 // Stop leader sequence
 void stop_leading(void) {
-    leading = false;
+    // leading = false;
+    menu.state = NO_MENU;
     leader_func = NULL;
 #ifdef LEADER_DISPLAY_STR
     leader_display[leader_display_size] = ' ';
@@ -257,7 +286,7 @@ void stop_leading(void) {
 
 // Process keycode for leader sequences
 bool process_leader(uint16_t keycode, const keyrecord_t *record) {
-    if (leading && record->event.pressed) {
+    if ((is_leading() || is_passing()) && record->event.pressed) {
         // Get the base keycode of a mod or layer tap key
         switch (keycode) {
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
@@ -287,6 +316,8 @@ bool process_leader(uint16_t keycode, const keyrecord_t *record) {
 #endif
         // update the leader function
         leader_func = leader_func(keycode);
+        // dprintf("leader_func %p\n", *leader_func);
+        // Put RGB changes here since this runs each time a key is pressed
         if (leader_func == NULL) {
             stop_leading();
         }

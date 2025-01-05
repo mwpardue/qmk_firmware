@@ -191,15 +191,22 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
        case PASSPAL:
             if (record->event.pressed) {
-                dprintln("PASSPAL pressed");
-                  dprintln("PASSPAL tapped");
-                  if (isMacOS) {
-                    tap_code16(C(A(G(S(KC_P)))));
-                  }
                   start_pass_leading();
                   return PROCESS_RECORD_RETURN_FALSE;
              }
          return PROCESS_RECORD_RETURN_TRUE;
+
+        case SYM_Z:
+            if (record->tap.count == 0) {           // On hold.
+                    if (record->event.pressed) {          // On press.
+                    register_mods(MOD_MASK_SHIFT);     // Hold left Shift.
+                    } else {                              // On release.
+                    unregister_mods(MOD_MASK_SHIFT);   // Release left Shift.
+                    }
+                }
+                // Continue default handling, which switches to NUM on hold and
+                // performs KC_DEL when tapped.
+                return PROCESS_RECORD_RETURN_TRUE;
 
          case SEL_WRD:
             if (record->event.pressed) {
@@ -323,6 +330,21 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
+
+        case SAF_ENT:
+          if (record->event.pressed) {
+            smart_mods = get_mods();
+            if ((smart_mods & MOD_MASK_CTRL) || isOneShotCtrl) {
+              unregister_mods(smart_mods);
+              del_oneshot_mods(MOD_MASK_CTRL);
+              tap_code16(KC_ENT);
+              register_mods(smart_mods);
+            } else {
+              tap_code16(KC_SPACE);
+        }
+          return PROCESS_RECORD_RETURN_FALSE;
+      }
+        return PROCESS_RECORD_RETURN_TRUE;
 
     }
     return PROCESS_RECORD_CONTINUE;

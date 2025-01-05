@@ -29,10 +29,10 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     bool isOneShotGui         = get_oneshot_mods() & MOD_MASK_GUI || get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotButShift = isOneShotCtrl || isOneShotAlt || isOneShotGui;
     bool isAnyOneShot         = isOneShotCtrl || isOneShotAlt || isOneShotGui || isOneShotShift;
-    // bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
-    // bool isShift               = get_mods() & MOD_MASK_SHIFT || isOneShotShift || isOneShotLockedShift;
-    // bool isAlt               = get_mods() & MOD_MASK_ALT || isOneShotAlt;
-    // bool isGui               = get_mods() & MOD_MASK_GUI || isOneShotGui;
+    bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
+    bool isShift               = get_mods() & MOD_MASK_SHIFT || isOneShotShift || isOneShotLockedShift;
+    bool isAlt               = get_mods() & MOD_MASK_ALT || isOneShotAlt;
+    bool isGui               = get_mods() & MOD_MASK_GUI || isOneShotGui;
 
 
 
@@ -98,44 +98,46 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     }
     break;
 
-        // case CLOL_THM:
-        //   if (record->event.pressed) {
-        //     if (record->tap.count > 0) {
-        //         if ((xcase_state != 0 || caps_word_on)) {
-        //             disable_xcase();
-        //             disable_caps_word();
-        //             if (host_keyboard_led_state().caps_lock) {
-        //                 tap_code16(KC_CAPS);
-        //                 }
-        //             clear_mods();
-        //             clear_locked_and_oneshot_mods();
-        //             return PROCESS_RECORD_RETURN_FALSE;
-        //         }
-        //         else if (isCtrl || isShift ) {
-        //             if (isCtrl) {
-        //                 enable_xcase();
-        //             }
-        //             if (isShift) {
-        //                 enable_caps_word();
-        //             }
-        //             clear_mods();
-        //             clear_locked_and_oneshot_mods();
-        //             return PROCESS_RECORD_RETURN_FALSE;
-        //         } else if (isAlt || isGui ) {
-        //             clear_mods();
-        //             clear_locked_and_oneshot_mods();
-        //             return PROCESS_RECORD_RETURN_FALSE;
-        //         } else {
-        //             add_oneshot_mods(MOD_LSFT);
-        //         }
-        //       return PROCESS_RECORD_RETURN_FALSE;
-        //     }
-        //   return PROCESS_RECORD_CONTINUE;
-        //   }
-        // break;
+        case CLIL_THM:
+          if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                if ((xcase_state != 0 || caps_word_on)) {
+                    disable_xcase();
+                    disable_caps_word();
+                    if (host_keyboard_led_state().caps_lock) {
+                        tap_code16(KC_CAPS);
+                        }
+                    clear_mods();
+                    clear_locked_and_oneshot_mods();
+                    return PROCESS_RECORD_RETURN_FALSE;
+                }
+                else if (isCtrl || isShift ) {
+                    if (isCtrl) {
+                        enable_xcase();
+                    }
+                    if (isShift) {
+                        enable_caps_word();
+                    }
+                    clear_mods();
+                    clear_locked_and_oneshot_mods();
+                    return PROCESS_RECORD_RETURN_FALSE;
+                } else if (isAlt || isGui ) {
+                    clear_mods();
+                    clear_locked_and_oneshot_mods();
+                    return PROCESS_RECORD_RETURN_FALSE;
+                } else {
+                    add_oneshot_mods(MOD_LSFT);
+                }
+              return PROCESS_RECORD_RETURN_FALSE;
+            }
+          return PROCESS_RECORD_CONTINUE;
+          }
+        break;
 
     case SFT_CW:
     case GUI_CW:
+    case UOR_THM:
+    case UIL_THM:
       if (record->event.pressed) {
         if (record->tap.count > 0) {
             if (caps_word_on) {
@@ -156,7 +158,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
             if (record->tap.count > 0) {
                 switch (user_config.os) {
                     case MACOS:
-                        tap_code16(G(C(A(S(KC_P)))));
+                        // tap_code16(G(C(A(S(KC_P)))));
                         start_pass_leading();
                         break;
                     case LINUX:
@@ -169,11 +171,31 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
             }
         break;
 
-    case UIL_THM:
-    case UIR_THM:
+    // case UIL_THM:
+    // case UIR_THM:
+    //     if (record->event.pressed) {
+    //         if (record->tap.count > 0) {
+    //                 start_leading();
+    //     return PROCESS_RECORD_RETURN_FALSE;
+    //             }
+    //   return PROCESS_RECORD_CONTINUE;
+    //         }
+    //     break;
+
+    case LUTHUM1:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    start_leading();
+                    tap_code16(LALT(KC_I));
+        return PROCESS_RECORD_RETURN_FALSE;
+                }
+      return PROCESS_RECORD_CONTINUE;
+            }
+        break;
+
+    case RUTHUM1:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                    tap_code16(LALT(KC_I));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -181,6 +203,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         break;
 
     case XCTHUM:
+    case UIR_THM:
         if (record->event.pressed) {
             dprintln("XCTHUM pressed");
                 if (xcase_state == XCASE_WAIT) {

@@ -43,7 +43,8 @@ extern smart_case_t smart_case;
 #endif
 
 #ifdef CUSTOM_LEADER_ENABLE
-    extern bool leading;
+    // extern bool leading;
+    menu_t menu;
 #endif
 
     // extern os_t os;
@@ -83,7 +84,8 @@ void user_transport_update(void) {
         kb_state.caps_word_on = caps_word_on;
         kb_state.debug_enabled = debug_enable;
         kb_state.is_dynamic_recording = is_dynamic_recording;
-        kb_state.leading = leading;
+        // kb_state.leading = leading;
+        kb_state.menu = menu.state;
         // kb_state.smart_case_types = smart_case_types;
         transport_kb_state = kb_state.raw;
     } else {
@@ -103,7 +105,8 @@ void user_transport_update(void) {
         caps_word_on = kb_state.caps_word_on;
         debug_enable = kb_state.debug_enabled;
         is_dynamic_recording = kb_state.is_dynamic_recording;
-        leading = kb_state.leading;
+        // leading = kb_state.leading;
+        menu.state = kb_state.menu;
         // smart_case_types = kb_state.smart_case_types;
 
     }
