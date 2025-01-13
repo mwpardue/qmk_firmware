@@ -2,6 +2,7 @@
 
 #include "taphold.h"
 #include "features/custom_shortcuts.h"
+#include "features/tapdance.h"
 
 uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
 
@@ -60,8 +61,8 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case OSMRALT:
         case OSMLGUI:
         case OSMRGUI:
-        case TD_SNIP:
-        case TD_SHOT:
+        // case TD_SNIP:
+        // case TD_SHOT:
         case TD_PAST:
         case TD_COPY:
         case LIR_THM:
@@ -69,7 +70,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LHM_BSL:
         case LHM_UND:
         case LHM_PIP:
-        case TD_QUOT:
+        // case TD_QUOT:
         case CTL_QUO:
         case CLUTHUM2:
         case CLOL_THM:
@@ -99,6 +100,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         // case LHM_A:
         // case RHM_O:
         case RHM_E:
+        case RHM_K:
         case LHM_S:
         case LHM_Z:
         case RHM_SLS:

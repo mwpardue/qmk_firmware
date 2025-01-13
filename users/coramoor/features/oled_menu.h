@@ -12,8 +12,8 @@ typedef enum {
     MENU_SAT,
     MENU_VAL,
     MENU_RGBMODE,
-    MENU_HMAREA,
-    MENU_HMSPREAD,
+    /*MENU_HMAREA,*/
+    /*MENU_HMSPREAD,*/
     MENU_STT,
     MENU_TT,
     MENU_MT,

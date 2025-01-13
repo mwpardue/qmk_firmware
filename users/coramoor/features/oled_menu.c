@@ -196,12 +196,12 @@ void menu_items(void) {
             case MENU_RGBMODE:
                 render_rgb_mode("MODE: ", i);
                 break;
-            case MENU_HMAREA:
-                render_menu_item("HEATMAP AREA:", user_config.rgb_matrix_heatmap_area, i);
-                break;
-            case MENU_HMSPREAD:
-                render_menu_item("HEATMAP SPREAD:", user_config.rgb_matrix_heatmap_spread, i);
-                break;
+            // case MENU_HMAREA:
+            //     render_menu_item("HEATMAP AREA:", user_config.rgb_matrix_heatmap_area, i);
+            //     break;
+            // case MENU_HMSPREAD:
+            //     render_menu_item("HEATMAP SPREAD:", user_config.rgb_matrix_heatmap_spread, i);
+            //     break;
             case MENU_STT:
                 render_menu_item("SHIFT TAP TERM:", sft_tapping_term, i);
                 break;

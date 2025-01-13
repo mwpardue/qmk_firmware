@@ -1,4 +1,5 @@
 #include "coramoor.h"
+#include "features/tapdance.h"
 #ifdef RAW_ENABLE
     #include "raw_hid.h"
 #endif
@@ -43,8 +44,8 @@ void                       keyboard_post_init_user(void) {
 __attribute__((weak)) void eeconfig_init_keymap(void) {}
 void                       eeconfig_init_user(void) {
     user_config.raw              = 0;
-    user_config.rgb_matrix_heatmap_area = 40;
-    user_config.rgb_matrix_heatmap_spread = 35;
+    // user_config.rgb_matrix_heatmap_area = 40;
+    // user_config.rgb_matrix_heatmap_spread = 35;
     user_config.os = MACOS;
     eeconfig_update_user(user_config.raw);
     eeconfig_init_keymap();
@@ -85,9 +86,9 @@ void matrix_scan_user(void) {
   caps_word_idle_timer();
 #endif
 
-#if LAYER_LOCK_IDLE_TIMEOUT > 0
-    layer_lock_task();
-#endif
+// #if LAYER_LOCK_IDLE_TIMEOUT > 0
+//     layer_lock_task();
+// #endif
 
 #ifdef CAPSWORD_ENABLE
     caps_word_task();
@@ -185,10 +186,6 @@ void matrix_scan_user(void) {
     case LHM_MNR:
     case CLIR_THM:
     case GUI_SLS:
-    #ifndef KYRIA_KEYBOARD
-    case DRGSCRL:
-    case SNIPING:
-    #endif
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -208,10 +205,6 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
         case LOL_THM:
         case RUTHUM2:
         case CRUTHUM2:
-        #ifndef KYRIA_KEYBOARD
-        case DRGSCRL:
-        case SNIPING:
-        #endif
         case XCASE:
         case (XCASE & 0xff):
             return false;
@@ -276,37 +269,18 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
 // }
 // #endif
 
-#ifndef KYRIA_KEYBOARD
-void pointing_device_init_user(void) {
-    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
-}
+// #ifdef KEY_OVERRIDE_ENABLE
+// const key_override_t dot_key_override =
+//     ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLN);  // Shift . is :
+// const key_override_t comm_key_override =
+//     ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_SCLN); // Shift , is ;
+//
+// const key_override_t *key_overrides[] = {
+//     &dot_key_override,
+//     &comm_key_override
+// };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    switch(get_highest_layer(state)) {
-        case _NAVIGATION:  // Navigation layer
-            charybdis_set_pointer_dragscroll_enabled(true);
-            break;
-        default:
-            charybdis_set_pointer_dragscroll_enabled(false);
-            break;
-    }
-    return state;
-}
-#endif
-
-#ifdef KEY_OVERRIDE_ENABLE
-const key_override_t dot_key_override =
-    ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLN);  // Shift . is :
-const key_override_t comm_key_override =
-    ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_SCLN); // Shift , is ;
-
-const key_override_t **key_overrides = (const key_override_t *[]){
-    &dot_key_override,
-    &comm_key_override,
-    NULL
-};
-
-#endif //KEY_OVERRIDE_ENABLE
+// #endif //KEY_OVERRIDE_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_LEADER_ENABLE
@@ -341,9 +315,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_caps_word(keycode, record)) { return false; }
 #endif
 
-#ifdef LAYER_LOCK_ENABLE
-      if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
-#endif
+// #ifdef LAYER_LOCK_ENABLE
+//       if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+// #endif
 
 #ifdef GQT_ENABLE
   if (!process_global_quick_tap(keycode, record)) { return false; }

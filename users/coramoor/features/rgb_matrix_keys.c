@@ -189,16 +189,16 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                                 break;
                         }
                         break;
-                    case MENU_HMAREA:
-                        user_config.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area + 1;
-                        eeconfig_update_user(user_config.raw);
-                        dprintf("Heatmap Area Limit(+) = %d\n", user_config.rgb_matrix_heatmap_area);
-                        break;
-                    case MENU_HMSPREAD:
-                        user_config.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread + 1;
-                        eeconfig_update_user(user_config.raw);
-                        dprintf("Heatmap Spread(+) = %d\n", user_config.rgb_matrix_heatmap_spread);
-                        break;
+                    // case MENU_HMAREA:
+                    //     user_config.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area + 1;
+                    //     eeconfig_update_user(user_config.raw);
+                    //     dprintf("Heatmap Area Limit(+) = %d\n", user_config.rgb_matrix_heatmap_area);
+                    //     break;
+                    // case MENU_HMSPREAD:
+                    //     user_config.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread + 1;
+                    //     eeconfig_update_user(user_config.raw);
+                    //     dprintf("Heatmap Spread(+) = %d\n", user_config.rgb_matrix_heatmap_spread);
+                    //     break;
                     case MENU_STT:
                         sft_tapping_term = sft_tapping_term + 5;
                         dprintf("Shift Tapping Term = %d\n", sft_tapping_term);
@@ -340,16 +340,16 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                                 break;
                         }
                         break;
-                    case MENU_HMAREA:
-                        user_config.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area - 1;
-                        eeconfig_update_user(user_config.raw);
-                        dprintf("Heatmap Area Limit(-) = %d\n", user_config.rgb_matrix_heatmap_area);
-                        break;
-                    case MENU_HMSPREAD:
-                        user_config.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread - 1;
-                        eeconfig_update_user(user_config.raw);
-                        dprintf("Heatmap Spread(-) = %d\n", user_config.rgb_matrix_heatmap_spread);
-                        break;
+                    // case MENU_HMAREA:
+                    //     user_config.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area - 1;
+                    //     eeconfig_update_user(user_config.raw);
+                    //     dprintf("Heatmap Area Limit(-) = %d\n", user_config.rgb_matrix_heatmap_area);
+                    //     break;
+                    // case MENU_HMSPREAD:
+                    //     user_config.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread - 1;
+                    //     eeconfig_update_user(user_config.raw);
+                    //     dprintf("Heatmap Spread(-) = %d\n", user_config.rgb_matrix_heatmap_spread);
+                    //     break;
                     case MENU_STT:
                         sft_tapping_term = sft_tapping_term - 5;
                         dprintf("Shift Tapping Term = %d\n", sft_tapping_term);

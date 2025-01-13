@@ -20,6 +20,123 @@
 # include "oled.c"
 #endif
 
+const key_override_t dot_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLN);  // Shift . is :
+const key_override_t comm_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_SCLN); // Shift , is ;
+
+const key_override_t *key_overrides[] = {
+    &dot_key_override,
+    &comm_key_override
+};
+// #include "features/tapdance.c"
+// static td_tap_t tap_state = {
+//     .state = TD_NONE
+// };
+//
+// enum {
+//     TDCOPY,
+//     TDPASTE
+// };
+// #define TD_COPY TD(TDCOPY)
+// #define TD_PAST TD(TDPASTE)
+//
+// __attribute__ ((weak)) td_state_t dance_state(tap_dance_state_t *state) {
+//     if (state->count == 1) {
+//         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
+//         // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
+//         else return TD_SINGLE_HOLD;
+//     } else if (state->count == 2) {
+//         // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
+//         // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
+//         // keystrokes of the key, and not the 'double tap' action/macro.
+//         if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
+//         else if (state->pressed) return TD_DOUBLE_HOLD;
+//         else return TD_DOUBLE_TAP;
+//     }
+//
+//     // Assumes no one is trying to type the same letter three times (at least not quickly).
+//     // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
+//     // an exception here to return a 'TD_TRIPLE_SINGLE_TAP', and define that enum just like 'TD_DOUBLE_SINGLE_TAP'
+//     if (state->count == 3) {
+//         if (state->interrupted || !state->pressed) return TD_TRIPLE_TAP;
+//         else return TD_TRIPLE_HOLD;
+//     } else return TD_UNKNOWN;
+// };
+// void td_copy(tap_dance_state_t *state, void *user_data) {
+//     tap_state.state = dance_state(state);
+//     switch (tap_state.state) {
+//         case TD_SINGLE_TAP:
+//             if (user_config.os == MACOS) {
+//                 dprintln("Executing MACOS command");
+//                 tap_code16(G(KC_C));
+//             } else if (user_config.os == LINUX) {
+//                 dprintln("Executing LINUX command");
+//                 tap_code16(C(S(KC_C)));
+//             } else {
+//                 dprintln("Executing WINDOWS command");
+//                 tap_code16(C(KC_C));
+//             }
+//             break;
+//         case TD_SINGLE_HOLD:
+//             if (user_config.os == MACOS) {
+//                 dprintln("Executing MACOS command");
+//                 tap_code16(G(KC_X));
+//             } else if (user_config.os == LINUX) {
+//                 dprintln("Executing LINUX command");
+//                 tap_code16(C(S(KC_C)));
+//             } else {
+//                 dprintln("Executing WINDOWS command");
+//                 tap_code16(C(KC_X));
+//             }
+//             break;
+//         default: break;
+//     }
+// };
+//
+// void td_paste(tap_dance_state_t *state, void *user_data) {
+//     tap_state.state = dance_state(state);
+//     switch (tap_state.state) {
+//         case TD_SINGLE_TAP:
+//             if (user_config.os == MACOS) {
+//                 dprintln("Executing MACOS command");
+//                 tap_code16(G(KC_V));
+//             } else if (user_config.os == LINUX) {
+//                 dprintln("Executing LINUX command");
+//                 tap_code16(C(S(KC_V)));
+//             } else {
+//                 dprintln("Executing WINDOWS command");
+//                 tap_code16(C(KC_V));
+//             }
+//             break;
+//         case TD_SINGLE_HOLD:
+//             if (user_config.os == MACOS) {
+//                 dprintln("Executing MACOS command");
+//                 tap_code16(G(A(KC_V)));
+//             } else if (user_config.os == LINUX) {
+//                 dprintln("Executing LINUX command");
+//                 tap_code16(C(S(KC_V)));
+//             } else {
+//                 dprintln("Executing WINDOWS command");
+//                 tap_code16(C(KC_V));
+//             }
+//             break;
+//         case TD_DOUBLE_TAP:
+//             if (user_config.os == MACOS) {
+//                 dprintln("Executing MACOS command");
+//                 tap_code16(G(C(KC_V)));
+//             } else {
+//                 dprintln("Executing WINDOWS command");
+//                 tap_code16(G(C(KC_V)));
+//             }
+//             break;
+//         default: break;
+//     }
+// };
+// tap_dance_action_t tap_dance_actions[] = {
+//     [TDCOPY] = ACTION_TAP_DANCE_FN(td_copy),
+//     [TDPASTE] = ACTION_TAP_DANCE_FN(td_paste)
+// };
 enum combos {
     CM_PARN,
     CM_CURB,
@@ -106,16 +223,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NAVIGATION] = LAYOUT(
-    _______, KC_BSPC, _______, _______, _______, _______, 		                                 KC_PGDN, SEL_LIN, SEL_WRD, KC_PGUP, _______, _______,
+    _______, KC_BSPC, _______, EE_CLR, _______, _______, 		                                 KC_PGDN, SEL_LIN, SEL_WRD, KC_PGUP, _______, _______,
     _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, TD_COPY,                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, KC_ENT,
-    LLOCK,   MONUM,   KC_ENT,  TAB_LFT, TAB_RGT, TD_PAST, _______, _______,    _______, _______, _______, MON_L,   MON_R,   _______, _______, _______,
+    QK_LLCK, MONUM,   KC_ENT,  TAB_LFT, TAB_RGT, TD_PAST, _______, _______,    _______, _______, _______, MON_L,   MON_R,   _______, _______, _______,
                                TAB_LFT, TAB_RGT, _______, _______, _______,    KC_ENT,  KC_SPC,  _______, _______, _______
 ),
 
 [_NUMPAD] = LAYOUT(
   _______, KC_BSPC, KC_TAB,  _______, _______, _______,                                        KC_GRV,  KC_7,    KC_8,    KC_9,    KC_SLSH, _______,
   _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                        KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, KC_ENT,
-  LLOCK,   MOVIM,   _______, _______, _______, _______, _______, _______,    _______, _______, KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  _______,
+  QK_LLCK, MOVIM,   _______, _______, _______, _______, _______, _______,    _______, _______, KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  _______,
                              _______, _______, _______, _______, _______,    KC_ENT,  KC_0,    KC_DOT,  _______, KC_NO
 ),
 

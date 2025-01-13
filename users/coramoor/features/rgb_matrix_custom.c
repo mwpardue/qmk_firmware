@@ -23,13 +23,13 @@
 
 extern led_config_t g_led_config;
 
-uint8_t rgb_matrix_get_heatmap_spread(void) {
-    return user_config.rgb_matrix_heatmap_spread;
-}
-
-uint8_t rgb_matrix_get_heatmap_area_limit(void) {
-    return user_config.rgb_matrix_heatmap_area;
-}
+// uint8_t rgb_matrix_get_heatmap_spread(void) {
+//     return user_config.rgb_matrix_heatmap_spread;
+// }
+//
+// uint8_t rgb_matrix_get_heatmap_area_limit(void) {
+//     return user_config.rgb_matrix_heatmap_area;
+// }
 
 // int leading_start_ind[] = {21, 53, 44, 22, 27, 23, 15};
 // size_t leading_start_size = sizeof(leading_start_ind) / sizeof(leading_start_ind[0]);

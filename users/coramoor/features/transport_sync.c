@@ -1,7 +1,9 @@
 #include "coramoor.h"
 #include "features/transport_sync.h"
 #include "transactions.h"
-#include "features/rgb_matrix_keys.h"
+#ifdef OLED_MENU_ENABLE
+    #include "features/rgb_matrix_keys.h"
+#endif
 #ifdef SMART_CASE_ENABLE
     #include "features/smart_case.h"
 #endif
@@ -71,9 +73,11 @@ void user_transport_update(void) {
     if (is_keyboard_master()) {
         // user_state.rgb_matrix_hue = user_config.rgb_matrix_hue;
         // user_state.rgb_matrix_sat = user_config.rgb_matrix_sat;
+#ifdef OLED_MENU_ENABLE
         user_state.rgb_menu_selector = user_config.rgb_menu_selector;
-        user_state.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area;
-        user_state.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread;
+#endif
+        // user_state.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area;
+        // user_state.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread;
         user_state.os = user_config.os;
         transport_user_state = user_state.raw;
     // #ifdef SMART_CASE_ENABLE
@@ -83,7 +87,7 @@ void user_transport_update(void) {
         kb_state.llocked = locked_layers;
         kb_state.caps_word_on = caps_word_on;
         kb_state.debug_enabled = debug_enable;
-        kb_state.is_dynamic_recording = is_dynamic_recording;
+        // kb_state.is_dynamic_recording = is_dynamic_recording;
         // kb_state.leading = leading;
         kb_state.menu = menu.state;
         // kb_state.smart_case_types = smart_case_types;
@@ -92,9 +96,11 @@ void user_transport_update(void) {
         user_state.raw       = transport_user_state;
         // user_config.rgb_matrix_hue = user_state.rgb_matrix_hue;
         // user_config.rgb_matrix_sat = user_state.rgb_matrix_sat;
+#ifdef OLED_MENU_ENABLE
         user_config.rgb_menu_selector = user_state.rgb_menu_selector;
-        user_config.rgb_matrix_heatmap_area = user_state.rgb_matrix_heatmap_area;
-        user_config.rgb_matrix_heatmap_spread = user_state.rgb_matrix_heatmap_spread;
+#endif
+        // user_config.rgb_matrix_heatmap_area = user_state.rgb_matrix_heatmap_area;
+        // user_config.rgb_matrix_heatmap_spread = user_state.rgb_matrix_heatmap_spread;
         user_config.os = user_state.os;
         kb_state.raw = transport_kb_state;
     // #ifdef SMART_CASE_ENABLE
@@ -104,7 +110,7 @@ void user_transport_update(void) {
         locked_layers = kb_state.llocked;
         caps_word_on = kb_state.caps_word_on;
         debug_enable = kb_state.debug_enabled;
-        is_dynamic_recording = kb_state.is_dynamic_recording;
+        // is_dynamic_recording = kb_state.is_dynamic_recording;
         // leading = kb_state.leading;
         menu.state = kb_state.menu;
         // smart_case_types = kb_state.smart_case_types;

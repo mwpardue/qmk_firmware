@@ -75,9 +75,10 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         case RHM_N:
         // case RHM_E:
         // case LHM_S:
-        case LQM_S:
           return gqt_tapping_term;
+        case LQM_S:
         case RHM_E:
+        case RHM_K:
         case LHM_S:
         // case RHM_O:
         // case LHM_A:

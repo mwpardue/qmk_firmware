@@ -93,9 +93,9 @@ void housekeeping_task_transport_sync(void);
     #include "features/custom_shift.h"
 #endif
 
-#ifdef LAYER_LOCK_ENABLE
-    #include "features/layer_lock.h"
-#endif
+/*#ifdef LAYER_LOCK_ENABLE*/
+/*    #include "features/layer_lock.h"*/
+/*#endif*/
 
 /*#ifdef RGB_MATRIX_ENABLED*/
 #ifdef OLED_MENU_ENABLE

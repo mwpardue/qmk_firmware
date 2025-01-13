@@ -1,5 +1,9 @@
 SRC += coramoor.c
 SRC += definitions/keycodes.c
+INTROSPECTION_KEYMAP_C = coramoor.c
+INTROSPECTION_KEYMAP_C = $(USER_PATH)/definitions/keycodes.c
+INTROSPECTION_KEYMAP_C = $(USER_PATH)/features/tapdance.c
+# INTROSPECTION_KEYMAP_C = $(USER_PATH)/features/custom_shortcuts.c
 
 ifneq ($(PLATFORM),CHIBIOS)
     ifneq ($(strip $(LTO_SUPPORTED)), no)
@@ -79,11 +83,11 @@ ifeq ($(strip $(CAPITALIZE_KEY_ENABLE)), yes)
     OPT_DEFS += -DCAPITALIZE_KEY_ENABLE
 endif
 
-TAP_DANCE_ENABLE ?= no
-ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
-    SRC += $(USER_PATH)/features/tapdance.c
-    OPT_DEFS += -DTAP_DANCE_ENABLE
-endif
+# TAP_DANCE_ENABLE ?= no
+# ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
+#     SRC += $(USER_PATH)/features/tapdance.c
+#     OPT_DEFS += -DTAP_DANCE_ENABLE
+# endif
 
 CAPSLOCK_TIMER_ENABLE ?= no
 ifeq ($(strip $(CAPSLOCK_TIMER_ENABLE)), yes)
@@ -133,17 +137,11 @@ ifeq ($(strip $(CUSTOM_SHIFT_ENABLE)), yes)
     OPT_DEFS += -DCUSTOM_SHIFT_ENABLE
 endif
 
-LAYER_LOCK_ENABLE ?= no
-ifeq ($(strip $(LAYER_LOCK_ENABLE)), yes)
-    SRC += $(USER_PATH)/features/layer_lock.c
-    OPT_DEFS += -DLAYER_LOCK_ENABLE
-endif
-
-RGB_MATRIX_ENABLE ?= no
-ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
-	SRC += $(USER_PATH)/features/rgb_matrix_keys.c
-	OPT_DEFS += -DRGB_MATRIX_ENABLED
-endif
+# LAYER_LOCK_ENABLE ?= no
+# ifeq ($(strip $(LAYER_LOCK_ENABLE)), yes)
+#     SRC += $(USER_PATH)/features/layer_lock.c
+#     OPT_DEFS += -DLAYER_LOCK_ENABLE
+# endif
 
 RGB_MATRIX_CUSTOM ?= no
 ifeq ($(strip $(RGB_MATRIX_CUSTOM)), yes)
@@ -160,8 +158,15 @@ endif
 OLED_MENU_ENABLE?= no
 ifeq ($(strip $(OLED_MENU_ENABLE)), yes)
 	SRC += $(USER_PATH)/features/oled_menu.c
-	# SRC += $(USER_PATH)/features/rgb_matrix_keys.c
+	SRC += $(USER_PATH)/features/rgb_matrix_keys.c
 	OPT_DEFS += -DOLED_MENU_ENABLE
+endif
+
+QUANTUM_PAINTER_ENABLE?= no
+ifeq ($(strip $(QUANTUM_PAINTER_ENABLE)), yes)
+	SRC += $(USER_PATH)/features/qpainter.c
+	SRC += $(USER_PATH)/features/mononoki.qff.c
+	OPT_DEFS += -DQUANTUM_PAINTER_ENABLE
 endif
 
 CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
@@ -190,3 +195,4 @@ ifeq ($(strip $(ENCODER_MAP_ENABLE)), yes)
 		override ENCODER_MAP_ENABLE = no
 	endif
 endif
+

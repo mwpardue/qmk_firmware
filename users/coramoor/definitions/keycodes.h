@@ -51,7 +51,7 @@ enum {
 #endif
 
 #ifdef TAP_DANCE_ENABLE
-    TD_COPY, TD_PAST, TD_LEAD,
+    TD_COPY, TD_PAST,
 #endif
 
 #ifdef SHORTCUTS_ENABLE
@@ -83,7 +83,8 @@ enum {
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
-    RGB_SPP, RGB_SPM, RGB_ALP, RGB_ALM, RGB_CHG, RGB_MDT,
+    /*RGB_SPP, RGB_SPM, RGB_ALP, RGB_ALM, */
+    RGB_CHG, RGB_MDT,
     MENU_AD, MENU_MD, MENU_MU, MENU_AU,
 #endif
 
