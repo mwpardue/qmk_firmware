@@ -61,7 +61,7 @@
     #define COMBO_MUST_TAP_PER_COMBO
 #endif
 
-    #define MACRO_TIMER 30
+    #define MACRO_TIMER 10
 
 // Mouse key speed and acceleration.
 #ifdef MOUSEKEY_ENABLE
@@ -91,7 +91,7 @@
 
 #ifdef SPLIT_KEYBOARD
     #ifdef CUSTOM_SPLIT_TRANSPORT_SYNC
-    #define SPLIT_TRANSACTION_IDS_USER RPC_ID_USER_STATE_SYNC, RPC_ID_KB_STATE_SYNC
+    #define SPLIT_TRANSACTION_IDS_USER RPC_ID_USER_STATE_SYNC, RPC_ID_KB_STATE_SYNC, MODULE_SYNC
     #endif
 #endif
 

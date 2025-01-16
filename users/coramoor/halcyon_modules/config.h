@@ -3,7 +3,7 @@
 
 #pragma once
 
-#define SPLIT_TRANSACTION_IDS_KB MODULE_SYNC
+/*#define SPLIT_TRANSACTION_IDS_KB MODULE_SYNC*/
 
 #define SPLIT_POINTING_ENABLE
 #define POINTING_DEVICE_COMBINED
@@ -17,10 +17,16 @@
 //// Keyboard redefines
 
 // Always the same
-#define BACKLIGHT_PIN GP2 //NOT CONNECTED
+#ifndef BACKLIGHT_PIN
+    #define BACKLIGHT_PIN GP2 //NOT CONNECTED
+#endif
 #define POINTING_DEVICE_CS_PIN GP2 //NOT CONNECTED
+#ifndef HLC_ENCODER_A
 #define HLC_ENCODER_A NO_PIN
+#endif
+#ifndef HLC_ENCODER_B
 #define HLC_ENCODER_B NO_PIN
+#endif
 
 #define SPLIT_MODS_ENABLE
 #define SPLIT_LED_STATE_ENABLE

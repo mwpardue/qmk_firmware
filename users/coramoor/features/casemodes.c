@@ -34,7 +34,6 @@
  *       if the default should be used.
  */
 
-
 #ifndef DEFAULT_XCASE_SEPARATOR
 #define DEFAULT_XCASE_SEPARATOR KC_UNDS
 #endif
@@ -88,10 +87,10 @@ void disable_caps_word(void) {
     dprintln("Disable Caps_Word");
     caps_word_on = false;
 #ifndef CAPSWORD_USE_SHIFT
-    if (host_keyboard_led_state().caps_lock) {
+    // if (host_keyboard_led_state().caps_lock) {
         dprintln("Disabling Caps Word by Caps Lock");
         tap_code(KC_CAPS);
-    }
+    // }
 #else
     unregister_mods(MOD_LSFT);
 #endif

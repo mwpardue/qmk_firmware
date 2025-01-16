@@ -140,14 +140,15 @@
 #   define SPLIT_LED_STATE_ENABLE
 #   define SPLIT_MODS_ENABLE
 
-/*#ifdef QUANTUM_PAINTER_ENABLE*/
+#ifdef HLC_TFT_DISPLAY
     #define LCD_HEIGHT 240
     #define LCD_WIDTH 135
 // 3 surfaces:
 #define SURFACE_NUM_DEVICES 1
+#define QUANTUM_PAINTER_DEBUG
 /*#undef ST7789_NUM_DEVICES*/
 /*#define ST7789_NUM_DEVICES 1*/
-/*#endif*/
+#endif
 
 #ifdef OLED_ENABLE
 #   define OLED_FONT_H "keyboards/splitkb/kyria/keymaps/coramoor/glcdfont.c"

@@ -162,12 +162,12 @@ ifeq ($(strip $(OLED_MENU_ENABLE)), yes)
 	OPT_DEFS += -DOLED_MENU_ENABLE
 endif
 
-QUANTUM_PAINTER_ENABLE?= no
-ifeq ($(strip $(QUANTUM_PAINTER_ENABLE)), yes)
+ifdef HLC_TFT_DISPLAY
 	SRC += $(USER_PATH)/features/qpainter.c
 	SRC += $(USER_PATH)/features/mononoki.qff.c
-	OPT_DEFS += -DQUANTUM_PAINTER_ENABLE
 endif
+include $(USER_PATH)/halcyon_modules/rules.mk
+POST_CONFIG_H += $(USER_PATH)/halcyon_modules/config.h
 
 CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
 ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)

@@ -89,7 +89,9 @@ void user_transport_update(void) {
         kb_state.debug_enabled = debug_enable;
         // kb_state.is_dynamic_recording = is_dynamic_recording;
         // kb_state.leading = leading;
+#ifdef CUSTOM_LEADER_ENABLE
         kb_state.menu = menu.state;
+#endif
         // kb_state.smart_case_types = smart_case_types;
         transport_kb_state = kb_state.raw;
     } else {
@@ -112,7 +114,9 @@ void user_transport_update(void) {
         debug_enable = kb_state.debug_enabled;
         // is_dynamic_recording = kb_state.is_dynamic_recording;
         // leading = kb_state.leading;
+#ifdef CUSTOM_LEADER_ENABLE
         menu.state = kb_state.menu;
+#endif
         // smart_case_types = kb_state.smart_case_types;
 
     }

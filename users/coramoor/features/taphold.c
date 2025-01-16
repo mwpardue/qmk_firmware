@@ -71,7 +71,6 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LHM_UND:
         case LHM_PIP:
         // case TD_QUOT:
-        case CTL_QUO:
         case CLUTHUM2:
         case CLOL_THM:
         case CRUTHUM2:
@@ -83,6 +82,11 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
           return g_tapping_term + 100;
         case LHM_A:
         case LHM_R:
+        case LQM_S:
+        case LHM_F:
+        case RHM_J:
+        case RHM_L:
+        case RHM_SCN:
         case RHM_O:
         case RHM_I:
         case RHM_DOT:
@@ -104,7 +108,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LHM_S:
         case LHM_Z:
         case RHM_SLS:
-        case LQM_S:
+        case LHM_D:
         case SFT_Z:
         case SFT_QUE:
             return get_sft_tapping_term();
@@ -125,6 +129,10 @@ uint16_t get_quick_tap_term_result(uint16_t keycode) {
         case RHM_E:
         case LHM_S:
         case LQM_S:
+        case LHM_F:
+        case RHM_J:
+        case RHM_L:
+        case RHM_SCN:
         case RHM_SLS:
         case RHM_DOT:
         case RHM_M:
@@ -188,6 +196,12 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case RHM_N:
         case RHM_E:
         case LHM_S:
+        case LHM_D:
+        case LHM_F:
+        case RHM_J:
+        case RHM_K:
+        case RHM_L:
+        case RHM_SCN:
         case LQM_S:
         case RHM_SLS:
         case RHM_DOT:

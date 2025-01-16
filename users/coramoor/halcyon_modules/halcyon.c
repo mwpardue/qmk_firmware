@@ -1,7 +1,7 @@
 // Copyright 2024 splitkb.com (support@splitkb.com)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "halcyon.h"
+#include "halcyon_modules/halcyon.h"
 #include "transactions.h"
 #include "split_util.h"
 #include "_wait.h"

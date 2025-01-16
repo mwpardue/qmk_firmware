@@ -113,6 +113,8 @@ void matrix_scan_user(void) {
       if ((other_keycode == KC_W) || (other_keycode == KC_Q) || (other_keycode == QK_GESC) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
     case LHM_R:
       if (other_keycode == LIL_THM) {return true;}
+    case LQM_S:
+      if (other_keycode == LIL_THM) {return true;}
     case LHM_A:
       if ((other_keycode == KC_C) || (other_keycode == LOL_THM)) {return true;}
     case LHM_S:
@@ -522,5 +524,5 @@ void housekeeping_task_user(void) {
 #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
     housekeeping_task_transport_sync();
 #endif
-    housekeeping_task_keymap();
+    // housekeeping_task_keymap();
 }

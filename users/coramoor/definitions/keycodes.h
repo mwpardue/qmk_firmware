@@ -115,10 +115,11 @@ enum {
 // Right thumb keys
 
     // Lower Right Thumb Keys
-    #define RUTHUM1 KC_RSFT
+    #define RUTHUM0 LGUI(LALT(KC_L))
+    #define RUTHUM1 LGUI(LALT(KC_H))
     #define RUTHUM2 MEH_T(KC_ENT)
     /*#define LOR_THM LGUI_T(KC_MINS)*/
-    #define LOR_THM LT(_HEX, KC_MINS)
+    #define LOR_THM LT(_HEX, KC_ENTER)
     #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
     // Upper Right Thumb Keys
@@ -188,7 +189,7 @@ enum {
 #define LHM_T LGUI_T(KC_T)
 
 // Right Hand
-#define RHM_SCN RCTL_T(KC_SCLN)
+#define RHM_SCN RCTL_T(KC_QUOT)
 #define RHM_L   RALT_T(KC_L)
 #define RHM_K   RSFT_T(KC_K)
 #define RHM_J   RGUI_T(KC_J)

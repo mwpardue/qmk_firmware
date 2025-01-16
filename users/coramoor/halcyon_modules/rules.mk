@@ -1,4 +1,4 @@
-SRC += halcyon.c
+SRC += $(USER_PATH)/halcyon_modules/halcyon.c
 
 # May need to be changed when adding more pointing devices
 POINTING_DEVICE_ENABLE = yes
@@ -11,7 +11,7 @@ QUANTUM_PAINTER_DRIVERS += st7789_spi surface
 BACKLIGHT_ENABLE = yes
 BACKLIGHT_DRIVER = pwm
 
-HALCONFDIR += $(USER_PATH)/halcyon_modules/halconf.h
+# HALCONFDIR += $(USER_PATH)/halcyon_modules/halconf.h
 
 ifdef HLC_ENCODER
   include $(USER_PATH)/halcyon_modules/hlc_encoder/rules.mk
