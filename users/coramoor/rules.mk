@@ -162,9 +162,19 @@ ifeq ($(strip $(OLED_MENU_ENABLE)), yes)
 	OPT_DEFS += -DOLED_MENU_ENABLE
 endif
 
+QMENU_ENABLE?= no
+ifeq ($(strip $(QMENU_ENABLE)), yes)
+	SRC += $(USER_PATH)/features/qmenu.c
+	SRC += $(USER_PATH)/features/qkeys.c
+	OPT_DEFS += -DQMENU_ENABLE
+endif
+
 ifdef HLC_TFT_DISPLAY
 	SRC += $(USER_PATH)/features/qpainter.c
 	SRC += $(USER_PATH)/features/mononoki.qff.c
+	SRC += $(USER_PATH)/features/kyria_logo-mono.qgf.c
+	SRC += $(USER_PATH)/fonts/bigbluetermmono.qff.c
+	SRC += $(USER_PATH)/images/glyphs.qgf.c
 endif
 include $(USER_PATH)/halcyon_modules/rules.mk
 POST_CONFIG_H += $(USER_PATH)/halcyon_modules/config.h

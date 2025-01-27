@@ -17,6 +17,9 @@
 #include "leader.h"
 #include "secrets.h"
 #include "features/rgb_matrix_custom.h"
+#ifdef HLC_TFT_DISPLAY
+    #include "features/qpainter.h"
+#endif
 
 #include <string.h>
 
@@ -25,11 +28,7 @@
 #endif
 
 menu_t menu = {.state = NO_MENU};
-// bool leading = false;
 static leader_func_t leader_func = NULL;
-
-// int leading_start_ind[] = {21, 53, 44, 22, 27, 23, 15};
-// size_t leading_start_size = sizeof(leading_start_ind) / sizeof(leading_start_ind[0]);
 
 #ifdef LEADER_DISPLAY_STR
 
@@ -246,10 +245,7 @@ bool is_passing(void) {
 // Start leader sequence
 void start_leading(void) {
     menu.state = LEADING_MENU;
-    // leading = true;
-        // dprintf("early leader_func %p\n", *leader_func);
     leader_func = leader_start_func;
-        // dprintf("started leader_func %p\n", *leader_func);
 #ifdef LEADER_DISPLAY_STR
     memset(leader_display, 0, sizeof(leader_display));
     leader_display[0] = 'L';
@@ -257,6 +253,9 @@ void start_leading(void) {
     leader_display[2] = 'R';
     leader_display[3] = '-';
     leader_display_size = 3;
+#endif
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
 #endif
 }
 
@@ -272,15 +271,20 @@ void start_pass_leading(void) {
     leader_display[3] = '-';
     leader_display_size = 3;
 #endif
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
+#endif
 }
 
 // Stop leader sequence
 void stop_leading(void) {
-    // leading = false;
     menu.state = NO_MENU;
     leader_func = NULL;
 #ifdef LEADER_DISPLAY_STR
     leader_display[leader_display_size] = ' ';
+#endif
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
 #endif
 }
 
@@ -316,7 +320,6 @@ bool process_leader(uint16_t keycode, const keyrecord_t *record) {
 #endif
         // update the leader function
         leader_func = leader_func(keycode);
-        // dprintf("leader_func %p\n", *leader_func);
         // Put RGB changes here since this runs each time a key is pressed
         if (leader_func == NULL) {
             stop_leading();

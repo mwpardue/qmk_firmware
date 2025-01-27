@@ -2,6 +2,9 @@
 
 #include "custom_shortcuts.h"
 #include "definitions/keycodes.h"
+#ifdef QMENU_ENABLE
+#include "features/qpainter.h"
+#endif
 
 #ifdef CUSTOM_LEADER_ENABLE
   #include "leader.h"
@@ -260,6 +263,7 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
               unregister_mods(MOD_MASK_GUI);
               }
             return PROCESS_RECORD_RETURN_FALSE;
+            break;
 
         case TG_OS:
             if (record->event.pressed) {
@@ -298,7 +302,11 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case ADJ_LYR:
             if (record->event.pressed) {
-                user_config.rgb_menu_selector = 1;
+                #ifdef QMENU_ENABLE
+                    user_config.menu_selector = LIGHTING_HEADING;
+                    user_config.submenu_selector = 1;
+                    qp_clear(lcd_surface);
+                #endif
                 layer_on(_ADJUST);
                 return PROCESS_RECORD_RETURN_FALSE;
             }

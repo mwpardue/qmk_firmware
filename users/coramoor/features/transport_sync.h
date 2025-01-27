@@ -1,7 +1,13 @@
 #pragma once
 
 // #include "coramoor.h"
-#include "features/rgb_matrix_keys.h"
+#ifdef OLED_MENU_ENABLE
+    #include "features/rgb_matrix_keys.h"
+#endif
+
+#ifdef QMENU_ENABLE
+    #include "features/qkeys.h"
+#endif
 #include "features/rgb_matrix_custom.h"
 
 typedef union {
@@ -9,7 +15,8 @@ typedef union {
     struct {
         // bool    rgb_matrix_ledmap_active  :1;
         // bool    rgb_matrix_toggle :1;
-        uint8_t rgb_menu_selector :8;
+        uint8_t menu_selector :8;
+        uint8_t submenu_selector :8;
         /*uint8_t rgb_matrix_heatmap_area :8;*/
         /*uint8_t rgb_matrix_heatmap_spread :8;*/
         uint8_t os :8;
@@ -56,7 +63,8 @@ typedef union {
     struct {
         // bool    rgb_matrix_ledmap_active  :1;
         // bool    rgb_matrix_toggle :1;
-        uint8_t rgb_menu_selector :8;
+        uint8_t menu_selector :8;
+        uint8_t submenu_selector :8;
         /*uint8_t rgb_matrix_heatmap_area :8;*/
         /*uint8_t rgb_matrix_heatmap_spread :8;*/
         uint8_t os :8;

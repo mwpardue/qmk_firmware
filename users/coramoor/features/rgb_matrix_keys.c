@@ -11,36 +11,6 @@ extern uint16_t achordion_tapping_term;
 extern uint16_t gqt_tapping_term;
 extern uint16_t sgqt_tapping_term;
 
-// uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
-//
-// uint16_t get_sft_tapping_term(void) {
-//     return sft_tapping_term;
-// }
-//
-// uint16_t modtap_tapping_term = MODTAP_TAPPING_TERM;
-//
-// uint16_t get_modtap_tapping_term(void) {
-//     return modtap_tapping_term;
-// }
-//
-// uint16_t achordion_tapping_term = ACHORDION_TAPPING_TERM;
-//
-// uint16_t get_achordion_tapping_term(void) {
-//     return achordion_tapping_term;
-// }
-//
-// uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
-//
-// uint16_t get_gqt_tapping_term(void) {
-//     return gqt_tapping_term;
-// }
-//
-// uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
-//
-// uint16_t sget_gqt_tapping_term(void) {
-//     return sgqt_tapping_term;
-// }
-
 extern uint32_t substring_timer;
 
 extern uint8_t viewport_begin(void);
@@ -80,12 +50,12 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
 
         case MENU_MD:
             if (record->event.pressed) {
-                if (user_config.rgb_menu_selector == MENU_MAX - 1) {
-                    user_config.rgb_menu_selector = 1;
+                if (user_config.menu_selector == MENU_MAX - 1) {
+                    user_config.menu_selector = 1;
                 } else {
-                    user_config.rgb_menu_selector = user_config.rgb_menu_selector + 1;
+                    user_config.menu_selector = user_config.menu_selector + 1;
                 };
-                dprintf("RGB Selector is %d\n", user_config.rgb_menu_selector);
+                dprintf("RGB Selector is %d\n", user_config.menu_selector);
                 dprintf("Viewport min is %d\n", viewport_begin());
                 substring_timer = timer_read32();
                 return PROCESS_RECORD_RETURN_FALSE;
@@ -94,12 +64,12 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
 
         case MENU_MU:
             if (record->event.pressed) {
-                if (user_config.rgb_menu_selector == 1) {
-                    user_config.rgb_menu_selector = MENU_MAX - 1;
+                if (user_config.menu_selector == 1) {
+                    user_config.menu_selector = MENU_MAX - 1;
                 } else {
-                    user_config.rgb_menu_selector = user_config.rgb_menu_selector - 1;
+                    user_config.menu_selector = user_config.menu_selector - 1;
                 }
-                dprintf("RGB Selector is %d\n", user_config.rgb_menu_selector);
+                dprintf("RGB Selector is %d\n", user_config.menu_selector);
                 dprintf("Viewport min is %d\n", viewport_begin());
                 substring_timer = timer_read32();
                 return PROCESS_RECORD_RETURN_FALSE;
@@ -108,7 +78,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
 
         case MENU_AU:
             if (record->event.pressed) {
-                switch (user_config.rgb_menu_selector) {
+                switch (user_config.menu_selector) {
                     case MENU_HUE:
                         rgb_matrix_increase_hue();
                         break;
@@ -189,16 +159,6 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                                 break;
                         }
                         break;
-                    // case MENU_HMAREA:
-                    //     user_config.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area + 1;
-                    //     eeconfig_update_user(user_config.raw);
-                    //     dprintf("Heatmap Area Limit(+) = %d\n", user_config.rgb_matrix_heatmap_area);
-                    //     break;
-                    // case MENU_HMSPREAD:
-                    //     user_config.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread + 1;
-                    //     eeconfig_update_user(user_config.raw);
-                    //     dprintf("Heatmap Spread(+) = %d\n", user_config.rgb_matrix_heatmap_spread);
-                    //     break;
                     case MENU_STT:
                         sft_tapping_term = sft_tapping_term + 5;
                         dprintf("Shift Tapping Term = %d\n", sft_tapping_term);
@@ -259,7 +219,7 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
 
         case MENU_AD:
             if (record->event.pressed) {
-                switch (user_config.rgb_menu_selector) {
+                switch (user_config.menu_selector) {
                     case MENU_HUE:
                         rgb_matrix_decrease_hue();
                         break;
@@ -291,14 +251,12 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                               break;
                             case LED_FLAG_UNDERGLOW: {
                                 rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
-                                // rgb_matrix_set_color_all(0, 0, 0);
                                 dprintf("rgb_matrix_get_flags (KMI)= %d\n", rgb_matrix_get_flags());
                               }
                               break;
                             default: {
                                 rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
                                 rgb_matrix_enable_noeeprom();
-                                // rgb_matrix_set_color_all(0, 0, 0);
                                 dprintf("rgb_matrix_get_flags (UG)= %d\n", rgb_matrix_get_flags());
                               }
                               break;
@@ -340,16 +298,6 @@ process_record_result_t process_rgb_matrix_keys(uint16_t keycode, keyrecord_t *r
                                 break;
                         }
                         break;
-                    // case MENU_HMAREA:
-                    //     user_config.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area - 1;
-                    //     eeconfig_update_user(user_config.raw);
-                    //     dprintf("Heatmap Area Limit(-) = %d\n", user_config.rgb_matrix_heatmap_area);
-                    //     break;
-                    // case MENU_HMSPREAD:
-                    //     user_config.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread - 1;
-                    //     eeconfig_update_user(user_config.raw);
-                    //     dprintf("Heatmap Spread(-) = %d\n", user_config.rgb_matrix_heatmap_spread);
-                    //     break;
                     case MENU_STT:
                         sft_tapping_term = sft_tapping_term - 5;
                         dprintf("Shift Tapping Term = %d\n", sft_tapping_term);

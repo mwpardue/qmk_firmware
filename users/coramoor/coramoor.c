@@ -1,11 +1,16 @@
 #include "coramoor.h"
 #include "features/tapdance.h"
+#include "features/qpainter.h"
 #ifdef RAW_ENABLE
     #include "raw_hid.h"
 #endif
 
 #ifdef CUSTOM_LEADER_ENABLE
     #include "features/leader.h"
+#endif
+
+#ifdef QMENU_ENABLE
+    #include "features/qkeys.h"
 #endif
 
 #ifdef CAPITALIZE_KEY_ENABLE
@@ -100,6 +105,13 @@ void matrix_scan_user(void) {
 
     matrix_scan_keymap();
 }
+
+#ifdef HLC_TFT_DISPLAY
+    layer_state_t layer_state_set_kb(layer_state_t state) {
+        lcd_dirty = true;
+        return state;
+    }
+#endif
 
 #ifdef ACHORDION_ENABLE
  bool achordion_chord(uint16_t tap_hold_keycode,
@@ -402,6 +414,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     };
 #endif
 
+#ifdef QMENU_ENABLE
+    // Process RGB Toggle Key
+    switch (process_qmenu_keys(keycode, record)) {
+        case PROCESS_RECORD_RETURN_TRUE:
+            return true;
+        case PROCESS_RECORD_RETURN_FALSE:
+            return false;
+        default:
+            break;
+    };
+#endif
+
 #ifdef CUSTOM_SHIFT_ENABLE
     // Process custom_shift
    switch (process_custom_shift(keycode, record)) {
@@ -524,5 +548,5 @@ void housekeeping_task_user(void) {
 #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
     housekeeping_task_transport_sync();
 #endif
-    // housekeeping_task_keymap();
+    housekeeping_task_keymap();
 }

@@ -316,7 +316,7 @@ bool display_module_housekeeping_task_kb(bool second_display) {
 
     // Update display information (layers, numlock, etc.)
     if(!second_display) {
-        update_display();
+        // update_display();
     }
 
     // Move surface to lcd

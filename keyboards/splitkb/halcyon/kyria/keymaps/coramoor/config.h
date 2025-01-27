@@ -35,6 +35,10 @@
 //   #define MK_KINETIC_SPEED
 // #endif
 
+#ifdef COMBO_ENABLE
+    #define COMBO_COUNT 16
+#endif
+
 #ifdef RGB_MATRIX_ENABLE
     #define RGB_MATRIX_KEYPRESSES // reacts to keypresses
     #define RGB_MATRIX_TIMEOUT 180000 // number of ticks to wait until disabling effects
@@ -141,6 +145,7 @@
 #   define SPLIT_MODS_ENABLE
 
 #ifdef HLC_TFT_DISPLAY
+    /*#define QUANTUM_PAINTER_NUM_IMAGES 10*/
     #define LCD_HEIGHT 240
     #define LCD_WIDTH 135
 // 3 surfaces:

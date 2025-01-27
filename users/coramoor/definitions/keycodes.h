@@ -85,7 +85,7 @@ enum {
 #ifdef RGB_MATRIX_ENABLE
     /*RGB_SPP, RGB_SPM, RGB_ALP, RGB_ALM, */
     RGB_CHG, RGB_MDT,
-    MENU_AD, MENU_MD, MENU_MU, MENU_AU,
+    TB_MENU, MENU_AD, MENU_MD, MENU_MU, MENU_AU,
 #endif
 
 
@@ -96,7 +96,7 @@ enum {
 
     // Upper Left Thumb Keys
     #define UOL_THM KC_CAPS
-    #define UIL_THM MEH_T(KC_F18)
+    #define UIL_THM KC_F20
 
     // Lower Left Thumb Keys
     #define LUTHUM0 MON_L
@@ -117,14 +117,14 @@ enum {
     // Lower Right Thumb Keys
     #define RUTHUM0 LGUI(LALT(KC_L))
     #define RUTHUM1 LGUI(LALT(KC_H))
-    #define RUTHUM2 MEH_T(KC_ENT)
+    #define RUTHUM2 KC_F18
     /*#define LOR_THM LGUI_T(KC_MINS)*/
-    #define LOR_THM LT(_HEX, KC_ENTER)
+    #define LOR_THM LGUI_T(KC_ENTER)
     #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
     // Upper Right Thumb Keys
-    #define UIR_THM MEH_T(KC_F15)
-    #define UOR_THM LCA_T(KC_F16)
+    #define UIR_THM KC_F15
+    #define UOR_THM KC_F16
 
     // Alt Base Thumb Keys
     #define CLOR_THM RSFT_T(KC_ENTER)
@@ -189,7 +189,7 @@ enum {
 #define LHM_T LGUI_T(KC_T)
 
 // Right Hand
-#define RHM_SCN RCTL_T(KC_QUOT)
+#define RHM_SCN RCTL_T(KC_SCLN)
 #define RHM_L   RALT_T(KC_L)
 #define RHM_K   RSFT_T(KC_K)
 #define RHM_J   RGUI_T(KC_J)
@@ -298,8 +298,8 @@ enum {
 #define MAX_SCR LGUI(LCTL(LALT(LSFT(KC_M))))
 #define MOV_LFT LCTL(LSFT(KC_TAB))
 #define MOV_RGT LCTL(KC_TAB)
-#define TAB_LFT LGUI(KC_M)
-#define TAB_RGT LGUI(KC_I)
+#define TAB_LFT LGUI(KC_H)
+#define TAB_RGT LGUI(KC_L)
 #define BRWS_FW LGUI(KC_RBRC)
 #define BRWS_BK LGUI(KC_LBRC)
 #define KM_HYPC LGUI(LCTL(LALT(LSFT(KC_C))))

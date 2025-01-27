@@ -5,31 +5,43 @@
 #include "quantum.h"
 
 typedef enum {
-    MENU_MIN,
+    LIGHTING_HEADING,
     MENU_FLAGS,
     MENU_SPEED,
     MENU_HUE,
     MENU_SAT,
     MENU_VAL,
     MENU_RGBMODE,
-    /*MENU_HMAREA,*/
-    /*MENU_HMSPREAD,*/
+    LIGHTING_END
+} qmenu_lighting_t;
+
+extern qmenu_lighting_t qmenu_lighting;
+
+typedef enum {
+    MODTAP_HEADING,
     MENU_STT,
     MENU_TT,
     MENU_MT,
     MENU_AT,
     MENU_GQT,
     MENU_SGQT,
+    MODTAP_END
+} qmenu_modtap_t;
+
+extern qmenu_modtap_t qmenu_modtap;
+
+typedef enum {
+    KB_HEADING,
     MENU_DEFAULTLAYER,
     MENU_OSFLAG,
     MENU_DEBUG,
     MENU_EECLEAR,
     MENU_NKRO,
     MENU_BOOTLOADER,
-    MENU_MAX
-} menu_list_t;
+    KB_END
+} qmenu_kb_t;
 
-extern menu_list_t menu_list;
+extern qmenu_kb_t qmenu_kb;
 
 static const char * const rmodes[] = {
     "               ",
@@ -51,12 +63,13 @@ static const char * const rmodes[] = {
     "SOLID M-SPLASH"
 };
 
-bool check_menu(uint8_t menu_item);
+typedef enum {
+    SUBMENU_OFF,
+    SUBMENU_LIGHTING,
+    SUBMENU_MODTAP,
+    SUBMENU_KB
+} qsubmenu_t;
 
-uint8_t viewport_begin(void);
+extern qsubmenu_t qsubmenu;
 
-void menu_items(void);
-
-void render_menu_item(const char *label, uint16_t property, uint8_t menu_item);
-
-void render_bool_menu_item(const char *label, bool property, uint8_t menu_item);
+void render_menu(void);

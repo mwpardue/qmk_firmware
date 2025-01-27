@@ -35,6 +35,10 @@
 //   #define MK_KINETIC_SPEED
 // #endif
 
+#ifdef COMBO_ENABLE
+    #define COMBO_COUNT 11
+#endif
+
 #ifdef RGB_MATRIX_ENABLE
     #define RGB_MATRIX_KEYPRESSES // reacts to keypresses
     #define RGB_MATRIX_TIMEOUT 180000 // number of ticks to wait until disabling effects

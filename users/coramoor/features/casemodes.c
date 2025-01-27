@@ -16,6 +16,9 @@
 
 #include "casemodes.h"
 #include "definitions/keycodes.h"
+#ifdef HLC_TFT_DISPLAY
+    #include "features/qpainter.h"
+#endif
 
 /* The caps word concept started with me @iaap on splitkb.com discord.
  * However it has been implemented and extended by many splitkb.com users:
@@ -80,6 +83,9 @@ void enable_caps_word(void) {
         tap_code(KC_CAPS);
     }
 #endif
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
+#endif
 }
 
 // Disable caps word
@@ -87,12 +93,15 @@ void disable_caps_word(void) {
     dprintln("Disable Caps_Word");
     caps_word_on = false;
 #ifndef CAPSWORD_USE_SHIFT
-    // if (host_keyboard_led_state().caps_lock) {
+    if (host_keyboard_led_state().caps_lock) {
         dprintln("Disabling Caps Word by Caps Lock");
         tap_code(KC_CAPS);
-    // }
+    }
 #else
     unregister_mods(MOD_LSFT);
+#endif
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
 #endif
 }
 
@@ -108,10 +117,6 @@ void toggle_caps_word(void) {
 
 void caps_word_idle_timer(void) {
   if (xcase_state != XCASE_ON && (timer_read() > idle_timer + CAPS_WORD_IDLE_TIMEOUT)) {
-    // if (host_keyboard_led_state().caps_lock) {
-    //   tap_code(KC_CAPS);
-    // } else if (caps_word_on) {
-    //   disable_caps_word();
     if (caps_word_on) {
       disable_caps_word();
     }
@@ -126,11 +131,17 @@ enum xcase_state get_xcase_state(void) {
 // Enable xcase and pickup the next keystroke as the delimiter
 void enable_xcase(void) {
     xcase_state = XCASE_WAIT;
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
+#endif
 }
 
 // Enable xcase with the specified delimiter
 void enable_xcase_with(uint16_t delimiter) {
     xcase_state = XCASE_ON;
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
+#endif
     xcase_delimiter = delimiter;
     distance_to_last_delim = -1;
     delimiters_count = 0;
@@ -139,6 +150,9 @@ void enable_xcase_with(uint16_t delimiter) {
 // Disable xcase
 void disable_xcase(void) {
     xcase_state = XCASE_OFF;
+#ifdef HLC_TFT_DISPLAY
+    lcd_dirty = true;
+#endif
 }
 
 // Place the current xcase delimiter

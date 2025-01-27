@@ -62,7 +62,7 @@ const char* rgb_matrix_name(uint8_t effect) {
 // GENERAL MENU FUNCTIONS
 
 bool check_menu(uint8_t menu_item) {
-    if (user_config.rgb_menu_selector == menu_item) {
+    if (user_config.menu_selector == menu_item) {
         return true;
     } else {
         return false;
@@ -70,12 +70,12 @@ bool check_menu(uint8_t menu_item) {
 }
 
 uint8_t viewport_begin(void) {
-    if (user_config.rgb_menu_selector <= 3) {
+    if (user_config.menu_selector <= 3) {
         return 1;
-    } else if (user_config.rgb_menu_selector >= (MENU_MAX - 3)) {
+    } else if (user_config.menu_selector >= (MENU_MAX - 3)) {
         return (MENU_MAX - VIEWPORT_HEIGHT);
     } else {
-        return (user_config.rgb_menu_selector - 3);
+        return (user_config.menu_selector - 3);
     }
 }
 

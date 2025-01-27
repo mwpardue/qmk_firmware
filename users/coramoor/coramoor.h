@@ -102,6 +102,10 @@ void housekeeping_task_transport_sync(void);
     #include "features/rgb_matrix_keys.h"
 #endif
 
+#ifdef QMENU_ENABLE
+    #include "features/qkeys.h"
+#endif
+
 #ifdef RGB_MATRIX_LEDMAPS_ENABLED
     #include "features/rgb_matrix_ledmaps.h"
 #endif

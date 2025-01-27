@@ -73,9 +73,8 @@ void user_transport_update(void) {
     if (is_keyboard_master()) {
         // user_state.rgb_matrix_hue = user_config.rgb_matrix_hue;
         // user_state.rgb_matrix_sat = user_config.rgb_matrix_sat;
-#ifdef OLED_MENU_ENABLE
-        user_state.rgb_menu_selector = user_config.rgb_menu_selector;
-#endif
+        user_state.menu_selector = user_config.menu_selector;
+        user_state.submenu_selector = user_config.submenu_selector;
         // user_state.rgb_matrix_heatmap_area = user_config.rgb_matrix_heatmap_area;
         // user_state.rgb_matrix_heatmap_spread = user_config.rgb_matrix_heatmap_spread;
         user_state.os = user_config.os;
@@ -98,9 +97,8 @@ void user_transport_update(void) {
         user_state.raw       = transport_user_state;
         // user_config.rgb_matrix_hue = user_state.rgb_matrix_hue;
         // user_config.rgb_matrix_sat = user_state.rgb_matrix_sat;
-#ifdef OLED_MENU_ENABLE
-        user_config.rgb_menu_selector = user_state.rgb_menu_selector;
-#endif
+        user_config.menu_selector = user_state.menu_selector;
+        user_config.submenu_selector = user_state.submenu_selector;
         // user_config.rgb_matrix_heatmap_area = user_state.rgb_matrix_heatmap_area;
         // user_config.rgb_matrix_heatmap_spread = user_state.rgb_matrix_heatmap_spread;
         user_config.os = user_state.os;
