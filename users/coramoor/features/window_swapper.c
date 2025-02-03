@@ -17,6 +17,13 @@ bool is_swapper_keycode(uint16_t keycode) {
         case KC_RIGHT:
         case KC_DOWN:
         case KC_UP:
+        case KC_H:
+        case KC_J:
+        case KC_K:
+        case KC_L:
+        case RHM_J:
+        case RHM_K:
+        case RHM_L:
         case KC_X:
         case KC_Z:
             return true;
@@ -37,7 +44,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             dprintf("swapper.state before=%d\n",swapper.state);
             clear_mods();
             clear_locked_and_oneshot_mods();
-            layer_off(_APPSWITCH);
+            // layer_off(_APPSWITCH);
             swapper.state = NONE;
             dprintf("swapper.state after=%d\n",swapper.state);
             send_keyboard_report();
@@ -77,7 +84,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
                     } else {
                         register_mods(MOD_LALT);
                     }
-                    layer_on(_APPSWITCH);
+                    // layer_on(_APPSWITCH);
                     dprintf("Registering mods for MC_SWRI\n");
                     swapper.state = SWAPPING_CONTINUE;
                     break;
@@ -137,10 +144,10 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
         case SWAPPING_CONTINUE:
         case TABBING_CONTINUE:
             switch (keycode) {
-                case MC_SWLE:
                 case MC_MODM:
                     register_mods(MOD_LSFT);
                     break;
+                case MC_SWLE:
                 case MC_SWRI:
                 case MC_MODP:
                 case KC_LEFT:
@@ -149,6 +156,13 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
                 case KC_UP:
                 case KC_X:
                 case KC_Z:
+                case KC_H:
+                case KC_J:
+                case KC_K:
+                case KC_L:
+                case RHM_J:
+                case RHM_K:
+                case RHM_L:
                     unregister_mods(MOD_LSFT);
                     break;
             }
@@ -167,6 +181,13 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             case KC_UP:
             case KC_X:
             case KC_Z:
+            case KC_H:
+            case KC_J:
+            case KC_K:
+            case KC_L:
+            case RHM_J:
+            case RHM_K:
+            case RHM_L:
               return false;
               break;
             case MC_SWLE:
@@ -209,6 +230,13 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             case KC_RIGHT:
             case KC_DOWN:
             case KC_UP:
+            case KC_H:
+            case KC_J:
+            case KC_K:
+            case KC_L:
+            case RHM_J:
+            case RHM_K:
+            case RHM_L:
             case KC_X:
             case KC_Z:
               return false;

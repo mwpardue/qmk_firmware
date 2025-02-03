@@ -56,6 +56,23 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             }
             return PROCESS_RECORD_RETURN_FALSE;
 
+        case DF_LAYR:
+            if (record->event.pressed) {
+                switch (get_highest_layer(default_layer_state)) {
+                    case _BASE:
+                        set_single_persistent_default_layer(_COLEMAK_DH);
+                        break;
+                    case _COLEMAK_DH:
+                        set_single_persistent_default_layer(_BASE);
+                        break;
+                    default:
+                        set_single_persistent_default_layer(_BASE);
+                        break;
+                }
+            }
+            return PROCESS_RECORD_RETURN_FALSE;
+
+
     #ifdef SMART_CASE_ENABLE
         case TG_KBAB:
             if (record->event.pressed) {
@@ -238,18 +255,6 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
          case S_ARRNG:
             if (record->event.pressed) {
               tap_code16(C(A(G(S(KC_RBRC)))));
-            return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-         case DF_TOGG:
-            if (record->event.pressed) {
-              if (default_layer_state == 1 << _COLEMAK_DH) {
-                dprintln("set to qwerty");
-                set_single_persistent_default_layer(_BASE);
-        } else {
-                dprintln("set to colemak");
-                set_single_persistent_default_layer(_COLEMAK_DH);
-        }
             return PROCESS_RECORD_RETURN_FALSE;
             }
 

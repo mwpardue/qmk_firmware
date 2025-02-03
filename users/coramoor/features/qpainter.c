@@ -53,7 +53,7 @@ void draw_layer(void) {
                 qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "BASE"))/2), LCD_LAYER_LINE, mononoki, "BASE", HSV_CYAN, HSV_BLACK);
                 break;
             case _COLEMAK_DH:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "ALT BASE"))/2), LCD_LAYER_LINE, mononoki, "ALT BASE", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "TYPING"))/2), LCD_LAYER_LINE, mononoki, "TYPING", HSV_CYAN, HSV_BLACK);
                 break;
             case _GAMING:
                 qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "GAMING"))/2), LCD_LAYER_LINE, mononoki, "GAMING", HSV_CYAN, HSV_BLACK);

@@ -36,7 +36,7 @@
 // #endif
 
 #ifdef COMBO_ENABLE
-    #define COMBO_COUNT 16
+    #define COMBO_COUNT 19
 #endif
 
 #ifdef RGB_MATRIX_ENABLE

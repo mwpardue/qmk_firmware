@@ -73,10 +73,12 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         }
     break;
 
+    case CUIL_THM:
     case LUTHUM2:
         if (record->event.pressed) {
             layer_on(_APPSWITCH);
             register_mods(MOD_MASK_GUI);
+            dprintln("LUTHUM2");
             tap_code16(KC_TAB);
         } else {
             layer_off(_APPSWITCH);
@@ -105,7 +107,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case LUTHUM1:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_I));
+                    tap_code16(LALT(KC_L));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -115,7 +117,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case RUTHUM1:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_I));
+                    tap_code16(LALT(KC_L));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -125,37 +127,73 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case XCTHUM:
     case RUTHUM2:
         if (record->event.pressed) {
-            dprintln("XCTHUM pressed");
-                if (isCtrl) {
-                    tap_code16(KC_CAPS);
-                    lcd_dirty = true;
-                } else {
-                    switch (xcase_state) {
-                        case XCASE_WAIT:
-                            if (caps_word_on) {
+                dprintln("XCTHUM pressed");
+                    if (isCtrl) {
+                        tap_code16(KC_CAPS);
+                        lcd_dirty = true;
+                    } else {
+                        switch (xcase_state) {
+                            case XCASE_WAIT:
+                                if (caps_word_on) {
+                                    disable_xcase();
+                                    disable_caps_word();
+                                } else {
+                                    enable_caps_word();
+                                }
+                                break;
+                            case XCASE_ON:
+                                disable_caps_word();
                                 disable_xcase();
-                                disable_caps_word();
-                            } else {
-                                enable_caps_word();
-                            }
-                            break;
-                        case XCASE_ON:
-                            disable_caps_word();
-                            disable_xcase();
-                            break;
-                        default:
-                            if (caps_word_on) {
-                                disable_caps_word();
-                            } else {
-                                enable_xcase();
-                            }
-                            break;
+                                break;
+                            default:
+                                if (caps_word_on) {
+                                    disable_caps_word();
+                                } else {
+                                    enable_xcase();
+                                }
+                                break;
+                        }
                     }
-                }
-        return PROCESS_RECORD_RETURN_FALSE;
+            return PROCESS_RECORD_RETURN_FALSE;
         }
-    break;
+        break;
 
-    }
+    case CRUTHUM2:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                dprintln("XCTHUM pressed");
+                    if (isCtrl) {
+                        tap_code16(KC_CAPS);
+                        lcd_dirty = true;
+                    } else {
+                        switch (xcase_state) {
+                            case XCASE_WAIT:
+                                if (caps_word_on) {
+                                    disable_xcase();
+                                    disable_caps_word();
+                                } else {
+                                    enable_caps_word();
+                                }
+                                break;
+                            case XCASE_ON:
+                                disable_caps_word();
+                                disable_xcase();
+                                break;
+                            default:
+                                if (caps_word_on) {
+                                    disable_caps_word();
+                                } else {
+                                    enable_xcase();
+                                }
+                                break;
+                        }
+                    }
+            return PROCESS_RECORD_RETURN_FALSE;
+            }
+            return PROCESS_RECORD_CONTINUE;
+        }
+        break;
+
+}
     return PROCESS_RECORD_CONTINUE;
 }

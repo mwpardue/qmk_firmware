@@ -24,7 +24,10 @@ enum combos {
     CM_PARN,
     CM_CURB,
     CM_BRAC,
-    CM_ESC,
+    CM_LESC,
+    CM_RESC,
+    CM_LMES,
+    CM_RMES,
     CM_CAPS,
     CM_CAP2,
     CM_MLOG,
@@ -43,7 +46,10 @@ enum combos {
 const uint16_t PROGMEM parn_combo[] = {KC_LPRN, KC_RPRN, COMBO_END};
 const uint16_t PROGMEM curb_combo[] = {KC_LCBR, KC_RCBR, COMBO_END};
 const uint16_t PROGMEM brac_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
-const uint16_t PROGMEM escape_combo[] = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM lescape_combo[] = {KC_D, KC_S, COMBO_END};
+const uint16_t PROGMEM rescape_combo[] = {KC_L, KC_K, COMBO_END};
+const uint16_t PROGMEM mtlescape_combo[] = {LHM_D, LQM_S, COMBO_END};
+const uint16_t PROGMEM mtrescape_combo[] = {RHM_L, RHM_K, COMBO_END};
 const uint16_t PROGMEM capsword_combo[] = {SFT_Z, SFT_QUE, COMBO_END};
 const uint16_t PROGMEM capsword2_combo[] = {LHM_D, RHM_K, COMBO_END};
 const uint16_t PROGMEM mtlogin_combo[] = {LIR_THM, RHM_K, RHM_L, COMBO_END};
@@ -61,7 +67,10 @@ combo_t key_combos[] = {
   [CM_PARN] = COMBO(parn_combo, SM_PAR),
   [CM_CURB] = COMBO(curb_combo, SM_CUR),
   [CM_BRAC] = COMBO(brac_combo, SM_BRC),
-  [CM_ESC] = COMBO(escape_combo, SM_ESC),
+  [CM_LESC] = COMBO(lescape_combo, SM_ESC),
+  [CM_RESC] = COMBO(rescape_combo, SM_ESC),
+  [CM_LMES] = COMBO(mtlescape_combo, SM_ESC),
+  [CM_RMES] = COMBO(mtrescape_combo, SM_ESC),
   [CM_CAPS] = COMBO(capsword_combo, SM_CW),
   [CM_CAP2] = COMBO(capsword2_combo, SM_CW),
   [CM_MLOG] = COMBO(mtlogin_combo, SM_LOGN),
@@ -95,9 +104,9 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE] = LAYOUT_split_3x6_5_hlc(
-  SM_ESC,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+  SM_ESC,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
   KC_TAB,  LHM_A,  LQM_S,   LHM_D,   LHM_F,   KC_G,                                                 KC_H,    RHM_J,   RHM_K,   RHM_L,   RHM_SCN, KC_QUOT,
-  KC_MINS, SFT_Z,  KC_X,    KC_C,    KC_V,    KC_B,    UIL_THM, UOL_THM,          UOR_THM, UIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  SFT_QUE, KC_MINS,
+  PASSPAL, SFT_Z,  KC_X,    KC_C,    KC_V,    KC_B,    UIL_THM, UOL_THM,          UOR_THM, UIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  SFT_QUE, PASSPAL,
                             LUTHUM0, LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,          LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, RUTHUM0,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                       KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
@@ -119,17 +128,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_COLEMAK_DH] = LAYOUT_split_3x6_5_hlc(
-  SM_ESC,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  CTL_TAB, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                                 KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_QUO,
-  GUI_MIN, SFT_Z,  KC_X,    KC_C,    KC_V,    KC_B,    UIL_THM, UOL_THM,          UOR_THM, UIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  SFT_QUE, GUI_MIN,
-                            LUTHUM0, LUTHUM1, LUTHUM2, LIL_THM, LOL_THM,          LOR_THM, LIR_THM, RUTHUM2, RUTHUM1, KC_NO,
+  _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
+  CTL_TAB, LSM_A,   LQM_S,   LSM_D,   LHM_F,   _______,                                             _______,   RHM_J,   RSM_K,   RHM_L, RSM_SCN, CTL_QUO,
+  _______, _______, _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, _______,
+                            _______, _______,  _______, _______, _______,         _______, _______, _______, _______, _______,
+                            // _______, _______, CLUTHUM2, _______, _______,        CLOR_THM, _______, CRUTHUM2, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
+  // SM_ESC,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+  // CTL_TAB, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                                 KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_QUO,
+  // PASSPAL, SFT_Z,  KC_X,    KC_C,    KC_V,    KC_B,     CUIL_THM, UOL_THM,         UOR_THM, UIR_THM, KC_N,    KC_M,    KC_COMM, KC_DOT,  SFT_QUE, PASSPAL,
+  //                           LUTHUM0, LUTHUM1, CLUTHUM2, LIL_THM, LOL_THM,         CLOR_THM, LIR_THM, CRUTHUM2, RUTHUM1, KC_NO,
+  //       KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
 [_NAVIGATION] = LAYOUT_split_3x6_5_hlc(
-    _______, KC_BSPC, _______, TAB_LFT, TAB_RGT, _______, 		                                    KC_PGDN, SEL_WRD, SEL_LIN, KC_PGUP, _______, _______,
+    _______, KC_BSPC, MC_SWRI, TAB_LFT, TAB_RGT, _______, 		                                    KC_PGDN, SEL_WRD, SEL_LIN, KC_PGUP, _______, _______,
     _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-    QK_LLCK, MONUM,   KC_ENT,  TD_COPY, TD_PAST, _______, _______, _______,       _______, _______, _______, MON_L,   MON_R,   _______, _______, _______,
+    QK_LLCK, MONUM,   _______, TD_COPY, TD_PAST, _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______, _______,
                                TAB_LFT, TAB_RGT, _______, _______, _______,       KC_ENT,  KC_SPC,  _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                   KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
@@ -143,11 +158,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_SYMBOL] = LAYOUT_split_3x6_5_hlc(
-  _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                                                KC_GRV,  KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
-  _______, KC_AT,   KC_BSLS, KC_UNDS, KC_PIPE, _______,                                             KC_UNDS, KC_DLR,  KC_PERC, KC_CIRC, _______, _______,
-  _______, KC_LBRC, KC_RBRC, KC_LT,   KC_GT,   _______, _______, _______,         _______, _______, KC_PLUS, KC_EXLM, KC_AT,   KC_HASH, _______, _______,
+  _______, KC_CIRC, KC_DLR,  KC_LCBR, KC_RCBR, TIPS,                                                KC_GRV,  KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
+  _______, KC_AT,   KC_BSLS, KC_LPRN, KC_RPRN, KC_PIPE,                                             KC_UNDS, KC_DLR,  KC_PERC, KC_CIRC, _______, _______,
+  _______, KC_HASH, KC_UNDS, KC_LBRC, KC_RBRC, KC_ASTR, _______, _______,         _______, _______, KC_PLUS, KC_EXLM, KC_AT,   KC_HASH, _______, _______,
                              TAB_LFT, TAB_RGT, _______, KC_BSPC, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
+  // _______, KC_LCBR, KC_RCBR, KC_LPRN, KC_RPRN, TIPS,                                                KC_GRV,  KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
+  // _______, KC_AT,   KC_BSLS, KC_UNDS, KC_PIPE, _______,                                             KC_UNDS, KC_DLR,  KC_PERC, KC_CIRC, _______, _______,
+  // _______, KC_LBRC, KC_RBRC, KC_LT,   KC_GT,   _______, _______, _______,         _______, _______, KC_PLUS, KC_EXLM, KC_AT,   KC_HASH, _______, _______,
+  //                            TAB_LFT, TAB_RGT, _______, KC_BSPC, _______,         _______, _______, _______, _______, _______,
+  //       KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
 [_VIM] = LAYOUT_split_3x6_5_hlc(
@@ -159,17 +179,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_HEX] = LAYOUT_split_3x6_5_hlc(
-  TOBAS,   KC_TAB,  KC_D,    KC_E,    KC_F,    _______,                                             KC_PIPE, KC_7,    KC_8,    KC_9,    KC_TILD, _______,
-  _______, _______, KC_A,    KC_B,    KC_C,    _______,                                             KC_SLSH, KC_4,    KC_5,    KC_6,    KC_COLN, _______,
-  _______, KC_LSFT, TOBAS,   _______, _______, _______, _______, _______,         _______, _______, KC_MINS, KC_1,    KC_2,    KC_3,    SFT_DOT, _______,
-                             _______, _______, _______, KC_BSPC, _______,         _______,  KC_0,   _______, _______, _______,
+  TOBAS,   _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______,                                             _______, OSMRGUI, OSMRSFT, OSMRALT, OSMRCTL, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, _______,
+                             _______, _______, _______, ALT_BSP, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
+  // TOBAS,   KC_TAB,  KC_D,    KC_E,    KC_F,    _______,                                             KC_PIPE, KC_7,    KC_8,    KC_9,    KC_TILD, _______,
+  // _______, _______, KC_A,    KC_B,    KC_C,    _______,                                             KC_SLSH, KC_4,    KC_5,    KC_6,    KC_COLN, _______,
+  // _______, KC_LSFT, TOBAS,   _______, _______, _______, _______, _______,         _______, _______, KC_MINS, KC_1,    KC_2,    KC_3,    SFT_DOT, _______,
+  //                            _______, _______, _______, KC_BSPC, _______,         _______,  KC_0,   _______, _______, _______,
+  //       KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
 [_FUNCTION] = LAYOUT_split_3x6_5_hlc( \
-  TOADJ,   TOBAS,   TOCMK,   EE_CLR,  DB_TOGG, RM_NEXT,                                             _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F13,\
-  SM_LOGN, OSMLSFT, OSMLALT, OSMLCTL, OSMLGUI, RM_HUEU,                                             _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,  KC_F14,\
-  MACSLEP, _______, TOHEX,   RM_SATU, RM_SATD, RM_HUED, _______, _______,         _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  KC_F15,\
+  TOADJ,   DF_LAYR, TOBAS,   EE_CLR,  DB_TOGG, _______,                                             _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F13,\
+  SM_LOGN, OSMLSFT, OSMLALT, OSMLCTL, OSMLGUI, _______,                                             _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,  KC_F14,\
+  MACSLEP, _______, TOHEX,   _______, _______, _______, _______, _______,         _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  KC_F15,\
                              _______, _______, _______, KC_DEL,  _______,         _______, _______, _______, _______, KC_NO, \
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                    KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),

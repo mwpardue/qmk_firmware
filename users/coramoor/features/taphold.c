@@ -98,6 +98,8 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case RHM_N:
         case LHM_C:
         case RHM_COM:
+        case RSM_SCN:
+        case LSM_A:
         // case RHM_E:
         // case LHM_S:
           return get_modtap_tapping_term();
@@ -111,6 +113,8 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case LHM_D:
         case SFT_Z:
         case SFT_QUE:
+        case RSM_K:
+        case LSM_D:
             return get_sft_tapping_term();
         default:
             return g_tapping_term;
@@ -140,6 +144,10 @@ uint16_t get_quick_tap_term_result(uint16_t keycode) {
         case LHM_X:
         case LHM_V:
         case LHM_C:
+        case RSM_K:
+        case LSM_D:
+        case RSM_SCN:
+        case LSM_A:
         case RHM_COM:
         case LIL_THM:
         case LOL_THM:
@@ -217,6 +225,10 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case ASW_Z:
         case SFT_Z:
         case SFT_QUE:
+        case RSM_K:
+        case LSM_D:
+        case RSM_SCN:
+        case LSM_A:
         case CRUTHUM2:
         case CLUTHUM2:
             // Immediately select the hold action when another key is tapped.
