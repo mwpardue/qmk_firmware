@@ -55,7 +55,7 @@ enum {
 #endif
 
 #ifdef SHORTCUTS_ENABLE
-    COLEMAK, QWERTY, CAPWORD, DF_LAYR, GUI_ESC, XCSTRG, PASSPAL,
+    COLEMAK, QWERTY, DF_LAYR, GUI_ESC, PASSPAL,
     SEL_WRD, SEL_LIN, CAP_MEH, SM_SWIT, TG_OS, ADJ_LYR,
 #endif
 
@@ -90,13 +90,13 @@ enum {
 // Left thumb keys
 
     // Upper Left Thumb Keys
-    #define UOL_THM KC_CAPS
+    #define UOL_THM KC_F17
     #define UIL_THM OSMMEH
 
     // Lower Left Thumb Keys
     #define LUTHUM0 MON_L
     #define LUTHUM1 LT(_FUNCTION, KC_UP)
-    #define LUTHUM2 LT(_NUMPAD, SM_ESC)
+    #define LUTHUM2 LT(_NUMPAD, KC_CIRC)
     #define LIL_THM LT(_NAVIGATION, KC_BSPC)
     #define LOL_THM LSFT_T(KC_ENTER)
 
@@ -112,7 +112,7 @@ enum {
     // Lower Right Thumb Keys
     #define RUTHUM0 TAB_RGT
     #define RUTHUM1 LT(_FUNCTION, KC_LEFT)
-    #define RUTHUM2 LT(_GAMING, SM_ESC)
+    #define RUTHUM2 LT(_GAMING, KC_DLR)
     #define LOR_THM RSFT_T(KC_ENTER)
     #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
@@ -152,6 +152,7 @@ enum {
 #define LHM_F LGUI_T(KC_F)
 #define CTL_TAB LCTL_T(KC_TAB)
 #define GUI_TAB LGUI_T(KC_TAB)
+#define GUI_ESC LGUI_T(SM_ESC)
 #define CTL_MINS LCTL_T(KC_MINS)
 #define SFT_DOT LSFT_T(KC_DOT)
 #define LHM_Z LCTL_T(KC_Z)

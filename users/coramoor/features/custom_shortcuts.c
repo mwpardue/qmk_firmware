@@ -90,49 +90,63 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
-         case CAPWORD:
-            if (record->event.pressed) {
-              toggle_caps_word();
-            return PROCESS_RECORD_RETURN_FALSE;
-            }
-            break;
-
-         case XCASE:
-            if (record->event.pressed) {
-                switch (xcase_state) {
-                    case XCASE_WAIT:
-                        disable_xcase();
-                        disable_caps_word();
-                        break;
-                    case XCASE_ON:
-                        disable_caps_word();
-                        disable_xcase();
-                        break;
-                    default:
-                        enable_xcase();
-                        break;
-                }
-            return PROCESS_RECORD_RETURN_FALSE;
-            }
-
-         case XCSTRG:
-            if (record->event.pressed) {
-                switch (xcase_state) {
-                    case XCASE_WAIT:
-                        disable_xcase();
-                        disable_caps_word();
-                        break;
-                    case XCASE_ON:
-                        disable_caps_word();
-                        disable_xcase();
-                        break;
-                    default:
-                        enable_xcase();
-                        enable_caps_word();
-                        break;
-                }
-            return PROCESS_RECORD_RETURN_FALSE;
-            }
+         // case CAPLOCK:
+         //    if (record->event.pressed) {
+         //        tap_code16(KC_CAPS);
+         //        lcd_dirty = true;
+         //    return PROCESS_RECORD_RETURN_FALSE;
+         //    }
+         //    break;
+         //
+         // case CAPWORD:
+         //    if (record->event.pressed) {
+         //        if (caps_word_on) {
+         //            disable_caps_word();
+         //            dprintln("CAPWORD disable caps word");
+         //        } else {
+         //            enable_caps_word();
+         //            dprintln("CAPWORD enable caps word");
+         //        }
+         //    return PROCESS_RECORD_RETURN_FALSE;
+         //    }
+         //    break;
+         //
+         // case XCASE:
+         //    if (record->event.pressed) {
+         //        switch (xcase_state) {
+         //            case XCASE_WAIT:
+         //                disable_xcase();
+         //                disable_caps_word();
+         //                break;
+         //            case XCASE_ON:
+         //                disable_caps_word();
+         //                disable_xcase();
+         //                break;
+         //            default:
+         //                enable_xcase();
+         //                break;
+         //        }
+         //    return PROCESS_RECORD_RETURN_FALSE;
+         //    }
+         //
+         // case XCSTRG:
+         //    if (record->event.pressed) {
+         //        switch (xcase_state) {
+         //            case XCASE_WAIT:
+         //                disable_xcase();
+         //                disable_caps_word();
+         //                break;
+         //            case XCASE_ON:
+         //                disable_caps_word();
+         //                disable_xcase();
+         //                break;
+         //            default:
+         //                enable_xcase();
+         //                enable_caps_word();
+         //                break;
+         //        }
+         //    return PROCESS_RECORD_RETURN_FALSE;
+         //    }
 
          case SM_SWIT: if (record->event.pressed) {
               layer_on(_APPSWITCH);
@@ -145,33 +159,29 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             break;
 
-        case LUTHUM2:
-        case RUTHUM2:
+        // case GUI_ESC:
         case SM_ESC:
-            if (record->tap.count > 0) {
-                if (record->event.pressed) {
-                    if (kbFeature) {
-                        if (caps_word_on) {
-                            disable_caps_word();
-                            tap_code16(KC_ESC);
-                        }
-                        if (host_keyboard_led_state().caps_lock) {
-                            tap_code16(KC_CAPS);
-                        }
-                        disable_xcase();
-                        clear_locked_and_oneshot_mods();
-                        stop_leading();
-                        return PROCESS_RECORD_RETURN_FALSE;
-                    } else {
+            if (record->event.pressed) {
+                if (kbFeature) {
+                    if (caps_word_on) {
+                        disable_caps_word();
                         tap_code16(KC_ESC);
-                        dprintln("SM_ESC default");
-                        return PROCESS_RECORD_RETURN_FALSE;
                     }
+                    if (host_keyboard_led_state().caps_lock) {
+                        tap_code16(KC_CAPS);
+                    }
+                    disable_xcase();
+                    clear_locked_and_oneshot_mods();
+                    stop_leading();
+                    return PROCESS_RECORD_RETURN_FALSE;
+                } else {
+                    tap_code16(KC_ESC);
+                    dprintln("SM_ESC default");
                     return PROCESS_RECORD_RETURN_FALSE;
                 }
-            return PROCESS_RECORD_RETURN_TRUE;
             }
-            break;
+            return PROCESS_RECORD_RETURN_FALSE;
+        break;
 
         case TG_OS:
             if (record->event.pressed) {

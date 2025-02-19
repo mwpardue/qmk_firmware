@@ -113,6 +113,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         break;
 
     case XCTHUM:
+    case XCASE:
     // case RUTHUM2:
         if (record->event.pressed) {
                 dprintln("XCTHUM pressed");
