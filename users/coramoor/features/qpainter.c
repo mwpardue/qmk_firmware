@@ -1,4 +1,4 @@
-#include "halcyon_modules/hlc_tft_display/hlc_tft_display.h"
+#include "splitkb/hlc_tft_display/hlc_tft_display.h"
 #include "qp_surface.h"
 #include "features/mononoki.qff.h"
 #include "features/kyria_logo-mono.qgf.h"
@@ -42,7 +42,7 @@ painter_image_handle_t  os_glyph,
 #define LCD_STATUS_LINE os_glyph->height+40
 
 #define HSV_INACTIVE 0, 0, 128
-#define HSV_ACTIVE 0, 0, 255
+#define HSV_ACTIVE HSV_CYAN
 
 void draw_layer(void) {
     if (lcd_dirty) {
@@ -91,8 +91,14 @@ void draw_layer(void) {
 
 void draw_header(void) {
     if (lcd_dirty) {
-        qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Kyria", HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 4.1", HSV_CYAN, HSV_BLACK);
+        #ifdef KYRIA_KEYBOARD
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Kyria", HSV_CYAN, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 4.1", HSV_CYAN, HSV_BLACK);
+        #endif
+        #ifdef ELORA_KEYBOARD
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Elora", HSV_CYAN, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 2.0", HSV_CYAN, HSV_BLACK);
+        #endif
     }
 }
 
@@ -135,56 +141,83 @@ void draw_os(void) {
 }
 
 void draw_status(void) {
+    #define STATUS_GLYPH_WIDTH capsword_glyph->width
+    #define STATUS_INTERSPACE ((LCD_WIDTH-(STATUS_GLYPH_WIDTH*3))/4)
+    #define LEFT_GLYPH_POS STATUS_INTERSPACE
+    #define CENTER_GLYPH_POS LEFT_GLYPH_POS + STATUS_GLYPH_WIDTH + STATUS_INTERSPACE
+    #define RIGHT_GLYPH_POS CENTER_GLYPH_POS + STATUS_GLYPH_WIDTH + STATUS_INTERSPACE
+
     if (lcd_dirty) {
         if (caps_word_on) {
-            qp_drawimage_recolor(lcd_surface, 5, LCD_STATUS_LINE, capsword_glyph, HSV_ACTIVE, HSV_BLACK);
+            qp_drawimage_recolor(lcd_surface, LEFT_GLYPH_POS, LCD_STATUS_LINE, capsword_glyph, HSV_ACTIVE, HSV_BLACK);
+            qp_drawimage_recolor(lcd_surface, RIGHT_GLYPH_POS, LCD_STATUS_LINE, capslock_glyph, HSV_INACTIVE, HSV_BLACK);
         } else if (host_keyboard_led_state().caps_lock) {
-            qp_drawimage_recolor(lcd_surface, 5, LCD_STATUS_LINE, capsword_glyph, HSV_RED, HSV_BLACK);
+            qp_drawimage_recolor(lcd_surface, LEFT_GLYPH_POS, LCD_STATUS_LINE, capsword_glyph, HSV_INACTIVE, HSV_BLACK);
+            qp_drawimage_recolor(lcd_surface, RIGHT_GLYPH_POS, LCD_STATUS_LINE, capslock_glyph, HSV_ACTIVE, HSV_BLACK);
         } else {
-            qp_drawimage_recolor(lcd_surface, 5, LCD_STATUS_LINE, capsword_glyph, HSV_INACTIVE, HSV_BLACK);
+            qp_drawimage_recolor(lcd_surface, LEFT_GLYPH_POS, LCD_STATUS_LINE, capsword_glyph, HSV_INACTIVE, HSV_BLACK);
+            qp_drawimage_recolor(lcd_surface, RIGHT_GLYPH_POS, LCD_STATUS_LINE, capslock_glyph, HSV_INACTIVE, HSV_BLACK);
         }
 
         switch(xcase_state) {
             case XCASE_ON:
-                qp_drawimage_recolor(lcd_surface, (capsword_glyph->width + 10), LCD_STATUS_LINE, xcase_glyph, HSV_ACTIVE, HSV_BLACK);
+                qp_drawimage_recolor(lcd_surface, CENTER_GLYPH_POS, LCD_STATUS_LINE, xcase_glyph, HSV_ACTIVE, HSV_BLACK);
             break;
             case XCASE_WAIT:
-                qp_drawimage_recolor(lcd_surface, (capsword_glyph->width + 10), LCD_STATUS_LINE, xcase_glyph, HSV_YELLOW, HSV_BLACK);
+                qp_drawimage_recolor(lcd_surface, CENTER_GLYPH_POS, LCD_STATUS_LINE, xcase_glyph, HSV_WHITE, HSV_BLACK);
             break;
             default:
-                qp_drawimage_recolor(lcd_surface, (capsword_glyph->width + 10), LCD_STATUS_LINE, xcase_glyph, HSV_INACTIVE, HSV_BLACK);
+                qp_drawimage_recolor(lcd_surface, CENTER_GLYPH_POS, LCD_STATUS_LINE, xcase_glyph, HSV_INACTIVE, HSV_BLACK);
             break;
         }
-
-        qp_drawimage_recolor(lcd_surface, ((capsword_glyph->width*2) + 15), LCD_STATUS_LINE, capslock_glyph, HSV_INACTIVE, HSV_BLACK);
     }
 }
 
 void draw_mods(void) {
-    static uint8_t                last_mods    = 0;
-    uint8_t                       current_mods = get_mods() | get_weak_mods() | get_oneshot_mods();
+    static uint8_t        last_mods           = 0;
+           bool           isOneShotCtrl       = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
+           bool           isOneShotShift      = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+           bool           isOneShotAlt        = get_oneshot_mods() & MOD_MASK_ALT || get_oneshot_locked_mods() & MOD_MASK_ALT;
+           bool           isOneShotGui        = get_oneshot_mods() & MOD_MASK_GUI || get_oneshot_locked_mods() & MOD_MASK_GUI;
+           uint8_t        current_mods        = get_mods() | get_weak_mods() | get_oneshot_mods();
     if (lcd_dirty || last_mods != current_mods) {
         last_mods = current_mods;
         if (last_mods & MOD_MASK_GUI) {
-            qp_drawimage_recolor(lcd_surface, ((command_glyph->width*3)+20), LCD_MOD_LINE, command_glyph, HSV_ACTIVE, HSV_BLACK);
+            if (isOneShotGui) {
+                qp_drawimage_recolor(lcd_surface, ((command_glyph->width*3)+20), LCD_MOD_LINE, command_glyph, HSV_WHITE, HSV_BLACK);
+            } else {
+                qp_drawimage_recolor(lcd_surface, ((command_glyph->width*3)+20), LCD_MOD_LINE, command_glyph, HSV_ACTIVE, HSV_BLACK);
+            }
         } else {
             qp_drawimage_recolor(lcd_surface, ((command_glyph->width*3)+20), LCD_MOD_LINE, command_glyph, HSV_INACTIVE, HSV_BLACK);
         }
 
         if (last_mods & MOD_MASK_CTRL) {
-            qp_drawimage_recolor(lcd_surface, (5), LCD_MOD_LINE, ctrl_glyph, HSV_ACTIVE, HSV_BLACK);
+            if (isOneShotCtrl) {
+                qp_drawimage_recolor(lcd_surface, (5), LCD_MOD_LINE, ctrl_glyph, HSV_WHITE, HSV_BLACK);
+            } else {
+                qp_drawimage_recolor(lcd_surface, (5), LCD_MOD_LINE, ctrl_glyph, HSV_ACTIVE, HSV_BLACK);
+            }
         } else {
             qp_drawimage_recolor(lcd_surface, (5), LCD_MOD_LINE, ctrl_glyph, HSV_INACTIVE, HSV_BLACK);
         }
 
         if (last_mods & MOD_MASK_ALT) {
-            qp_drawimage_recolor(lcd_surface, (command_glyph->width+10), LCD_MOD_LINE, option_glyph, HSV_ACTIVE, HSV_BLACK);
+            if (isOneShotAlt) {
+                qp_drawimage_recolor(lcd_surface, (command_glyph->width+10), LCD_MOD_LINE, option_glyph, HSV_WHITE, HSV_BLACK);
+            } else {
+                qp_drawimage_recolor(lcd_surface, (command_glyph->width+10), LCD_MOD_LINE, option_glyph, HSV_ACTIVE, HSV_BLACK);
+            }
         } else {
             qp_drawimage_recolor(lcd_surface, (command_glyph->width+10), LCD_MOD_LINE, option_glyph, HSV_INACTIVE, HSV_BLACK);
         }
 
         if (last_mods & MOD_MASK_SHIFT) {
-            qp_drawimage_recolor(lcd_surface, ((command_glyph->width*2)+15), LCD_MOD_LINE, shift_glyph, HSV_ACTIVE, HSV_BLACK);
+            if (isOneShotShift) {
+                qp_drawimage_recolor(lcd_surface, ((command_glyph->width*2)+15), LCD_MOD_LINE, shift_glyph, HSV_WHITE, HSV_BLACK);
+            } else {
+                qp_drawimage_recolor(lcd_surface, ((command_glyph->width*2)+15), LCD_MOD_LINE, shift_glyph, HSV_ACTIVE, HSV_BLACK);
+            }
         } else {
             qp_drawimage_recolor(lcd_surface, ((command_glyph->width*2)+15), LCD_MOD_LINE, shift_glyph, HSV_INACTIVE, HSV_BLACK);
         }
@@ -248,13 +281,13 @@ void draw_leader_screen(void) {
 void draw_pass_screen(void) {
     if (lcd_dirty) {
         static const char *pass1 = "PASS-KEYS";
-        static const char *pass2 = "[A] Ad!|[B] LbD";
-        static const char *pass3 = "[D] D!2|[I] T!P";
-        static const char *pass4 = "[J] JbD|[L] L2c";
-        static const char *pass5 = "[N] Nv_|[O] Pdn";
-        static const char *pass6 = "[P] P@s|[Q] StQ";
-        static const char *pass7 = "[R] IWR|[S] S1b";
-        static const char *pass8 = "[T] Tit|[Y] Lab";
+        static const char *pass2 = "[A] Ad! [B] LbD";
+        static const char *pass3 = "[D] D!2 [I] T!P";
+        static const char *pass4 = "[J] JbD [L] L2c";
+        static const char *pass5 = "[N] Nv_ [O] Pdn";
+        static const char *pass6 = "[P] P@s [Q] StQ";
+        static const char *pass7 = "[R] IWR [S] S1b";
+        static const char *pass8 = "[T] Tit [Y] Lab";
 
         uint16_t left = ((LCD_WIDTH-qp_textwidth(bbt, pass1))/2) - 2;
         uint16_t right = ((LCD_WIDTH-qp_textwidth(bbt, pass1))/2)+(qp_textwidth(bbt, pass1) + 2);
@@ -280,6 +313,7 @@ void housekeeping_task_keymap(void) {
     if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps
         last_draw = timer_read32();
             if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
+                dyn_display = true;
                 render_menu();
             } else if (is_passing()) {
                 dprintln("QPAINTER is_passing");
@@ -293,6 +327,7 @@ void housekeeping_task_keymap(void) {
                     dprintln("QPAINTER lcd_dirty");
                     qp_clear(lcd_surface);
                 }
+                dyn_display = false;
                 draw_header();
                 draw_status();
                 draw_os();

@@ -10,37 +10,24 @@
   #include "leader.h"
 #endif
 
+#ifdef CASEMODE_ENABLE
+    #include "casemodes.h"
+#endif
+
+extern enum xcase_state xcase_state;
+extern bool caps_word_on;
+
 process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
 
     bool isMacOS = user_config.os == MACOS;
-    bool isWindowsOrLinux = user_config.os == WINDOWS || user_config.os == LINUX;
-    bool isOneShotShift = get_oneshot_mods() & MOD_MASK_SHIFT || get_oneshot_locked_mods() & MOD_MASK_SHIFT;
-    bool isOneShotCtrl = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
-    uint8_t smart_mods = 0;
+    bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
+    bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
+    bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
+    bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
+    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock || is_passing();
 
     switch (keycode) {
-
-        // Zoom shortcuts
-
-        case SS_MODP:
-            if (record->event.pressed) {
-                if (should_send_ctrl(isWindowsOrLinux, isOneShotShift)) {
-                    SEND_STRING(SS_LCTL("+"));
-                } else {
-                    SEND_STRING(SS_LGUI("+"));
-                }
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-
-        case SS_MODM:
-            if (record->event.pressed) {
-                if (should_send_ctrl(isWindowsOrLinux, isOneShotShift)) {
-                    SEND_STRING(SS_LCTL("-"));
-                } else {
-                    SEND_STRING(SS_LGUI("-"));
-                }
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
 
         case QWERTY:
             if (record->event.pressed) {
@@ -72,161 +59,12 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             }
             return PROCESS_RECORD_RETURN_FALSE;
 
-
-    #ifdef SMART_CASE_ENABLE
-        case TG_KBAB:
-            if (record->event.pressed) {
-                if (has_smart_case(KEBAB_CASE) && has_smart_case(WORD_CASE)) {
-                    disable_smart_case();
-                } else if (has_smart_case(KEBAB_CASE)) {
-                    set_smart_case(WORD_CASE);
-                } else {
-                    set_smart_case(KEBAB_CASE);
-                }
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-
-        case TG_SNAK:
-            if (record->event.pressed) {
-                if (has_smart_case(SNAKE_CASE) && has_smart_case(WORD_CASE)) {
-                    disable_smart_case();
-                } else if (has_smart_case(SNAKE_CASE)) {
-                    set_smart_case(WORD_CASE);
-                } else {
-                    set_smart_case(SNAKE_CASE);
-                }
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-
-        case TG_CAML:
-            if (record->event.pressed) {
-                if (has_smart_case(CAMEL_CASE)) {
-                    disable_smart_case();
-                } else {
-                    set_smart_case(CAMEL_CASE);
-                }
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-    #endif
-
-        case NAV_LFT:
-          if (record->event.pressed) {
-            smart_mods = get_mods();
-            if ((smart_mods & MOD_MASK_CTRL) || isOneShotCtrl) {
-              unregister_mods(smart_mods);
-              del_oneshot_mods(MOD_MASK_CTRL);
-              tap_code16(G(KC_LBRC));
-              register_mods(smart_mods);
-            } else {
-              tap_code16(C(S(KC_TAB)));
-        }
-          return PROCESS_RECORD_RETURN_FALSE;
-      }
-        return PROCESS_RECORD_RETURN_TRUE;
-
-
-        case NAV_RGT:
-          if (record->event.pressed) {
-            smart_mods = get_mods();
-            if ((smart_mods & MOD_MASK_CTRL) || isOneShotCtrl) {
-              unregister_mods(smart_mods);
-              del_oneshot_mods(MOD_MASK_CTRL);
-              tap_code16(G(KC_RBRC));
-              register_mods(smart_mods);
-            } else {
-              tap_code16(C(KC_TAB));
-        }
-          return PROCESS_RECORD_RETURN_FALSE;
-      }
-        return PROCESS_RECORD_RETURN_TRUE;
-
-        case LHM_AT:
-        case UOR_THM:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              dprintln("KC_AT pressed");
-              tap_code16(KC_AT);
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
-        case LHM_BSL:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              dprintln("KC_AT pressed");
-              tap_code16(KC_BSLS);
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
-        case LHM_PIP:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              dprintln("KC_AT pressed");
-              tap_code16(KC_PIPE);
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
-        case LHM_UND:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              dprintln("KC_AT pressed");
-              tap_code16(KC_UNDS);
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
-        case LHM_MNL:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              tap_code16(C(KC_LEFT));
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
-
-        case LHM_MNR:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              tap_code16(C(KC_RIGHT));
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
-        case RHM_CLN:
-          if (record->tap.count > 0) {
-            if (record->event.pressed) {
-              tap_code16(KC_COLN);
-            }
-            return PROCESS_RECORD_RETURN_FALSE;
-          }
-          return PROCESS_RECORD_RETURN_TRUE;
-
        case PASSPAL:
             if (record->event.pressed) {
                   start_pass_leading();
                   return PROCESS_RECORD_RETURN_FALSE;
              }
          return PROCESS_RECORD_RETURN_TRUE;
-
-        case SYM_Z:
-            if (record->tap.count == 0) {           // On hold.
-                    if (record->event.pressed) {          // On press.
-                    register_mods(MOD_MASK_SHIFT);     // Hold left Shift.
-                    } else {                              // On release.
-                    unregister_mods(MOD_MASK_SHIFT);   // Release left Shift.
-                    }
-                }
-                // Continue default handling, which switches to NUM on hold and
-                // performs KC_DEL when tapped.
-                return PROCESS_RECORD_RETURN_TRUE;
 
          case SEL_WRD:
             if (record->event.pressed) {
@@ -252,14 +90,51 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
-         case S_ARRNG:
+         case CAPWORD:
             if (record->event.pressed) {
-              tap_code16(C(A(G(S(KC_RBRC)))));
+              toggle_caps_word();
+            return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
+
+         case XCASE:
+            if (record->event.pressed) {
+                switch (xcase_state) {
+                    case XCASE_WAIT:
+                        disable_xcase();
+                        disable_caps_word();
+                        break;
+                    case XCASE_ON:
+                        disable_caps_word();
+                        disable_xcase();
+                        break;
+                    default:
+                        enable_xcase();
+                        break;
+                }
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
-         case SM_SWIT:
+         case XCSTRG:
             if (record->event.pressed) {
+                switch (xcase_state) {
+                    case XCASE_WAIT:
+                        disable_xcase();
+                        disable_caps_word();
+                        break;
+                    case XCASE_ON:
+                        disable_caps_word();
+                        disable_xcase();
+                        break;
+                    default:
+                        enable_xcase();
+                        enable_caps_word();
+                        break;
+                }
+            return PROCESS_RECORD_RETURN_FALSE;
+            }
+
+         case SM_SWIT: if (record->event.pressed) {
               layer_on(_APPSWITCH);
               register_mods(MOD_MASK_GUI);
               tap_code16(KC_TAB);
@@ -268,6 +143,34 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
               unregister_mods(MOD_MASK_GUI);
               }
             return PROCESS_RECORD_RETURN_FALSE;
+            break;
+
+        case LUTHUM2:
+        case RUTHUM2:
+        case SM_ESC:
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    if (kbFeature) {
+                        if (caps_word_on) {
+                            disable_caps_word();
+                            tap_code16(KC_ESC);
+                        }
+                        if (host_keyboard_led_state().caps_lock) {
+                            tap_code16(KC_CAPS);
+                        }
+                        disable_xcase();
+                        clear_locked_and_oneshot_mods();
+                        stop_leading();
+                        return PROCESS_RECORD_RETURN_FALSE;
+                    } else {
+                        tap_code16(KC_ESC);
+                        dprintln("SM_ESC default");
+                        return PROCESS_RECORD_RETURN_FALSE;
+                    }
+                    return PROCESS_RECORD_RETURN_FALSE;
+                }
+            return PROCESS_RECORD_RETURN_TRUE;
+            }
             break;
 
         case TG_OS:
@@ -296,67 +199,16 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
-        case CG_MOD:
-            if (record->event.pressed) {
-                register_mods(MOD_MASK_CG);
-            } else {
-                unregister_mods(MOD_MASK_CG);
-            }
-
-        return PROCESS_RECORD_RETURN_FALSE;
-
         case ADJ_LYR:
             if (record->event.pressed) {
                 #ifdef QMENU_ENABLE
-                    user_config.menu_selector = LIGHTING_HEADING;
+                    user_config.menu_selector = 1;
                     user_config.submenu_selector = 1;
                     qp_clear(lcd_surface);
                 #endif
                 layer_on(_ADJUST);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
-
-        case FUN_BSP:
-            if (record->event.pressed) {
-                tap_code16(A(KC_BSPC));
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-            break;
-
-        case MACSLEP:
-            if (record->event.pressed) {
-                switch (user_config.os) {
-
-                    case MACOS:
-                        wait_ms(500);
-                        tap_code16(LGUI(LALT(KC_KB_POWER)));
-                        break;
-                    case LINUX:
-                        wait_ms(500);
-                        tap_code16(LGUI(KC_X));
-                        wait_ms(1000);
-                        tap_code16(KC_U);
-                        break;
-                    case WINDOWS:
-                        break;
-                }
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-            break;
-
-        case SAF_ENT:
-          if (record->event.pressed) {
-            smart_mods = get_mods();
-            if ((smart_mods & MOD_MASK_CTRL) || isOneShotCtrl) {
-              unregister_mods(smart_mods);
-              del_oneshot_mods(MOD_MASK_CTRL);
-              tap_code16(KC_ENT);
-              register_mods(smart_mods);
-            } else {
-              tap_code16(KC_SPACE);
-        }
-          return PROCESS_RECORD_RETURN_FALSE;
-      }
         return PROCESS_RECORD_RETURN_TRUE;
 
     }

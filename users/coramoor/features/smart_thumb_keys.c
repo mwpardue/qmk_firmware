@@ -19,16 +19,11 @@ bool should_send_ctrl(bool isWindowsOrLinux, bool isOneShotShift) {
 }
 
 process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *record) {
-    // bool isWindowsOrLinux    = user_config.os == WINDOWS || user_config.os == LINUX;
-    // bool isOneShotDefaultMod = (!isWindowsOrLinux && (get_oneshot_mods() & MOD_MASK_GUI)) ||
-                               // (isWindowsOrLinux && (get_oneshot_mods() & MOD_MASK_CTRL));
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotShift       = get_oneshot_mods() & MOD_MASK_SHIFT || isOneShotLockedShift;
     bool isOneShotCtrl        = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
     bool isOneShotAlt         = get_oneshot_mods() & MOD_MASK_ALT || get_oneshot_locked_mods() & MOD_MASK_ALT;
     bool isOneShotGui         = get_oneshot_mods() & MOD_MASK_GUI || get_oneshot_locked_mods() & MOD_MASK_GUI;
-    // bool isAnyOneShotButShift = isOneShotCtrl || isOneShotAlt || isOneShotGui;
-    // bool isAnyOneShot         = isOneShotCtrl || isOneShotAlt || isOneShotGui || isOneShotShift;
     bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
     bool isShift               = get_mods() & MOD_MASK_SHIFT || isOneShotShift || isOneShotLockedShift;
     bool isAlt               = get_mods() & MOD_MASK_ALT || isOneShotAlt;
@@ -74,7 +69,8 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     break;
 
     case CUIL_THM:
-    case LUTHUM2:
+    case UIL_THM:
+    case UIR_THM:
         if (record->event.pressed) {
             layer_on(_APPSWITCH);
             register_mods(MOD_MASK_GUI);
@@ -96,14 +92,6 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         return PROCESS_RECORD_RETURN_FALSE;
     break;
 
-    case UIL_THM:
-    case UIR_THM:
-        if (record->event.pressed) {
-            start_pass_leading();
-            return PROCESS_RECORD_RETURN_FALSE;
-        }
-        break;
-
     case LUTHUM1:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
@@ -117,7 +105,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case RUTHUM1:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_L));
+                    tap_code16(LGUI(KC_H));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -125,12 +113,14 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         break;
 
     case XCTHUM:
-    case RUTHUM2:
+    // case RUTHUM2:
         if (record->event.pressed) {
                 dprintln("XCTHUM pressed");
                     if (isCtrl) {
                         tap_code16(KC_CAPS);
+                        #ifdef HLC_TFT_DISPLAY
                         lcd_dirty = true;
+                        #endif
                     } else {
                         switch (xcase_state) {
                             case XCASE_WAIT:
@@ -164,7 +154,9 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                 dprintln("XCTHUM pressed");
                     if (isCtrl) {
                         tap_code16(KC_CAPS);
+                        #ifdef HLC_TFT_DISPLAY
                         lcd_dirty = true;
+                        #endif
                     } else {
                         switch (xcase_state) {
                             case XCASE_WAIT:

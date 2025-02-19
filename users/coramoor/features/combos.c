@@ -93,12 +93,12 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
 
  process_record_result_t process_combos(uint16_t keycode, keyrecord_t *record) {
 
-    bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
-    bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
-    bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
-    bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
-    bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
-    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock || is_passing();
+    // bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    // bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
+    // bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
+    // bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
+    // bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
+    // bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock || is_passing();
 
     switch (keycode) {
 
@@ -110,28 +110,28 @@ bool get_combo_must_tap(uint16_t index, combo_t *combo) {
             }
             break;
 
-        case SM_ESC:
-            if (record->event.pressed) {
-                if (kbFeature) {
-                    if (caps_word_on) {
-                        disable_caps_word();
-                        tap_code16(KC_ESC);
-                    }
-                    if (host_keyboard_led_state().caps_lock) {
-                        tap_code16(KC_CAPS);
-                    }
-                    disable_xcase();
-                    clear_locked_and_oneshot_mods();
-                    stop_leading();
-                    return PROCESS_RECORD_RETURN_FALSE;
-                } else {
-                    tap_code16(KC_ESC);
-                    dprintln("SM_ESC default");
-                    return PROCESS_RECORD_RETURN_FALSE;
-                }
-                return PROCESS_RECORD_RETURN_FALSE;
-            }
-            break;
+        // case SM_ESC:
+        //     if (record->event.pressed) {
+        //         if (kbFeature) {
+        //             if (caps_word_on) {
+        //                 disable_caps_word();
+        //                 tap_code16(KC_ESC);
+        //             }
+        //             if (host_keyboard_led_state().caps_lock) {
+        //                 tap_code16(KC_CAPS);
+        //             }
+        //             disable_xcase();
+        //             clear_locked_and_oneshot_mods();
+        //             stop_leading();
+        //             return PROCESS_RECORD_RETURN_FALSE;
+        //         } else {
+        //             tap_code16(KC_ESC);
+        //             dprintln("SM_ESC default");
+        //             return PROCESS_RECORD_RETURN_FALSE;
+        //         }
+        //         return PROCESS_RECORD_RETURN_FALSE;
+        //     }
+        //     break;
 
         case SM_CW:
             if (record->event.pressed) {

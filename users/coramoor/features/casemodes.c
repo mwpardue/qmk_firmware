@@ -191,9 +191,6 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_MINS:
             case KC_UNDS:
             case KC_BSPC:
-            // case BSP_SYM:
-            case SPC_HYP:
-            case UIL_THM:
             case UOL_THM:
             case LUTHUM1:
             case LUTHUM2:
@@ -201,7 +198,6 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case CLIL_THM:
             case LOL_THM:
             case UOR_THM:
-            case UIR_THM:
             case LIR_THM:
             case LOR_THM:
             case CLOR_THM:
@@ -210,13 +206,10 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case CLUTHUM2:
             case RUTHUM2:
             case RUTHUM1:
-            case SFT_MIN:
-            // case (XCASE & 0xff):
             case KC_UP:
             case KC_DOWN:
             case KC_RIGHT:
             case KC_LEFT:
-            case SM_CW:
             case KC_LPRN:
             case KC_RPRN:
             case KC_LBRC:
@@ -296,8 +289,8 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                     case RUTHUM2:
                     case XCASE:
                     case (XCASE & 0xff):
-                    case SP_CAP:
-                    case (SP_CAP & 0xFF):
+                    // case SP_CAP:
+                    // case (SP_CAP & 0xFF):
                         return false;
                         dprintln("xcase pcm met first switch condition");
                     default:

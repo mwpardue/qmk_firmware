@@ -16,12 +16,15 @@ uint16_t get_modtap_tapping_term(void) {
     return modtap_tapping_term;
 }
 
+#ifdef ACHORDION_ENABLE
 uint16_t achordion_tapping_term = ACHORDION_TAPPING_TERM;
 
 uint16_t get_achordion_tapping_term(void) {
     return achordion_tapping_term;
 }
+#endif
 
+#ifdef GQT_ENABLE
 uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
 
 uint16_t get_gqt_tapping_term(void) {
@@ -33,10 +36,11 @@ uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
 uint16_t sget_gqt_tapping_term(void) {
     return sgqt_tapping_term;
 }
+#endif
 
 uint16_t get_tapping_term_result(uint16_t keycode) {
     switch (keycode) {
-        case SPC_HYP:
+        // case SPC_HYP:
         case LUTHUM1:
         case LUTHUM2:
         case LOL_THM:
@@ -45,76 +49,33 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case CLIL_THM:
         case RUTHUM2:
         case RUTHUM1:
-        case SFT_MIN:
-        case ALT_MIN:
-        case SFT_QUO:
             return g_tapping_term + 40;
         case UOR_THM:
-        case UIR_THM:
         case UOL_THM:
-        case UIL_THM:
-        case OSMLSFT:
-        case OSMRSFT:
-        case OSMLCTL:
-        case OSMRCTL:
-        case OSMLALT:
-        case OSMRALT:
-        case OSMLGUI:
-        case OSMRGUI:
-        // case TD_SNIP:
-        // case TD_SHOT:
         case TD_PAST:
         case TD_COPY:
         case LIR_THM:
-        case LHM_AT:
-        case LHM_BSL:
-        case LHM_UND:
-        case LHM_PIP:
-        // case TD_QUOT:
         case CLUTHUM2:
         case CLOL_THM:
         case CRUTHUM2:
         case CLIR_THM:
         case CLOR_THM:
-        case CTL_CW:
-        case SFT_CW:
-        case RHM_CLN:
           return g_tapping_term + 100;
         case LHM_A:
-        case LHM_R:
         case LQM_S:
         case LHM_F:
         case RHM_J:
         case RHM_L:
         case RHM_SCN:
-        case RHM_O:
-        case RHM_I:
-        case RHM_DOT:
-        case LHM_X:
-        case ASW_Z:
-        case RHM_M:
-        case LHM_V:
-        case LHM_T:
-        case RHM_N:
-        case LHM_C:
-        case RHM_COM:
-        case RSM_SCN:
-        case LSM_A:
-        // case RHM_E:
-        // case LHM_S:
+        case CTL_Z:
+        case ALT_X:
+        case GUI_C:
+        case CTL_QUE:
+        case ALT_DOT:
+        case GUI_COM:
           return get_modtap_tapping_term();
-        // case LHM_A:
-        // case RHM_O:
-        case RHM_E:
         case RHM_K:
-        case LHM_S:
-        case LHM_Z:
-        case RHM_SLS:
         case LHM_D:
-        case SFT_Z:
-        case SFT_QUE:
-        case RSM_K:
-        case LSM_D:
             return get_sft_tapping_term();
         default:
             return g_tapping_term;
@@ -123,32 +84,10 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
 
 uint16_t get_quick_tap_term_result(uint16_t keycode) {
     switch (keycode) {
-        case SPC_HYP:
         case LHM_A:
-        case LHM_R:
-        case LHM_T:
-        case RHM_O:
-        case RHM_I:
-        case RHM_N:
-        case RHM_E:
-        case LHM_S:
         case LQM_S:
         case LHM_F:
-        case RHM_J:
-        case RHM_L:
         case RHM_SCN:
-        case RHM_SLS:
-        case RHM_DOT:
-        case RHM_M:
-        case LHM_Z:
-        case LHM_X:
-        case LHM_V:
-        case LHM_C:
-        case RSM_K:
-        case LSM_D:
-        case RSM_SCN:
-        case LSM_A:
-        case RHM_COM:
         case LIL_THM:
         case LOL_THM:
         case LIR_THM:
@@ -175,10 +114,8 @@ uint16_t get_quick_tap_term_result(uint16_t keycode) {
 
 bool get_hold_on_other_key_press_result(uint16_t keycode) {
     switch (keycode) {
-        case SPC_HYP:
         case LUTHUM1:
         case LUTHUM2:
-        case UIR_THM:
         case LOL_THM:
         case LOR_THM:
         case RUTHUM2:
@@ -197,13 +134,6 @@ bool get_hold_on_other_key_press_result(uint16_t keycode) {
 bool get_permissive_hold_result(uint16_t keycode) {
     switch (keycode) {
         case LHM_A:
-        case LHM_R:
-        case LHM_T:
-        case RHM_O:
-        case RHM_I:
-        case RHM_N:
-        case RHM_E:
-        case LHM_S:
         case LHM_D:
         case LHM_F:
         case RHM_J:
@@ -211,26 +141,14 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case RHM_L:
         case RHM_SCN:
         case LQM_S:
-        case RHM_SLS:
-        case RHM_DOT:
-        case RHM_M:
-        case LHM_Z:
-        case LHM_X:
-        case LHM_V:
-        case LHM_C:
-        case RHM_COM:
-        case SFT_MIN:
-        case ALT_MIN:
-        case SFT_QUO:
-        case ASW_Z:
-        case SFT_Z:
-        case SFT_QUE:
-        case RSM_K:
-        case LSM_D:
-        case RSM_SCN:
-        case LSM_A:
         case CRUTHUM2:
         case CLUTHUM2:
+        case CTL_Z:
+        case ALT_X:
+        case GUI_C:
+        case CTL_QUE:
+        case ALT_DOT:
+        case GUI_COM:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

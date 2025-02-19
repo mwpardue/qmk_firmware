@@ -176,8 +176,8 @@ ifdef HLC_TFT_DISPLAY
 	SRC += $(USER_PATH)/fonts/bigbluetermmono.qff.c
 	SRC += $(USER_PATH)/images/glyphs.qgf.c
 endif
-include $(USER_PATH)/halcyon_modules/rules.mk
-POST_CONFIG_H += $(USER_PATH)/halcyon_modules/config.h
+include $(USER_PATH)/splitkb/rules.mk
+POST_CONFIG_H += $(USER_PATH)/splitkb/config.h
 
 CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
 ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)

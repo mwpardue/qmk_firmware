@@ -28,10 +28,12 @@ _Static_assert(sizeof(kb_state_t) <= sizeof(uint32_t), "kb_state_t is oversize!"
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
 #ifdef KYRIA_KEYBOARD
-  setPinOutput(24);
-  // Turn the LED off
-  // (Due to technical reasons, high is off and low is on)
-  writePinHigh(24);
+    #ifndef HALCYON_KEYBOARD
+        setPinOutput(24);
+        // Turn the LED off
+        // (Due to technical reasons, high is off and low is on)
+        writePinHigh(24);
+    #endif
 #endif
 }
 
@@ -103,6 +105,10 @@ void matrix_scan_user(void) {
     check_oneshot_mods_timeout();
 #endif
 
+#ifdef HLC_TFT_DISPLAY
+    qmenu_timer();
+#endif
+
     matrix_scan_keymap();
 }
 
@@ -122,7 +128,7 @@ void matrix_scan_user(void) {
   // are on the same hand in Dvorak.
   switch (tap_hold_keycode) {
     case LHM_T: //F   + W, Q
-      if ((other_keycode == KC_W) || (other_keycode == KC_Q) || (other_keycode == QK_GESC) || (other_keycode == CUIL_THM) || (other_keycode == CUOL_THM)) {return true;}
+      if ((other_keycode == KC_W) || (other_keycode == KC_Q)) {return true;}
     case LHM_R:
       if (other_keycode == LIL_THM) {return true;}
     case LQM_S:
@@ -130,7 +136,7 @@ void matrix_scan_user(void) {
     case LHM_A:
       if ((other_keycode == KC_C) || (other_keycode == LOL_THM)) {return true;}
     case LHM_S:
-      if ((other_keycode == KC_QUOT) || (other_keycode == KC_DOT) || (other_keycode == KC_SCLN) || (other_keycode == SFT_QUE)) {return true;}
+      if ((other_keycode == KC_QUOT) || (other_keycode == KC_DOT) || (other_keycode == KC_SCLN)) {return true;}
     // case SFT_5: //Shift + XCS_SFT
     //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;
@@ -157,8 +163,6 @@ void matrix_scan_user(void) {
    switch (tap_hold_keycode) {
     // case BSP_SYM:
     // case ENT_HYP:
-    case SPC_HYP:
-    case SFT_FUN:
     case UIL_THM:
     case UOL_THM:
     case LUTHUM1:
@@ -172,26 +176,24 @@ void matrix_scan_user(void) {
     case LOR_THM:
     case RUTHUM2:
     case RUTHUM1:
-    case HYP_TAB:
     case CLUTHUM2:
     case CRUTHUM2:
     // case CLIR_THM:
     case CLOR_THM:
     case CLIL_THM:
     case CUIL_THM:
-    case SFT_MIN:
-    case CTL_QUO:
-    case GUI_BSP:
-    case ALT_MIN:
-    case ASW_Z:
-    case SFT_Z:
-    case SFT_QUE:
-    case LHM_Z:
-    case RHM_SLS:
-    case RHM_O:
-    case CTL_CW:
-    case GUI_CW:
-    case SFT_CW:
+    // case CTL_QUO:
+    // case GUI_BSP:
+    // case ALT_MIN:
+    // case ASW_Z:
+    // case SFT_Z:
+    // case SFT_QUE:
+    // case LHM_Z:
+    // case RHM_SLS:
+    // case RHM_O:
+    // case CTL_CW:
+    // case GUI_CW:
+    // case SFT_CW:
     case UIG_THM:
     case LUGTHUM:
     case LOG_THM:
@@ -199,7 +201,7 @@ void matrix_scan_user(void) {
     case LHM_MNL:
     case LHM_MNR:
     case CLIR_THM:
-    case GUI_SLS:
+    // case GUI_SLS:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -214,7 +216,7 @@ void matrix_scan_user(void) {
 bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     // for example:
     switch (keycode) {
-        case SP_CAP:
+        // case SP_CAP:
         case LUTHUM2:
         case LOL_THM:
         case RUTHUM2:

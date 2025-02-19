@@ -10,9 +10,13 @@
 
 extern uint16_t sft_tapping_term;
 extern uint16_t modtap_tapping_term;
+#ifdef ACHORDION_ENABLE
 extern uint16_t achordion_tapping_term;
+#endif
+#ifdef GQT_ENABLE
 extern uint16_t gqt_tapping_term;
 extern uint16_t sgqt_tapping_term;
+#endif
 
 process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -52,7 +56,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                 switch (user_config.submenu_selector) {
                     case SUBMENU_LIGHTING:
                         if (user_config.menu_selector == LIGHTING_END - 1) {
-                            user_config.menu_selector = LIGHTING_HEADING;
+                            user_config.menu_selector = LIGHTING_HEADING + 1;
                         } else {
                             user_config.menu_selector = user_config.menu_selector + 1;
                         };
@@ -60,7 +64,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         break;
                     case SUBMENU_MODTAP:
                         if (user_config.menu_selector == MODTAP_END - 1) {
-                            user_config.menu_selector = MODTAP_HEADING;
+                            user_config.menu_selector = MODTAP_HEADING + 1;
                         } else {
                             user_config.menu_selector = user_config.menu_selector + 1;
                         };
@@ -68,7 +72,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         break;
                     case SUBMENU_KB:
                         if (user_config.menu_selector == KB_END - 1) {
-                            user_config.menu_selector = KB_HEADING;
+                            user_config.menu_selector = KB_HEADING + 1;
                         } else {
                             user_config.menu_selector = user_config.menu_selector + 1;
                         };
@@ -84,7 +88,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
             if (record->event.pressed) {
                 switch (user_config.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        if (user_config.menu_selector == LIGHTING_HEADING) {
+                        if (user_config.menu_selector == LIGHTING_HEADING + 1) {
                             user_config.menu_selector = LIGHTING_END - 1;
                         } else {
                             user_config.menu_selector = user_config.menu_selector - 1;
@@ -92,7 +96,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
-                        if (user_config.menu_selector == MODTAP_HEADING) {
+                        if (user_config.menu_selector == MODTAP_HEADING + 1) {
                             user_config.menu_selector = MODTAP_END - 1;
                         } else {
                             user_config.menu_selector = user_config.menu_selector - 1;
@@ -100,7 +104,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         lcd_dirty = true;
                         break;
                     case SUBMENU_KB:
-                        if (user_config.menu_selector == KB_HEADING) {
+                        if (user_config.menu_selector == KB_HEADING + 1) {
                             user_config.menu_selector = KB_END - 1;
                         } else {
                             user_config.menu_selector = user_config.menu_selector - 1;
@@ -184,10 +188,13 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 modtap_tapping_term = modtap_tapping_term + 5;
                                 dprintf("Mod-Tap Tapping Term = %d\n", modtap_tapping_term);
                                 break;
+                            #ifdef ACHORDION_ENABLE
                             case MENU_AT:
                                 achordion_tapping_term = achordion_tapping_term + 50;
                                 dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
                                 break;
+                            #endif
+                            #ifdef GQT_ENABLE
                             case MENU_GQT:
                                 gqt_tapping_term = gqt_tapping_term + 5;
                                 dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
@@ -196,6 +203,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 sgqt_tapping_term = sgqt_tapping_term + 5;
                                 dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
                                 break;
+                            #endif
                         } //MODTAP menu switch
                     break;
                     case SUBMENU_KB:
@@ -347,10 +355,13 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 modtap_tapping_term = modtap_tapping_term - 5;
                                 dprintf("Mod-Tap Tapping Term = %d\n", modtap_tapping_term);
                                 break;
+                            #ifdef ACHORDION_ENABLE
                             case MENU_AT:
                                 achordion_tapping_term = achordion_tapping_term - 50;
                                 dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
                                 break;
+                            #endif
+                            #ifdef GQT_ENABLE
                             case MENU_GQT:
                                 gqt_tapping_term = gqt_tapping_term - 5;
                                 dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
@@ -359,6 +370,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 sgqt_tapping_term = sgqt_tapping_term - 5;
                                 dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
                                 break;
+                            #endif
                         }
                     break;
                     case SUBMENU_KB:
@@ -451,6 +463,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             break;
                     }
                 }
+            user_config.menu_selector = 1;
             qp_clear(lcd_surface);
             lcd_dirty = true;
             return PROCESS_RECORD_RETURN_FALSE;

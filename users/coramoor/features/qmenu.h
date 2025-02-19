@@ -22,9 +22,13 @@ typedef enum {
     MENU_STT,
     MENU_TT,
     MENU_MT,
+#ifdef ACHORDION_ENABLE
     MENU_AT,
+#endif
+#ifdef GQT_ENABLE
     MENU_GQT,
     MENU_SGQT,
+#endif
     MODTAP_END
 } qmenu_modtap_t;
 
@@ -35,8 +39,8 @@ typedef enum {
     MENU_DEFAULTLAYER,
     MENU_OSFLAG,
     MENU_DEBUG,
-    MENU_EECLEAR,
     MENU_NKRO,
+    MENU_EECLEAR,
     MENU_BOOTLOADER,
     KB_END
 } qmenu_kb_t;
@@ -73,3 +77,5 @@ typedef enum {
 extern qsubmenu_t qsubmenu;
 
 void render_menu(void);
+bool dyn_display;
+void qmenu_timer(void);
