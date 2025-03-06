@@ -60,6 +60,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         } else {
                             user_config.menu_selector = user_config.menu_selector + 1;
                         };
+                        start_index = 0;
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
@@ -93,6 +94,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         } else {
                             user_config.menu_selector = user_config.menu_selector - 1;
                         }
+                        start_index = 0;
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
@@ -141,6 +143,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 break;
                             case MENU_RGBMODE:
                                 rgb_matrix_step();
+                                start_index = 0;
                                 break;
                             case MENU_FLAGS:
                                 switch (rgb_matrix_get_flags()) {
@@ -263,13 +266,13 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             case MENU_DEFAULTLAYER:
                                 switch (get_highest_layer(default_layer_state)) {
                                     case _BASE:
-                                        set_single_persistent_default_layer(_COLEMAK_DH);
-                                        break;
-                                    case _COLEMAK_DH:
                                         set_single_persistent_default_layer(_GAMING);
                                         break;
-                                    case _GAMING:
+                                    case _COLEMAK_DH:
                                         set_single_persistent_default_layer(_BASE);
+                                        break;
+                                    case _GAMING:
+                                        set_single_persistent_default_layer(_COLEMAK_DH);
                                         break;
                                     default:
                                         break;
@@ -307,7 +310,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 break;
                             case MENU_RGBMODE:
                                 rgb_matrix_step_reverse();
-                                // substring_timer = timer_read32();
+                                start_index = 0;
                                 break;
                             case MENU_FLAGS:
                                 switch (rgb_matrix_get_flags()) {

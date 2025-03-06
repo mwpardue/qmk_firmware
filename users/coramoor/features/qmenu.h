@@ -78,4 +78,5 @@ extern qsubmenu_t qsubmenu;
 
 void render_menu(void);
 bool dyn_display;
+int start_index;
 void qmenu_timer(void);

@@ -20,9 +20,11 @@ extern uint16_t sgqt_tapping_term;
 
 __attribute__((unused)) int            start_index = 0;
 
+__attribute__((unused)) int            oversize_length = 0;
+
 __attribute__((unused)) uint32_t        substring_timer = 0;
 
-__attribute__((unused)) uint32_t scroll_time = 1000;
+__attribute__((unused)) uint32_t scroll_time = 250;
 
 __attribute__((unused)) bool dyn_display = false;
 //----------------------------------------------------------
@@ -83,27 +85,11 @@ bool check_menu(uint8_t menu_item) {
 #define ROW_HEIGHT mononoki->line_height
 #define ROW_OFFSET (menu_item*2)
 #define MENU_START_Y bbt->line_height+ROW_OFFSET
-// #define ROW_CALC (menu_item*(mononoki->line_height)+ROW_OFFSET)
-#define ROW_CALC (menu_item*(mononoki->line_height))+(menu_item*2) + 6
+#define ROW_CALC (menu_item*(mononoki->line_height))+(menu_item*2) + HEADER_ROW_Y
 #define BOX_LEFT 2
 #define BOX_TOP ROW_CALC - 1
 #define BOX_RIGHT LCD_WIDTH - 2
 #define BOX_BOTTOM BOX_TOP + mononoki->line_height + 2
-
-// Menu Header Colors
-#define CLR_MENU_FG HSV_BLACK
-#define CLR_MENU_BG HSV_CYAN
-
-// Selected Menu Item Colors
-#define CLR_SEL_BG 45, 255, 255
-#define CLR_SEL_FG HSV_BLACK
-
-// Unselected Menu Item Colors
-#define CLR_IDL_BG HSV_BLACK
-#define CLR_IDL_FG HSV_CYAN
-
-// Dangerous Selected Menu Item Colors
-#define CLR_STG_BG HSV_RED
 
 static char label[MAX_LABEL_SIZE];  // Static array to hold the string
 static char prop[MAX_PROP_SIZE];  // Static array to hold the string
@@ -133,7 +119,6 @@ void set_label(const char *new_value) {
 void render_menu_item(const char *label, char *property, uint8_t menu_item) {
 
     uint8_t property_length = strlen(property);
-    // char property_str[property_length + 1];
 
     uint8_t label_length = strlen(label);
     char menu_row[MAX_MENU_SIZE+1];
@@ -160,32 +145,9 @@ void prerender_menu_item(const char *label, uint16_t property, uint8_t menu_item
     render_menu_item(label, property_str, menu_item);
 }
 
-// void render_rgb_mode(const char *label, uint8_t menu_item) {
-//     __attribute__((unused)) static uint8_t mode;
-//     static char                            buf[41]     = {0};
-//     size_t                                 PROPERTY_LENGTH = 15;
-//
-//     if (mode != rgb_matrix_get_mode()) {
-//         mode        = rgb_matrix_get_mode();
-//         start_index = 0;
-//         snprintf(buf, sizeof(buf), "%*s", PROPERTY_LENGTH, rgb_matrix_name(rgb_matrix_get_mode()));
-//         for (uint8_t i = 1; i < sizeof(buf); ++i) {
-//             if (buf[i] == 0)
-//                 break;
-//             else if (buf[i] == '_')
-//                 buf[i] = ' ';
-//         }
-//     }
-//     if (check_menu(menu_item)) {
-//         qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, buf))/2), ROW_CALC, mononoki, buf, CLR_SEL_FG, CLR_SEL_BG);
-//     } else {
-//         qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, buf))/2), ROW_CALC, mononoki, buf, CLR_IDL_FG, CLR_IDL_BG);
-//     }
-// }
-
-
 void qmenu_timer(void) {
-    if ((dyn_display) && (timer_elapsed32(substring_timer) > scroll_time)) {
+    if ((dyn_display == true) && (timer_elapsed32(substring_timer) > scroll_time)) {
+        dprintln("qmenu_timer expired");
         lcd_dirty = true;
     }
 }
@@ -195,15 +157,13 @@ void render_rgb_mode(uint8_t menu_item) {
     static char                            buf[41] = {0};
     int                                    STRING_LENGTH;
     static char                            livestring[MAX_MENU_SIZE + 1];
-    size_t                                 PROPERTY_LENGTH = MAX_MENU_SIZE;
-    int                                    oversize_length = 0;
+    size_t                                 PROPERTY_LENGTH = MAX_MENU_SIZE - 4;
 
     if (mode != rgb_matrix_get_mode()) {
 
         memset(buf, ' ', 41);
         mode        = rgb_matrix_get_mode();
         STRING_LENGTH = strlen(rgb_matrix_name(rgb_matrix_get_mode()));
-        start_index = 0;
 
         snprintf(buf, sizeof(buf), "%*s", PROPERTY_LENGTH, rgb_matrix_name(rgb_matrix_get_mode()));
         STRING_LENGTH = strlen(strcat(buf, ""));
@@ -216,16 +176,18 @@ void render_rgb_mode(uint8_t menu_item) {
         if ( STRING_LENGTH > PROPERTY_LENGTH ) {
             strncpy(livestring, buf, PROPERTY_LENGTH);
             oversize_length = STRING_LENGTH - PROPERTY_LENGTH;
-            dyn_display = true;
         } else {
-            dyn_display = false;
             strncpy(livestring, buf, PROPERTY_LENGTH);
         }
     }
 
 
+    render_menu_item("MD: ", livestring, menu_item);
     if (check_menu(menu_item)) {
-        qp_drawtext_recolor(lcd_surface, 5, ROW_CALC + 1, mononoki, livestring, CLR_SEL_FG, CLR_SEL_BG);
+        dyn_display = true;
+        dprintln("RGB menu check");
+        dprintf("start_index = %d\n", start_index);
+        dprintf("oversize_length = %d\n", oversize_length);
         if ((dyn_display) && (start_index < oversize_length)) {
             start_index++;
             dprintf("start_index = %d\n", start_index);
@@ -233,14 +195,16 @@ void render_rgb_mode(uint8_t menu_item) {
             substring_timer = timer_read32();
         }
     } else {
-        qp_drawtext_recolor(lcd_surface, (LCD_WIDTH - qp_textwidth(mononoki, livestring)), ROW_CALC + 1, mononoki, livestring, CLR_IDL_FG, CLR_IDL_BG);
+        start_index = 0;
+        strncpy(livestring, buf + start_index, PROPERTY_LENGTH);
+        dyn_display = false;
     }
 }
 
 
 void render_menu_line(const char *heading) {
-    uint16_t left = 0;
-    uint16_t right = LCD_WIDTH;
+    uint16_t left = 2;
+    uint16_t right = LCD_WIDTH - 2;
     uint16_t top = 0;
     uint16_t bottom = bbt->line_height + 7;
 

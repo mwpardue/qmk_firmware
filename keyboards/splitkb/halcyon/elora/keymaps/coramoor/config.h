@@ -163,3 +163,19 @@
 #   define OLED_FONT_LSB
 #endif
 
+#define HSV_HAMMERHEAD 118, 255, 255
+// Menu Header Colors
+#define CLR_MENU_FG HSV_BLACK
+#define CLR_MENU_BG HSV_HAMMERHEAD
+
+// Selected Menu Item Colors
+#define CLR_SEL_BG HSV_YELLOW
+#define CLR_SEL_FG HSV_BLACK
+
+// Unselected Menu Item Colors
+#define CLR_IDL_BG HSV_BLACK
+#define CLR_IDL_FG HSV_HAMMERHEAD
+
+// Theme Colors
+#define CLR_THM1 HSV_WHITE
+#define CLR_THM2 HSV_HAMMERHEAD

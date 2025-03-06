@@ -21,6 +21,43 @@ painter_image_handle_t  os_glyph,
                         command_glyph, ctrl_glyph, option_glyph, shift_glyph,
                         capslock_glyph, capsword_glyph, xcase_glyph, layer_border;
 
+#define HEADER_ROW_Y 6
+#define ROW_HEIGHT mononoki->line_height
+#define ROW_OFFSET (menu_item*2)
+#define MENU_START_Y bbt->line_height+ROW_OFFSET
+#define ROW_CALC (menu_item*(mononoki->line_height))+(menu_item*2) + HEADER_ROW_Y
+#define ROW_Y ((row+1)*(mononoki->line_height) + 2) + HEADER_ROW_Y
+
+char* leaders[][2] = {
+
+     {"[DD]", "Dyn Macro"},
+     {"[SA]", "Arr Apps"},
+     {"[SS]", "Scrn Snag"},
+     {"[SC]", "Scrn Clip"},
+     {"[RR]", "FW Flash"},
+     {"[EC]", "@caracarn"},
+     {"[ET]", "@trueip"}
+ };
+
+
+ char* passers[][2] = {
+
+     {"[A]", "Ad!"},
+     {"[B]", "LbD"},
+     {"[D]", "D!2"},
+     {"[I]", "T!P"},
+     {"[J]", "JbD"},
+     {"[L]", "L2c"},
+     {"[N]", "Nv_"},
+     {"[O]", "Pdn"},
+     {"[P]", "P@s"},
+     {"[Q]", "StQ"},
+     {"[R]", "IWR"},
+     {"[S]", "S1b"},
+     {"[T]", "Tit"},
+     {"[Y]", "Lab"}
+ };
+
 #define LCD_LINE_ONE LCD_HEIGHT - 14*(mononoki->line_height)
 #define LCD_LINE_TWO LCD_HEIGHT - 13*(mononoki->line_height)
 #define LCD_LINE_THREE LCD_HEIGHT - 12*(mononoki->line_height)
@@ -42,7 +79,7 @@ painter_image_handle_t  os_glyph,
 #define LCD_STATUS_LINE os_glyph->height+40
 
 #define HSV_INACTIVE 0, 0, 128
-#define HSV_ACTIVE HSV_CYAN
+#define HSV_ACTIVE HSV_HAMMERHEAD
 
 void draw_layer(void) {
     if (lcd_dirty) {
@@ -50,40 +87,40 @@ void draw_layer(void) {
         dprintln("Drawing border");
         switch (get_highest_layer(layer_state|default_layer_state)) {
             case _BASE:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "BASE"))/2), LCD_LAYER_LINE, mononoki, "BASE", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "BASE"))/2), LCD_LAYER_LINE, mononoki, "BASE", CLR_THM2, HSV_BLACK);
                 break;
             case _COLEMAK_DH:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "TYPING"))/2), LCD_LAYER_LINE, mononoki, "TYPING", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "TYPING"))/2), LCD_LAYER_LINE, mononoki, "TYPING", CLR_THM2, HSV_BLACK);
                 break;
             case _GAMING:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "GAMING"))/2), LCD_LAYER_LINE, mononoki, "GAMING", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "GAMING"))/2), LCD_LAYER_LINE, mononoki, "GAMING", CLR_THM2, HSV_BLACK);
                 break;
             case _GAMENUM:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "GAMENUM"))/2), LCD_LAYER_LINE, mononoki, "GAMENUM", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "GAMENUM"))/2), LCD_LAYER_LINE, mononoki, "GAMENUM", CLR_THM2, HSV_BLACK);
                 break;
             case _HEX:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "HEX"))/2), LCD_LAYER_LINE, mononoki, "HEX", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "HEX"))/2), LCD_LAYER_LINE, mononoki, "HEX", CLR_THM2, HSV_BLACK);
                 break;
             case _NAVIGATION:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "NAVIGATION"))/2), LCD_LAYER_LINE, mononoki, "NAVIGATION", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "NAVIGATION"))/2), LCD_LAYER_LINE, mononoki, "NAVIGATION", CLR_THM2, HSV_BLACK);
                 break;
             case _NUMPAD:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "NUMPAD"))/2), LCD_LAYER_LINE, mononoki, "NUMPAD", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "NUMPAD"))/2), LCD_LAYER_LINE, mononoki, "NUMPAD", CLR_THM2, HSV_BLACK);
                 break;
             case _SYMBOL:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "SYMBOL"))/2), LCD_LAYER_LINE, mononoki, "SYMBOL", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "SYMBOL"))/2), LCD_LAYER_LINE, mononoki, "SYMBOL", CLR_THM2, HSV_BLACK);
                 break;
             case _VIM:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "VIM"))/2), LCD_LAYER_LINE, mononoki, "VIM", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "VIM"))/2), LCD_LAYER_LINE, mononoki, "VIM", CLR_THM2, HSV_BLACK);
                 break;
             case _FUNCTION:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "FUNCTION"))/2), LCD_LAYER_LINE, mononoki, "FUNCTION", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "FUNCTION"))/2), LCD_LAYER_LINE, mononoki, "FUNCTION", CLR_THM2, HSV_BLACK);
                 break;
             case _APPSWITCH:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "APPSWITCH"))/2), LCD_LAYER_LINE, mononoki, "APPSWITCH", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "APPSWITCH"))/2), LCD_LAYER_LINE, mononoki, "APPSWITCH", CLR_THM2, HSV_BLACK);
                 break;
             case _ADJUST:
-                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "ADJUST"))/2), LCD_LAYER_LINE, mononoki, "ADJUST", HSV_CYAN, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, "ADJUST"))/2), LCD_LAYER_LINE, mononoki, "ADJUST", CLR_THM2, HSV_BLACK);
                 break;
         }
     }
@@ -92,12 +129,12 @@ void draw_layer(void) {
 void draw_header(void) {
     if (lcd_dirty) {
         #ifdef KYRIA_KEYBOARD
-            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Kyria", HSV_CYAN, HSV_BLACK);
-            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 4.1", HSV_CYAN, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Kyria", CLR_THM2, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 4.1", CLR_THM2, HSV_BLACK);
         #endif
         #ifdef ELORA_KEYBOARD
-            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Elora", HSV_CYAN, HSV_BLACK);
-            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 2.0", HSV_CYAN, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height-mononoki->line_height), mononoki, "Elora", CLR_THM2, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 10, (os_glyph->height), mononoki, "rev 2.0", CLR_THM2, HSV_BLACK);
         #endif
     }
 }
@@ -249,62 +286,54 @@ bool module_post_init_user(void) {
     return false;
 }
 
-void draw_leader_screen(void) {
-    if (lcd_dirty) {
-        static const char *leader1 =    "LEADING";
-        static const char *leader2 =    "[DD]  Dyn Macro";
-        static const char *leader3 =    "[SA]   Arr Apps";
-        static const char *leader4 =    "[SS]  Scrn Snag";
-        static const char *leader5 =    "[SC]  Scrn Clip";
-        static const char *leader6 =    "[RR]   FW Flash";
-        static const char *leader7 =    "[EC]  @caracarn";
-        static const char *leader8 =    "[ET]    @trueip";
+void render_menu_header(const char *heading) {
+    uint16_t left = 2;
+    uint16_t right = LCD_WIDTH - 2;
+    uint16_t top = 0;
+    uint16_t bottom = bbt->line_height + 7;
 
-        uint16_t left = ((LCD_WIDTH-qp_textwidth(bbt, leader1))/2) - 2;
-        uint16_t right = ((LCD_WIDTH-qp_textwidth(bbt, leader1))/2)+(qp_textwidth(bbt, leader1) + 2);
-        uint16_t top = bbt->line_height + 1;
-        uint16_t bottom = bbt->line_height + 2;
+    qp_rect(lcd_surface, left, top, right, bottom, CLR_MENU_BG, true);
+    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+}
+
+void draw_leader_screen(char* array[][2], int size) {
+    if (lcd_dirty) {
+
+        int row =0;
 
         qp_clear(lcd_surface);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, leader1))/2), LCD_LINE_ONE, bbt, leader1, HSV_YELLOW, HSV_BLACK);
-        qp_rect(lcd_surface, left, top, right, bottom, HSV_WHITE, true);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader2))/2), LCD_LINE_TWO + 2, mononoki, leader2, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader3))/2), LCD_LINE_THREE + 2, mononoki, leader3, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader4))/2), LCD_LINE_FOUR + 2, mononoki, leader4, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader5))/2), LCD_LINE_FIVE + 2, mononoki, leader5, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader6))/2), LCD_LINE_SIX + 2, mononoki, leader6, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader7))/2), LCD_LINE_SEVEN + 2, mononoki, leader7, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, leader8))/2), LCD_LINE_EIGHT + 2, mononoki, leader8, HSV_CYAN, HSV_BLACK);
+        render_menu_header("LEADING");
+
+        int rows = size / sizeof(array[0]);
+        for (int i = 0; i < rows; i++) {
+            qp_drawtext_recolor(lcd_surface, 0, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, (LCD_WIDTH - qp_textwidth(mononoki, array[i][1])), ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
+            row++;
+        }
     }
 }
 
-void draw_pass_screen(void) {
+void draw_pass_screen(char* array[][2], int size) {
     if (lcd_dirty) {
-        static const char *pass1 = "PASS-KEYS";
-        static const char *pass2 = "[A] Ad! [B] LbD";
-        static const char *pass3 = "[D] D!2 [I] T!P";
-        static const char *pass4 = "[J] JbD [L] L2c";
-        static const char *pass5 = "[N] Nv_ [O] Pdn";
-        static const char *pass6 = "[P] P@s [Q] StQ";
-        static const char *pass7 = "[R] IWR [S] S1b";
-        static const char *pass8 = "[T] Tit [Y] Lab";
+        bool left_column = true;
+        int row = 0;
 
-        uint16_t left = ((LCD_WIDTH-qp_textwidth(bbt, pass1))/2) - 2;
-        uint16_t right = ((LCD_WIDTH-qp_textwidth(bbt, pass1))/2)+(qp_textwidth(bbt, pass1) + 2);
-        uint16_t top = bbt->line_height + 1;
-        uint16_t bottom = bbt->line_height + 2;
-
-        // int16_t width = qp_textwidth(my_font, pass1);
         qp_clear(lcd_surface);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, pass1))/2), LCD_LINE_ONE, bbt, pass1, HSV_YELLOW, HSV_BLACK);
-        qp_rect(lcd_surface, left, top, right, bottom, HSV_WHITE, true);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass2))/2), LCD_LINE_TWO + 2, mononoki, pass2, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass3))/2), LCD_LINE_THREE + 2, mononoki, pass3, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass4))/2), LCD_LINE_FOUR + 2, mononoki, pass4, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass5))/2), LCD_LINE_FIVE + 2, mononoki, pass5, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass6))/2), LCD_LINE_SIX + 2, mononoki, pass6, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass7))/2), LCD_LINE_SEVEN + 2, mononoki, pass7, HSV_CYAN, HSV_BLACK);
-        qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(mononoki, pass8))/2), LCD_LINE_EIGHT + 2, mononoki, pass8, HSV_CYAN, HSV_BLACK);
+        render_menu_header("PASS-KEYS");
+
+        int rows = size / sizeof(array[0]);
+        for (int i = 0; i < rows; i++) {
+            if (left_column) {
+                qp_drawtext_recolor(lcd_surface, 0, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH/2) - qp_textwidth(mononoki, array[i][1]))-5, ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
+                left_column = false;
+            } else {
+                qp_drawtext_recolor(lcd_surface, (LCD_WIDTH/2)+5, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, (LCD_WIDTH - qp_textwidth(mononoki, array[i][1])), ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
+                left_column = true;
+                row++;
+            }
+        }
     }
 }
 
@@ -313,14 +342,13 @@ void housekeeping_task_keymap(void) {
     if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps
         last_draw = timer_read32();
             if (get_highest_layer(layer_state | default_layer_state) == _ADJUST) {
-                dyn_display = true;
                 render_menu();
             } else if (is_passing()) {
                 dprintln("QPAINTER is_passing");
-                draw_pass_screen();
+                draw_pass_screen(passers, sizeof(passers));
             }
             else if (is_leading()){
-                draw_leader_screen();
+                draw_leader_screen(leaders, sizeof(leaders));
             }
             else {
                 if (lcd_dirty) {

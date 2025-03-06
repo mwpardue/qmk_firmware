@@ -60,6 +60,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case CRUTHUM2:
         case CLIR_THM:
         case CLOR_THM:
+        case NUM_Z:
           return g_tapping_term + 100;
         case LHM_A:
         case LQM_S:
@@ -141,14 +142,15 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case RHM_L:
         case RHM_SCN:
         case LQM_S:
-        case CRUTHUM2:
-        case CLUTHUM2:
+        case RUTHUM2:
+        case LUTHUM2:
         case CTL_Z:
         case ALT_X:
         case GUI_C:
         case CTL_QUE:
         case ALT_DOT:
         case GUI_COM:
+        case NUM_Z:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

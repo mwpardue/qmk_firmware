@@ -35,12 +35,8 @@
     #define CUSTOM_ONESHOT_TIMEOUT 2000
 #endif
 
-// #ifdef MOUSEKEY_ENABLE
-//   #define MK_KINETIC_SPEED
-// #endif
-
 #ifdef COMBO_ENABLE
-    #define COMBO_COUNT 11
+    #define COMBO_COUNT 10
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
@@ -64,14 +60,6 @@
     #endif
     #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_REACTIVE_SIMPLE
     #define RGB_MATRIX_DEFAULT_HUE 105
-    /*#ifdef RGB_MATRIX_TYPING_HEATMAP_SPREAD*/
-    /*    #undef RGB_MATRIX_TYPING_HEATMAP_SPREAD*/
-    /*#endif*/
-    /*#ifdef RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT*/
-    /*    #undef RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT*/
-    /*#endif*/
-    /*#define RGB_MATRIX_TYPING_HEATMAP_SPREAD rgb_matrix_get_heatmap_spread()*/
-    /*#define RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT rgb_matrix_get_heatmap_area_limit()*/
 
 #define ENABLE_RGB_MATRIX_SOLID
 #define ENABLE_RGB_MATRIX_BREATHING
@@ -163,3 +151,19 @@
 #   define OLED_FONT_LSB
 #endif
 
+#define HSV_HAMMERHEAD 118, 255, 255
+// Menu Header Colors
+#define CLR_MENU_FG HSV_BLACK
+#define CLR_MENU_BG HSV_HAMMERHEAD
+
+// Selected Menu Item Colors
+#define CLR_SEL_BG HSV_YELLOW
+#define CLR_SEL_FG HSV_BLACK
+
+// Unselected Menu Item Colors
+#define CLR_IDL_BG HSV_BLACK
+#define CLR_IDL_FG HSV_HAMMERHEAD
+
+// Theme Colors
+#define CLR_THM1 HSV_WHITE
+#define CLR_THM2 HSV_HAMMERHEAD

@@ -91,7 +91,7 @@ enum {
 
     // Upper Left Thumb Keys
     #define UOL_THM KC_F17
-    #define UIL_THM OSMMEH
+    #define UIL_THM HYPR_T(KC_F22)
 
     // Lower Left Thumb Keys
     #define LUTHUM0 MON_L
@@ -101,9 +101,9 @@ enum {
     #define LOL_THM LSFT_T(KC_ENTER)
 
     // Alt Base Thumb Keys
-    #define CLUTHUM2 LGUI_T(KC_ESC)
+    #define CLUTHUM2 LGUI_T(KC_CIRC)
     #define CLIL_THM LT(_NAVIGATION, KC_TAB)
-    #define CLOL_THM LT(_NUMPAD, LALT(KC_BSPC))
+    #define CLOL_THM LCTL_T(KC_ENTER)
     #define CUIL_THM KC_F20
     #define CUOL_THM MON_R
 
@@ -111,17 +111,17 @@ enum {
 
     // Lower Right Thumb Keys
     #define RUTHUM0 TAB_RGT
-    #define RUTHUM1 LT(_FUNCTION, KC_LEFT)
-    #define RUTHUM2 LT(_GAMING, KC_DLR)
+    #define RUTHUM1 TAB_LFT
+    #define RUTHUM2 RGUI_T(KC_DLR)
     #define LOR_THM RSFT_T(KC_ENTER)
     #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
     // Upper Right Thumb Keys
-    #define UIR_THM KC_F24
+    #define UIR_THM HYPR_T(KC_F23)
     #define UOR_THM KC_F16
 
     // Alt Base Thumb Keys
-    #define CLOR_THM LGUI_T(KC_ENTER)
+    #define CLOR_THM RCTL_T(KC_ENTER)
     #define CLIR_THM LT(_HEX, KC_SPACE)
     #define CUIR_THM OSMHYPR
     #define CUOR_THM OSMMEH
@@ -151,6 +151,10 @@ enum {
 #define LHM_D LSFT_T(KC_D)
 #define LHM_F LGUI_T(KC_F)
 #define CTL_TAB LCTL_T(KC_TAB)
+#define SFT_TAB LSFT_T(KC_TAB)
+#define SFT_QUO RSFT_T(KC_QUOT)
+#define CTL_QUO RCTL_T(KC_QUOT)
+#define GUI_QUO RGUI_T(KC_QUOT)
 #define GUI_TAB LGUI_T(KC_TAB)
 #define GUI_ESC LGUI_T(SM_ESC)
 #define CTL_MINS LCTL_T(KC_MINS)
@@ -189,17 +193,21 @@ enum {
 
 // Layer-taps
 
+#define LALT_PP LALT_T(KC_F18)
+#define RALT_PP RALT_T(KC_F19)
 #define MONUM MO(_NUMPAD)
 #define MOVIM MO(_VIM)
+#define NUM_Z LT(_NUMPAD, KC_Z)
 #define MON_L LALT(KC_H)
 #define MON_R LALT(KC_L)
 #define MON_U LALT(KC_K)
 #define MON_D LALT(KC_J)
+#define SPC_L LCTL(LALT(KC_H))
+#define SPC_R LCTL(LALT(KC_L))
 #define MOV_LFT LCTL(LSFT(KC_TAB))
 #define MOV_RGT LCTL(KC_TAB)
 #define TAB_LFT LGUI(KC_H)
 #define TAB_RGT LGUI(KC_L)
-#define GUI_QUO RGUI_T(KC_QUOT)
 #define TOBAS TO(_BASE)
 #define TOHEX TO(_HEX)
 #define TOADJ ADJ_LYR

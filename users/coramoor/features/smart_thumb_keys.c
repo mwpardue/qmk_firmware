@@ -69,8 +69,8 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     break;
 
     case CUIL_THM:
-    case UIL_THM:
-    case UIR_THM:
+    // case UIL_THM:
+    // case UIR_THM:
         if (record->event.pressed) {
             layer_on(_APPSWITCH);
             register_mods(MOD_MASK_GUI);
@@ -101,11 +101,52 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
       return PROCESS_RECORD_CONTINUE;
             }
         break;
+    //
+    // case RUTHUM1:
+    //     if (record->event.pressed) {
+    //         if (record->tap.count > 0) {
+    //                 tap_code16(LGUI(KC_H));
+    //     return PROCESS_RECORD_RETURN_FALSE;
+    //             }
+    //   return PROCESS_RECORD_CONTINUE;
+    //         }
+    //     break;
 
-    case RUTHUM1:
+    case RUTHUM2:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LGUI(KC_H));
+                    tap_code16(LSFT(KC_4));
+        return PROCESS_RECORD_RETURN_FALSE;
+                }
+      return PROCESS_RECORD_CONTINUE;
+            }
+        break;
+
+    case LUTHUM2:
+    case CLUTHUM2:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                    tap_code16(LSFT(KC_6));
+        return PROCESS_RECORD_RETURN_FALSE;
+                }
+      return PROCESS_RECORD_CONTINUE;
+            }
+        break;
+
+    case UIL_THM:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                    tap_code16(LALT(KC_H));
+        return PROCESS_RECORD_RETURN_FALSE;
+                }
+      return PROCESS_RECORD_CONTINUE;
+            }
+        break;
+
+    case UIR_THM:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                    tap_code16(LALT(KC_L));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
