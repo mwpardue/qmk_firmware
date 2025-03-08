@@ -74,6 +74,8 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case CTL_QUE:
         case ALT_DOT:
         case GUI_COM:
+        case GUI_X:
+        case GUI_DOT:
           return get_modtap_tapping_term();
         case RHM_K:
         case LHM_D:
@@ -151,6 +153,8 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case ALT_DOT:
         case GUI_COM:
         case NUM_Z:
+        case GUI_X:
+        case GUI_DOT:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:

@@ -110,9 +110,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_GAMING] = LAYOUT_split_3x6_5_hlc(
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
-  SFT_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, SFT_QUO,
-  LALT_PP, NUM_Z,   _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, RALT_PP,
-                             _______, _______, CLUTHUM2, _______, CLOL_THM,         CLOR_THM, _______, _______, _______, KC_NO,
+  GUI_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, GUI_QUO,
+  LALT_PP, SFT_Z,   ALT_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, ALT_DOT, SFT_QUE, RALT_PP,
+                            _______, _______,  _______, _______, CLOL_THM,         CLOR_THM, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                    KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
@@ -126,9 +126,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMAK_DH] = LAYOUT_split_3x6_5_hlc(
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
-  CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_QUO,
-  LALT_PP, NUM_Z,   _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, RALT_PP,
-                            _______, _______, CLUTHUM2, _______, _______,         _______, _______, _______, _______, _______,
+  GUI_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, GUI_QUO,
+  LALT_PP, CTL_Z,   ALT_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, ALT_DOT, CTL_QUE, RALT_PP,
+                            _______, _______,  _______, _______, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 

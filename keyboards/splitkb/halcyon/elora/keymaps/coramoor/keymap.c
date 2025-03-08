@@ -31,7 +31,8 @@ enum combos {
     CM_PLAY,
     CM_MOND,
     CM_NEXT,
-    CM_HEX
+    CM_HEX,
+    CM_SLSH
 };
 
 
@@ -46,6 +47,7 @@ const uint16_t PROGMEM mnext_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM mond_combo[] = {LUTHUM0, LUTHUM1, COMBO_END};
 const uint16_t PROGMEM mprev_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM hex_combo[] = {KC_X, KC_DOT, COMBO_END};
+const uint16_t PROGMEM slash_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
   [CM_LMES] = COMBO(mtlescape_combo, SM_ESC),
@@ -58,7 +60,8 @@ combo_t key_combos[] = {
   [CM_PLAY] = COMBO(play_combo, KC_MPLY),
   [CM_MOND] = COMBO(mond_combo, MON_D),
   [CM_NEXT] = COMBO(mnext_combo, KC_MNXT),
-  [CM_HEX] = COMBO(hex_combo, TOHEX)
+  [CM_HEX] = COMBO(hex_combo, TOHEX),
+  [CM_SLSH] = COMBO(slash_combo, KC_SLSH)
 };
 
 #define NOENC ENCODER_CCW_CW(_______, _______)
@@ -102,9 +105,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_GAMING] = LAYOUT_elora_hlc(
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
-  SFT_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, SFT_QUO,
-  LALT_PP, NUM_Z,   _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, RALT_PP,
-                             _______, _______, CLUTHUM2, _______, CLOL_THM,         CLOR_THM, _______, _______, _______, KC_NO,
+  GUI_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, GUI_QUO,
+  LALT_PP, CTL_Z,   ALT_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, ALT_DOT, CTL_QUE, RALT_PP,
+                            _______, _______,  _______, _______, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                    KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
@@ -120,9 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK_DH] = LAYOUT_elora_hlc(
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
-  CTL_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_QUO,
-  LALT_PP, NUM_Z,   _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, RALT_PP,
-                            _______, _______, CLUTHUM2, _______, _______,         _______, _______, _______, _______, _______,
+  _______, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, _______,
+  LALT_PP, CTL_Z,   GUI_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, GUI_DOT, CTL_QUE, RALT_PP,
+                            _______, _______,  _______, _______, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
@@ -137,9 +140,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NUMPAD] = LAYOUT_elora_hlc(
   KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                               KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-  _______, KC_BSPC, KC_TAB,  _______, _______, _______,                                             KC_TILD, KC_7,    KC_8,    KC_9,    KC_SLSH, KC_BSLS,
-  _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                             KC_MINS, KC_4,    KC_5,    KC_6,    KC_COLN, _______,
-  QK_LLCK, MOVIM,   _______, _______, _______, _______, _______, _______,         _______, _______, KC_EQL,  KC_1,    KC_2,    KC_3,    KC_DOT,  _______,
+  _______, KC_BSPC, KC_TAB,  _______, _______, _______,                                             KC_TILD, KC_7,    KC_8,    KC_9,    KC_COLN, KC_BSLS,
+  _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                             KC_MINS, KC_4,    KC_5,    KC_6,    KC_DOT,  KC_COLN,
+  QK_LLCK, MOVIM,   _______, _______, _______, _______, _______, _______,         _______, _______, KC_EQL,  KC_1,    KC_2,    KC_3,    KC_SLSH, _______,
                              SPC_L,   SPC_R,   _______, _______, _______,         KC_ENT,  KC_0,    KC_DOT,  _______, KC_NO,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),

@@ -21,6 +21,11 @@ painter_image_handle_t  os_glyph,
                         command_glyph, ctrl_glyph, option_glyph, shift_glyph,
                         capslock_glyph, capsword_glyph, xcase_glyph, layer_border;
 
+// hsv_t sel_fg;
+// hsv_t sel_bg;
+// #define CLR_SEL_FG sel_fg.h, sel_fg.s, sel_fg.v
+// #define CLR_SEL_BG sel_bg.h, sel_bg.s, sel_bg.v
+
 #define HEADER_ROW_Y 6
 #define ROW_HEIGHT mononoki->line_height
 #define ROW_OFFSET (menu_item*2)

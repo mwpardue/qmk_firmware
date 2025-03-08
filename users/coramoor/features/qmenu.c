@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "coramoor.h"
 #include "features/qpainter.h"
+#include "features/qmenu.h"
 
 extern uint16_t sft_tapping_term;
 
@@ -117,7 +118,6 @@ void set_label(const char *new_value) {
 }
 
 void render_menu_item(const char *label, char *property, uint8_t menu_item) {
-
     uint8_t property_length = strlen(property);
 
     uint8_t label_length = strlen(label);

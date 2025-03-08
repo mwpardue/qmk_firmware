@@ -129,11 +129,15 @@ enum {
 
 // Typing Layer Keys
 #define CTL_Z LCTL_T(KC_Z)
+#define SFT_Z LSFT_T(KC_Z)
 #define CTL_QUE RCTL_T(KC_SLSH)
+#define SFT_QUE RSFT_T(KC_SLSH)
 #define GUI_C LGUI_T(KC_C)
 #define GUI_COM RGUI_T(KC_COMM)
 #define ALT_X LALT_T(KC_X)
+#define GUI_X LGUI_T(KC_X)
 #define ALT_DOT RALT_T(KC_DOT)
+#define GUI_DOT RGUI_T(KC_DOT)
 
 // Right thumb keys
 
