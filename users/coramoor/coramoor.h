@@ -4,6 +4,7 @@
 #include "definitions/layers.h"
 #include "definitions/keycodes.h"
 #include "features/transport_sync.h"
+#include "coramoor_runtime.h"
 
 void keyboard_post_init_transport_sync(void);
 void keyboard_post_init_keymap(void);

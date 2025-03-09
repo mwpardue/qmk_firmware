@@ -4,7 +4,6 @@
 
 #include "../definitions/keycodes.h"
 #include "process_record_result.h"
-// #include "os_toggle.h"
 #include "macros.h"
 #include "smart_case.h"
 #include "features/transport_sync.h"

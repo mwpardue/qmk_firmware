@@ -1,6 +1,7 @@
 #include "select_word.h"
+#include "../coramoor_runtime.h"
 
-// extern os_t os;
+extern user_config_t user_config;
 
 void clear_locked_and_oneshot_mods(void) {
     uint8_t oneshot_locked_mods = get_oneshot_locked_mods();
@@ -39,7 +40,7 @@ process_record_result_t process_select_word(uint16_t keycode, keyrecord_t* recor
             }
         } else {
             // Select Word
-            if (user_config.os == MACOS) {
+            if (user_config.menu.os == MACOS) {
                 register_code(KC_LALT);
             } else {
                 register_code(KC_LCTL);
@@ -59,7 +60,7 @@ process_record_result_t process_select_word(uint16_t keycode, keyrecord_t* recor
         case STATE_WORD:
             unregister_code(KC_RGHT);
             unregister_mods(MOD_LSFT);
-            if (user_config.os == MACOS) {
+            if (user_config.menu.os == MACOS) {
                 unregister_code(KC_LALT);
             } else {
                 unregister_code(KC_LCTL);

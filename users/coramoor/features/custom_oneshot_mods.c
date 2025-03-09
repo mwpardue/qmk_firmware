@@ -2,8 +2,6 @@
 
 #include "custom_oneshot_mods.h"
 
-// extern os_t os;
-
 static custom_oneshots_t custom_oneshots = {.timer = 0};
 static bool              holding_oneshot_layer = false;
 

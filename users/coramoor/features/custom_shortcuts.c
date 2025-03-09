@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "custom_shortcuts.h"
+#include "coramoor_runtime.h"
 #include "definitions/keycodes.h"
 #ifdef QMENU_ENABLE
 #include "features/qpainter.h"
@@ -19,7 +20,7 @@ extern bool caps_word_on;
 
 process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
 
-    bool isMacOS = user_config.os == MACOS;
+    bool isMacOS = user_config.menu.os == MACOS;
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
     bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
@@ -190,24 +191,24 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case TG_OS:
             if (record->event.pressed) {
-                switch (user_config.os) {
+                switch (user_config.menu.os) {
 
                     case MACOS:
-                        user_config.os = WINDOWS;
+                        user_config.menu.os = WINDOWS;
                         SEND_STRING("win");
-                        eeconfig_update_user(user_config.raw);
+                        eeconfig_update_user_datablock(&user_config);
                         break;
 
                     case WINDOWS:
-                        user_config.os = LINUX;
+                        user_config.menu.os = LINUX;
                         SEND_STRING("lin");
-                        eeconfig_update_user(user_config.raw);
+                        eeconfig_update_user_datablock(&user_config);
                         break;
 
                     case LINUX:
-                        user_config.os = MACOS;
+                        user_config.menu.os = MACOS;
                         SEND_STRING("mac");
-                        eeconfig_update_user(user_config.raw);
+                        eeconfig_update_user_datablock(&user_config);
                         break;
 
                 }
@@ -217,8 +218,8 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
         case ADJ_LYR:
             if (record->event.pressed) {
                 #ifdef QMENU_ENABLE
-                    user_config.menu_selector = 1;
-                    user_config.submenu_selector = 1;
+                    user_config.menu.menu_selector = 1;
+                    user_config.menu.submenu_selector = 1;
                     qp_clear(lcd_surface);
                 #endif
                 layer_on(_ADJUST);

@@ -30,11 +30,6 @@ enum combos {
     CM_PREV,
     CM_PLAY,
     CM_NEXT,
-    CM_MONR,
-    CM_MOND,
-    CM_MONL,
-    CM_SPCL,
-    CM_SPCR,
     CM_HEX
 };
 
@@ -48,11 +43,6 @@ const uint16_t PROGMEM mtlogin2_combo[] = {LIL_THM, LHM_D, LQM_S, COMBO_END};
 const uint16_t PROGMEM play_combo[] = {KC_X, KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM mnext_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM mprev_combo[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM monl_combo[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM mond_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM monr_combo[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM spcl_combo[] = {KC_Q, KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM spcr_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM hex_combo[] = {KC_X, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
@@ -65,11 +55,6 @@ combo_t key_combos[] = {
   [CM_PREV] = COMBO(mprev_combo, KC_MPRV),
   [CM_PLAY] = COMBO(play_combo, KC_MPLY),
   [CM_NEXT] = COMBO(mnext_combo, KC_MNXT),
-  [CM_MONR] = COMBO(monl_combo, MON_L),
-  [CM_MOND] = COMBO(mond_combo, MON_D),
-  [CM_MONL] = COMBO(monr_combo, MON_R),
-  [CM_SPCL] = COMBO(spcl_combo, SPC_L),
-  [CM_SPCR] = COMBO(spcr_combo, SPC_R),
   [CM_HEX] = COMBO(hex_combo, TOHEX)
 };
 
@@ -111,8 +96,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_GAMING] = LAYOUT_split_3x6_5_hlc(
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
   GUI_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, GUI_QUO,
-  LALT_PP, SFT_Z,   ALT_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, ALT_DOT, SFT_QUE, RALT_PP,
-                            _______, _______,  _______, _______, CLOL_THM,         CLOR_THM, _______, _______, _______, _______,
+  LALT_PP, CTL_Z,   ALT_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, ALT_DOT, CTL_QUE, RALT_PP,
+                            _______, _______,  _______, _______, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                    KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),
 
@@ -126,8 +111,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMAK_DH] = LAYOUT_split_3x6_5_hlc(
   _______, _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______, _______,
-  GUI_TAB, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, GUI_QUO,
-  LALT_PP, CTL_Z,   ALT_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, ALT_DOT, CTL_QUE, RALT_PP,
+  _______, KC_A,    KC_S,    KC_D,    KC_F,    _______,                                             _______, KC_J,    KC_K,    KC_L,    KC_SCLN, _______,
+  LALT_PP, CTL_Z,   GUI_X,   _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, GUI_DOT, CTL_QUE, RALT_PP,
                             _______, _______,  _______, _______, _______,         _______, _______, _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                     KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
 ),

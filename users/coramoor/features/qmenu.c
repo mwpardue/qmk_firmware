@@ -72,7 +72,7 @@ const char* rgb_matrix_name(uint8_t effect) {
 // GENERAL MENU FUNCTIONS
 
 bool check_menu(uint8_t menu_item) {
-    if (user_config.menu_selector == menu_item) {
+    if (user_config.menu.menu_selector == menu_item) {
         return true;
     } else {
         return false;
@@ -314,7 +314,7 @@ void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
                 }
                 break;
             case MENU_OSFLAG:
-                switch (user_config.os) {
+                switch (user_config.menu.os) {
                     case WINDOWS:
                         render_menu_item("OS:", "WINDOWS", MENU_OSFLAG);
                         break;
@@ -327,7 +327,7 @@ void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
                 }
                 break;
             case MENU_DEBUG:
-                if (kb_state.debug_enabled) {
+                if (user_runtime_state.kb.debug_enabled) {
                     render_menu_item("DEBUG:", "ON", MENU_DEBUG);
                 } else {
                     render_menu_item("DEBUG:", "OFF", MENU_DEBUG);
@@ -355,7 +355,7 @@ void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
 
 void render_menu(void) {
     if (lcd_dirty) {
-        switch (user_config.submenu_selector) {
+        switch (user_config.menu.submenu_selector) {
             case SUBMENU_LIGHTING:
                 render_menu_rgb("RGB CONFIG", LIGHTING_HEADING, LIGHTING_END);
                 break;

@@ -1,6 +1,7 @@
 #include "coramoor.h"
 #include "features/tapdance.h"
 #include "features/qpainter.h"
+#include "coramoor_runtime.h"
 #ifdef RAW_ENABLE
     #include "raw_hid.h"
 #endif
@@ -19,14 +20,11 @@
     #endif
 #endif
 
-// static uint16_t next_keycode;
-// static keyrecord_t next_record;
-
-_Static_assert(sizeof(user_config_t) == sizeof(uint32_t), "user_config_t is oversize!");
-_Static_assert(sizeof(kb_state_t) <= sizeof(uint32_t), "kb_state_t is oversize!");
+user_config_t user_config;
 
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
+  eeconfig_read_user_datablock(&user_config);
 #ifdef KYRIA_KEYBOARD
     #ifndef HALCYON_KEYBOARD
         setPinOutput(24);
@@ -37,25 +35,18 @@ void keyboard_pre_init_user(void) {
 #endif
 }
 
-void                       keyboard_post_init_user(void) {
-    user_config.raw = eeconfig_read_user();
-    kb_state.raw = eeconfig_read_user();
-    // rgb_matrix_sethsv(160, 140, rgb_matrix_get_val());
-    // rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_SIMPLE);
-
-#if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
-    keyboard_post_init_transport_sync();
-#endif
+void keyboard_post_init_user(void) {
+    #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
+        keyboard_post_init_transport_sync();
+    #endif
 }
 
 __attribute__((weak)) void eeconfig_init_keymap(void) {}
 void                       eeconfig_init_user(void) {
-    user_config.raw              = 0;
-    // user_config.rgb_matrix_heatmap_area = 40;
-    // user_config.rgb_matrix_heatmap_spread = 35;
-    user_config.os = MACOS;
-    eeconfig_update_user(user_config.raw);
+    memset(&user_config, 0, sizeof(user_config_t));
+    user_config.menu.os = MACOS;
     eeconfig_init_keymap();
+    eeconfig_update_user_datablock(&user_config);
 }
 
 void matrix_init_user(void) {

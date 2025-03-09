@@ -146,10 +146,10 @@ void draw_header(void) {
 
 void draw_os(void) {
     static uint8_t last_os = 0;
-    if (lcd_dirty || last_os != user_config.os) {
-        if (last_os != user_config.os) {
+    if (lcd_dirty || last_os != user_config.menu.os) {
+        if (last_os != user_config.menu.os) {
             qp_close_image(os_glyph);
-            switch(user_config.os) {
+            switch(user_config.menu.os) {
                 case MACOS:
                     os_glyph = qp_load_image_mem(gfx_apple_glyph);
                 break;
@@ -163,9 +163,9 @@ void draw_os(void) {
                     os_glyph = qp_load_image_mem(gfx_circle_x);
                 break;
             }
-            last_os = user_config.os;
+            last_os = user_config.menu.os;
         }
-        switch(user_config.os) {
+        switch(user_config.menu.os) {
             case MACOS:
                 qp_drawimage_recolor(lcd_surface, ((LCD_WIDTH - (os_glyph->width + 2))), 10, os_glyph, HSV_WHITE, HSV_BLACK);
             break;

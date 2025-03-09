@@ -1,8 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "window_swapper.h"
-
-// extern os_t os;
+#include "coramoor_runtime.h"
 
 swapper_t swapper = {.state = NONE};
 
@@ -52,7 +51,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
         return PROCESS_RECORD_CONTINUE;
     }
 
-    bool isMacOS              = user_config.os == MACOS;
+    bool isMacOS              = user_config.menu.os == MACOS;
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotShift       = isOneShotLockedShift || get_oneshot_mods() & MOD_MASK_SHIFT;
     bool isShifted            = isOneShotShift || get_mods() & MOD_MASK_SHIFT;

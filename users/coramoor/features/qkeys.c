@@ -53,68 +53,68 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
 
         case MENU_MD:
             if (record->event.pressed) {
-                switch (user_config.submenu_selector) {
+                switch (user_config.menu.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        if (user_config.menu_selector == LIGHTING_END - 1) {
-                            user_config.menu_selector = LIGHTING_HEADING + 1;
+                        if (user_config.menu.menu_selector == LIGHTING_END - 1) {
+                            user_config.menu.menu_selector = LIGHTING_HEADING + 1;
                         } else {
-                            user_config.menu_selector = user_config.menu_selector + 1;
+                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
                         };
                         start_index = 0;
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
-                        if (user_config.menu_selector == MODTAP_END - 1) {
-                            user_config.menu_selector = MODTAP_HEADING + 1;
+                        if (user_config.menu.menu_selector == MODTAP_END - 1) {
+                            user_config.menu.menu_selector = MODTAP_HEADING + 1;
                         } else {
-                            user_config.menu_selector = user_config.menu_selector + 1;
+                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
                         };
                         lcd_dirty = true;
                         break;
                     case SUBMENU_KB:
-                        if (user_config.menu_selector == KB_END - 1) {
-                            user_config.menu_selector = KB_HEADING + 1;
+                        if (user_config.menu.menu_selector == KB_END - 1) {
+                            user_config.menu.menu_selector = KB_HEADING + 1;
                         } else {
-                            user_config.menu_selector = user_config.menu_selector + 1;
+                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
                         };
                         lcd_dirty = true;
                         break;
                 }
-                dprintf("Menu Selector is %d\n", user_config.menu_selector);
+                dprintf("Menu Selector is %d\n", user_config.menu.menu_selector);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
 
         case MENU_MU:
             if (record->event.pressed) {
-                switch (user_config.submenu_selector) {
+                switch (user_config.menu.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        if (user_config.menu_selector == LIGHTING_HEADING + 1) {
-                            user_config.menu_selector = LIGHTING_END - 1;
+                        if (user_config.menu.menu_selector == LIGHTING_HEADING + 1) {
+                            user_config.menu.menu_selector = LIGHTING_END - 1;
                         } else {
-                            user_config.menu_selector = user_config.menu_selector - 1;
+                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
                         }
                         start_index = 0;
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
-                        if (user_config.menu_selector == MODTAP_HEADING + 1) {
-                            user_config.menu_selector = MODTAP_END - 1;
+                        if (user_config.menu.menu_selector == MODTAP_HEADING + 1) {
+                            user_config.menu.menu_selector = MODTAP_END - 1;
                         } else {
-                            user_config.menu_selector = user_config.menu_selector - 1;
+                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
                         }
                         lcd_dirty = true;
                         break;
                     case SUBMENU_KB:
-                        if (user_config.menu_selector == KB_HEADING + 1) {
-                            user_config.menu_selector = KB_END - 1;
+                        if (user_config.menu.menu_selector == KB_HEADING + 1) {
+                            user_config.menu.menu_selector = KB_END - 1;
                         } else {
-                            user_config.menu_selector = user_config.menu_selector - 1;
+                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
                         }
                         lcd_dirty = true;
                         break;
                     }
-                dprintf("Menu Selector is %d\n", user_config.menu_selector);
+                dprintf("Menu Selector is %d\n", user_config.menu.menu_selector);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
@@ -122,12 +122,12 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
         case MENU_AU:
             if (record->event.pressed) {
                 dprintln("MENU_AU pressed");
-                switch (user_config.submenu_selector) {
+                switch (user_config.menu.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        switch (user_config.menu_selector) {
+                        switch (user_config.menu.menu_selector) {
                             case LIGHTING_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.submenu_selector = SUBMENU_MODTAP;
+                                user_config.menu.submenu_selector = SUBMENU_MODTAP;
                                 break;
                             case MENU_HUE:
                                 rgb_matrix_increase_hue();
@@ -174,10 +174,10 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         }
                         break;
                     case SUBMENU_MODTAP:
-                        switch (user_config.menu_selector) {
+                        switch (user_config.menu.menu_selector) {
                             case MODTAP_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.submenu_selector = SUBMENU_KB;
+                                user_config.menu.submenu_selector = SUBMENU_KB;
                                 break;
                             case MENU_STT:
                                 sft_tapping_term = sft_tapping_term + 5;
@@ -210,10 +210,10 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         } //MODTAP menu switch
                     break;
                     case SUBMENU_KB:
-                        switch (user_config.menu_selector) {
+                        switch (user_config.menu.menu_selector) {
                             case KB_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.submenu_selector = SUBMENU_LIGHTING;
+                                user_config.menu.submenu_selector = SUBMENU_LIGHTING;
                                 break;
                             case MENU_EECLEAR:
                                 #ifdef NO_RESET
@@ -226,8 +226,8 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             case MENU_DEBUG:
                                 #ifndef NO_DEBUG
                                     debug_enable ^= 1;
-                                    kb_state.debug_enabled = debug_enable;
-                                    eeconfig_update_user(kb_state.raw);
+                                    user_runtime_state.kb.debug_enabled = debug_enable;
+                                    // eeconfig_update_user(user_runtime_state.raw);
                                     if (debug_enable) {
                                         print("DEBUG: enabled.\n");
                                     } else {
@@ -236,18 +236,18 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 #endif
                                 break;
                             case MENU_OSFLAG:
-                                switch (user_config.os) {
+                                switch (user_config.menu.os) {
                                     case MACOS:
-                                        user_config.os = WINDOWS;
-                                        eeconfig_update_user(user_config.raw);
+                                        user_config.menu.os = WINDOWS;
+                                        eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case WINDOWS:
-                                        user_config.os = LINUX;
-                                        eeconfig_update_user(user_config.raw);
+                                        user_config.menu.os = LINUX;
+                                        eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case LINUX:
-                                        user_config.os = MACOS;
-                                        eeconfig_update_user(user_config.raw);
+                                        user_config.menu.os = MACOS;
+                                        eeconfig_update_user_datablock(&user_config);
                                         break;
                                 }
                                 break;
@@ -289,12 +289,12 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
         case MENU_AD:
                 dprintln("MENU_AD pressed");
             if (record->event.pressed) {
-                switch (user_config.submenu_selector) {
+                switch (user_config.menu.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        switch (user_config.menu_selector) {
+                        switch (user_config.menu.menu_selector) {
                             case LIGHTING_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.submenu_selector = SUBMENU_KB;
+                                user_config.menu.submenu_selector = SUBMENU_KB;
                                 break;
                             case MENU_HUE:
                                 rgb_matrix_decrease_hue();
@@ -341,10 +341,10 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         }
                     break;
                     case SUBMENU_MODTAP:
-                        switch (user_config.menu_selector) {
+                        switch (user_config.menu.menu_selector) {
                             case MODTAP_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.submenu_selector = SUBMENU_LIGHTING;
+                                user_config.menu.submenu_selector = SUBMENU_LIGHTING;
                                 break;
                             case MENU_STT:
                                 sft_tapping_term = sft_tapping_term - 5;
@@ -377,10 +377,10 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         }
                     break;
                     case SUBMENU_KB:
-                        switch (user_config.menu_selector) {
+                        switch (user_config.menu.menu_selector) {
                             case KB_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.submenu_selector = SUBMENU_MODTAP;
+                                user_config.menu.submenu_selector = SUBMENU_MODTAP;
                                 break;
                             case MENU_EECLEAR:
                                 #ifdef NO_RESET
@@ -393,8 +393,8 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             case MENU_DEBUG:
                                 #ifndef NO_DEBUG
                                     debug_enable ^= 1;
-                                    kb_state.debug_enabled = debug_enable;
-                                    eeconfig_update_user(kb_state.raw);
+                                    user_runtime_state.kb.debug_enabled = debug_enable;
+                                    // eeconfig_update_user(user_runtime_state.raw);
                                     if (debug_enable) {
                                         print("DEBUG: enabled.\n");
                                     } else {
@@ -403,18 +403,18 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 #endif
                                 break;
                             case MENU_OSFLAG:
-                                switch (user_config.os) {
+                                switch (user_config.menu.os) {
                                     case MACOS:
-                                        user_config.os = LINUX;
-                                        eeconfig_update_user(user_config.raw);
+                                        user_config.menu.os = LINUX;
+                                        eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case WINDOWS:
-                                        user_config.os = MACOS;
-                                        eeconfig_update_user(user_config.raw);
+                                        user_config.menu.os = MACOS;
+                                        eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case LINUX:
-                                        user_config.os = WINDOWS;
-                                        eeconfig_update_user(user_config.raw);
+                                        user_config.menu.os = WINDOWS;
+                                        eeconfig_update_user_datablock(&user_config);
                                         break;
                                 }
                                 break;
@@ -454,19 +454,19 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
             break;
             case TB_MENU:
                 if (record->event.pressed) {
-                    switch (user_config.submenu_selector) {
+                    switch (user_config.menu.submenu_selector) {
                         case SUBMENU_LIGHTING:
-                            user_config.submenu_selector = SUBMENU_MODTAP;
+                            user_config.menu.submenu_selector = SUBMENU_MODTAP;
                             break;
                         case SUBMENU_MODTAP:
-                            user_config.submenu_selector = SUBMENU_KB;
+                            user_config.menu.submenu_selector = SUBMENU_KB;
                             break;
                         case SUBMENU_KB:
-                            user_config.submenu_selector = SUBMENU_LIGHTING;
+                            user_config.menu.submenu_selector = SUBMENU_LIGHTING;
                             break;
                     }
                 }
-            user_config.menu_selector = 1;
+            user_config.menu.menu_selector = 1;
             qp_clear(lcd_surface);
             lcd_dirty = true;
             return PROCESS_RECORD_RETURN_FALSE;

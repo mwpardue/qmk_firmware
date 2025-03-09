@@ -3,8 +3,6 @@
 #include QMK_KEYBOARD_H
 
 #include "../definitions/keycodes.h"
-/*#include "caps_word.h"*/
-/*#include "smart_case.h"*/
 
 typedef enum {
     TD_NONE,
@@ -20,7 +18,6 @@ typedef enum {
 
 typedef struct {
     td_state_t state;
-    /*bool recording;*/
 } td_tap_t;
 
 enum {
