@@ -230,11 +230,13 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case ADJ_EXT:
             if (record->event.pressed) {
-                if (user_runtime_state.kb.write_to_eeprom) {
-                    painter_sethsv(painter_get_hue(true), painter_get_sat(true), painter_get_val(true), true);
-                    painter_sethsv(painter_get_hue(false), painter_get_sat(false), painter_get_val(false), false);
-                    user_runtime_state.kb.write_to_eeprom = false;
-                }
+                #ifdef HLC_TFT_DISPLAY
+                    if (user_runtime_state.kb.write_to_eeprom) {
+                        painter_sethsv(painter_get_hue(true), painter_get_sat(true), painter_get_val(true), true);
+                        painter_sethsv(painter_get_hue(false), painter_get_sat(false), painter_get_val(false), false);
+                        user_runtime_state.kb.write_to_eeprom = false;
+                    }
+                #endif
                 layer_off(_ADJUST);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
