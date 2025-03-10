@@ -9,6 +9,9 @@
 void keyboard_post_init_transport_sync(void);
 void keyboard_post_init_keymap(void);
 void housekeeping_task_transport_sync(void);
+uint32_t eeconfig_update_user_datablock_handler(const void *data, uint8_t offset, uint8_t size);
+uint32_t eeconfig_read_user_datablock_handler(void *data, uint8_t offset, uint8_t size);
+
 
 #ifdef TAP_DANCE_ENABLE
     #include "features/tapdance.h"
@@ -105,6 +108,7 @@ void housekeeping_task_transport_sync(void);
 
 #ifdef QMENU_ENABLE
     #include "features/qkeys.h"
+    #include "features/qhelper.h"
 #endif
 
 #ifdef RGB_MATRIX_LEDMAPS_ENABLED

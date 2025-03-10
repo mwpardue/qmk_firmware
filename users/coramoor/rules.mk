@@ -166,6 +166,7 @@ QMENU_ENABLE?= no
 ifeq ($(strip $(QMENU_ENABLE)), yes)
 	SRC += $(USER_PATH)/features/qmenu.c
 	SRC += $(USER_PATH)/features/qkeys.c
+	SRC += $(USER_PATH)/features/qhelper.c
 	OPT_DEFS += -DQMENU_ENABLE
 endif
 

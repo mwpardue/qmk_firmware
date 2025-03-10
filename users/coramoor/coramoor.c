@@ -22,9 +22,19 @@
 
 user_config_t user_config;
 
+uint32_t eeconfig_update_user_datablock_handler(const void *data, uint8_t offset, uint8_t size) {
+    eeconfig_update_user_datablock(data);
+    return 0;
+}
+
+uint32_t eeconfig_read_user_datablock_handler(void *data, uint8_t offset, uint8_t size) {
+    eeconfig_read_user_datablock(data);
+    return 0;
+}
+
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
-  eeconfig_read_user_datablock(&user_config);
+  eeconfig_read_user_datablock_handler(&user_config, 0, EECONFIG_USER_DATA_SIZE);
 #ifdef KYRIA_KEYBOARD
     #ifndef HALCYON_KEYBOARD
         setPinOutput(24);
@@ -44,9 +54,24 @@ void keyboard_post_init_user(void) {
 __attribute__((weak)) void eeconfig_init_keymap(void) {}
 void                       eeconfig_init_user(void) {
     memset(&user_config, 0, sizeof(user_config_t));
+    user_config.painter.hsv.primary = (HSV) {
+        .h = 118,
+        .s = 255,
+        .v = 255,
+    };
+    user_config.painter.hsv.secondary = (HSV) {
+        .h = 43,
+        .s = 255,
+        .v = 255,
+    };
+    user_config.menu.menu_selector = 0;
+    user_config.menu.submenu_selector = 0;
     user_config.menu.os = MACOS;
+    dprintf("Initialized user_config.painter.hsv.primary: %d, %d, %d\n", user_config.painter.hsv.primary.h, user_config.painter.hsv.primary.s, user_config.painter.hsv.primary.v);
+    dprintf("Initialized user_config.painter.hsv.secondary: %d, %d, %d\n", user_config.painter.hsv.secondary.h, user_config.painter.hsv.secondary.s, user_config.painter.hsv.secondary.v);
     eeconfig_init_keymap();
-    eeconfig_update_user_datablock(&user_config);
+    // eeconfig_update_user_datablock(&user_config);
+    eeconfig_update_user_datablock_handler(&user_config, 0, EECONFIG_USER_DATA_SIZE);
 }
 
 void matrix_init_user(void) {

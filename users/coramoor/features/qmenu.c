@@ -145,6 +145,15 @@ void prerender_menu_item(const char *label, uint16_t property, uint8_t menu_item
     render_menu_item(label, property_str, menu_item);
 }
 
+void prerender_painter_item(const char *label, uint8_t property, uint8_t menu_item) {
+
+    uint8_t property_length = snprintf(NULL, 0, "%d", property);
+    char property_str[property_length + 1];
+    snprintf(property_str, sizeof(property_str), "%d", property);
+
+    render_menu_item(label, property_str, menu_item);
+}
+
 void qmenu_timer(void) {
     if ((dyn_display == true) && (timer_elapsed32(substring_timer) > scroll_time)) {
         dprintln("qmenu_timer expired");
@@ -353,6 +362,37 @@ void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
     }
 }
 
+void render_menu_painter(const char *heading, uint8_t sm_start, uint8_t sm_end) {
+    render_menu_line(heading);
+    dprintf("user_config.painter.hsv.primary: %d, %d, %d\n", user_config.painter.hsv.primary.h, user_config.painter.hsv.primary.s, user_config.painter.hsv.primary.v);
+    dprintf("user_config.painter.hsv.secondary: %d, %d, %d\n", user_config.painter.hsv.secondary.h, user_config.painter.hsv.secondary.s, user_config.painter.hsv.secondary.v);
+    for (uint8_t i = (sm_start); i < sm_end; i++) {
+        switch(i) {
+            case PAINTER_HEADING:
+                    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+                break;
+            case MENU_PHUE:
+                prerender_painter_item("PRI HUE:", user_config.painter.hsv.primary.h, i);
+                break;
+            case MENU_PSAT:
+                prerender_painter_item("PRI SAT:", user_config.painter.hsv.primary.s, i);
+                break;
+            case MENU_PVAL:
+                prerender_painter_item("PRI VAL:", user_config.painter.hsv.primary.v, i);
+                break;
+            case MENU_SHUE:
+                prerender_painter_item("SEC HUE:", user_config.painter.hsv.secondary.h, i);
+                break;
+            case MENU_SSAT:
+                prerender_painter_item("SEC SAT:", user_config.painter.hsv.secondary.s, i);
+                break;
+            case MENU_SVAL:
+                prerender_painter_item("SEC VAL:", user_config.painter.hsv.secondary.v, i);
+                break;
+         }
+    }
+}
+
 void render_menu(void) {
     if (lcd_dirty) {
         switch (user_config.menu.submenu_selector) {
@@ -361,6 +401,9 @@ void render_menu(void) {
                 break;
             case SUBMENU_MODTAP:
                 render_menu_modtap("MODTAP CONFIG", MODTAP_HEADING, MODTAP_END);
+                break;
+            case SUBMENU_PAINTER:
+                render_menu_painter("PAINTER CONFIG", PAINTER_HEADING, PAINTER_END);
                 break;
             case SUBMENU_KB:
                 render_menu_kb("KB CONFIG", KB_HEADING, KB_END);

@@ -6,6 +6,7 @@
 #include "rgb_matrix.h"
 #include "features/qmenu.h"
 #include "features/qpainter.h"
+#include "features/qhelper.h"
 
 
 extern uint16_t sft_tapping_term;
@@ -17,6 +18,8 @@ extern uint16_t achordion_tapping_term;
 extern uint16_t gqt_tapping_term;
 extern uint16_t sgqt_tapping_term;
 #endif
+
+extern user_runtime_state_t user_runtime_state;
 
 process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -71,6 +74,14 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         };
                         lcd_dirty = true;
                         break;
+                    case SUBMENU_PAINTER:
+                        if (user_config.menu.menu_selector == PAINTER_END - 1) {
+                            user_config.menu.menu_selector = PAINTER_HEADING + 1;
+                        } else {
+                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
+                        }
+                        lcd_dirty = true;
+                        break;
                     case SUBMENU_KB:
                         if (user_config.menu.menu_selector == KB_END - 1) {
                             user_config.menu.menu_selector = KB_HEADING + 1;
@@ -100,6 +111,14 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                     case SUBMENU_MODTAP:
                         if (user_config.menu.menu_selector == MODTAP_HEADING + 1) {
                             user_config.menu.menu_selector = MODTAP_END - 1;
+                        } else {
+                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
+                        }
+                        lcd_dirty = true;
+                        break;
+                    case SUBMENU_PAINTER:
+                        if (user_config.menu.menu_selector == PAINTER_HEADING + 1) {
+                            user_config.menu.menu_selector = PAINTER_END - 1;
                         } else {
                             user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
                         }
@@ -177,7 +196,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         switch (user_config.menu.menu_selector) {
                             case MODTAP_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_KB;
+                                user_config.menu.submenu_selector = SUBMENU_PAINTER;
                                 break;
                             case MENU_STT:
                                 sft_tapping_term = sft_tapping_term + 5;
@@ -208,6 +227,38 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 break;
                             #endif
                         } //MODTAP menu switch
+                    break;
+                    case SUBMENU_PAINTER:
+                        switch (user_config.menu.menu_selector) {
+                            case PAINTER_HEADING:
+                                qp_clear(lcd_surface);
+                                user_config.menu.submenu_selector = SUBMENU_KB;
+                                break;
+                            case MENU_PHUE:
+                                painter_increase_hue_noeeprom(true);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_PSAT:
+                                painter_increase_sat_noeeprom(true);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_PVAL:
+                                painter_increase_val_noeeprom(true);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_SHUE:
+                                painter_increase_hue_noeeprom(false);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_SSAT:
+                                painter_increase_sat_noeeprom(false);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_SVAL:
+                                painter_increase_val_noeeprom(false);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                        } //PAINTER menu switch
                     break;
                     case SUBMENU_KB:
                         switch (user_config.menu.menu_selector) {
@@ -376,11 +427,43 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             #endif
                         }
                     break;
+                    case SUBMENU_PAINTER:
+                        switch (user_config.menu.menu_selector) {
+                            case PAINTER_HEADING:
+                                qp_clear(lcd_surface);
+                                user_config.menu.submenu_selector = SUBMENU_MODTAP;
+                                break;
+                            case MENU_PHUE:
+                                painter_decrease_hue_noeeprom(true);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_PSAT:
+                                painter_decrease_sat_noeeprom(true);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_PVAL:
+                                painter_decrease_val_noeeprom(true);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_SHUE:
+                                painter_decrease_hue_noeeprom(false);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_SSAT:
+                                painter_decrease_sat_noeeprom(false);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                            case MENU_SVAL:
+                                painter_decrease_val_noeeprom(false);
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                break;
+                        } //MODTAP menu switch
+                    break;
                     case SUBMENU_KB:
                         switch (user_config.menu.menu_selector) {
                             case KB_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_MODTAP;
+                                user_config.menu.submenu_selector = SUBMENU_PAINTER;
                                 break;
                             case MENU_EECLEAR:
                                 #ifdef NO_RESET
@@ -459,6 +542,9 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             user_config.menu.submenu_selector = SUBMENU_MODTAP;
                             break;
                         case SUBMENU_MODTAP:
+                            user_config.menu.submenu_selector = SUBMENU_PAINTER;
+                            break;
+                        case SUBMENU_PAINTER:
                             user_config.menu.submenu_selector = SUBMENU_KB;
                             break;
                         case SUBMENU_KB:

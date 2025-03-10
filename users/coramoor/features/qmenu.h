@@ -47,30 +47,44 @@ typedef enum {
 
 extern qmenu_kb_t qmenu_kb;
 
-static const char * const rmodes[] = {
-    "               ",
-    "SOLID",
-    "BREATHING",
-    "CYC LEFT/RIGHT",
-    "CYC OUT/IN",
-    "DUAL BEACON",
-    "HUE BREATHING",
-    "HUE PENDULUM",
-    "HUE WAVE",
-    "TYPING HEATMAP",
-    "REACT SIMPLE",
-    "REACTIVE NEXUS",
-    "REACT M-NEXUS",
-    "SPLASH",
-    "MULTISPLASH",
-    "SOLID SPLASH",
-    "SOLID M-SPLASH"
-};
+typedef enum {
+    PAINTER_HEADING,
+    MENU_PHUE,
+    MENU_PSAT,
+    MENU_PVAL,
+    MENU_SHUE,
+    MENU_SSAT,
+    MENU_SVAL,
+    PAINTER_END
+} qmenu_painter_t;
+
+extern qmenu_painter_t qmenu_painter;
+
+/*static const char * const rmodes[] = {*/
+/*    "               ",*/
+/*    "SOLID",*/
+/*    "BREATHING",*/
+/*    "CYC LEFT/RIGHT",*/
+/*    "CYC OUT/IN",*/
+/*    "DUAL BEACON",*/
+/*    "HUE BREATHING",*/
+/*    "HUE PENDULUM",*/
+/*    "HUE WAVE",*/
+/*    "TYPING HEATMAP",*/
+/*    "REACT SIMPLE",*/
+/*    "REACTIVE NEXUS",*/
+/*    "REACT M-NEXUS",*/
+/*    "SPLASH",*/
+/*    "MULTISPLASH",*/
+/*    "SOLID SPLASH",*/
+/*    "SOLID M-SPLASH"*/
+/*};*/
 
 typedef enum {
     SUBMENU_OFF,
     SUBMENU_LIGHTING,
     SUBMENU_MODTAP,
+    SUBMENU_PAINTER,
     SUBMENU_KB
 } qsubmenu_t;
 

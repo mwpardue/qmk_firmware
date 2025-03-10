@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NAVIGATION] = LAYOUT_split_3x6_5_hlc(
     _______, KC_BSPC, MC_SWRI, TAB_LFT, TAB_RGT, _______, 		                                    KC_PGDN, SEL_WRD, SEL_LIN, KC_PGUP, _______, _______,
-    _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+    _______, OSMLCTL, OSMLALT, OSMLSFT, OSMLGUI, _______,                                           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XCASE,   _______,
     QK_LLCK, MONUM,   MC_SWRI, TD_COPY, TD_PAST, _______, _______, _______,       _______, _______, _______, MON_L,   MON_D,   MON_R,   _______, _______,
                                MON_L,   MON_R,   _______, _______, _______,       KC_ENT,  KC_SPC,  _______, _______, _______,
         KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                   KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
@@ -158,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_FUNCTION] = LAYOUT_split_3x6_5_hlc( \
-  TOADJ,   DF_LAYR, TOBAS,   EE_CLR,  DB_TOGG, _______,                                             _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F13,\
+  TOADJ,   DF_LAYR, TOBAS,   EE_CLR,  DB_TOGG, TG_OS,                                               _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F13,\
   SM_LOGN, OSMLSFT, OSMLALT, OSMLCTL, OSMLGUI, _______,                                             _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,  KC_F14,\
   _______, _______, TOHEX,   _______, _______, _______, _______, _______,         _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  KC_F15,\
                              _______, _______, _______, KC_DEL,  _______,         _______, _______, _______, _______, KC_NO, \
@@ -174,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_ADJUST] = LAYOUT_split_3x6_5_hlc( \
-  TOBAS,   TOBAS,   _______, EE_CLR,  QK_RBT,  _______,                                             _______, _______,  _______,  _______, _______, _______,  \
+  ADJ_EXT, TOBAS,   _______, EE_CLR,  QK_RBT,  _______,                                             _______, _______,  _______,  _______, _______, _______,  \
   TB_MENU, _______, _______, _______, _______, _______,                                             MENU_AD, MENU_MD,  MENU_MU,  MENU_AU, _______, _______,\
   _______, _______, _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______,  _______,  _______, _______, _______,\
                              _______, _______, _______, _______, _______,         _______, _______, _______, _______, KC_NO, \

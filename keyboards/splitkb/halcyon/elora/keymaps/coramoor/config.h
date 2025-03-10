@@ -166,16 +166,20 @@
 #define HSV_HAMMERHEAD 118, 255, 255
 // Menu Header Colors
 #define CLR_MENU_FG HSV_BLACK
-#define CLR_MENU_BG HSV_HAMMERHEAD
+#define CLR_MENU_BG painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
+/*#define CLR_MENU_BG HSV_HAMMERHEAD*/
 
 // Selected Menu Item Colors
-#define CLR_SEL_BG HSV_YELLOW
+/*#define CLR_SEL_BG HSV_YELLOW*/
+#define CLR_SEL_BG painter_get_hue(false), painter_get_sat(false), painter_get_val(false)
 #define CLR_SEL_FG HSV_BLACK
 
 // Unselected Menu Item Colors
 #define CLR_IDL_BG HSV_BLACK
-#define CLR_IDL_FG HSV_HAMMERHEAD
+#define CLR_IDL_FG painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
+/*#define CLR_IDL_FG HSV_HAMMERHEAD*/
 
 // Theme Colors
 #define CLR_THM1 HSV_WHITE
-#define CLR_THM2 HSV_HAMMERHEAD
+#define CLR_THM2 painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
+/*#define CLR_THM2 HSV_HAMMERHEAD*/
