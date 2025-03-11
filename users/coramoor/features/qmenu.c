@@ -5,18 +5,8 @@
 #include "features/qpainter.h"
 #include "features/qmenu.h"
 
-extern uint16_t sft_tapping_term;
-
-extern uint16_t modtap_tapping_term;
-
 #ifdef ACHORDION_ENABLE
 extern uint16_t achordion_tapping_term;
-#endif
-
-#ifdef GQT_ENABLE
-extern uint16_t gqt_tapping_term;
-
-extern uint16_t sgqt_tapping_term;
 #endif
 
 __attribute__((unused)) int            start_index = 0;
@@ -72,7 +62,7 @@ const char* rgb_matrix_name(uint8_t effect) {
 // GENERAL MENU FUNCTIONS
 
 bool check_menu(uint8_t menu_item) {
-    if (user_config.menu.menu_selector == menu_item) {
+    if (painter_menu.state.menu_selector == menu_item) {
         return true;
     } else {
         return false;
@@ -274,13 +264,13 @@ void render_menu_modtap(const char *heading, uint8_t sm_start, uint8_t sm_end) {
                     qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
                 break;
             case MENU_STT:
-                prerender_menu_item("SHIFT:", sft_tapping_term, i);
+                prerender_menu_item("SHIFT:", user_config.tapping_term.shift, i);
                 break;
             case MENU_TT:
                 prerender_menu_item("DEFAULT:", g_tapping_term, i);
                 break;
             case MENU_MT:
-                prerender_menu_item("MOD TAP:", modtap_tapping_term, i);
+                prerender_menu_item("MOD TAP:", user_config.tapping_term.modtap, i);
                 break;
             #ifdef ACHORDION_ENABLE
             case MENU_AT:
@@ -289,10 +279,10 @@ void render_menu_modtap(const char *heading, uint8_t sm_start, uint8_t sm_end) {
             #endif
             #ifdef GQT_ENABLE
             case MENU_GQT:
-                prerender_menu_item("GQT:", gqt_tapping_term, i);
+                prerender_menu_item("GQT:", user_config.tapping_term.gqt, i);
                 break;
             case MENU_SGQT:
-                prerender_menu_item("SGQT:", sgqt_tapping_term, i);
+                prerender_menu_item("SGQT:", user_config.tapping_term.shift_gqt, i);
                 break;
             #endif
          }
@@ -323,7 +313,7 @@ void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
                 }
                 break;
             case MENU_OSFLAG:
-                switch (user_config.menu.os) {
+                switch (user_config.system.os) {
                     case WINDOWS:
                         render_menu_item("OS:", "WINDOWS", MENU_OSFLAG);
                         break;
@@ -395,7 +385,7 @@ void render_menu_painter(const char *heading, uint8_t sm_start, uint8_t sm_end) 
 
 void render_menu(void) {
     if (lcd_dirty) {
-        switch (user_config.menu.submenu_selector) {
+        switch (painter_menu.state.submenu_selector) {
             case SUBMENU_LIGHTING:
                 render_menu_rgb("RGB CONFIG", LIGHTING_HEADING, LIGHTING_END);
                 break;

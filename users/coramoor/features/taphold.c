@@ -3,40 +3,43 @@
 #include "taphold.h"
 #include "features/custom_shortcuts.h"
 #include "features/tapdance.h"
+#include "coramoor_runtime.h"
 
-uint16_t sft_tapping_term = SHIFT_TAPPING_TERM;
-
-uint16_t get_sft_tapping_term(void) {
-    return sft_tapping_term;
+uint16_t get_custom_tapping_term(uint16_t custom_tapping_term) {
+    return custom_tapping_term;
 }
 
-uint16_t modtap_tapping_term = MODTAP_TAPPING_TERM;
-
-uint16_t get_modtap_tapping_term(void) {
-    return modtap_tapping_term;
+void increase_modtap_tapping_term(void) {
+    user_config.tapping_term.modtap = user_config.tapping_term.modtap + 5;
 }
 
-#ifdef ACHORDION_ENABLE
-uint16_t achordion_tapping_term = ACHORDION_TAPPING_TERM;
-
-uint16_t get_achordion_tapping_term(void) {
-    return achordion_tapping_term;
-}
-#endif
-
-#ifdef GQT_ENABLE
-uint16_t gqt_tapping_term = GQT_TAPPING_TERM;
-
-uint16_t get_gqt_tapping_term(void) {
-    return gqt_tapping_term;
+void increase_shift_tapping_term(void) {
+    user_config.tapping_term.shift = user_config.tapping_term.shift + 5;
 }
 
-uint16_t sgqt_tapping_term = SGQT_TAPPING_TERM;
-
-uint16_t sget_gqt_tapping_term(void) {
-    return sgqt_tapping_term;
+void increase_gqt_tapping_term(void) {
+    user_config.tapping_term.gqt = user_config.tapping_term.gqt + 5;
 }
-#endif
+
+void increase_shift_gqt_tapping_term(void) {
+    user_config.tapping_term.shift_gqt = user_config.tapping_term.shift_gqt + 5;
+}
+
+void decrease_modtap_tapping_term(void) {
+    user_config.tapping_term.modtap = user_config.tapping_term.modtap - 5;
+}
+
+void decrease_shift_tapping_term(void) {
+    user_config.tapping_term.shift = user_config.tapping_term.shift - 5;
+}
+
+void decrease_gqt_tapping_term(void) {
+    user_config.tapping_term.gqt = user_config.tapping_term.gqt - 5;
+}
+
+void decrease_shift_gqt_tapping_term(void) {
+    user_config.tapping_term.shift_gqt = user_config.tapping_term.shift_gqt - 5;
+}
 
 uint16_t get_tapping_term_result(uint16_t keycode) {
     switch (keycode) {
@@ -76,10 +79,12 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case GUI_COM:
         case GUI_X:
         case GUI_DOT:
-          return get_modtap_tapping_term();
+          return get_custom_tapping_term(user_config.tapping_term.modtap);
+          // return get_modtap_tapping_term();
         case RHM_K:
         case LHM_D:
-            return get_sft_tapping_term();
+            return get_custom_tapping_term(user_config.tapping_term.shift);
+            // return get_sft_tapping_term();
         default:
             return g_tapping_term;
     }

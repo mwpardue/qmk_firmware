@@ -36,10 +36,10 @@ void td_copy(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-            if (user_config.menu.os == MACOS) {
+            if (user_config.system.os == MACOS) {
                 dprintln("Executing MACOS command");
                 tap_code16(G(KC_C));
-            } else if (user_config.menu.os == LINUX) {
+            } else if (user_config.system.os == LINUX) {
                 dprintln("Executing LINUX command");
                 tap_code16(C(S(KC_C)));
             } else {
@@ -48,10 +48,10 @@ void td_copy(tap_dance_state_t *state, void *user_data) {
             }
             break;
         case TD_SINGLE_HOLD:
-            if (user_config.menu.os == MACOS) {
+            if (user_config.system.os == MACOS) {
                 dprintln("Executing MACOS command");
                 tap_code16(G(KC_X));
-            } else if (user_config.menu.os == LINUX) {
+            } else if (user_config.system.os == LINUX) {
                 dprintln("Executing LINUX command");
                 tap_code16(C(S(KC_C)));
             } else {
@@ -67,10 +67,10 @@ void td_paste(tap_dance_state_t *state, void *user_data) {
     tap_state.state = dance_state(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP:
-            if (user_config.menu.os == MACOS) {
+            if (user_config.system.os == MACOS) {
                 dprintln("Executing MACOS command");
                 tap_code16(G(KC_V));
-            } else if (user_config.menu.os == LINUX) {
+            } else if (user_config.system.os == LINUX) {
                 dprintln("Executing LINUX command");
                 tap_code16(C(S(KC_V)));
             } else {
@@ -79,10 +79,10 @@ void td_paste(tap_dance_state_t *state, void *user_data) {
             }
             break;
         case TD_SINGLE_HOLD:
-            if (user_config.menu.os == MACOS) {
+            if (user_config.system.os == MACOS) {
                 dprintln("Executing MACOS command");
                 tap_code16(G(A(KC_V)));
-            } else if (user_config.menu.os == LINUX) {
+            } else if (user_config.system.os == LINUX) {
                 dprintln("Executing LINUX command");
                 tap_code16(C(S(KC_V)));
             } else {
@@ -91,7 +91,7 @@ void td_paste(tap_dance_state_t *state, void *user_data) {
             }
             break;
         case TD_DOUBLE_TAP:
-            if (user_config.menu.os == MACOS) {
+            if (user_config.system.os == MACOS) {
                 dprintln("Executing MACOS command");
                 tap_code16(G(C(KC_V)));
             } else {

@@ -43,7 +43,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
             dprintf("swapper.state before=%d\n",swapper.state);
             clear_mods();
             clear_locked_and_oneshot_mods();
-            // layer_off(_APPSWITCH);
+            layer_off(_APPSWITCH);
             swapper.state = NONE;
             dprintf("swapper.state after=%d\n",swapper.state);
             send_keyboard_report();
@@ -51,7 +51,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
         return PROCESS_RECORD_CONTINUE;
     }
 
-    bool isMacOS              = user_config.menu.os == MACOS;
+    bool isMacOS              = user_config.system.os == MACOS;
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotShift       = isOneShotLockedShift || get_oneshot_mods() & MOD_MASK_SHIFT;
     bool isShifted            = isOneShotShift || get_mods() & MOD_MASK_SHIFT;
@@ -83,7 +83,7 @@ process_record_result_t process_window_swapper(uint16_t keycode, keyrecord_t *re
                     } else {
                         register_mods(MOD_LALT);
                     }
-                    // layer_on(_APPSWITCH);
+                    layer_on(_APPSWITCH);
                     dprintf("Registering mods for MC_SWRI\n");
                     swapper.state = SWAPPING_CONTINUE;
                     break;

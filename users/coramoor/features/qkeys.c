@@ -1,25 +1,19 @@
 #include QMK_KEYBOARD_H
 
-// #include "rgb_matrix_keys.h"
 #include "qkeys.h"
 #include "coramoor.h"
 #include "rgb_matrix.h"
 #include "features/qmenu.h"
 #include "features/qpainter.h"
 #include "features/qhelper.h"
+#include "features/taphold.h"
 
-
-extern uint16_t sft_tapping_term;
-extern uint16_t modtap_tapping_term;
 #ifdef ACHORDION_ENABLE
 extern uint16_t achordion_tapping_term;
 #endif
-#ifdef GQT_ENABLE
-extern uint16_t gqt_tapping_term;
-extern uint16_t sgqt_tapping_term;
-#endif
 
 extern user_runtime_state_t user_runtime_state;
+extern painter_menu_t painter_menu;
 
 process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -56,84 +50,84 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
 
         case MENU_MD:
             if (record->event.pressed) {
-                switch (user_config.menu.submenu_selector) {
+                switch (painter_menu.state.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        if (user_config.menu.menu_selector == LIGHTING_END - 1) {
-                            user_config.menu.menu_selector = LIGHTING_HEADING + 1;
+                        if (painter_menu.state.menu_selector == LIGHTING_END - 1) {
+                            painter_menu.state.menu_selector = LIGHTING_HEADING + 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         };
                         start_index = 0;
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
-                        if (user_config.menu.menu_selector == MODTAP_END - 1) {
-                            user_config.menu.menu_selector = MODTAP_HEADING + 1;
+                        if (painter_menu.state.menu_selector == MODTAP_END - 1) {
+                            painter_menu.state.menu_selector = MODTAP_HEADING + 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         };
                         lcd_dirty = true;
                         break;
                     case SUBMENU_PAINTER:
-                        if (user_config.menu.menu_selector == PAINTER_END - 1) {
-                            user_config.menu.menu_selector = PAINTER_HEADING + 1;
+                        if (painter_menu.state.menu_selector == PAINTER_END - 1) {
+                            painter_menu.state.menu_selector = PAINTER_HEADING + 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         }
                         lcd_dirty = true;
                         break;
                     case SUBMENU_KB:
-                        if (user_config.menu.menu_selector == KB_END - 1) {
-                            user_config.menu.menu_selector = KB_HEADING + 1;
+                        if (painter_menu.state.menu_selector == KB_END - 1) {
+                            painter_menu.state.menu_selector = KB_HEADING + 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector + 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         };
                         lcd_dirty = true;
                         break;
                 }
-                dprintf("Menu Selector is %d\n", user_config.menu.menu_selector);
+                dprintf("Menu Selector is %d\n", painter_menu.state.menu_selector);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
 
         case MENU_MU:
             if (record->event.pressed) {
-                switch (user_config.menu.submenu_selector) {
+                switch (painter_menu.state.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        if (user_config.menu.menu_selector == LIGHTING_HEADING + 1) {
-                            user_config.menu.menu_selector = LIGHTING_END - 1;
+                        if (painter_menu.state.menu_selector == LIGHTING_HEADING + 1) {
+                            painter_menu.state.menu_selector = LIGHTING_END - 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         start_index = 0;
                         lcd_dirty = true;
                         break;
                     case SUBMENU_MODTAP:
-                        if (user_config.menu.menu_selector == MODTAP_HEADING + 1) {
-                            user_config.menu.menu_selector = MODTAP_END - 1;
+                        if (painter_menu.state.menu_selector == MODTAP_HEADING + 1) {
+                            painter_menu.state.menu_selector = MODTAP_END - 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         lcd_dirty = true;
                         break;
                     case SUBMENU_PAINTER:
-                        if (user_config.menu.menu_selector == PAINTER_HEADING + 1) {
-                            user_config.menu.menu_selector = PAINTER_END - 1;
+                        if (painter_menu.state.menu_selector == PAINTER_HEADING + 1) {
+                            painter_menu.state.menu_selector = PAINTER_END - 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         lcd_dirty = true;
                         break;
                     case SUBMENU_KB:
-                        if (user_config.menu.menu_selector == KB_HEADING + 1) {
-                            user_config.menu.menu_selector = KB_END - 1;
+                        if (painter_menu.state.menu_selector == KB_HEADING + 1) {
+                            painter_menu.state.menu_selector = KB_END - 1;
                         } else {
-                            user_config.menu.menu_selector = user_config.menu.menu_selector - 1;
+                            painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         lcd_dirty = true;
                         break;
                     }
-                dprintf("Menu Selector is %d\n", user_config.menu.menu_selector);
+                dprintf("Menu Selector is %d\n", painter_menu.state.menu_selector);
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
@@ -141,12 +135,12 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
         case MENU_AU:
             if (record->event.pressed) {
                 dprintln("MENU_AU pressed");
-                switch (user_config.menu.submenu_selector) {
+                switch (painter_menu.state.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case LIGHTING_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_MODTAP;
+                                painter_menu.state.submenu_selector = SUBMENU_MODTAP;
                                 break;
                             case MENU_HUE:
                                 rgb_matrix_increase_hue();
@@ -193,22 +187,26 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         }
                         break;
                     case SUBMENU_MODTAP:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case MODTAP_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_PAINTER;
+                                painter_menu.state.submenu_selector = SUBMENU_PAINTER;
                                 break;
                             case MENU_STT:
-                                sft_tapping_term = sft_tapping_term + 5;
-                                dprintf("Shift Tapping Term = %d\n", sft_tapping_term);
+                                // sft_tapping_term = sft_tapping_term + 5;
+                                increase_shift_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("Shift Tapping Term = %d\n", user_config.tapping_term.shift);
                                 break;
                             case MENU_TT:
                                 g_tapping_term = g_tapping_term + 5;
                                 dprintf("General Tapping Term = %d\n", g_tapping_term);
                                 break;
                             case MENU_MT:
-                                modtap_tapping_term = modtap_tapping_term + 5;
-                                dprintf("Mod-Tap Tapping Term = %d\n", modtap_tapping_term);
+                                // modtap_tapping_term = modtap_tapping_term + 5;
+                                increase_modtap_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("Mod-Tap Tapping Term = %d\n", user_config.tapping_term.modtap);
                                 break;
                             #ifdef ACHORDION_ENABLE
                             case MENU_AT:
@@ -218,21 +216,25 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             #endif
                             #ifdef GQT_ENABLE
                             case MENU_GQT:
-                                gqt_tapping_term = gqt_tapping_term + 5;
-                                dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
+                                // gqt_tapping_term = gqt_tapping_term + 5;
+                                increase_gqt_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("GQT Tapping Term = %d\n", user_config.tapping_term.gqt);
                                 break;
                             case MENU_SGQT:
-                                sgqt_tapping_term = sgqt_tapping_term + 5;
-                                dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
+                                // sgqt_tapping_term = sgqt_tapping_term + 5;
+                                increase_shift_gqt_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("SGQT Tapping Term = %d\n", user_config.tapping_term.shift_gqt);
                                 break;
                             #endif
                         } //MODTAP menu switch
                     break;
                     case SUBMENU_PAINTER:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case PAINTER_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_KB;
+                                painter_menu.state.submenu_selector = SUBMENU_KB;
                                 break;
                             case MENU_PHUE:
                                 painter_increase_hue_noeeprom(true);
@@ -261,10 +263,10 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         } //PAINTER menu switch
                     break;
                     case SUBMENU_KB:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case KB_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_LIGHTING;
+                                painter_menu.state.submenu_selector = SUBMENU_LIGHTING;
                                 break;
                             case MENU_EECLEAR:
                                 #ifdef NO_RESET
@@ -287,17 +289,17 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 #endif
                                 break;
                             case MENU_OSFLAG:
-                                switch (user_config.menu.os) {
+                                switch (user_config.system.os) {
                                     case MACOS:
-                                        user_config.menu.os = WINDOWS;
+                                        user_config.system.os = WINDOWS;
                                         eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case WINDOWS:
-                                        user_config.menu.os = LINUX;
+                                        user_config.system.os = LINUX;
                                         eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case LINUX:
-                                        user_config.menu.os = MACOS;
+                                        user_config.system.os = MACOS;
                                         eeconfig_update_user_datablock(&user_config);
                                         break;
                                 }
@@ -340,12 +342,12 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
         case MENU_AD:
                 dprintln("MENU_AD pressed");
             if (record->event.pressed) {
-                switch (user_config.menu.submenu_selector) {
+                switch (painter_menu.state.submenu_selector) {
                     case SUBMENU_LIGHTING:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case LIGHTING_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_KB;
+                                painter_menu.state.submenu_selector = SUBMENU_KB;
                                 break;
                             case MENU_HUE:
                                 rgb_matrix_decrease_hue();
@@ -392,22 +394,26 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         }
                     break;
                     case SUBMENU_MODTAP:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case MODTAP_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_LIGHTING;
+                                painter_menu.state.submenu_selector = SUBMENU_LIGHTING;
                                 break;
                             case MENU_STT:
-                                sft_tapping_term = sft_tapping_term - 5;
-                                dprintf("Shift Tapping Term = %d\n", sft_tapping_term);
+                                // sft_tapping_term = sft_tapping_term - 5;
+                                decrease_shift_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("Shift Tapping Term = %d\n", user_config.tapping_term.shift);
                                 break;
                             case MENU_TT:
                                 g_tapping_term = g_tapping_term - 5;
                                 dprintf("General Tapping Term = %d\n", g_tapping_term);
                                 break;
                             case MENU_MT:
-                                modtap_tapping_term = modtap_tapping_term - 5;
-                                dprintf("Mod-Tap Tapping Term = %d\n", modtap_tapping_term);
+                                // modtap_tapping_term = modtap_tapping_term - 5;
+                                decrease_modtap_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("Mod-Tap Tapping Term = %d\n", user_config.tapping_term.modtap);
                                 break;
                             #ifdef ACHORDION_ENABLE
                             case MENU_AT:
@@ -417,21 +423,25 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             #endif
                             #ifdef GQT_ENABLE
                             case MENU_GQT:
-                                gqt_tapping_term = gqt_tapping_term - 5;
-                                dprintf("GQT Tapping Term = %d\n", gqt_tapping_term);
+                                // gqt_tapping_term = gqt_tapping_term - 5;
+                                decrease_gqt_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("GQT Tapping Term = %d\n", user_config.tapping_term.gqt);
                                 break;
                             case MENU_SGQT:
-                                sgqt_tapping_term = sgqt_tapping_term - 5;
-                                dprintf("SGQT Tapping Term = %d\n", sgqt_tapping_term);
+                                // sgqt_tapping_term = sgqt_tapping_term - 5;
+                                decrease_shift_gqt_tapping_term();
+                                user_runtime_state.kb.write_to_eeprom = true;
+                                dprintf("SGQT Tapping Term = %d\n", user_config.tapping_term.shift_gqt);
                                 break;
                             #endif
                         }
                     break;
                     case SUBMENU_PAINTER:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case PAINTER_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_MODTAP;
+                                painter_menu.state.submenu_selector = SUBMENU_MODTAP;
                                 break;
                             case MENU_PHUE:
                                 painter_decrease_hue_noeeprom(true);
@@ -460,10 +470,10 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         } //MODTAP menu switch
                     break;
                     case SUBMENU_KB:
-                        switch (user_config.menu.menu_selector) {
+                        switch (painter_menu.state.menu_selector) {
                             case KB_HEADING:
                                 qp_clear(lcd_surface);
-                                user_config.menu.submenu_selector = SUBMENU_PAINTER;
+                                painter_menu.state.submenu_selector = SUBMENU_PAINTER;
                                 break;
                             case MENU_EECLEAR:
                                 #ifdef NO_RESET
@@ -486,17 +496,17 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 #endif
                                 break;
                             case MENU_OSFLAG:
-                                switch (user_config.menu.os) {
+                                switch (user_config.system.os) {
                                     case MACOS:
-                                        user_config.menu.os = LINUX;
+                                        user_config.system.os = LINUX;
                                         eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case WINDOWS:
-                                        user_config.menu.os = MACOS;
+                                        user_config.system.os = MACOS;
                                         eeconfig_update_user_datablock(&user_config);
                                         break;
                                     case LINUX:
-                                        user_config.menu.os = WINDOWS;
+                                        user_config.system.os = WINDOWS;
                                         eeconfig_update_user_datablock(&user_config);
                                         break;
                                 }
@@ -537,22 +547,22 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
             break;
             case TB_MENU:
                 if (record->event.pressed) {
-                    switch (user_config.menu.submenu_selector) {
+                    switch (painter_menu.state.submenu_selector) {
                         case SUBMENU_LIGHTING:
-                            user_config.menu.submenu_selector = SUBMENU_MODTAP;
+                            painter_menu.state.submenu_selector = SUBMENU_MODTAP;
                             break;
                         case SUBMENU_MODTAP:
-                            user_config.menu.submenu_selector = SUBMENU_PAINTER;
+                            painter_menu.state.submenu_selector = SUBMENU_PAINTER;
                             break;
                         case SUBMENU_PAINTER:
-                            user_config.menu.submenu_selector = SUBMENU_KB;
+                            painter_menu.state.submenu_selector = SUBMENU_KB;
                             break;
                         case SUBMENU_KB:
-                            user_config.menu.submenu_selector = SUBMENU_LIGHTING;
+                            painter_menu.state.submenu_selector = SUBMENU_LIGHTING;
                             break;
                     }
                 }
-            user_config.menu.menu_selector = 1;
+            painter_menu.state.menu_selector = 1;
             qp_clear(lcd_surface);
             lcd_dirty = true;
             return PROCESS_RECORD_RETURN_FALSE;

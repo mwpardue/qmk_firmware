@@ -30,15 +30,30 @@ typedef struct PACKED {
         dual_hsv_t hsv;
     } painter;
     struct {
-        uint8_t menu_selector :8;
-        uint8_t submenu_selector :8;
+        /*uint8_t menu_selector :8;*/
+        /*uint8_t submenu_selector :8;*/
         uint8_t os :8;
-    } menu;
+    } system;
+    struct {
+        uint16_t shift :16;
+        uint16_t modtap :16;
+        uint16_t gqt :16;
+        uint16_t shift_gqt :16;
+    } tapping_term;
 } user_config_t;
 
 _Static_assert(sizeof(user_config_t) <= EECONFIG_USER_DATA_SIZE, "User EECONFIG block is not large enough.");
 
 extern user_config_t user_config;
+
+typedef struct {
+    struct {
+        uint8_t menu_selector :8;
+        uint8_t submenu_selector :8;
+    } state;
+} painter_menu_t;
+
+extern painter_menu_t painter_menu;
 
 typedef enum {
     OTHER,

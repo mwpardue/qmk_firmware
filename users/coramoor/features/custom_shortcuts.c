@@ -21,7 +21,7 @@ extern bool caps_word_on;
 
 process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
 
-    bool isMacOS = user_config.menu.os == MACOS;
+    bool isMacOS = user_config.system.os == MACOS;
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
     bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
@@ -192,22 +192,22 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case TG_OS:
             if (record->event.pressed) {
-                switch (user_config.menu.os) {
+                switch (user_config.system.os) {
 
                     case MACOS:
-                        user_config.menu.os = WINDOWS;
+                        user_config.system.os = WINDOWS;
                         SEND_STRING("win");
                         eeconfig_update_user_datablock(&user_config);
                         break;
 
                     case WINDOWS:
-                        user_config.menu.os = LINUX;
+                        user_config.system.os = LINUX;
                         SEND_STRING("lin");
                         eeconfig_update_user_datablock(&user_config);
                         break;
 
                     case LINUX:
-                        user_config.menu.os = MACOS;
+                        user_config.system.os = MACOS;
                         SEND_STRING("mac");
                         eeconfig_update_user_datablock(&user_config);
                         break;
@@ -219,8 +219,8 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
         case ADJ_LYR:
             if (record->event.pressed) {
                 #ifdef QMENU_ENABLE
-                    user_config.menu.menu_selector = 1;
-                    user_config.menu.submenu_selector = 1;
+                    painter_menu.state.menu_selector = 1;
+                    painter_menu.state.submenu_selector = 1;
                     qp_clear(lcd_surface);
                 #endif
                 layer_on(_ADJUST);

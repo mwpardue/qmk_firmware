@@ -115,7 +115,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case RUTHUM2:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LSFT(KC_4));
+                    tap_code16(LSFT(KC_BSLS));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -126,7 +126,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case CLUTHUM2:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LSFT(KC_6));
+                    tap_code16(LSFT(KC_MINS));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -136,7 +136,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case UIL_THM:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_H));
+                    tap_code16(LSFT(KC_6));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
@@ -146,7 +146,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     case UIR_THM:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_L));
+                    tap_code16(LSFT(KC_4));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;

@@ -21,6 +21,7 @@
 #endif
 
 user_config_t user_config;
+painter_menu_t painter_menu;
 
 uint32_t eeconfig_update_user_datablock_handler(const void *data, uint8_t offset, uint8_t size) {
     eeconfig_update_user_datablock(data);
@@ -46,6 +47,8 @@ void keyboard_pre_init_user(void) {
 }
 
 void keyboard_post_init_user(void) {
+    painter_menu.state.menu_selector = 0;
+    painter_menu.state.submenu_selector = 0;
     #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
         keyboard_post_init_transport_sync();
     #endif
@@ -64,9 +67,11 @@ void                       eeconfig_init_user(void) {
         .s = 255,
         .v = 255,
     };
-    user_config.menu.menu_selector = 0;
-    user_config.menu.submenu_selector = 0;
-    user_config.menu.os = MACOS;
+    user_config.system.os = MACOS;
+    user_config.tapping_term.shift = 150;
+    user_config.tapping_term.modtap = 200;
+    user_config.tapping_term.gqt = 175;
+    user_config.tapping_term.shift_gqt = 100;
     dprintf("Initialized user_config.painter.hsv.primary: %d, %d, %d\n", user_config.painter.hsv.primary.h, user_config.painter.hsv.primary.s, user_config.painter.hsv.primary.v);
     dprintf("Initialized user_config.painter.hsv.secondary: %d, %d, %d\n", user_config.painter.hsv.secondary.h, user_config.painter.hsv.secondary.s, user_config.painter.hsv.secondary.v);
     eeconfig_init_keymap();

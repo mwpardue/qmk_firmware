@@ -91,12 +91,12 @@ enum {
 
     // Upper Left Thumb Keys
     #define UOL_THM KC_F17
-    #define UIL_THM HYPR_T(KC_F22)
+    #define UIL_THM HYPR_T(KC_CIRC)
 
     // Lower Left Thumb Keys
     #define LUTHUM0 MON_L
     #define LUTHUM1 LT(_FUNCTION, KC_UP)
-    #define LUTHUM2 LT(_NUMPAD, KC_CIRC)
+    #define LUTHUM2 LT(_NUMPAD, KC_UNDS)
     #define LIL_THM LT(_NAVIGATION, KC_BSPC)
     #define LOL_THM LSFT_T(KC_ENTER)
 
@@ -112,12 +112,12 @@ enum {
     // Lower Right Thumb Keys
     #define RUTHUM0 TAB_RGT
     #define RUTHUM1 TAB_LFT
-    #define RUTHUM2 RGUI_T(KC_DLR)
+    #define RUTHUM2 RGUI_T(KC_PIPE)
     #define LOR_THM RSFT_T(KC_ENTER)
     #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
     // Upper Right Thumb Keys
-    #define UIR_THM HYPR_T(KC_F23)
+    #define UIR_THM HYPR_T(KC_DLR)
     #define UOR_THM KC_F16
 
     // Alt Base Thumb Keys
@@ -212,6 +212,8 @@ enum {
 #define MOV_RGT LCTL(KC_TAB)
 #define TAB_LFT LGUI(KC_H)
 #define TAB_RGT LGUI(KC_L)
+#define TAB_UP LCTL(KC_K)
+#define TAB_DWN LCTL(KC_J)
 #define TOBAS TO(_BASE)
 #define TOHEX TO(_HEX)
 #define TOADJ ADJ_LYR

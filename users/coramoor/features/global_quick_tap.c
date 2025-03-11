@@ -1,9 +1,7 @@
 #include "global_quick_tap.h"
 #include "definitions/keycodes.h"
-
-extern uint16_t gqt_tapping_term;
-
-extern uint16_t sgqt_tapping_term;
+#include "coramoor_runtime.h"
+#include "features/taphold.h"
 
 static struct {
     uint16_t keycode;
@@ -73,10 +71,10 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         case RHM_J:
         case RHM_L:
         case RHM_SCN:
-          return gqt_tapping_term;
+          return get_custom_tapping_term(user_config.tapping_term.gqt);
         case LHM_D:
         case RHM_K:
-          return sgqt_tapping_term;
+          return get_custom_tapping_term(user_config.tapping_term.shift_gqt);
         default:
             return 0;  // global_quick_tap is not applied
     }
