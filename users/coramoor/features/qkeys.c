@@ -193,7 +193,6 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 painter_menu.state.submenu_selector = SUBMENU_PAINTER;
                                 break;
                             case MENU_STT:
-                                // sft_tapping_term = sft_tapping_term + 5;
                                 increase_shift_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("Shift Tapping Term = %d\n", user_config.tapping_term.shift);
@@ -203,7 +202,6 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 dprintf("General Tapping Term = %d\n", g_tapping_term);
                                 break;
                             case MENU_MT:
-                                // modtap_tapping_term = modtap_tapping_term + 5;
                                 increase_modtap_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("Mod-Tap Tapping Term = %d\n", user_config.tapping_term.modtap);
@@ -216,13 +214,11 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             #endif
                             #ifdef GQT_ENABLE
                             case MENU_GQT:
-                                // gqt_tapping_term = gqt_tapping_term + 5;
                                 increase_gqt_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("GQT Tapping Term = %d\n", user_config.tapping_term.gqt);
                                 break;
                             case MENU_SGQT:
-                                // sgqt_tapping_term = sgqt_tapping_term + 5;
                                 increase_shift_gqt_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("SGQT Tapping Term = %d\n", user_config.tapping_term.shift_gqt);
@@ -280,7 +276,6 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 #ifndef NO_DEBUG
                                     debug_enable ^= 1;
                                     user_runtime_state.kb.debug_enabled = debug_enable;
-                                    // eeconfig_update_user(user_runtime_state.raw);
                                     if (debug_enable) {
                                         print("DEBUG: enabled.\n");
                                     } else {
@@ -400,7 +395,6 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 painter_menu.state.submenu_selector = SUBMENU_LIGHTING;
                                 break;
                             case MENU_STT:
-                                // sft_tapping_term = sft_tapping_term - 5;
                                 decrease_shift_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("Shift Tapping Term = %d\n", user_config.tapping_term.shift);
@@ -410,7 +404,6 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 dprintf("General Tapping Term = %d\n", g_tapping_term);
                                 break;
                             case MENU_MT:
-                                // modtap_tapping_term = modtap_tapping_term - 5;
                                 decrease_modtap_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("Mod-Tap Tapping Term = %d\n", user_config.tapping_term.modtap);
@@ -423,13 +416,11 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             #endif
                             #ifdef GQT_ENABLE
                             case MENU_GQT:
-                                // gqt_tapping_term = gqt_tapping_term - 5;
                                 decrease_gqt_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("GQT Tapping Term = %d\n", user_config.tapping_term.gqt);
                                 break;
                             case MENU_SGQT:
-                                // sgqt_tapping_term = sgqt_tapping_term - 5;
                                 decrease_shift_gqt_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
                                 dprintf("SGQT Tapping Term = %d\n", user_config.tapping_term.shift_gqt);
@@ -487,7 +478,6 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 #ifndef NO_DEBUG
                                     debug_enable ^= 1;
                                     user_runtime_state.kb.debug_enabled = debug_enable;
-                                    // eeconfig_update_user(user_runtime_state.raw);
                                     if (debug_enable) {
                                         print("DEBUG: enabled.\n");
                                     } else {

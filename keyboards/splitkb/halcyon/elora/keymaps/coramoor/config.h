@@ -35,10 +35,6 @@
     #define CUSTOM_ONESHOT_TIMEOUT 2000
 #endif
 
-// #ifdef MOUSEKEY_ENABLE
-//   #define MK_KINETIC_SPEED
-// #endif
-
 #ifdef COMBO_ENABLE
     #define COMBO_COUNT 12
 #endif
@@ -64,14 +60,6 @@
     #endif
     #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_REACTIVE_SIMPLE
     #define RGB_MATRIX_DEFAULT_HUE 105
-    /*#ifdef RGB_MATRIX_TYPING_HEATMAP_SPREAD*/
-    /*    #undef RGB_MATRIX_TYPING_HEATMAP_SPREAD*/
-    /*#endif*/
-    /*#ifdef RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT*/
-    /*    #undef RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT*/
-    /*#endif*/
-    /*#define RGB_MATRIX_TYPING_HEATMAP_SPREAD rgb_matrix_get_heatmap_spread()*/
-    /*#define RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT rgb_matrix_get_heatmap_area_limit()*/
 
 #define ENABLE_RGB_MATRIX_SOLID
 #define ENABLE_RGB_MATRIX_BREATHING
@@ -145,15 +133,12 @@
 #   define SPLIT_MODS_ENABLE
 
 #ifdef HLC_TFT_DISPLAY
-    /*#define QUANTUM_PAINTER_NUM_IMAGES 10*/
     #define LCD_HEIGHT 240
     #define LCD_WIDTH 135
 // 3 surfaces:
 #define SURFACE_NUM_DEVICES 1
 #define QUANTUM_PAINTER_DEBUG
 #define QUANTUM_PAINTER_NUM_IMAGES 12
-/*#undef ST7789_NUM_DEVICES*/
-/*#define ST7789_NUM_DEVICES 1*/
 #endif
 
 #ifdef OLED_ENABLE
@@ -167,7 +152,6 @@
 // Menu Header Colors
 #define CLR_MENU_FG HSV_BLACK
 #define CLR_MENU_BG painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
-/*#define CLR_MENU_BG HSV_HAMMERHEAD*/
 
 // Selected Menu Item Colors
 /*#define CLR_SEL_BG HSV_YELLOW*/
@@ -177,9 +161,7 @@
 // Unselected Menu Item Colors
 #define CLR_IDL_BG HSV_BLACK
 #define CLR_IDL_FG painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
-/*#define CLR_IDL_FG HSV_HAMMERHEAD*/
 
 // Theme Colors
 #define CLR_THM1 HSV_WHITE
 #define CLR_THM2 painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
-/*#define CLR_THM2 HSV_HAMMERHEAD*/

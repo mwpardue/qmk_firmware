@@ -82,24 +82,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         default:
             set_layer_rgb_matrix(rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val(), led_min, led_max);
 
-            // switch (rgb_matrix_get_flags()) {
-            //     case LED_FLAG_ALL:
-            //     case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR):
-            //         if (is_leading()) {
-            //             set_layer_rgb_matrix(HSV_BLUE, led_min, led_max);
-            //         } else if (is_passing()) {
-            //             set_layer_rgb_matrix(HSV_PURPLE, led_min, led_max);
-            //         }
-            //     break;
-            // }
  #endif
             break;
     }
-    #ifdef DYNAMIC_MACRO_ENABLE
-        if (is_dynamic_recording) {
-            rgb_matrix_set_custom_indicators(led_min, led_max, LED_FLAG_KEYLIGHT, HSV_RED);
-        }
-    #endif
 
     return false;
 }

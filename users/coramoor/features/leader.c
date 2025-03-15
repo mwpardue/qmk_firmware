@@ -20,6 +20,7 @@
 #ifdef HLC_TFT_DISPLAY
     #include "features/qpainter.h"
 #endif
+#include "features/dynamic_macro.h"
 
 #include <string.h>
 
@@ -77,6 +78,37 @@ void *leader_tips_func(uint16_t keycode) {
                 break;
             case KC_T:
                 send_string_with_delay("trueipsolutions.com", MACRO_TIMER);
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_dmacro_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_1:
+                dyn_macro_toggle(QK_DYNAMIC_MACRO_RECORD_START_1);
+                break;
+            case KC_2:
+                dyn_macro_toggle(QK_DYNAMIC_MACRO_RECORD_START_2);
+                break;
+            case KC_S:
+                dyn_macro_stop();
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_dmacro_play_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_1:
+                dyn_macro_play(QK_DYNAMIC_MACRO_PLAY_1);
+                break;
+            case KC_2:
+                dyn_macro_play(QK_DYNAMIC_MACRO_PLAY_2);
                 break;
             default:
                 break;
@@ -202,20 +234,25 @@ void *leader_start_func(uint16_t keycode) {
     switch (keycode) {
         case KC_T:
             return leader_tips_func;
+            break;
         case KC_E:
             return leader_email_func;
+            break;
         case KC_K:
             return leader_keyb_func;
+            break;
         case KC_S:
             return leader_screen_func;
+            break;
         case KC_P:
-            return leader_pass_func;
+            return leader_dmacro_play_func;
+            break;
         case KC_R:
             return leader_reset_func;
-        case KC_D:
-            tap_code16(G(S(A(C(KC_D)))));
             break;
-        return NULL;
+        case KC_M:
+            return leader_dmacro_func;
+            break;
     default:
         return NULL;
     }

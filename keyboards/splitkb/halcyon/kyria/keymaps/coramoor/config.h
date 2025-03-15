@@ -133,15 +133,12 @@
 #   define SPLIT_MODS_ENABLE
 
 #ifdef HLC_TFT_DISPLAY
-    /*#define QUANTUM_PAINTER_NUM_IMAGES 10*/
     #define LCD_HEIGHT 240
     #define LCD_WIDTH 135
 // 3 surfaces:
 #define SURFACE_NUM_DEVICES 1
 #define QUANTUM_PAINTER_DEBUG
 #define QUANTUM_PAINTER_NUM_IMAGES 12
-/*#undef ST7789_NUM_DEVICES*/
-/*#define ST7789_NUM_DEVICES 1*/
 #endif
 
 #ifdef OLED_ENABLE
@@ -155,19 +152,15 @@
 // Menu Header Colors
 #define CLR_MENU_FG HSV_BLACK
 #define CLR_MENU_BG painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
-/*#define CLR_MENU_BG HSV_HAMMERHEAD*/
 
 // Selected Menu Item Colors
-/*#define CLR_SEL_BG HSV_YELLOW*/
 #define CLR_SEL_BG painter_get_hue(false), painter_get_sat(false), painter_get_val(false)
 #define CLR_SEL_FG HSV_BLACK
 
 // Unselected Menu Item Colors
 #define CLR_IDL_BG HSV_BLACK
 #define CLR_IDL_FG painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
-/*#define CLR_IDL_FG HSV_HAMMERHEAD*/
 
 // Theme Colors
 #define CLR_THM1 HSV_WHITE
 #define CLR_THM2 painter_get_hue(true), painter_get_sat(true), painter_get_val(true)
-/*#define CLR_THM2 HSV_HAMMERHEAD*/

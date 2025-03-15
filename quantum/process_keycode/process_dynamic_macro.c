@@ -30,9 +30,11 @@
 // default feedback method
 void dynamic_macro_led_blink(void) {
 #ifdef BACKLIGHT_ENABLE
-    backlight_toggle();
-    wait_ms(100);
-    backlight_toggle();
+    #ifdef BACKLIGHT_DYNAMIC_BLINK
+        backlight_toggle();
+        wait_ms(100);
+        backlight_toggle();
+    #endif
 #endif
 }
 

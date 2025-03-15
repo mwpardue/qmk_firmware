@@ -3,7 +3,6 @@ SRC += definitions/keycodes.c
 INTROSPECTION_KEYMAP_C = coramoor.c
 INTROSPECTION_KEYMAP_C = $(USER_PATH)/definitions/keycodes.c
 INTROSPECTION_KEYMAP_C = $(USER_PATH)/features/tapdance.c
-# INTROSPECTION_KEYMAP_C = $(USER_PATH)/features/custom_shortcuts.c
 
 ifneq ($(PLATFORM),CHIBIOS)
     ifneq ($(strip $(LTO_SUPPORTED)), no)
@@ -83,12 +82,6 @@ ifeq ($(strip $(CAPITALIZE_KEY_ENABLE)), yes)
     OPT_DEFS += -DCAPITALIZE_KEY_ENABLE
 endif
 
-# TAP_DANCE_ENABLE ?= no
-# ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
-#     SRC += $(USER_PATH)/features/tapdance.c
-#     OPT_DEFS += -DTAP_DANCE_ENABLE
-# endif
-
 CAPSLOCK_TIMER_ENABLE ?= no
 ifeq ($(strip $(CAPSLOCK_TIMER_ENABLE)), yes)
     SRC += $(USER_PATH)/features/capslock_timer.c
@@ -105,6 +98,12 @@ MACRO_ENABLE ?= no
 ifeq ($(strip $(MACRO_ENABLE)), yes)
     SRC += $(USER_PATH)/features/macros.c
     OPT_DEFS += -DMACRO_ENABLE
+endif
+
+DYNAMIC_MACRO_ENABLE ?= no
+ifeq ($(strip $(DYNAMIC_MACRO_ENABLE)), yes)
+    SRC += $(USER_PATH)/features/dynamic_macro.c
+    OPT_DEFS += -DDYNAMIC_MACRO_ENABLE
 endif
 
 SELECT_WORD_ENABLE ?= no
@@ -136,12 +135,6 @@ ifeq ($(strip $(CUSTOM_SHIFT_ENABLE)), yes)
     SRC += $(USER_PATH)/features/custom_shift.c
     OPT_DEFS += -DCUSTOM_SHIFT_ENABLE
 endif
-
-# LAYER_LOCK_ENABLE ?= no
-# ifeq ($(strip $(LAYER_LOCK_ENABLE)), yes)
-#     SRC += $(USER_PATH)/features/layer_lock.c
-#     OPT_DEFS += -DLAYER_LOCK_ENABLE
-# endif
 
 RGB_MATRIX_CUSTOM ?= no
 ifeq ($(strip $(RGB_MATRIX_CUSTOM)), yes)

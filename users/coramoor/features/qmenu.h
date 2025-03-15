@@ -60,26 +60,6 @@ typedef enum {
 
 extern qmenu_painter_t qmenu_painter;
 
-/*static const char * const rmodes[] = {*/
-/*    "               ",*/
-/*    "SOLID",*/
-/*    "BREATHING",*/
-/*    "CYC LEFT/RIGHT",*/
-/*    "CYC OUT/IN",*/
-/*    "DUAL BEACON",*/
-/*    "HUE BREATHING",*/
-/*    "HUE PENDULUM",*/
-/*    "HUE WAVE",*/
-/*    "TYPING HEATMAP",*/
-/*    "REACT SIMPLE",*/
-/*    "REACTIVE NEXUS",*/
-/*    "REACT M-NEXUS",*/
-/*    "SPLASH",*/
-/*    "MULTISPLASH",*/
-/*    "SOLID SPLASH",*/
-/*    "SOLID M-SPLASH"*/
-/*};*/
-
 typedef enum {
     SUBMENU_OFF,
     SUBMENU_LIGHTING,
@@ -94,6 +74,3 @@ void render_menu(void);
 bool dyn_display;
 int start_index;
 void qmenu_timer(void);
-
-/*extern hsv_t primary;*/
-/*extern hsv_t secondary;*/

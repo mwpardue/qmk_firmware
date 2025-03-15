@@ -75,7 +75,6 @@ void                       eeconfig_init_user(void) {
     dprintf("Initialized user_config.painter.hsv.primary: %d, %d, %d\n", user_config.painter.hsv.primary.h, user_config.painter.hsv.primary.s, user_config.painter.hsv.primary.v);
     dprintf("Initialized user_config.painter.hsv.secondary: %d, %d, %d\n", user_config.painter.hsv.secondary.h, user_config.painter.hsv.secondary.s, user_config.painter.hsv.secondary.v);
     eeconfig_init_keymap();
-    // eeconfig_update_user_datablock(&user_config);
     eeconfig_update_user_datablock_handler(&user_config, 0, EECONFIG_USER_DATA_SIZE);
 }
 
@@ -90,7 +89,6 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
   // Your code goes here. data is the packet received from host.
 }
 #endif
-
 
 // Matrix scan
 
@@ -113,10 +111,6 @@ void matrix_scan_user(void) {
 #ifdef CASEMODE_ENABLE
   caps_word_idle_timer();
 #endif
-
-// #if LAYER_LOCK_IDLE_TIMEOUT > 0
-//     layer_lock_task();
-// #endif
 
 #ifdef CAPSWORD_ENABLE
     caps_word_task();
@@ -158,8 +152,6 @@ void matrix_scan_user(void) {
       if ((other_keycode == KC_C) || (other_keycode == LOL_THM)) {return true;}
     case LHM_S:
       if ((other_keycode == KC_QUOT) || (other_keycode == KC_DOT) || (other_keycode == KC_SCLN)) {return true;}
-    // case SFT_5: //Shift + XCS_SFT
-    //   if (other_keycode == XCASE || other_keycode == XCS_SFT || other_keycode == (XCASE & 0xff)) {return true;}
       break;
   }
 
@@ -174,16 +166,7 @@ void matrix_scan_user(void) {
 }
 
   uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
-    // extern leader_t leader;
-    // if (leader.isLeading) {
-    //     switch (tap_hold_keycode) {
-    //         default:
-    //         return 0;
-    //     }
-    // }
    switch (tap_hold_keycode) {
-    // case BSP_SYM:
-    // case ENT_HYP:
     case UIL_THM:
     case UOL_THM:
     case LUTHUM1:
@@ -199,22 +182,9 @@ void matrix_scan_user(void) {
     case RUTHUM1:
     case CLUTHUM2:
     case CRUTHUM2:
-    // case CLIR_THM:
     case CLOR_THM:
     case CLIL_THM:
     case CUIL_THM:
-    // case CTL_QUO:
-    // case GUI_BSP:
-    // case ALT_MIN:
-    // case ASW_Z:
-    // case SFT_Z:
-    // case SFT_QUE:
-    // case LHM_Z:
-    // case RHM_SLS:
-    // case RHM_O:
-    // case CTL_CW:
-    // case GUI_CW:
-    // case SFT_CW:
     case UIG_THM:
     case LUGTHUM:
     case LOG_THM:
@@ -222,7 +192,6 @@ void matrix_scan_user(void) {
     case LHM_MNL:
     case LHM_MNR:
     case CLIR_THM:
-    // case GUI_SLS:
        return 0;  // Bypass Achordion for these keys.
        dprintln("Bypassing achordion for timeout");
    }
@@ -237,7 +206,6 @@ void matrix_scan_user(void) {
 bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     // for example:
     switch (keycode) {
-        // case SP_CAP:
         case LUTHUM2:
         case LOL_THM:
         case RUTHUM2:
@@ -249,90 +217,19 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
          case KC_1 ... KC_0:
           dprintf("default xcase separator from coramoor\n");
              return true;
-         // case (XCASE & 0xff):
-         // case XCASE:
-         // case BSP_SYM:
          default:
             return false;
      }
     return false;
 }
 
-#ifdef DYNAMIC_MACRO_ENABLE
-    bool is_dynamic_recording = false;
-
-    void dynamic_macro_record_start_user(int8_t direction) {
-        is_dynamic_recording = true;
-    }
-
-    void dynamic_macro_record_end_user(int8_t direction) {
-        is_dynamic_recording = false;
-    }
-#endif
-
-// Gloal quick-tap
-// #ifdef QT_ENABLE
-
-//     bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
-//     #define IS_HOMEROW(r) (r->event.key.row == 1 || r->event.key.row == 5)
-//
-//     static uint16_t prev_keycode;
-//     if (record->event.pressed) {
-//         // Store the previous keycode for instant tap decision
-//         prev_keycode = next_keycode;
-//         // Cache the next input for mod-tap decisions
-//         next_keycode = keycode;
-//         next_record  = *record;
-//     }
-//
-//     // Match home row mod-tap keys when it is not preceded by a Layer key
-//     if (IS_HOMEROW(record) && IS_QK_MOD_TAP(keycode) && !IS_QK_LAYER_TAP(prev_keycode) && (last_input_activity_elapsed() > COMBO_TERM)) {
-//         dprintln("Inside pre_process_record_user function.");
-//         // Tap the mod-tap key instantly when it follows a short interval
-//         if (record->event.pressed && (last_input_activity_elapsed() < GQT_TAPPING_TERM)) {
-//             record->keycode = keycode & 0xff;
-//             action_tapping_process(*record);
-//             dprintln("Registering tap action due to short interval");
-//             return false;
-//         } else { // Send the base keycode key up event
-//             keyrecord_t base_record   = *record;
-//             base_record.keycode       = keycode & 0xff;
-//             base_record.event.pressed = false;
-//             action_tapping_process(base_record);
-//             dprintln("Registering tap action on long interval");
-//         }
-//     }
-//     return true;
-// }
-// #endif
-
-// #ifdef KEY_OVERRIDE_ENABLE
-// const key_override_t dot_key_override =
-//     ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLN);  // Shift . is :
-// const key_override_t comm_key_override =
-//     ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_SCLN); // Shift , is ;
-//
-// const key_override_t *key_overrides[] = {
-//     &dot_key_override,
-//     &comm_key_override
-// };
-
-// #endif //KEY_OVERRIDE_ENABLE
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_LEADER_ENABLE
-//   switch (process_custom_leader(keycode, record)) {
-//         case PROCESS_RECORD_RETURN_TRUE:
-//             return true;
-//         case PROCESS_RECORD_RETURN_FALSE:
-//             return false;
-//         default:
-//             break;
-//     };
   if (!process_leader(keycode, record)) { return false; }
 #endif
 
 #ifdef COMBO_ENABLE
+
     // Process combos
     switch (process_combos(keycode, record)) {
         case PROCESS_RECORD_RETURN_TRUE:
@@ -351,10 +248,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CAPSWORD_ENABLE
     if (!process_caps_word(keycode, record)) { return false; }
 #endif
-
-// #ifdef LAYER_LOCK_ENABLE
-//       if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
-// #endif
 
 #ifdef GQT_ENABLE
   if (!process_global_quick_tap(keycode, record)) { return false; }
@@ -375,6 +268,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef SMART_CASE_ENABLE
         // Process smart case
     switch (process_smart_case(keycode, record)) {
+        case PROCESS_RECORD_RETURN_TRUE:
+            return true;
+        case PROCESS_RECORD_RETURN_FALSE:
+            return false;
+        default:
+            break;
+    };
+#endif
+
+#ifdef SHORTCUTS_ENABLE
+    // Process custom_shortcuts
+    switch (process_custom_shortcuts(keycode, record)) {
         case PROCESS_RECORD_RETURN_TRUE:
             return true;
         case PROCESS_RECORD_RETURN_FALSE:
@@ -452,18 +357,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CUSTOM_SHIFT_ENABLE
     // Process custom_shift
    switch (process_custom_shift(keycode, record)) {
-        case PROCESS_RECORD_RETURN_TRUE:
-            return true;
-        case PROCESS_RECORD_RETURN_FALSE:
-            return false;
-        default:
-            break;
-    };
-#endif
-
-#ifdef SHORTCUTS_ENABLE
-    // Process custom_shortcuts
-    switch (process_custom_shortcuts(keycode, record)) {
         case PROCESS_RECORD_RETURN_TRUE:
             return true;
         case PROCESS_RECORD_RETURN_FALSE:

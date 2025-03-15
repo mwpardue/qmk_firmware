@@ -27,7 +27,13 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
     bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
     bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
-    bool kbFeature = caps_word_on || xcase_state == XCASE_ON || xcase_state == XCASE_WAIT || isAnyOneShotLockedMod || is_leading() || host_keyboard_led_state().caps_lock || is_passing();
+    bool kbFeature = caps_word_on || \
+                     xcase_state == XCASE_ON || \
+                     xcase_state == XCASE_WAIT || \
+                     isAnyOneShotLockedMod || \
+                     is_leading() || \
+                     host_keyboard_led_state().caps_lock || \
+                     is_passing();
 
     switch (keycode) {
 
@@ -97,64 +103,6 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             }
 
-         // case CAPLOCK:
-         //    if (record->event.pressed) {
-         //        tap_code16(KC_CAPS);
-         //        lcd_dirty = true;
-         //    return PROCESS_RECORD_RETURN_FALSE;
-         //    }
-         //    break;
-         //
-         // case CAPWORD:
-         //    if (record->event.pressed) {
-         //        if (caps_word_on) {
-         //            disable_caps_word();
-         //            dprintln("CAPWORD disable caps word");
-         //        } else {
-         //            enable_caps_word();
-         //            dprintln("CAPWORD enable caps word");
-         //        }
-         //    return PROCESS_RECORD_RETURN_FALSE;
-         //    }
-         //    break;
-         //
-         // case XCASE:
-         //    if (record->event.pressed) {
-         //        switch (xcase_state) {
-         //            case XCASE_WAIT:
-         //                disable_xcase();
-         //                disable_caps_word();
-         //                break;
-         //            case XCASE_ON:
-         //                disable_caps_word();
-         //                disable_xcase();
-         //                break;
-         //            default:
-         //                enable_xcase();
-         //                break;
-         //        }
-         //    return PROCESS_RECORD_RETURN_FALSE;
-         //    }
-         //
-         // case XCSTRG:
-         //    if (record->event.pressed) {
-         //        switch (xcase_state) {
-         //            case XCASE_WAIT:
-         //                disable_xcase();
-         //                disable_caps_word();
-         //                break;
-         //            case XCASE_ON:
-         //                disable_caps_word();
-         //                disable_xcase();
-         //                break;
-         //            default:
-         //                enable_xcase();
-         //                enable_caps_word();
-         //                break;
-         //        }
-         //    return PROCESS_RECORD_RETURN_FALSE;
-         //    }
-
          case SM_SWIT: if (record->event.pressed) {
               layer_on(_APPSWITCH);
               register_mods(MOD_MASK_GUI);
@@ -166,17 +114,13 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
             break;
 
-        // case GUI_ESC:
         case SM_ESC:
             if (record->event.pressed) {
                 if (kbFeature) {
-                    if (caps_word_on) {
-                        disable_caps_word();
-                        tap_code16(KC_ESC);
-                    }
                     if (host_keyboard_led_state().caps_lock) {
                         tap_code16(KC_CAPS);
                     }
+                    disable_caps_word();
                     disable_xcase();
                     clear_locked_and_oneshot_mods();
                     stop_leading();

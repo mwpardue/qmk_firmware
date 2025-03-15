@@ -20,6 +20,7 @@ typedef union {
         bool caps_word_on :1;
     #endif
         bool write_to_eeprom :1;
+        bool dyn_recording :1;
     } kb;
 } user_runtime_state_t;
 
@@ -30,8 +31,6 @@ typedef struct PACKED {
         dual_hsv_t hsv;
     } painter;
     struct {
-        /*uint8_t menu_selector :8;*/
-        /*uint8_t submenu_selector :8;*/
         uint8_t os :8;
     } system;
     struct {

@@ -218,6 +218,8 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             case KC_RCBR:
             case KC_SCLN:
             case KC_COLN:
+            case UIL_THM:
+            case UIR_THM:
             dprintln("terminate_case_modes");
                 // If mod chording disable the mods
                 if (record->event.pressed && (get_mods() != 0)) {

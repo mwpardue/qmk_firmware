@@ -64,6 +64,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case CLIR_THM:
         case CLOR_THM:
         case NUM_Z:
+        case NUM_TAB:
           return g_tapping_term + 100;
         case LHM_A:
         case LQM_S:
@@ -80,11 +81,9 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case GUI_X:
         case GUI_DOT:
           return get_custom_tapping_term(user_config.tapping_term.modtap);
-          // return get_modtap_tapping_term();
         case RHM_K:
         case LHM_D:
             return get_custom_tapping_term(user_config.tapping_term.shift);
-            // return get_sft_tapping_term();
         default:
             return g_tapping_term;
     }

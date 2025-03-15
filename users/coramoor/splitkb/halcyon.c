@@ -115,10 +115,12 @@ void housekeeping_task_kb(void) {
     // Backlight feature
     if (last_input_activity_elapsed() <= HLC_BACKLIGHT_TIMEOUT) {
         if (backlight_off) {
+            dprintln("Wake HLC TFTP");
             backlight_wakeup();
         }
     } else {
         if (!backlight_off) {
+            dprintln("Sleep HLC TFTP");
             backlight_suspend();
         }
     }

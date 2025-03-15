@@ -19,15 +19,12 @@
 #endif
 
 #ifdef TAPHOLD_ENABLE
-    // #define IGNORE_MOD_TAP_INTERRUPT
     #define TAPPING_TERM_PER_KEY
     #define TAPPING_FORCE_HOLD_PER_KEY
     #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
     #define PERMISSIVE_HOLD_PER_KEY
     #define QUICK_TAP_TERM_PER_KEY
-    // #define QUICK_TAP_TERM 0
 #endif
-//#define BILATERAL_COMBINATIONS
 
     #define ONESHOT_TAP_TOGGLE 2
     #define ONESHOT_TIMEOUT 5000
@@ -54,7 +51,6 @@
     #define COMBO_STRICT_TIMER
     #define COMBO_HOLD_TERM 150
     #define COMBO_MUST_TAP_PER_COMBO
-    #define COMBO_ONLY_FROM_LAYER 0
 #endif
 
     #define MACRO_TIMER 10
@@ -88,6 +84,4 @@
 #endif
 
 
-/*#ifdef HLC_TFT_DISPLAY*/
-    #define QUANTUM_PAINTER_NUM_IMAGES 12
-/*#endif*/
+#define QUANTUM_PAINTER_NUM_IMAGES 12

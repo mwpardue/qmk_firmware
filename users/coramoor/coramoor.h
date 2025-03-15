@@ -69,6 +69,10 @@ uint32_t eeconfig_read_user_datablock_handler(void *data, uint8_t offset, uint8_
     #include "features/macros.h"
 #endif
 
+#ifdef DYNAMIC_MACRO_ENABLE
+    #include "features/dynamic_macro.h"
+#endif
+
 #ifdef CUSTOM_LEADER_ENABLE
     #include "features/leader.h"
 #endif
@@ -97,11 +101,6 @@ uint32_t eeconfig_read_user_datablock_handler(void *data, uint8_t offset, uint8_
     #include "features/custom_shift.h"
 #endif
 
-/*#ifdef LAYER_LOCK_ENABLE*/
-/*    #include "features/layer_lock.h"*/
-/*#endif*/
-
-/*#ifdef RGB_MATRIX_ENABLED*/
 #ifdef OLED_MENU_ENABLE
     #include "features/rgb_matrix_keys.h"
 #endif

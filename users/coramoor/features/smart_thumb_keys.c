@@ -69,8 +69,6 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
     break;
 
     case CUIL_THM:
-    // case UIL_THM:
-    // case UIR_THM:
         if (record->event.pressed) {
             layer_on(_APPSWITCH);
             register_mods(MOD_MASK_GUI);
@@ -83,44 +81,22 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         return PROCESS_RECORD_RETURN_FALSE;
     break;
 
-    case UOR_THM:
-    case UOL_THM:
+    case RUTHUM1:
+    case LUTHUM1:
+        if (record->event.pressed) {
+            toggle_caps_word();
+        }
+        return PROCESS_RECORD_RETURN_FALSE;
+        break;
+
+    case UIR_THM:
+    case UIL_THM:
         if (record->event.pressed) {
             start_leading();
             return PROCESS_RECORD_RETURN_FALSE;
         }
         return PROCESS_RECORD_RETURN_FALSE;
     break;
-
-    case LUTHUM1:
-        if (record->event.pressed) {
-            if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_L));
-        return PROCESS_RECORD_RETURN_FALSE;
-                }
-      return PROCESS_RECORD_CONTINUE;
-            }
-        break;
-    //
-    // case RUTHUM1:
-    //     if (record->event.pressed) {
-    //         if (record->tap.count > 0) {
-    //                 tap_code16(LGUI(KC_H));
-    //     return PROCESS_RECORD_RETURN_FALSE;
-    //             }
-    //   return PROCESS_RECORD_CONTINUE;
-    //         }
-    //     break;
-
-    case RUTHUM2:
-        if (record->event.pressed) {
-            if (record->tap.count > 0) {
-                    tap_code16(LSFT(KC_BSLS));
-        return PROCESS_RECORD_RETURN_FALSE;
-                }
-      return PROCESS_RECORD_CONTINUE;
-            }
-        break;
 
     case LUTHUM2:
     case CLUTHUM2:
@@ -133,17 +109,7 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
             }
         break;
 
-    case UIL_THM:
-        if (record->event.pressed) {
-            if (record->tap.count > 0) {
-                    tap_code16(LSFT(KC_6));
-        return PROCESS_RECORD_RETURN_FALSE;
-                }
-      return PROCESS_RECORD_CONTINUE;
-            }
-        break;
-
-    case UIR_THM:
+    case UOL_THM:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
                     tap_code16(LSFT(KC_4));
@@ -153,78 +119,63 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
             }
         break;
 
+        case UOR_THM:
+            if (record->event.pressed) {
+                if (record->tap.count > 0) {
+                    tap_code16(LSFT(KC_6));
+                    return PROCESS_RECORD_RETURN_FALSE;
+                }
+                return PROCESS_RECORD_CONTINUE;
+            }
+            break;
+
     case XCTHUM:
     case XCASE:
-    // case RUTHUM2:
         if (record->event.pressed) {
-                dprintln("XCTHUM pressed");
-                    if (isCtrl) {
-                        tap_code16(KC_CAPS);
-                        #ifdef HLC_TFT_DISPLAY
-                        lcd_dirty = true;
-                        #endif
-                    } else {
-                        switch (xcase_state) {
-                            case XCASE_WAIT:
-                                if (caps_word_on) {
-                                    disable_xcase();
-                                    disable_caps_word();
-                                } else {
-                                    enable_caps_word();
-                                }
-                                break;
-                            case XCASE_ON:
-                                disable_caps_word();
-                                disable_xcase();
-                                break;
-                            default:
-                                if (caps_word_on) {
-                                    disable_caps_word();
-                                } else {
-                                    enable_xcase();
-                                }
-                                break;
-                        }
-                    }
-            return PROCESS_RECORD_RETURN_FALSE;
+            dprintln("XCTHUM pressed");
+            if (xcase_state == XCASE_ON || xcase_state == XCASE_WAIT) {
+                disable_xcase();
+                disable_caps_word();
+            } else {
+                enable_xcase();
+            }
+        return PROCESS_RECORD_RETURN_FALSE;
         }
         break;
 
-    case CRUTHUM2:
+    case LUTHUM0:
+    case RUTHUM0:
         if (record->event.pressed) {
-            if (record->tap.count > 0) {
-                dprintln("XCTHUM pressed");
-                    if (isCtrl) {
-                        tap_code16(KC_CAPS);
-                        #ifdef HLC_TFT_DISPLAY
-                        lcd_dirty = true;
-                        #endif
-                    } else {
-                        switch (xcase_state) {
-                            case XCASE_WAIT:
-                                if (caps_word_on) {
-                                    disable_xcase();
-                                    disable_caps_word();
-                                } else {
-                                    enable_caps_word();
-                                }
-                                break;
-                            case XCASE_ON:
-                                disable_caps_word();
+            dprintln("XCTHUM pressed");
+                if (isCtrl) {
+                    tap_code16(KC_CAPS);
+                    #ifdef HLC_TFT_DISPLAY
+                    lcd_dirty = true;
+                    #endif
+                } else {
+                    switch (xcase_state) {
+                        case XCASE_WAIT:
+                            if (caps_word_on) {
                                 disable_xcase();
-                                break;
-                            default:
-                                if (caps_word_on) {
-                                    disable_caps_word();
-                                } else {
-                                    enable_xcase();
-                                }
-                                break;
-                        }
+                                disable_caps_word();
+                            } else {
+                                enable_caps_word();
+                            }
+                            break;
+                        case XCASE_ON:
+                            disable_caps_word();
+                            disable_xcase();
+                            break;
+                        default:
+                            if (caps_word_on) {
+                                disable_caps_word();
+                            } else {
+                                enable_xcase();
+                            }
+                            break;
                     }
-            return PROCESS_RECORD_RETURN_FALSE;
-            }
-            return PROCESS_RECORD_CONTINUE;
+                }
+        return PROCESS_RECORD_RETURN_FALSE;
         }
         break;
 
