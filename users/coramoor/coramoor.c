@@ -223,7 +223,29 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     return false;
 }
 
+#ifdef HLC_TFT_DISPLAY
+    bool led_update_kb(led_t led_state) {
+        lcd_dirty = true;
+        return false;
+    }
+#endif
+
+#ifdef DYNAMIC_MACRO_ENABLE
+bool dynamic_macro_record_start_user(int8_t direction) {
+    user_runtime_state.kb.dyn_recording = true;
+    lcd_dirty = true;
+    return true;
+}
+
+bool dynamic_macro_record_end_user(int8_t direction) {
+    user_runtime_state.kb.dyn_recording = false;
+    lcd_dirty = false;
+    return true;
+}
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
 #ifdef CUSTOM_LEADER_ENABLE
   if (!process_leader(keycode, record)) { return false; }
 #endif

@@ -21,6 +21,7 @@
     #include "features/qpainter.h"
 #endif
 #include "features/dynamic_macro.h"
+#include "coramoor_runtime.h"
 
 #include <string.h>
 
@@ -71,6 +72,16 @@ char *leader_display_str(void) {
 }
 #endif
 
+void *adjust_layer(void) {
+    #ifdef QMENU_ENABLE
+        painter_menu.state.menu_selector = 1;
+        painter_menu.state.submenu_selector = 1;
+        qp_clear(lcd_surface);
+    #endif
+        layer_on(_ADJUST);
+    return NULL;
+}
+
 void *leader_tips_func(uint16_t keycode) {
         switch (keycode) {
             case KC_A:
@@ -78,6 +89,17 @@ void *leader_tips_func(uint16_t keycode) {
                 break;
             case KC_T:
                 send_string_with_delay("trueipsolutions.com", MACRO_TIMER);
+                break;
+            default:
+                break;
+        }
+        return NULL;
+    }
+
+void *leader_adjust_func(uint16_t keycode) {
+        switch (keycode) {
+            case KC_D:
+                adjust_layer();
                 break;
             default:
                 break;
@@ -232,6 +254,9 @@ void *leader_pass_func(uint16_t keycode) {
 __attribute__ ((weak))
 void *leader_start_func(uint16_t keycode) {
     switch (keycode) {
+        case KC_A:
+            return leader_adjust_func;
+            break;
         case KC_T:
             return leader_tips_func;
             break;

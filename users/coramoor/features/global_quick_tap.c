@@ -71,6 +71,10 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
         case RHM_J:
         case RHM_L:
         case RHM_SCN:
+        case CTL_QUE:
+        case ALT_DOT:
+        case CTL_Z:
+        case ALT_X:
           return get_custom_tapping_term(user_config.tapping_term.gqt);
         case LHM_D:
         case RHM_K:

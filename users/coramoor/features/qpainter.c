@@ -27,16 +27,18 @@ painter_image_handle_t  os_glyph,
 #define MENU_START_Y bbt->line_height+ROW_OFFSET
 #define ROW_CALC (menu_item*(mononoki->line_height))+(menu_item*2) + HEADER_ROW_Y
 #define ROW_Y ((row+1)*(mononoki->line_height) + 2) + HEADER_ROW_Y
+#define BOX_ROW_Y (mononoki->line_height) + HEADER_ROW_Y
 
 char* leaders[][2] = {
 
-     {"[DD]", "Dyn Macro"},
-     {"[SA]", "Arr Apps"},
-     {"[SS]", "Scrn Snag"},
-     {"[SC]", "Scrn Clip"},
-     {"[RR]", "FW Flash"},
-     {"[EC]", "@caracarn"},
-     {"[ET]", "@trueip"}
+    {"[AD]", "Adjust"},
+    {"[DD]", "Dyn Macro"},
+    {"[EC]", "@caracarn"},
+    {"[ET]", "@trueip"},
+    {"[SA]", "Arr Apps"},
+    {"[SC]", "Scrn Clip"},
+    {"[SS]", "Scrn Snag"},
+    {"[RR]", "FW Flash"}
  };
 
 
@@ -287,13 +289,15 @@ bool module_post_init_user(void) {
 }
 
 void render_menu_header(const char *heading) {
-    uint16_t left = 2;
-    uint16_t right = LCD_WIDTH - 2;
-    uint16_t top = 0;
-    uint16_t bottom = bbt->line_height + 7;
+    uint16_t width = qp_textwidth(bbt, heading);
+    uint16_t left = ((LCD_WIDTH - width)/2) - 3;
+    uint16_t right = LCD_WIDTH - ((LCD_WIDTH - width)/2) + 3;
+    uint16_t top = 4;
+    uint16_t bottom = top + bbt->line_height + 2;
 
     qp_rect(lcd_surface, left, top, right, bottom, CLR_MENU_BG, true);
     qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+    qp_rect(lcd_surface, left, top, right, bottom, HSV_BLACK, false);
 }
 
 void draw_leader_screen(char* array[][2], int size) {
@@ -302,14 +306,16 @@ void draw_leader_screen(char* array[][2], int size) {
         int row =0;
 
         qp_clear(lcd_surface);
-        render_menu_header("LEADING");
+        // render_menu_header("LEADING");
 
         int rows = size / sizeof(array[0]);
         for (int i = 0; i < rows; i++) {
-            qp_drawtext_recolor(lcd_surface, 0, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
-            qp_drawtext_recolor(lcd_surface, (LCD_WIDTH - qp_textwidth(mononoki, array[i][1])), ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, 3, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
+            qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - 3) - qp_textwidth(mononoki, array[i][1])), ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
             row++;
         }
+        qp_rect(lcd_surface, 0, BOX_ROW_Y - 2, LCD_WIDTH - 1, ((row + 1) * mononoki->line_height) + HEADER_ROW_Y + 3, CLR_MENU_BG, false);
+        render_menu_header("LEADING");
     }
 }
 
@@ -319,20 +325,30 @@ void draw_pass_screen(char* array[][2], int size) {
         int row = 0;
 
         qp_clear(lcd_surface);
-        render_menu_header("PASS-KEYS");
+        // render_menu_header("PASS-KEYS");
 
         int rows = size / sizeof(array[0]);
         for (int i = 0; i < rows; i++) {
             if (left_column) {
-                qp_drawtext_recolor(lcd_surface, 0, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, 3, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
                 qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH/2) - qp_textwidth(mononoki, array[i][1]))-5, ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
                 left_column = false;
             } else {
                 qp_drawtext_recolor(lcd_surface, (LCD_WIDTH/2)+5, ROW_Y, mononoki, array[i][0], CLR_MENU_BG, HSV_BLACK);
-                qp_drawtext_recolor(lcd_surface, (LCD_WIDTH - qp_textwidth(mononoki, array[i][1])), ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
+                qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - 3) - qp_textwidth(mononoki, array[i][1])), ROW_Y, mononoki, array[i][1], CLR_SEL_BG, HSV_BLACK);
                 left_column = true;
                 row++;
             }
+        }
+        qp_rect(lcd_surface, 0, BOX_ROW_Y - 2, LCD_WIDTH - 1, ((row + 1) * mononoki->line_height) + HEADER_ROW_Y + 3, CLR_MENU_BG, false);
+        render_menu_header("PASS-KEYS");
+    }
+}
+
+void draw_macro_status(void) {
+    if (lcd_dirty) {
+        if (user_runtime_state.kb.dyn_recording) {
+            qp_circle(lcd_surface, LCD_WIDTH/2, 8, 5, HSV_RED, true);
         }
     }
 }
@@ -359,6 +375,7 @@ void housekeeping_task_keymap(void) {
                 draw_header();
                 draw_status();
                 draw_os();
+                draw_macro_status();
                 draw_status();
                 draw_layer();
                 draw_mods();

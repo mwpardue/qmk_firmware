@@ -68,15 +68,10 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
             return PROCESS_RECORD_RETURN_FALSE;
 
        case PASSPAL:
-        case LALT_PP:
-        case RALT_PP:
             if (record->event.pressed) {
-                if (record->tap.count > 0) {
                   start_pass_leading();
-                    return PROCESS_RECORD_RETURN_FALSE;
                 }
-            return PROCESS_RECORD_CONTINUE;
-            }
+            return PROCESS_RECORD_RETURN_FALSE;
             break;
 
          case SEL_WRD:

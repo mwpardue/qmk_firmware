@@ -72,11 +72,11 @@ bool check_menu(uint8_t menu_item) {
 #define MAX_LABEL_SIZE 16
 #define MAX_PROP_SIZE 16
 #define MAX_MENU_SIZE 14
-#define HEADER_ROW_Y 6
+#define HEADER_ROW_Y 9
 #define ROW_HEIGHT mononoki->line_height
 #define ROW_OFFSET (menu_item*2)
 #define MENU_START_Y bbt->line_height+ROW_OFFSET
-#define ROW_CALC (menu_item*(mononoki->line_height))+(menu_item*2) + HEADER_ROW_Y
+#define ROW_CALC (menu_item*(mononoki->line_height))+(menu_item*2) + HEADER_ROW_Y - 4
 #define BOX_LEFT 2
 #define BOX_TOP ROW_CALC - 1
 #define BOX_RIGHT LCD_WIDTH - 2
@@ -201,22 +201,26 @@ void render_rgb_mode(uint8_t menu_item) {
 }
 
 
-void render_menu_line(const char *heading) {
-    uint16_t left = 2;
-    uint16_t right = LCD_WIDTH - 2;
-    uint16_t top = 0;
-    uint16_t bottom = bbt->line_height + 7;
+void render_menu_heading(const char *heading) {
+    uint16_t heading_width = qp_textwidth(bbt, heading);
+    uint16_t left = ((LCD_WIDTH - heading_width)/2) - 3;
+    uint16_t right = LCD_WIDTH - ((LCD_WIDTH - heading_width)/2) + 3;
+    uint16_t top = 5;
+    uint16_t bottom = top + bbt->line_height + 5;
 
     qp_rect(lcd_surface, left, top, right, bottom, CLR_MENU_BG, true);
+    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+    qp_rect(lcd_surface, left, top, right, bottom, HSV_BLACK, false);
 }
 
 void render_menu_rgb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
-    render_menu_line(heading);
+    // render_menu_heading(heading);
     for (uint8_t i = (sm_start); i < sm_end; i++) {
         switch(i) {
-            case LIGHTING_HEADING:
-                    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
-                break;
+            // case LIGHTING_HEADING:
+                    // qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+                    // render_menu_heading(heading);
+                // break;
             case MENU_FLAGS:
                     switch (rgb_matrix_get_flags()) {
                         case LED_FLAG_ALL: {
@@ -254,15 +258,16 @@ void render_menu_rgb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
                 break;
          }
     }
+    render_menu_heading(heading);
 }
 
 void render_menu_modtap(const char *heading, uint8_t sm_start, uint8_t sm_end) {
-    render_menu_line(heading);
+    // render_menu_heading(heading);
     for (uint8_t i = (sm_start); i < sm_end; i++) {
         switch(i) {
-            case MODTAP_HEADING:
-                    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
-                break;
+            // case MODTAP_HEADING:
+            //         // qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+            //     break;
             case MENU_STT:
                 prerender_menu_item("SHIFT:", user_config.tapping_term.shift, i);
                 break;
@@ -287,15 +292,15 @@ void render_menu_modtap(const char *heading, uint8_t sm_start, uint8_t sm_end) {
             #endif
          }
     }
+    render_menu_heading(heading);
 }
 
 void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
-    render_menu_line(heading);
     for (uint8_t i = (sm_start); i < sm_end; i++) {
         switch(i) {
-            case KB_HEADING:
-                    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
-                break;
+            // case KB_HEADING:
+            // qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+            //     break;
             case MENU_DEFAULTLAYER:
                 switch (get_highest_layer(default_layer_state)) {
                     case _BASE:
@@ -350,17 +355,15 @@ void render_menu_kb(const char *heading, uint8_t sm_start, uint8_t sm_end) {
             break;
         }
     }
+    render_menu_heading(heading);
 }
 
 void render_menu_painter(const char *heading, uint8_t sm_start, uint8_t sm_end) {
-    render_menu_line(heading);
-    dprintf("user_config.painter.hsv.primary: %d, %d, %d\n", user_config.painter.hsv.primary.h, user_config.painter.hsv.primary.s, user_config.painter.hsv.primary.v);
-    dprintf("user_config.painter.hsv.secondary: %d, %d, %d\n", user_config.painter.hsv.secondary.h, user_config.painter.hsv.secondary.s, user_config.painter.hsv.secondary.v);
     for (uint8_t i = (sm_start); i < sm_end; i++) {
         switch(i) {
-            case PAINTER_HEADING:
-                    qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
-                break;
+            // case PAINTER_HEADING:
+                    // qp_drawtext_recolor(lcd_surface, ((LCD_WIDTH - qp_textwidth(bbt, heading))/2), HEADER_ROW_Y, bbt, heading, CLR_MENU_FG, CLR_MENU_BG);
+                // break;
             case MENU_PHUE:
                 prerender_painter_item("PRI HUE:", user_config.painter.hsv.primary.h, i);
                 break;
@@ -381,22 +384,23 @@ void render_menu_painter(const char *heading, uint8_t sm_start, uint8_t sm_end) 
                 break;
          }
     }
+    render_menu_heading(heading);
 }
 
 void render_menu(void) {
     if (lcd_dirty) {
         switch (painter_menu.state.submenu_selector) {
             case SUBMENU_LIGHTING:
-                render_menu_rgb("RGB CONFIG", LIGHTING_HEADING, LIGHTING_END);
+                render_menu_rgb("RGB", LIGHTING_HEADING, LIGHTING_END);
                 break;
             case SUBMENU_MODTAP:
-                render_menu_modtap("MODTAP CONFIG", MODTAP_HEADING, MODTAP_END);
+                render_menu_modtap("MODTAP", MODTAP_HEADING, MODTAP_END);
                 break;
             case SUBMENU_PAINTER:
-                render_menu_painter("PAINTER CONFIG", PAINTER_HEADING, PAINTER_END);
+                render_menu_painter("PAINTER", PAINTER_HEADING, PAINTER_END);
                 break;
             case SUBMENU_KB:
-                render_menu_kb("KB CONFIG", KB_HEADING, KB_END);
+                render_menu_kb("KB", KB_HEADING, KB_END);
                 break;
         }
     }

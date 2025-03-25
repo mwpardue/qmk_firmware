@@ -90,17 +90,18 @@ enum {
 // Left thumb keys
 
     // Upper Left Thumb Keys
-    #define UOL_THM LT(_FUNCTION, KC_F17)
-    #define UIL_THM KC_F22
+    #define UIL_THM LT(_FUNCTION, KC_F17)
+    #define UOL_THM KC_F22
 
     // Lower Left Thumb Keys
     #define LUTHUM0 KC_F13
     #define LUTHUM1 KC_F14
-    #define LUTHUM2 LGUI_T(KC_UNDS)
+    #define LUTHUM2 LT(_NUMPAD, KC_MINS)
     #define LIL_THM LT(_NAVIGATION, KC_BSPC)
     #define LOL_THM LSFT_T(KC_ENTER)
 
     // Alt Base Thumb Keys
+    /*#define CLUTHUM2 LT(_NUMPAD, KC_MINS)*/
     #define CLUTHUM2 LCTL_T(KC_UNDS)
     #define CLIL_THM LT(_NAVIGATION, KC_TAB)
     #define CLOL_THM LGUI_T(KC_ENTER)
@@ -117,20 +118,22 @@ enum {
     #define LIR_THM LT(_SYMBOL, KC_SPACE)
 
     // Upper Right Thumb Keys
-    #define UIR_THM KC_F23
-    #define UOR_THM LT(_FUNCTION, KC_F16)
+    #define UIR_THM LT(_FUNCTION, KC_F16)
+    #define UOR_THM KC_F23
 
     // Alt Base Thumb Keys
     #define CLOR_THM RGUI_T(KC_ENTER)
     #define CLIR_THM LT(_HEX, KC_SPACE)
     #define CUIR_THM OSMHYPR
     #define CUOR_THM OSMMEH
-    #define CRUTHUM2 LCTL_T(KC_DEL)
+    #define CRUTHUM2 RCTL_T(KC_DEL)
 
 // Typing Layer Keys
 #define CTL_Z LCTL_T(KC_Z)
+#define GUI_Z LGUI_T(KC_Z)
 #define SFT_Z LSFT_T(KC_Z)
 #define CTL_QUE RCTL_T(KC_SLSH)
+#define GUI_QUE RGUI_T(KC_SLSH)
 #define SFT_QUE RSFT_T(KC_SLSH)
 #define GUI_C LGUI_T(KC_C)
 #define GUI_COM RGUI_T(KC_COMM)
@@ -200,6 +203,8 @@ enum {
 
 #define LALT_PP LALT_T(KC_F18)
 #define RALT_PP RALT_T(KC_F19)
+#define LGUI_PP LGUI_T(KC_F18)
+#define RGUI_PP RGUI_T(KC_F19)
 #define MONUM MO(_NUMPAD)
 #define MOVIM MO(_VIM)
 #define NUM_Z LT(_NUMPAD, KC_Z)

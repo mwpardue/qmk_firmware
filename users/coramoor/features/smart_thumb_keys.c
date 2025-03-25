@@ -89,8 +89,8 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
         return PROCESS_RECORD_RETURN_FALSE;
         break;
 
-    case UIR_THM:
-    case UIL_THM:
+    case UOR_THM:
+    case UOL_THM:
         if (record->event.pressed) {
             start_leading();
             return PROCESS_RECORD_RETURN_FALSE;
@@ -109,25 +109,16 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
             }
         break;
 
-    case UOL_THM:
+    case UIL_THM:
+    case UIR_THM:
         if (record->event.pressed) {
             if (record->tap.count > 0) {
-                    tap_code16(LSFT(KC_4));
+                    tap_code16(LCTL(LALT(KC_A)));
         return PROCESS_RECORD_RETURN_FALSE;
                 }
       return PROCESS_RECORD_CONTINUE;
             }
         break;
-
-        case UOR_THM:
-            if (record->event.pressed) {
-                if (record->tap.count > 0) {
-                    tap_code16(LSFT(KC_6));
-                    return PROCESS_RECORD_RETURN_FALSE;
-                }
-                return PROCESS_RECORD_CONTINUE;
-            }
-            break;
 
     case XCTHUM:
     case XCASE:
@@ -152,6 +143,9 @@ process_record_result_t process_smart_thumb_keys(uint16_t keycode, keyrecord_t *
                     #ifdef HLC_TFT_DISPLAY
                     lcd_dirty = true;
                     #endif
+                } else if (isShift) {
+                    enable_caps_word();
+                    enable_xcase();
                 } else {
                     switch (xcase_state) {
                         case XCASE_WAIT:
