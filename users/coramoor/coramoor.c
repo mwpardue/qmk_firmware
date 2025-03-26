@@ -233,13 +233,17 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
 #ifdef DYNAMIC_MACRO_ENABLE
 bool dynamic_macro_record_start_user(int8_t direction) {
     user_runtime_state.kb.dyn_recording = true;
+#ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+#endif
     return true;
 }
 
 bool dynamic_macro_record_end_user(int8_t direction) {
     user_runtime_state.kb.dyn_recording = false;
+#ifdef HLC_TFT_DISPLAY
     lcd_dirty = false;
+#endif
     return true;
 }
 #endif
