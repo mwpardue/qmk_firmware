@@ -72,12 +72,12 @@ uint8_t combo_ref_from_layer(uint8_t layer) {
             }
             break;
 
-        case SM_CW:
-            if (record->event.pressed) {
-                    toggle_caps_word();
-                    return PROCESS_RECORD_RETURN_FALSE;
-            }
-            break;
+        // case SM_CW:
+        //     if (record->event.pressed) {
+        //             toggle_caps_word();
+        //             return PROCESS_RECORD_RETURN_FALSE;
+        //     }
+        //     break;
 
         case SM_PAR:
             if (record->event.pressed) {

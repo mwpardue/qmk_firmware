@@ -9,4 +9,5 @@
         bool should_send_ctrl(bool isWindowsOrLinux, bool isOneShotShift);
 #endif
 
+void smart_escape(void);
 process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record);

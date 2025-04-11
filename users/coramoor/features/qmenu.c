@@ -282,7 +282,7 @@ void render_menu_modtap(const char *heading, uint8_t sm_start, uint8_t sm_end) {
                 prerender_menu_item("ACHORDION:", achordion_tapping_term, i);
                 break;
             #endif
-            #ifdef GQT_ENABLE
+            #if defined(GQT_ENABLE) || defined(TAP_FLOW_ENABLE)
             case MENU_GQT:
                 prerender_menu_item("GQT:", user_config.tapping_term.gqt, i);
                 break;

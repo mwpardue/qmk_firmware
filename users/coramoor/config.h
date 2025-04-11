@@ -18,6 +18,9 @@
   #define CAPS_WORD_IDLE_TIMEOUT 5000
 #endif
 
+#define TAP_FLOW_TERM 150
+#define TAP_FLOW_DEBUG
+
 #ifdef TAPHOLD_ENABLE
     #define TAPPING_TERM_PER_KEY
     #define TAPPING_FORCE_HOLD_PER_KEY
@@ -37,7 +40,7 @@
 #endif
 #ifdef GQT_ENABLE
     #define GQT_TAPPING_TERM 175
-    #define SGQT_TAPPING_TERM 100
+    #define SGQT_TAPPING_TERM 150
 #endif
 
 #ifdef CUSTOM_ONESHOT_MODS_ENABLE

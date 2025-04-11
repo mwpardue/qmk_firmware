@@ -15,7 +15,7 @@
     },
     "features": {
         "bootmagic": true,
-        "caps_word": true,
+        "caps_word": false,
         "deferred_exec": true,
         "mousekey": true,
         "extrakey": true,

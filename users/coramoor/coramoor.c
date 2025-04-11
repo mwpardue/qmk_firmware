@@ -1,6 +1,10 @@
 #include "coramoor.h"
 #include "features/tapdance.h"
+
+#ifdef HLC_TFT_DISPLAY
 #include "features/qpainter.h"
+#endif
+
 #include "coramoor_runtime.h"
 #ifdef RAW_ENABLE
     #include "raw_hid.h"
@@ -22,6 +26,7 @@
 
 user_config_t user_config;
 painter_menu_t painter_menu;
+bool capslock_state = false;
 
 uint32_t eeconfig_update_user_datablock_handler(const void *data, uint8_t offset, uint8_t size) {
     eeconfig_update_user_datablock(data);
@@ -129,6 +134,7 @@ void matrix_scan_user(void) {
 
 #ifdef HLC_TFT_DISPLAY
     layer_state_t layer_state_set_kb(layer_state_t state) {
+        dprintln("lcd_dirty layer change");
         lcd_dirty = true;
         return state;
     }
@@ -224,8 +230,12 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
 }
 
 #ifdef HLC_TFT_DISPLAY
-    bool led_update_kb(led_t led_state) {
-        lcd_dirty = true;
+    bool led_update_user(led_t led_state) {
+        if (capslock_state != host_keyboard_led_state().caps_lock) {
+            lcd_dirty = true;
+            dprintln("coramoor lcd_dirty1");
+            capslock_state = host_keyboard_led_state().caps_lock;
+        }
         return false;
     }
 #endif
@@ -235,6 +245,7 @@ bool dynamic_macro_record_start_user(int8_t direction) {
     user_runtime_state.kb.dyn_recording = true;
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+        dprintln("coramoor lcd_dirty2");
 #endif
     return true;
 }
@@ -243,6 +254,7 @@ bool dynamic_macro_record_end_user(int8_t direction) {
     user_runtime_state.kb.dyn_recording = false;
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = false;
+        dprintln("coramoor lcd_dirty3");
 #endif
     return true;
 }

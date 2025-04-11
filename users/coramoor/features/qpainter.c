@@ -278,6 +278,7 @@ bool module_post_init_user(void) {
     mononoki = qp_load_font_mem(font_mononoki);
     bbt = qp_load_font_mem(font_bigbluetermmono);
     lcd_dirty = true;
+    dprintln("module_post_init_user");
     draw_status();
     draw_os();
     draw_status();

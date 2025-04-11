@@ -25,7 +25,7 @@ typedef enum {
 #ifdef ACHORDION_ENABLE
     MENU_AT,
 #endif
-#ifdef GQT_ENABLE
+#if defined(GQT_ENABLE) || defined(TAP_FLOW_ENABLE)
     MENU_GQT,
     MENU_SGQT,
 #endif

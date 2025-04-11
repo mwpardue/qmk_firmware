@@ -94,8 +94,8 @@ enum {
     #define UOL_THM KC_F22
 
     // Lower Left Thumb Keys
-    #define LUTHUM0 KC_F13
-    #define LUTHUM1 KC_F14
+    #define LUTHUM0 KC_MPLY
+    #define LUTHUM1 KC_MNXT
     #define LUTHUM2 LT(_NUMPAD, KC_MINS)
     #define LIL_THM LT(_NAVIGATION, KC_BSPC)
     #define LOL_THM LSFT_T(KC_ENTER)
@@ -103,8 +103,8 @@ enum {
     // Alt Base Thumb Keys
     /*#define CLUTHUM2 LT(_NUMPAD, KC_MINS)*/
     #define CLUTHUM2 LCTL_T(KC_UNDS)
-    #define CLIL_THM LT(_NAVIGATION, KC_TAB)
-    #define CLOL_THM LGUI_T(KC_ENTER)
+    #define CLIL_THM LT(_NAVIGATION, KC_F13)
+    #define CLOL_THM LCTL_T(KC_ENTER)
     #define CUIL_THM KC_F20
     #define CUOL_THM MON_R
 
@@ -122,14 +122,15 @@ enum {
     #define UOR_THM KC_F23
 
     // Alt Base Thumb Keys
-    #define CLOR_THM RGUI_T(KC_ENTER)
-    #define CLIR_THM LT(_HEX, KC_SPACE)
+    #define CLIR_THM LT(_SYMBOL, KC_ENTER)
+    #define CLOR_THM RCTL_T(KC_ENTER)
     #define CUIR_THM OSMHYPR
     #define CUOR_THM OSMMEH
     #define CRUTHUM2 RCTL_T(KC_DEL)
 
 // Typing Layer Keys
 #define CTL_Z LCTL_T(KC_Z)
+#define CTL_X LCTL_T(KC_X)
 #define GUI_Z LGUI_T(KC_Z)
 #define SFT_Z LSFT_T(KC_Z)
 #define CTL_QUE RCTL_T(KC_SLSH)
@@ -140,7 +141,9 @@ enum {
 #define ALT_X LALT_T(KC_X)
 #define GUI_X LGUI_T(KC_X)
 #define ALT_DOT RALT_T(KC_DOT)
+#define CTL_DOT RCTL_T(KC_DOT)
 #define GUI_DOT RGUI_T(KC_DOT)
+#define B_NUM LT(_NUMPAD, KC_B)
 
 // Right thumb keys
 
@@ -159,7 +162,11 @@ enum {
 #define LHM_F LGUI_T(KC_F)
 #define CTL_TAB LCTL_T(KC_TAB)
 #define SFT_TAB LSFT_T(KC_TAB)
+#define SFT_BSP LSFT_T(KC_BSPC)
 #define SFT_QUO RSFT_T(KC_QUOT)
+#define SFT_PP LSFT_T(KC_F13)
+#define MEH_PP MEH_T(KC_F14)
+#define NUM_PP LT(_NUMPAD, KC_F14)
 #define CTL_QUO RCTL_T(KC_QUOT)
 #define GUI_QUO RGUI_T(KC_QUOT)
 #define GUI_TAB LGUI_T(KC_TAB)
@@ -208,6 +215,7 @@ enum {
 #define MONUM MO(_NUMPAD)
 #define MOVIM MO(_VIM)
 #define NUM_Z LT(_NUMPAD, KC_Z)
+#define NUM_BSP LT(_NUMPAD, KC_BSPC)
 #define MON_L LALT(KC_H)
 #define MON_R LALT(KC_L)
 #define MON_U LALT(KC_K)
@@ -222,4 +230,7 @@ enum {
 #define TAB_DWN LCTL(KC_J)
 #define TOBAS TO(_BASE)
 #define TOHEX TO(_HEX)
+#define TOFUN TO(_FUNCTION)
 #define TOADJ ADJ_LYR
+#define SFT_TAB LSFT_T(KC_TAB)
+#define LCA_A LCTL(LALT(KC_A))

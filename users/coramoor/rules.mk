@@ -28,6 +28,11 @@ ifeq ($(strip $(GQT_ENABLE)), yes)
     OPT_DEFS += -DGQT_ENABLE
 endif
 
+TAP_FLOW_ENABLE ?= no
+ifeq ($(strip $(TAP_FLOW_ENABLE)), yes)
+    OPT_DEFS += -DTAP_FLOW_ENABLE
+endif
+
 ACHORDION_ENABLE ?= no
 ifeq ($(strip $(ACHORDION_ENABLE)), yes)
     SRC += $(USER_PATH)/features/achordion.c
@@ -169,9 +174,9 @@ ifdef HLC_TFT_DISPLAY
 	SRC += $(USER_PATH)/features/kyria_logo-mono.qgf.c
 	SRC += $(USER_PATH)/fonts/bigbluetermmono.qff.c
 	SRC += $(USER_PATH)/images/glyphs.qgf.c
+	include $(USER_PATH)/splitkb/rules.mk
+	POST_CONFIG_H += $(USER_PATH)/splitkb/config.h
 endif
-include $(USER_PATH)/splitkb/rules.mk
-POST_CONFIG_H += $(USER_PATH)/splitkb/config.h
 
 CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
 ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)

@@ -59,6 +59,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         };
                         start_index = 0;
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty1");
                         break;
                     case SUBMENU_MODTAP:
                         if (painter_menu.state.menu_selector == MODTAP_END - 1) {
@@ -67,6 +68,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         };
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty2");
                         break;
                     case SUBMENU_PAINTER:
                         if (painter_menu.state.menu_selector == PAINTER_END - 1) {
@@ -75,6 +77,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         }
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty3");
                         break;
                     case SUBMENU_KB:
                         if (painter_menu.state.menu_selector == KB_END - 1) {
@@ -83,6 +86,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             painter_menu.state.menu_selector = painter_menu.state.menu_selector + 1;
                         };
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty4");
                         break;
                 }
                 dprintf("Menu Selector is %d\n", painter_menu.state.menu_selector);
@@ -101,6 +105,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                         }
                         start_index = 0;
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty5");
                         break;
                     case SUBMENU_MODTAP:
                         if (painter_menu.state.menu_selector == MODTAP_HEADING + 1) {
@@ -109,6 +114,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty6");
                         break;
                     case SUBMENU_PAINTER:
                         if (painter_menu.state.menu_selector == PAINTER_HEADING + 1) {
@@ -117,6 +123,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty7");
                         break;
                     case SUBMENU_KB:
                         if (painter_menu.state.menu_selector == KB_HEADING + 1) {
@@ -125,6 +132,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                             painter_menu.state.menu_selector = painter_menu.state.menu_selector - 1;
                         }
                         lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty8");
                         break;
                     }
                 dprintf("Menu Selector is %d\n", painter_menu.state.menu_selector);
@@ -212,7 +220,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
                                 break;
                             #endif
-                            #ifdef GQT_ENABLE
+                            #if defined(GQT_ENABLE) || defined(TAP_FLOW_ENABLE)
                             case MENU_GQT:
                                 increase_gqt_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
@@ -330,6 +338,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                     break;
                 }
                 lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty8");
                 return PROCESS_RECORD_RETURN_FALSE;
             }
         break;
@@ -414,7 +423,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                                 dprintf("Achordion Tapping Term = %d\n", achordion_tapping_term);
                                 break;
                             #endif
-                            #ifdef GQT_ENABLE
+                            #if defined(GQT_ENABLE) || defined(TAP_FLOW_ENABLE)
                             case MENU_GQT:
                                 decrease_gqt_tapping_term();
                                 user_runtime_state.kb.write_to_eeprom = true;
@@ -532,6 +541,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
                     break;
                 }
                 lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty9");
                 return PROCESS_RECORD_RETURN_FALSE;
             }
             break;
@@ -555,6 +565,7 @@ process_record_result_t process_qmenu_keys(uint16_t keycode, keyrecord_t *record
             painter_menu.state.menu_selector = 1;
             qp_clear(lcd_surface);
             lcd_dirty = true;
+                        dprintln("qkeys lcd_dirty10");
             return PROCESS_RECORD_RETURN_FALSE;
             break;
     }

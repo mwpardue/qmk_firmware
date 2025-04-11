@@ -78,6 +78,8 @@ uint16_t get_global_quick_tap_ms(uint16_t keycode) {
           return get_custom_tapping_term(user_config.tapping_term.gqt);
         case LHM_D:
         case RHM_K:
+        case LHM_C:
+        case RHM_COM:
           return get_custom_tapping_term(user_config.tapping_term.shift_gqt);
         default:
             return 0;  // global_quick_tap is not applied

@@ -19,23 +19,59 @@
 extern enum xcase_state xcase_state;
 extern bool caps_word_on;
 
-process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
 
-    bool isMacOS = user_config.system.os == MACOS;
+void smart_escape(void) {
     bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
     bool isOneShotLockedCtrl = get_oneshot_locked_mods() & MOD_MASK_CTRL;
     bool isOneShotLockedAlt = get_oneshot_locked_mods() & MOD_MASK_ALT;
     bool isOneShotLockedGui = get_oneshot_locked_mods() & MOD_MASK_GUI;
     bool isAnyOneShotLockedMod = isOneShotLockedShift || isOneShotLockedCtrl || isOneShotLockedAlt || isOneShotLockedGui;
     bool kbFeature = caps_word_on || \
-                     xcase_state == XCASE_ON || \
-                     xcase_state == XCASE_WAIT || \
-                     isAnyOneShotLockedMod || \
-                     is_leading() || \
-                     host_keyboard_led_state().caps_lock || \
-                     is_passing();
+        xcase_state == XCASE_ON || \
+        xcase_state == XCASE_WAIT || \
+        isAnyOneShotLockedMod || \
+        is_leading() || \
+        host_keyboard_led_state().caps_lock || \
+        is_passing();
+
+        if (kbFeature) {
+        if (host_keyboard_led_state().caps_lock) {
+            tap_code16(KC_CAPS);
+        }
+        disable_caps_word();
+        disable_xcase();
+        clear_locked_and_oneshot_mods();
+        stop_leading();
+    } else {
+        tap_code16(KC_ESC);
+        dprintln("SM_ESC default");
+    }
+}
+
+process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *record) {
+    bool isMacOS = user_config.system.os == MACOS;
+    // bool isOneShotLockedShift = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
+    // bool isOneShotShift       = get_oneshot_mods() & MOD_MASK_SHIFT || isOneShotLockedShift;
+    bool isOneShotCtrl        = get_oneshot_mods() & MOD_MASK_CTRL || get_oneshot_locked_mods() & MOD_MASK_CTRL;
+    // bool isOneShotAlt         = get_oneshot_mods() & MOD_MASK_ALT || get_oneshot_locked_mods() & MOD_MASK_ALT;
+    // bool isOneShotGui         = get_oneshot_mods() & MOD_MASK_GUI || get_oneshot_locked_mods() & MOD_MASK_GUI;
+    bool isCtrl               = get_mods() & MOD_MASK_CTRL || isOneShotCtrl;
+    // bool isShift               = get_mods() & MOD_MASK_SHIFT || isOneShotShift || isOneShotLockedShift;
+    // bool isAlt               = get_mods() & MOD_MASK_ALT || isOneShotAlt;
+    // bool isGui               = get_mods() & MOD_MASK_GUI || isOneShotGui;
 
     switch (keycode) {
+
+        case SM_CW:
+            if (record->event.pressed) {
+                if (isCtrl || host_keyboard_led_state().caps_lock) {
+                    tap_code16(KC_CAPS);
+                } else {
+                    toggle_caps_word();
+                }
+                    return PROCESS_RECORD_RETURN_FALSE;
+            }
+            break;
 
         case QWERTY:
             if (record->event.pressed) {
@@ -111,20 +147,21 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
 
         case SM_ESC:
             if (record->event.pressed) {
-                if (kbFeature) {
-                    if (host_keyboard_led_state().caps_lock) {
-                        tap_code16(KC_CAPS);
-                    }
-                    disable_caps_word();
-                    disable_xcase();
-                    clear_locked_and_oneshot_mods();
-                    stop_leading();
-                    return PROCESS_RECORD_RETURN_FALSE;
-                } else {
-                    tap_code16(KC_ESC);
-                    dprintln("SM_ESC default");
-                    return PROCESS_RECORD_RETURN_FALSE;
-                }
+                smart_escape();
+                // if (kbFeature) {
+                //     if (host_keyboard_led_state().caps_lock) {
+                //         tap_code16(KC_CAPS);
+                //     }
+                //     disable_caps_word();
+                //     disable_xcase();
+                //     clear_locked_and_oneshot_mods();
+                //     stop_leading();
+                //     return PROCESS_RECORD_RETURN_FALSE;
+                // } else {
+                //     tap_code16(KC_ESC);
+                //     dprintln("SM_ESC default");
+                //     return PROCESS_RECORD_RETURN_FALSE;
+                // }
             }
             return PROCESS_RECORD_RETURN_FALSE;
         break;
@@ -166,6 +203,28 @@ process_record_result_t process_custom_shortcuts(uint16_t keycode, keyrecord_t *
                 return PROCESS_RECORD_RETURN_FALSE;
             }
         return PROCESS_RECORD_RETURN_TRUE;
+
+
+    case SFT_PP:
+    case NUM_PP:
+        if (record->event.pressed) {
+            if (record->tap.count > 0) {
+                start_pass_leading();
+                return PROCESS_RECORD_RETURN_FALSE;
+            }
+        return PROCESS_RECORD_CONTINUE;
+        }
+    break;
+
+    case MEH_PP:
+        if (record->event.pressed) {
+        if (record->tap.count > 0) {
+            start_pass_leading();
+            return PROCESS_RECORD_RETURN_FALSE;
+        }
+        return PROCESS_RECORD_CONTINUE;
+        }
+    break;
 
         case ADJ_EXT:
             if (record->event.pressed) {

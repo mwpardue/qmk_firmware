@@ -4,6 +4,7 @@
 #include "features/custom_shortcuts.h"
 #include "features/tapdance.h"
 #include "coramoor_runtime.h"
+#include "modules/getreuer/tap_flow/tap_flow.h"
 
 uint16_t get_custom_tapping_term(uint16_t custom_tapping_term) {
     return custom_tapping_term;
@@ -64,7 +65,7 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case CLIR_THM:
         case CLOR_THM:
         case NUM_Z:
-        case NUM_TAB:
+        // case NUM_TAB:
           return g_tapping_term + 100;
         case LHM_A:
         case LQM_S:
@@ -80,9 +81,13 @@ uint16_t get_tapping_term_result(uint16_t keycode) {
         case GUI_COM:
         case GUI_X:
         case GUI_DOT:
+        case CTL_X:
+        case CTL_DOT:
           return get_custom_tapping_term(user_config.tapping_term.modtap);
         case RHM_K:
         case LHM_D:
+        case LHM_C:
+        case RHM_COM:
             return get_custom_tapping_term(user_config.tapping_term.shift);
         default:
             return g_tapping_term;
@@ -95,7 +100,7 @@ uint16_t get_quick_tap_term_result(uint16_t keycode) {
         case LQM_S:
         case LHM_F:
         case RHM_SCN:
-        case LIL_THM:
+        // case LIL_THM:
         case LOL_THM:
         case LIR_THM:
         case LOR_THM:
@@ -159,10 +164,46 @@ bool get_permissive_hold_result(uint16_t keycode) {
         case NUM_Z:
         case GUI_X:
         case GUI_DOT:
+        case LHM_C:
+        case RHM_COM:
+        case CTL_X:
+        case CTL_DOT:
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
             // Do not select the hold action when another key is tapped.
             return false;
+    }
+}
+
+
+uint16_t get_tap_flow(uint16_t keycode, keyrecord_t* record, uint16_t prev_keycode) {
+    switch(keycode) {
+        case LHM_A:
+        case LQM_S:
+        case LHM_F:
+        case RHM_J:
+        case RHM_L:
+        case RHM_SCN:
+        case CTL_Z:
+        case ALT_X:
+        case CTL_QUE:
+        case ALT_DOT:
+            dprintln("get_tap_flow triggered, gqt case");
+          return get_custom_tapping_term(user_config.tapping_term.gqt);
+        case LHM_D:
+        case RHM_K:
+        case LHM_C:
+        case RHM_COM:
+            dprintln("get_tap_flow triggered, shift gqt case");
+          return get_custom_tapping_term(user_config.tapping_term.shift_gqt);
+        case SFT_Z:
+        case SFT_QUE:
+        case NUM_Z:
+        case CLIL_THM:
+            return 1;
+        default:
+            dprintln("get_tap_flow triggered, default case");
+            return 0;
     }
 }

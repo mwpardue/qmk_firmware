@@ -106,7 +106,7 @@ void *leader_adjust_func(uint16_t keycode) {
         }
         return NULL;
     }
-
+#ifdef DYNAMIC_MACRO_ENABLE
 void *leader_dmacro_func(uint16_t keycode) {
         switch (keycode) {
             case KC_1:
@@ -123,7 +123,9 @@ void *leader_dmacro_func(uint16_t keycode) {
         }
         return NULL;
     }
+#endif
 
+#ifdef DYNAMIC_MACRO_ENABLE
 void *leader_dmacro_play_func(uint16_t keycode) {
         switch (keycode) {
             case KC_1:
@@ -137,6 +139,7 @@ void *leader_dmacro_play_func(uint16_t keycode) {
         }
         return NULL;
     }
+#endif
 
 void *leader_email_func(uint16_t keycode) {
         switch (keycode) {
@@ -269,15 +272,19 @@ void *leader_start_func(uint16_t keycode) {
         case KC_S:
             return leader_screen_func;
             break;
+#ifdef DYNAMIC_MACRO_ENABLE
         case KC_P:
             return leader_dmacro_play_func;
             break;
+#endif
         case KC_R:
             return leader_reset_func;
             break;
+#ifdef DYNAMIC_MACRO_ENABLE
         case KC_M:
             return leader_dmacro_func;
             break;
+#endif
     default:
         return NULL;
     }
@@ -318,6 +325,7 @@ void start_leading(void) {
 #endif
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("leader lcd_dirty2");
 #endif
 }
 
@@ -335,6 +343,7 @@ void start_pass_leading(void) {
 #endif
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("leader lcd_dirty3");
 #endif
 }
 
@@ -347,6 +356,7 @@ void stop_leading(void) {
 #endif
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("leader lcd_dirty1");
 #endif
 }
 

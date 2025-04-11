@@ -85,6 +85,10 @@ void enable_caps_word(void) {
 #endif
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("casemode lcd_dirty2");
+#endif
+#ifdef VOYAGER
+    STATUS_LED_3(true);
 #endif
 }
 
@@ -102,6 +106,10 @@ void disable_caps_word(void) {
 #endif
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("casemode lcd_dirty3");
+#endif
+#ifdef VOYAGER
+    STATUS_LED_3(false);
 #endif
 }
 
@@ -133,6 +141,7 @@ void enable_xcase(void) {
     xcase_state = XCASE_WAIT;
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("casemode lcd_dirty4");
 #endif
 }
 
@@ -141,6 +150,7 @@ void enable_xcase_with(uint16_t delimiter) {
     xcase_state = XCASE_ON;
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("casemode lcd_dirty5");
 #endif
     xcase_delimiter = delimiter;
     distance_to_last_delim = -1;
@@ -152,6 +162,7 @@ void disable_xcase(void) {
     xcase_state = XCASE_OFF;
 #ifdef HLC_TFT_DISPLAY
     lcd_dirty = true;
+    dprintln("casemode lcd_dirty1");
 #endif
 }
 
